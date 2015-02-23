@@ -93,7 +93,7 @@ namespace DatabaseBenchmark
         {
             Type type = item.GetType();
 
-            // Serialize type.
+            // Serialize the type.
             writer.Write(type.FullName);
 
             // Serialize IDatabase members.
