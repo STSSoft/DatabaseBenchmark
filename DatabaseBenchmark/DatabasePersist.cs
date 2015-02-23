@@ -13,6 +13,9 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark
 {
+    /// <summary>
+    /// Persists the state of the application (including: database settings, window layout.)
+    /// </summary>
     public class ApplicationPersist
     {
         private ILog Logger;
