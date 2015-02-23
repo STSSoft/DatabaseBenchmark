@@ -1,3 +1,6 @@
 [submodule "STS.General"]
 	path = STS.General
 	url = https://github.com/STSSoft/STS.General
+[submodule "STS.General.GUI"]
+	path = STS.General.GUI
+	url = https://github.com/STSSoft/STS.General.GUI
