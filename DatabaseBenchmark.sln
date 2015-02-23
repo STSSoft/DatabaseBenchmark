@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseBenchmark", "DatabaseBenchmark\DatabaseBenchmark.csproj", "{D7827731-73BB-4938-A6D8-D9E1C55DD416}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Dataflow Debug|Any CPU = Dataflow Debug|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7827731-73BB-4938-A6D8-D9E1C55DD416}.Dataflow Debug|Any CPU.ActiveCfg = Dataflow Debug|Any CPU
+		{D7827731-73BB-4938-A6D8-D9E1C55DD416}.Dataflow Debug|Any CPU.Build.0 = Dataflow Debug|Any CPU
+		{D7827731-73BB-4938-A6D8-D9E1C55DD416}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7827731-73BB-4938-A6D8-D9E1C55DD416}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7827731-73BB-4938-A6D8-D9E1C55DD416}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7827731-73BB-4938-A6D8-D9E1C55DD416}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
