@@ -13,7 +13,7 @@ Database Benchmark is a stress test tool, it is not a complex performance measur
 
 Every tested database must be capable of performing this simple test - insert the generated records and read them, ordered by their keys.
 
-Features
+# Features
 - Advanced Data Generators - special algorithms that provide close to real-life data streams.
 - Graphic Vsualization and Export - chart visualization and export of the test results.
 - Easy to Use - Intuitive and easy to use interface.
