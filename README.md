@@ -20,7 +20,7 @@ All of the databases included in the benchmark are implemented by our team. We a
 - Advanced Data Generators - special algorithms that provide close to real-life data streams.
 - Graphic Vsualization and Export - chart visualization and export of the test results.
 - Easy to Use - Intuitive and easy to use interface.
-- 
+
 # Use case
 This tool can be used as additional viewpoint when the research engineers or software architects assesses the appropriate background storage engine for their mission critical systems.
 
