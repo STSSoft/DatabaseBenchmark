@@ -14,7 +14,7 @@ Database Benchmark is a stress test tool, it is not a complex performance measur
 Every tested database must be capable of performing this simple test - insert the generated records and read them, ordered by their keys.
 
 # Included DBMS products
-All of the databases included in the benchmark are implemented by our team. We are doing our best to make sure that the implementations are the best possible. If you can propose a better implementation or if you want to make a change, we encourage you to do it, following the Contributing guide: https://github.com/STSSoft/DatabaseBenchmark/wiki/Contributing guide.
+All of the databases included in the benchmark are implemented by our team. We are doing our best to make sure that the implementations are the best possible. If you can propose a better implementation or if you want to make a change, we encourage you to do it, following the Contributing guide: https://github.com/STSSoft/DatabaseBenchmark/wiki/Contributing.
 
 The currently included databases are:
 
