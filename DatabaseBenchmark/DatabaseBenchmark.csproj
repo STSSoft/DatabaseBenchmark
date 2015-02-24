@@ -493,10 +493,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Doc\LICENSE" />
-    <None Include="Doc\CHANGELOG" />
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="ADOX">
       <Guid>{00000600-0000-0010-8000-00AA006D2EA4}</Guid>
       <VersionMajor>2</VersionMajor>
