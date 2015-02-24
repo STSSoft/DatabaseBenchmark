@@ -18,7 +18,7 @@ namespace DatabaseBenchmark
     /// </summary>
     public class ApplicationPersist
     {
-        private ILog Logger;
+        //private ILog Logger;
         private int Count;
 
         public DockContainer DockingContainer { get; private set; }
