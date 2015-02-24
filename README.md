@@ -13,10 +13,15 @@ Database Benchmark is a stress test tool, it is not a complex performance measur
 
 Every tested database must be capable of performing this simple test - insert the generated records and read them, ordered by their keys.
 
-# Use case
-This tool can be used as additional viewpoint when the research engineers or software architects assesses the appropriate background storage engine for their mission critical systems.
+# Included DBMS products
+All of the databases included in the benchmark are implemented by our team. We are doing our best to make sure that they are the best possible. If you can propose a better implementation or if you want to make a change, we encourage you to do it, following the Contributing guide: https://github.com/STSSoft/DatabaseBenchmark/wiki/Contributing guide.
 
 # Features
 - Advanced Data Generators - special algorithms that provide close to real-life data streams.
 - Graphic Vsualization and Export - chart visualization and export of the test results.
 - Easy to Use - Intuitive and easy to use interface.
+- 
+# Use case
+This tool can be used as additional viewpoint when the research engineers or software architects assesses the appropriate background storage engine for their mission critical systems.
+
+
