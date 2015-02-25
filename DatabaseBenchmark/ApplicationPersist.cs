@@ -130,9 +130,9 @@ namespace DatabaseBenchmark
         private void StoreFrames(BinaryWriter writer, IEnumerable<StepFrame> frames, int count)
         {
             writer.Write(Container.Frames.Count);
+
             foreach (var frame in Container.Frames)
             {
-                writer.Write(frame.Key);
                 writer.Write(frame.Value.Text);
                 writer.Write(frame.Value.DockState.ToString());
             }
@@ -144,7 +144,6 @@ namespace DatabaseBenchmark
 
             for (int i = 0; i < framesCount; i++)
             {
-                string frameName = reader.ReadString();
                 string frameText = reader.ReadString();
 
                 DockState state = (DockState)Enum.Parse(typeof(DockState), reader.ReadString());
@@ -157,7 +156,6 @@ namespace DatabaseBenchmark
         private void StoreDatabases(Tuple<IDatabase, bool>[] databases, BinaryWriter writer)
         {
             DatabasePersist persist = new DatabasePersist();
-
             writer.Write(databases.Length);
 
             foreach (var database in databases)
@@ -275,13 +273,9 @@ namespace DatabaseBenchmark
 
     public class DockContainer
     {
-        public DockPanel DockingPanel { get; private set; }
-        public TreeViewFrame TreeView { get; private set; }
-        public Dictionary<string, StepFrame> Frames { get; private set; }
-
-        public DockContainer()
-        {
-        }
+        public DockPanel DockingPanel { get; set; }
+        public TreeViewFrame TreeView { get; set; }
+        public Dictionary<string, StepFrame> Frames { get; set; }
 
         public DockContainer(DockPanel panel, TreeViewFrame treeView, Dictionary<string, StepFrame> frames)
         {
