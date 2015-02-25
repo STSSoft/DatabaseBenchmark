@@ -14,63 +14,56 @@ using WeifenLuo.WinFormsUI.Docking;
 namespace DatabaseBenchmark
 {
     /// <summary>
-    /// Persists the state of the application (including: database settings, window layout.)
+    /// Persists the state of the application (including: application settings, database settings, window layout).
     /// </summary>
     public class ApplicationPersist
     {
         public static readonly string DOCKING_CONFIGURATION = "Docking.config";
-        public static readonly string APPLICATION_PERSIST_CONFIGURATION = "Persist.config";
+        public static readonly string APPLICATION_PERSIST_CONFIGURATION = "Persist.bin";
+
+        private string ApplicationConfigPath;
+        private string DockConfigPath;
 
         private ILog Logger;
         private int Count;
-        private string ApplicationConfigPath;
-        private string DockConfigPath;
-        private Stream stream;
 
         public DockContainer Container { get; private set; }
+        public string ConfigurationFolder { get; private set; }
 
-        public ApplicationPersist(ILog logger, DockContainer dockingContainer, string folderPath)
+        public ApplicationPersist(DockContainer dockingContainer, string configurationFolder)
         {
             Container = dockingContainer;
-            Logger = logger;
+            ConfigurationFolder = configurationFolder;
 
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
+            Logger = LogManager.GetLogger("ApplicationLogger");
 
-            ApplicationConfigPath = Path.Combine(folderPath, APPLICATION_PERSIST_CONFIGURATION);
-            DockConfigPath = Path.Combine(folderPath, DOCKING_CONFIGURATION);
+            if (!Directory.Exists(configurationFolder))
+                Directory.CreateDirectory(configurationFolder);
+
+            ApplicationConfigPath = Path.Combine(configurationFolder, APPLICATION_PERSIST_CONFIGURATION);
+            DockConfigPath = Path.Combine(configurationFolder, DOCKING_CONFIGURATION);
         }
 
         public void Store()
         {
             try
             {
+                // Docking.
                 StoreDocking();
 
-                stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate);
-                Tuple<IDatabase, bool>[] databases = Container.TreeView.GetAllBenchmarks();
-
-                BinaryWriter writer = new BinaryWriter(stream);
-
-                writer.Write(databases.Length);
-
-                StoreDatabases(databases, writer);
-
-                writer.Write(Container.Frames.Count);
-
-                foreach (var frame in Container.Frames)
+                // Databases and frames.
+                using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
                 {
-                    writer.Write(frame.Key);
-                    writer.Write(frame.Value.Text);
-                    writer.Write(frame.Value.DockState.ToString());
-                }
+                    BinaryWriter writer = new BinaryWriter(stream);
+                    Tuple<IDatabase, bool>[] databases = Container.TreeView.GetAllDatabases();
 
-                writer.Close();
+                    StoreDatabases(databases, writer);
+                    StoreFrames(writer, Container.Frames.Select(x => x.Value), Container.Frames.Count);
+                }
             }
             catch (Exception exc)
             {
                 Logger.Error("Persist store error ...", exc);
-                stream.Close();
             }
         }
 
@@ -78,48 +71,32 @@ namespace DatabaseBenchmark
         {
             try
             {
+                // Docking.
                 LoadDocking();
 
                 if (!File.Exists(ApplicationConfigPath))
                 {
                     Container.TreeView.CreateTreeView();
-
                     return;
                 }
 
-                //Clear TreeView
+                // Clear TreeView.
                 Container.TreeView.treeView.Nodes.Clear();
 
-                stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate);
-                BinaryReader reader = new BinaryReader(stream);
-
-                int dbCount = reader.ReadInt32();
-
-                LoadDatabases(reader);
-
-                Container.TreeView.treeView.ExpandAll();
-
-                int countFrames = reader.ReadInt32();
-
-                for (int i = 0; i < countFrames; i++)
+                using(var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
                 {
-                    string frameName = reader.ReadString();
-                    string frameText = reader.ReadString();
-                    DockState state = (DockState)Enum.Parse(typeof(DockState), reader.ReadString());
+                    BinaryReader reader = new BinaryReader(stream);
 
-                    Container.Frames[frameText].Show(Container.DockingPanel);
-                    Container.Frames[frameText].DockState = state;
+                    LoadDatabases(reader);
+                    LoadFrames(reader);
+
+                    Container.TreeView.treeView.ExpandAll();
                 }
-
-                reader.Close();
             }
             catch (Exception exc)
             {
                 Logger.Error("Persist load error ...", exc);
-
-                //Restore TreeView
                 Container.TreeView.CreateTreeView();
-                stream.Close();
             }
         }
 
@@ -145,6 +122,35 @@ namespace DatabaseBenchmark
             finally
             {
                 Container.TreeView.Text = "Databases";
+            }
+        }
+
+        #region Private Methods
+
+        private void StoreFrames(BinaryWriter writer, IEnumerable<StepFrame> frames, int count)
+        {
+            writer.Write(Container.Frames.Count);
+            foreach (var frame in Container.Frames)
+            {
+                writer.Write(frame.Key);
+                writer.Write(frame.Value.Text);
+                writer.Write(frame.Value.DockState.ToString());
+            }
+        }
+
+        private void LoadFrames(BinaryReader reader)
+        {
+            int framesCount = reader.ReadInt32();
+
+            for (int i = 0; i < framesCount; i++)
+            {
+                string frameName = reader.ReadString();
+                string frameText = reader.ReadString();
+
+                DockState state = (DockState)Enum.Parse(typeof(DockState), reader.ReadString());
+
+                Container.Frames[frameText].Show(Container.DockingPanel);
+                Container.Frames[frameText].DockState = state;
             }
         }
 
@@ -212,6 +218,8 @@ namespace DatabaseBenchmark
 
             return null;
         }
+
+        #endregion
     }
 
     public class DatabasePersist : IPersist<IDatabase>
