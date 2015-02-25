@@ -552,7 +552,7 @@ if exist %25drive%25 (
    xcopy /d /y /r "R:\Deployment\STSdb4\STSdb4.dll" "$(TargetDir)"
    xcopy /d /y /r "%25thirdParty%25\log4net\1.2.13\*.dll" "$(TargetDir)"
    xcopy /d /y /r "%25thirdParty%25\Json for .NET 1.2\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25thirdParty%25\DockingSuite\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\DockingSuite\2.9.0\*.dll" "$(TargetDir)"
 )
 </PreBuildEvent>
   </PropertyGroup>
