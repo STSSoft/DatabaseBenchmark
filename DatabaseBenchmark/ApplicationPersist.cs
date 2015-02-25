@@ -18,8 +18,8 @@ namespace DatabaseBenchmark
     /// </summary>
     public class ApplicationPersist
     {
-        public static const string DOCKING_CONFIGURATION = "Docking.config";
-        public static const string APPLICATION_CONFIGURATION = "AppConfig.bin";
+        public static readonly string DOCKING_CONFIGURATION = "Docking.config";
+        public static readonly string APPLICATION_CONFIGURATION = "AppConfig.bin";
 
         private ILog Logger;
         private int Count;
