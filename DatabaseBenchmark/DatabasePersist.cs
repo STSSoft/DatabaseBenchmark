@@ -18,67 +18,194 @@ namespace DatabaseBenchmark
     /// </summary>
     public class ApplicationPersist
     {
+        public static readonly string DOCKING_CONFIGURATION = "Docking.config";
+        public static readonly string APPLICATION_PERSIST_CONFIGURATION = "Persist.config";
+
         private ILog Logger;
         private int Count;
+        private string ApplicationConfigPath;
+        private string DockConfigPath;
+        private Stream stream;
 
-        public DockContainer DockingContainer { get; private set; }
+        public DockContainer Container { get; private set; }
 
-        public ApplicationPersist(DockContainer dockingContainer)
+        public ApplicationPersist(ILog logger, DockContainer dockingContainer, string folderPath)
         {
-            DockingContainer = dockingContainer;
+            Container = dockingContainer;
+            Logger = logger;
+
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+
+            ApplicationConfigPath = Path.Combine(folderPath, APPLICATION_PERSIST_CONFIGURATION);
+            DockConfigPath = Path.Combine(folderPath, DOCKING_CONFIGURATION);
         }
 
-        public void StoreDocking(DockPanel panel, Stream stream)
+        public void Store()
         {
-            panel.SaveAsXml(stream, Encoding.Default);
+            try
+            {
+                StoreDocking();
+
+                stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate);
+                Tuple<IDatabase, bool>[] databases = Container.TreeView.GetAllBenchmarks();
+
+                BinaryWriter writer = new BinaryWriter(stream);
+
+                writer.Write(databases.Length);
+
+                StoreDatabases(databases, writer);
+
+                writer.Write(Container.Frames.Count);
+
+                foreach (var frame in Container.Frames)
+                {
+                    writer.Write(frame.Key);
+                    writer.Write(frame.Value.Text);
+                    writer.Write(frame.Value.DockState.ToString());
+                }
+
+                writer.Close();
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("Persist store error ...", exc);
+                stream.Close();
+            }
         }
 
-        public void LoadDocking(DockPanel panel, Stream stream)
+        public void Load()
         {
-            Count = 0;
+            try
+            {
+                LoadDocking();
 
-            panel.LoadFromXml(stream, GetContentFromPersistString, true);
+                if (!File.Exists(ApplicationConfigPath))
+                {
+                    Container.TreeView.CreateTreeView();
+
+                    return;
+                }
+
+                //Clear TreeView
+                Container.TreeView.treeView.Nodes.Clear();
+
+                stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate);
+                BinaryReader reader = new BinaryReader(stream);
+
+                int dbCount = reader.ReadInt32();
+
+                LoadDatabases(reader);
+
+                Container.TreeView.treeView.ExpandAll();
+
+                int countFrames = reader.ReadInt32();
+
+                for (int i = 0; i < countFrames; i++)
+                {
+                    string frameName = reader.ReadString();
+                    string frameText = reader.ReadString();
+                    DockState state = (DockState)Enum.Parse(typeof(DockState), reader.ReadString());
+
+                    Container.Frames[frameText].Show(Container.DockingPanel);
+                    Container.Frames[frameText].DockState = state;
+                }
+
+                reader.Close();
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("Persist load error ...", exc);
+
+                //Restore TreeView
+                Container.TreeView.CreateTreeView();
+                stream.Close();
+            }
         }
 
-        public void StoreDatabases(IDatabase[] databases, Stream stream)
+        public void StoreDocking()
+        {
+            Container.DockingPanel.SaveAsXml(DockConfigPath);
+        }
+
+        public void LoadDocking()
+        {
+            try
+            {
+                if (File.Exists(DockConfigPath))
+                    Container.DockingPanel.LoadFromXml(DockConfigPath, new DeserializeDockContent(GetContentFromPersistString));
+                else
+                    InitializeDockingConfiguration();
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("Load docking configuration error...", exc);
+                InitializeDockingConfiguration();
+            }
+            finally
+            {
+                Container.TreeView.Text = "Databases";
+            }
+        }
+
+        private void StoreDatabases(Tuple<IDatabase, bool>[] databases, BinaryWriter writer)
         {
             DatabasePersist persist = new DatabasePersist();
-            BinaryWriter writer = new BinaryWriter(stream);
 
             writer.Write(databases.Length);
 
             foreach (var database in databases)
-                persist.Write(writer, database);
+            {
+                writer.Write(database.Item2);
+                persist.Write(writer, database.Item1);
+            }
         }
 
-        public IDatabase[] LoadDatabases(Stream stream)
+        private Tuple<IDatabase, bool>[] LoadDatabases(BinaryReader reader)
         {
-            BinaryReader reader = new BinaryReader(stream);
             int length = reader.ReadInt32();
 
-            IDatabase[] databases = new IDatabase[length];
+            Tuple<IDatabase, bool>[] databases = new Tuple<IDatabase, bool>[length];
             DatabasePersist persist = new DatabasePersist();
 
             for (int i = 0; i < databases.Length; i++)
-                databases[i] = persist.Read(reader);
+            {
+                bool checkedState = reader.ReadBoolean();
+                IDatabase database = persist.Read(reader);
+
+                Container.TreeView.CreateTreeViewNode(database, checkedState);
+            }
 
             return databases;
+        }
+
+        private void InitializeDockingConfiguration()
+        {
+            Container.TreeView.Text = "Databases";
+            Container.TreeView.Show(Container.DockingPanel);
+            Container.TreeView.DockState = DockState.DockLeft;
+
+            foreach (var item in Container.Frames)
+            {
+                item.Value.Show(Container.DockingPanel);
+                item.Value.DockState = DockState.Document;
+            }
         }
 
         private IDockContent GetContentFromPersistString(string persistString)
         {
             if (persistString == typeof(TreeViewFrame).ToString())
-                return DockingContainer.TreeView;
+                return Container.TreeView;
 
             StepFrame frame = null;
             if (persistString == typeof(StepFrame).ToString())
             {
                 if (Count == 0)
-                    frame = DockingContainer.Frames[TestMethod.Write.ToString()];
+                    frame = Container.Frames[TestMethod.Write.ToString()];
                 else if (Count == 1)
-                    frame = DockingContainer.Frames[TestMethod.Read.ToString()];
+                    frame = Container.Frames[TestMethod.Read.ToString()];
                 else if (Count == 2)
-                    frame = DockingContainer.Frames[TestMethod.SecondaryRead.ToString()];
+                    frame = Container.Frames[TestMethod.SecondaryRead.ToString()];
 
                 Count++;
             }
@@ -98,9 +225,9 @@ namespace DatabaseBenchmark
 
             // Serialize IDatabase members.
             writer.Write(item.DatabaseName);
-            writer.Write(item.DatabaseCollection);
+            writer.Write(item.DatabaseCollection == null ? string.Empty : item.DatabaseCollection);
             writer.Write(item.DataDirectory);
-            writer.Write(item.ConnectionString);
+            writer.Write(item.ConnectionString == null ? string.Empty : item.ConnectionString);
             writer.Write(item.Category);
             writer.Write(item.Description);
             writer.Write(item.Website);

@@ -61,6 +61,14 @@ namespace DatabaseBenchmark.Frames
             treeView.ExpandAll();
         }
 
+        public void CreateTreeViewNode(IDatabase database, bool state)
+        {
+            AddAfter(null, database, state);
+
+            if (!Directory.Exists(database.DataDirectory))
+                Directory.CreateDirectory(database.DataDirectory);
+        }
+
         public void RefreshTreeView()
         {
             this.SuspendLayout();
@@ -84,19 +92,30 @@ namespace DatabaseBenchmark.Frames
             return treeView.Nodes.Iterate().Where(x => x.Checked && x.Tag as Database != null).Select(y => y.Tag as Database).ToArray();
         }
 
-        private void AddAfter(Database database, Database newDatabase)
+        /// <summary>
+        /// Renturn all database and checked state
+        /// </summary>
+        /// <returns></returns>
+        public Tuple<IDatabase, bool>[] GetAllBenchmarks()
+        {
+            return treeView.Nodes.Iterate().Where(x => x.Tag != null).Select(x => new Tuple<IDatabase, bool>(x.Tag as IDatabase, x.Checked)).ToArray();
+        }
+
+        private void AddAfter(IDatabase database, IDatabase newDatabase, bool state = false)
         {
             if (database == null)
             {
                 var node1 = treeView.Nodes.BuildNode(newDatabase.Category, newDatabase.DatabaseName);
                 node1.ImageIndex = 0;
                 node1.Tag = newDatabase;
+                node1.Checked = state;
 
                 return;
             }
 
             TreeNode node = treeView.Nodes.Iterate().Where(x => x.Tag == database).FirstOrDefault();
             node.ImageIndex = 0;
+            node.Checked = state;
 
             var nodes = node.Parent != null ? node.Parent.Nodes : treeView.Nodes;
             nodes.Insert(node.Index + 1, newDatabase.DatabaseName).Tag = newDatabase;

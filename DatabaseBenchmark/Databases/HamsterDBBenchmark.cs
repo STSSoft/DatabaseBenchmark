@@ -20,6 +20,7 @@ namespace DatabaseBenchmark.Databases
             SyncRoot = new object();
 
             DatabaseName = "HamsterDB";
+            DatabaseCollection = "database";
             Category = "NoSQL\\Key-Value Store";
             Description = "HamsterDB 2.1.9 + HamsterDb-dotnet.dll";
             Website = "http://hamsterdb.com/";
@@ -34,7 +35,7 @@ namespace DatabaseBenchmark.Databases
 
         public override void Init(int flowCount, long flowRecordCount)
         {
-            string path = Path.Combine(DataDirectory, "database.hamster");
+            string path = Path.Combine(DataDirectory, String.Format("{0}..hamster", DatabaseCollection));
 
             enviroment = new Hamster.Environment();
             enviroment.Create(path, 0, 0664, new Parameter[] { GetCacheParam(CACHE_SIZE) });

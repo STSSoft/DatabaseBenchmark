@@ -36,7 +36,8 @@ namespace DatabaseBenchmark
     public partial class MainForm : Form
     {
         public static readonly string DATABASES_DIRECTORY = Path.Combine(Application.StartupPath + "\\Databases");
-        public static readonly string DOCKING_CONFIGURATION = "Docking.config";
+        public static readonly string CONFIGURATION_FOLDER = Path.Combine(Application.StartupPath + "\\Config");
+
         private static int count = 0;
 
         private volatile Task MainTask = null;
@@ -58,6 +59,8 @@ namespace DatabaseBenchmark
         private Dictionary<string, StepFrame> TestFrames;
 
         private ILog Logger;
+
+        private ApplicationPersist ApplicationPersist;
 
         public MainForm()
         {
@@ -94,17 +97,15 @@ namespace DatabaseBenchmark
 
             View_Click(btnTimeView, EventArgs.Empty);
 
-            TreeViewFrame.CreateTreeView();
-            
             // Logger.
             Logger = LogManager.GetLogger("ApplicationLogger");
 
-            // Docking.
-            if (File.Exists(DOCKING_CONFIGURATION))
-                LoadDockingConfiguration(DOCKING_CONFIGURATION);
-            else
-                InitializeDockingConfiguration();
+            DockContainer container = new DockContainer(dockPanel1, TreeViewFrame, TestFrames);
+            ApplicationPersist = new ApplicationPersist(Logger, container, CONFIGURATION_FOLDER);
 
+            //Load dock and persist configuration
+            ApplicationPersist.Load();
+           
             TestFrames[TestMethod.Write.ToString()].Select();
 
             this.ResumeLayout();
@@ -533,52 +534,12 @@ namespace DatabaseBenchmark
 
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveDockingConfiguration(DOCKING_CONFIGURATION);
+            ApplicationPersist.Store();
         }
 
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoadDockingConfiguration(DOCKING_CONFIGURATION);
-        }
-
-        private void SaveDockingConfiguration(string fileName)
-        {
-            dockPanel1.SaveAsXml(fileName);
-        }
-
-        private void LoadDockingConfiguration(string fileName)
-        {
-            count = 0;
-
-            try
-            {
-                if (File.Exists(DOCKING_CONFIGURATION))
-                    dockPanel1.LoadFromXml(fileName, new DeserializeDockContent(GetContentFromPersistString));
-                else
-                    InitializeDockingConfiguration();
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Load docking configuration error...", exc);
-                InitializeDockingConfiguration();
-            }
-            finally
-            {
-                TreeViewFrame.Text = "Databases";
-            }
-        }
-
-        private void InitializeDockingConfiguration()
-        {
-            TreeViewFrame.Text = "Databases";
-            TreeViewFrame.Show(dockPanel1);
-            TreeViewFrame.DockState = DockState.DockLeft;
-
-            foreach (var item in TestFrames)
-            {
-                item.Value.Show(dockPanel1);
-                item.Value.DockState = DockState.Document;
-            } 
+            ApplicationPersist.Load();
         }
 
         private void ResetDockingConfiguration()
@@ -718,8 +679,8 @@ namespace DatabaseBenchmark
 
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (File.Exists(DOCKING_CONFIGURATION))
-                File.Delete(DOCKING_CONFIGURATION);
+            //if (File.Exists(DOCKING_CONFIGURATION))
+            //    File.Delete(DOCKING_CONFIGURATION);
 
             ResetDockingConfiguration();
         }
@@ -846,7 +807,7 @@ namespace DatabaseBenchmark
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveDockingConfiguration(DOCKING_CONFIGURATION);
+            ApplicationPersist.Store();
             stopButton_Click(sender, e);
 
             Application.Exit();
