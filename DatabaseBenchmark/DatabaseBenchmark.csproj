@@ -339,7 +339,7 @@
     <Compile Include="Charts\LineChartFrame.Designer.cs">
       <DependentUpon>LineChartFrame.cs</DependentUpon>
     </Compile>
-    <Compile Include="DatabasePersist.cs" />
+    <Compile Include="ApplicationPersist.cs" />
     <Compile Include="Databases\AerospikeBenchmark.cs" />
     <Compile Include="Databases\GridGainBenchmark.cs" />
     <Compile Include="Databases\OrientDBBenchmark.cs" />

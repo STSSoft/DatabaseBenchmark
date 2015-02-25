@@ -18,30 +18,30 @@ namespace DatabaseBenchmark
     /// </summary>
     public class ApplicationPersist
     {
-        public static readonly string DOCKING_CONFIGURATION = "Docking.config";
-        public static readonly string APPLICATION_PERSIST_CONFIGURATION = "Persist.bin";
-
-        private string ApplicationConfigPath;
-        private string DockConfigPath;
+        public static const string DOCKING_CONFIGURATION = "Docking.config";
+        public static const string APPLICATION_CONFIGURATION = "AppConfig.bin";
 
         private ILog Logger;
         private int Count;
 
+        public string ApplicationConfigPath { get; private set; }
+        public string DockConfigPath { get; private set; }
+
         public DockContainer Container { get; private set; }
         public string ConfigurationFolder { get; private set; }
 
-        public ApplicationPersist(DockContainer dockingContainer, string configurationFolder)
+        public ApplicationPersist(DockContainer dockingContainer, string configFolder)
         {
             Container = dockingContainer;
-            ConfigurationFolder = configurationFolder;
+            ConfigurationFolder = configFolder;
 
             Logger = LogManager.GetLogger("ApplicationLogger");
 
-            if (!Directory.Exists(configurationFolder))
-                Directory.CreateDirectory(configurationFolder);
+            if (!Directory.Exists(configFolder))
+                Directory.CreateDirectory(configFolder);
 
-            ApplicationConfigPath = Path.Combine(configurationFolder, APPLICATION_PERSIST_CONFIGURATION);
-            DockConfigPath = Path.Combine(configurationFolder, DOCKING_CONFIGURATION);
+            ApplicationConfigPath = Path.Combine(configFolder, APPLICATION_CONFIGURATION);
+            DockConfigPath = Path.Combine(configFolder, DOCKING_CONFIGURATION);
         }
 
         public void Store()

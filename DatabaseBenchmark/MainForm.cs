@@ -103,7 +103,7 @@ namespace DatabaseBenchmark
             DockContainer container = new DockContainer(dockPanel1, TreeViewFrame, TestFrames);
             ApplicationPersist = new ApplicationPersist(container, CONFIGURATION_FOLDER);
 
-            //Load dock and persist configuration
+            // Load dock and application configuration.
             ApplicationPersist.Load();
            
             TestFrames[TestMethod.Write.ToString()].Select();
@@ -331,8 +331,6 @@ namespace DatabaseBenchmark
                 return;
             }
 
-            Logger.Info("Tests started...");
-
             // Parse test parameters.
             TableCount = Int32.Parse(cbFlowsCount.Text.Replace(" ", ""));
             RecordCount = Int64.Parse(cbRecordCount.Text.Replace(" ", ""));
@@ -368,6 +366,7 @@ namespace DatabaseBenchmark
             InitializeCharts(benchmarks);
 
             // Start the benchmark.
+            Logger.Info("Tests started...");
             MainTask = Task.Factory.StartNew(DoBenchmark, Cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
