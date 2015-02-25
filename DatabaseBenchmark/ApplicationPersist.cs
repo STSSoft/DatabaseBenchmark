@@ -10,6 +10,7 @@ using DatabaseBenchmark.Frames;
 using log4net;
 using STS.General.Persist;
 using WeifenLuo.WinFormsUI.Docking;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark
 {
@@ -269,6 +270,9 @@ namespace DatabaseBenchmark
 
             return database;
         }
+
+        //private  class SerializeObjects
+
     }
 
     public class DockContainer
