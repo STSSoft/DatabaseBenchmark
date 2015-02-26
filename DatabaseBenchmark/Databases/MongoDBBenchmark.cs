@@ -30,7 +30,7 @@ namespace DatabaseBenchmark.Databases
             DatabaseName = "MongoDB";
             DatabaseCollection = "collection";
             Category = "NoSQL\\Document Store";
-            Description = "MongoDB";
+            Description = "MongoDB C# Driver 2.0.0beta";
             Website = "http://www.mongodb.org/";
             Color = Color.FromArgb(235, 215, 151);
 
@@ -68,6 +68,7 @@ namespace DatabaseBenchmark.Databases
 
                 var collection = database.GetCollection<Row>(DatabaseCollection);
                 collection.CreateIndex(new IndexKeysBuilder().Ascending("_id"));
+
                 collections[i] = collection;
                 clients[i] = client;
             }

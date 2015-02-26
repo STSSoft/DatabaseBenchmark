@@ -132,9 +132,8 @@ namespace DatabaseBenchmark.Databases
         {
             get
             {
-                long sum = 0;
                 var stats = collections.First().GetStats();
-                sum = stats.StorageSize + stats.TotalIndexSize;
+                long sum = stats.StorageSize + stats.TotalIndexSize;
 
                 return sum;
             }
