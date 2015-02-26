@@ -119,16 +119,16 @@ CHANGED: MongoDB implementation and TokuMX implementations:
 IMPROVED: TokuMX size query (thanks to Tim Callaghan of Tokutek).
 IMPROVED: SQLite benchmark.
 
-REMOVED: SiaqoDB database.
+REMOVED: SiaqoDB database. 
 REMOVED: RaptorDB database.
-REMOVED: H2 database.
-REMOVED: DerbyDb database.
+REMOVED: H2 database. 
+REMOVED: DerbyDb database. 
 REMOVED: NSimpleDB.
 REMOVED: all IKVM references.
 
 UPDATED: HamsterDB native library to version 2.1.9 and .NET wrapper recompiled for .NET 4.5.
 UPDATED: MongoDB C# drivers to 2.0.0beta2.
-UPDATED: CassandraDB to version 2.1.2
+UPDATED: CassandraDB to version 2.1.2.
 UPDATED: SQLite to 3.8.4.1, ADO.NET Provider for SQLite to 1.0.92.0
 ***
 ver. 2.0.3 (2014-04-23)
