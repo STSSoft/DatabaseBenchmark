@@ -104,7 +104,7 @@ namespace DatabaseBenchmark
             ApplicationPersist = new ApplicationPersist(containerSettings, CONFIGURATION_FOLDER);
 
             // Load dock and application configuration.
-            ApplicationPersist.Load();
+            ApplicationPersist.Load(Path.Combine(CONFIGURATION_FOLDER, "AppConfig.config"));
 
             TestFrames[TestMethod.Write.ToString()].Select();
 
@@ -533,12 +533,14 @@ namespace DatabaseBenchmark
 
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationPersist.Store();
+            if (fbAppConfigurationPath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                ApplicationPersist.Store(fbAppConfigurationPath.SelectedPath);
         }
 
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationPersist.Load();
+            if (fdAppFileConfig.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                ApplicationPersist.Load(fdAppFileConfig.FileName);
         }
 
         private void ResetDockingConfiguration()
@@ -806,7 +808,7 @@ namespace DatabaseBenchmark
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            ApplicationPersist.Store();
+            //ApplicationPersist.Store();
             stopButton_Click(sender, e);
 
             Application.Exit();

@@ -28,39 +28,33 @@ namespace DatabaseBenchmark
         private ILog Logger;
         private int Count;
 
-        public string ApplicationConfigPath { get; private set; }
         public string DockConfigPath { get; private set; }
-
         public AppSettings Container { get; private set; }
-        public string ConfigurationFolder { get; private set; }
 
-        public ApplicationPersist(AppSettings dockingContainer, string configFolder)
+        public ApplicationPersist(AppSettings dockingContainer, string configurationFolder)
         {
             Container = dockingContainer;
-            ConfigurationFolder = configFolder;
 
             Logger = LogManager.GetLogger("ApplicationLogger");
 
-            if (!Directory.Exists(configFolder))
-                Directory.CreateDirectory(configFolder);
-
-            ApplicationConfigPath = Path.Combine(configFolder, APPLICATION_CONFIGURATION);
-            DockConfigPath = Path.Combine(configFolder, DOCKING_CONFIGURATION);
+            DockConfigPath = Path.Combine(configurationFolder, DOCKING_CONFIGURATION);
         }
 
-        public void Store()
+        public void Store(string directoryPath)
         {
             try
             {
+                string applicationConfigPath = Path.Combine(directoryPath, APPLICATION_CONFIGURATION);
+
                 // Docking.
                 StoreDocking();
 
                 // Remove last configuration.
-                if (File.Exists(ApplicationConfigPath))
-                    File.Delete(ApplicationConfigPath);
+                if (File.Exists(applicationConfigPath))
+                    File.Delete(applicationConfigPath);
 
                 // Databases and frames.
-                using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
+                using (var stream = new FileStream(applicationConfigPath, FileMode.OpenOrCreate))
                 {
                     Dictionary<IDatabase, bool> databases = Container.TreeView.GetAllDatabases();
                     XmlAppSettingsPersist persist = new XmlAppSettingsPersist(databases, Container.GetComboBoxSelectedItems(), Container.TrackBar.Value);
@@ -75,14 +69,14 @@ namespace DatabaseBenchmark
             }
         }
 
-        public void Load()
+        public void Load(string filePath)
         {
             try
             {
                 // Docking.
                 LoadDocking();
 
-                if (!File.Exists(ApplicationConfigPath))
+                if (!File.Exists(filePath))
                 {
                     Container.TreeView.CreateTreeView();
                     return;
@@ -91,7 +85,7 @@ namespace DatabaseBenchmark
                 // Clear TreeView.
                 Container.TreeView.treeView.Nodes.Clear();
 
-                using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
+                using (var stream = new FileStream(filePath, FileMode.OpenOrCreate))
                 {
                     XmlSerializer deserializer = new XmlSerializer(typeof(XmlAppSettingsPersist));
                     XmlAppSettingsPersist deserializeObj = (XmlAppSettingsPersist)deserializer.Deserialize(stream);
