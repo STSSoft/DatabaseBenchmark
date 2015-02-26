@@ -101,7 +101,7 @@ namespace DatabaseBenchmark
                         Container.TreeView.CreateTreeViewNode(db.Key, db.Value);
 
                     foreach (var cb in deserializeObj.ComboBoxItems)
-                        Container.ComboBoxs.First(x => x.Name == cb.Key).Text = cb.Value;
+                        Container.ComboBoxes.First(x => x.Name == cb.Key).Text = cb.Value;
 
                     Container.TrackBar.Value = deserializeObj.TrackBarValue;
                 }
@@ -227,8 +227,8 @@ namespace DatabaseBenchmark
 
             reader.ReadEndElement(); // Databases.
 
-            // Deserialize ComboBoxs.
-            reader.ReadStartElement("ComboBoxs");
+            // Deserialize ComboBoxes.
+            reader.ReadStartElement("ComboBoxes");
 
             while (reader.IsStartElement("ComboBox"))
             {
@@ -240,7 +240,7 @@ namespace DatabaseBenchmark
                 reader.ReadEndElement(); // ComboBox.
             }
 
-            reader.ReadEndElement(); // ComboBoxs.
+            reader.ReadEndElement(); // ComboBoxes.
 
             reader.ReadStartElement("TrackBar");
             TrackBarValue = reader.ReadContentAsInt();
@@ -274,8 +274,8 @@ namespace DatabaseBenchmark
 
             writer.WriteEndElement();
 
-            // Serialize ComboBoxs.
-            writer.WriteStartElement("ComboBoxs");
+            // Serialize ComboBoxes.
+            writer.WriteStartElement("ComboBoxes");
 
             foreach (var item in ComboBoxItems)
             {
@@ -287,7 +287,7 @@ namespace DatabaseBenchmark
                 writer.WriteEndElement(); // ComboBox.
             }
 
-            writer.WriteEndElement(); // ComboBoxs.
+            writer.WriteEndElement(); // ComboBoxes.
 
             // Serialize TrackBar.
             writer.WriteStartElement("TrackBar");
@@ -302,15 +302,15 @@ namespace DatabaseBenchmark
         public DockPanel DockingPanel { get; set; }
         public TreeViewFrame TreeView { get; set; }
         public Dictionary<string, StepFrame> Frames { get; set; }
-        public ToolStripComboBox[] ComboBoxs { get; set; }
+        public ToolStripComboBox[] ComboBoxes { get; set; }
         public TrackBar TrackBar { get; set; }
 
-        public AppSettings(DockPanel panel, TreeViewFrame treeView, Dictionary<string, StepFrame> frames, ToolStripComboBox[] comboBoxs, TrackBar trackBar)
+        public AppSettings(DockPanel panel, TreeViewFrame treeView, Dictionary<string, StepFrame> frames, ToolStripComboBox[] comboBoxes, TrackBar trackBar)
         {
             DockingPanel = panel;
             TreeView = treeView;
             Frames = frames;
-            ComboBoxs = comboBoxs;
+            ComboBoxes = comboBoxes;
             TrackBar = trackBar;
         }
 
@@ -318,7 +318,7 @@ namespace DatabaseBenchmark
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
 
-            foreach (var cb in ComboBoxs)
+            foreach (var cb in ComboBoxes)
                 result.Add(cb.Name, cb.Text);
 
             return result;
