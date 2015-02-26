@@ -95,9 +95,9 @@ namespace DatabaseBenchmark.Frames
         /// <summary>
         /// Returns all databases and their checked state.
         /// </summary>
-        public Tuple<IDatabase, bool>[] GetAllDatabases()
+        public Dictionary<IDatabase, bool> GetAllDatabases()
         {
-            return treeView.Nodes.Iterate().Where(x => x.Tag != null).Select(x => new Tuple<IDatabase, bool>(x.Tag as IDatabase, x.Checked)).ToArray();
+            return treeView.Nodes.Iterate().Where(x => x.Tag != null).ToDictionary(x => x.Tag as IDatabase, v => v.Checked);
         }
 
         private void AddAfter(IDatabase database, IDatabase newDatabase, bool state = false)

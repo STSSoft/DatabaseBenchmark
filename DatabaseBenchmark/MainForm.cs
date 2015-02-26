@@ -100,8 +100,8 @@ namespace DatabaseBenchmark
             // Logger.
             Logger = LogManager.GetLogger("ApplicationLogger");
 
-            DockContainer container = new DockContainer(dockPanel1, TreeViewFrame, TestFrames);
-            ApplicationPersist = new ApplicationPersist(container, CONFIGURATION_FOLDER);
+            AppSettings containerSettings = new AppSettings(dockPanel1, TreeViewFrame, TestFrames);
+            ApplicationPersist = new ApplicationPersist(containerSettings, CONFIGURATION_FOLDER);
 
             // Load dock and application configuration.
             ApplicationPersist.Load();

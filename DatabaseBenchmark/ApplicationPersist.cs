@@ -11,6 +11,8 @@ using log4net;
 using STS.General.Persist;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Xml.Serialization;
+using System.Xml;
+using System.IO.IsolatedStorage;
 
 namespace DatabaseBenchmark
 {
@@ -20,7 +22,7 @@ namespace DatabaseBenchmark
     public class ApplicationPersist
     {
         public static readonly string DOCKING_CONFIGURATION = "Docking.config";
-        public static readonly string APPLICATION_CONFIGURATION = "AppConfig.bin";
+        public static readonly string APPLICATION_CONFIGURATION = "AppConfig.config";
 
         private ILog Logger;
         private int Count;
@@ -28,10 +30,10 @@ namespace DatabaseBenchmark
         public string ApplicationConfigPath { get; private set; }
         public string DockConfigPath { get; private set; }
 
-        public DockContainer Container { get; private set; }
+        public AppSettings Container { get; private set; }
         public string ConfigurationFolder { get; private set; }
 
-        public ApplicationPersist(DockContainer dockingContainer, string configFolder)
+        public ApplicationPersist(AppSettings dockingContainer, string configFolder)
         {
             Container = dockingContainer;
             ConfigurationFolder = configFolder;
@@ -52,14 +54,18 @@ namespace DatabaseBenchmark
                 // Docking.
                 StoreDocking();
 
+                // Remove last configuration.
+                if (File.Exists(ApplicationConfigPath))
+                    File.Delete(ApplicationConfigPath);
+
                 // Databases and frames.
                 using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
                 {
-                    BinaryWriter writer = new BinaryWriter(stream);
-                    Tuple<IDatabase, bool>[] databases = Container.TreeView.GetAllDatabases();
+                    Dictionary<IDatabase, bool> databases = Container.TreeView.GetAllDatabases();
+                    DatabaseXmlPersist persist = new DatabaseXmlPersist(databases);
 
-                    StoreDatabases(databases, writer);
-                    StoreFrames(writer, Container.Frames.Select(x => x.Value), Container.Frames.Count);
+                    XmlSerializer serializer = new XmlSerializer(typeof(DatabaseXmlPersist));
+                    serializer.Serialize(stream, persist);
                 }
             }
             catch (Exception exc)
@@ -84,15 +90,17 @@ namespace DatabaseBenchmark
                 // Clear TreeView.
                 Container.TreeView.treeView.Nodes.Clear();
 
-                using(var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
+                using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
                 {
-                    BinaryReader reader = new BinaryReader(stream);
+                    XmlSerializer deserializer = new XmlSerializer(typeof(DatabaseXmlPersist));
+                    DatabaseXmlPersist container = (DatabaseXmlPersist)deserializer.Deserialize(stream);
 
-                    LoadDatabases(reader);
-                    LoadFrames(reader);
-
-                    Container.TreeView.treeView.ExpandAll();
+                    // Add databases in TreeView.
+                    foreach (var db in container.Databases)
+                        Container.TreeView.CreateTreeViewNode(db.Key, db.Value);
                 }
+
+                Container.TreeView.treeView.ExpandAll();
             }
             catch (Exception exc)
             {
@@ -128,62 +136,6 @@ namespace DatabaseBenchmark
 
         #region Private Methods
 
-        private void StoreFrames(BinaryWriter writer, IEnumerable<StepFrame> frames, int count)
-        {
-            writer.Write(Container.Frames.Count);
-
-            foreach (var frame in Container.Frames)
-            {
-                writer.Write(frame.Value.Text);
-                writer.Write(frame.Value.DockState.ToString());
-            }
-        }
-
-        private void LoadFrames(BinaryReader reader)
-        {
-            int framesCount = reader.ReadInt32();
-
-            for (int i = 0; i < framesCount; i++)
-            {
-                string frameText = reader.ReadString();
-
-                DockState state = (DockState)Enum.Parse(typeof(DockState), reader.ReadString());
-
-                Container.Frames[frameText].Show(Container.DockingPanel);
-                Container.Frames[frameText].DockState = state;
-            }
-        }
-
-        private void StoreDatabases(Tuple<IDatabase, bool>[] databases, BinaryWriter writer)
-        {
-            DatabasePersist persist = new DatabasePersist();
-            writer.Write(databases.Length);
-
-            foreach (var database in databases)
-            {
-                writer.Write(database.Item2);
-                persist.Write(writer, database.Item1);
-            }
-        }
-
-        private Tuple<IDatabase, bool>[] LoadDatabases(BinaryReader reader)
-        {
-            int length = reader.ReadInt32();
-
-            Tuple<IDatabase, bool>[] databases = new Tuple<IDatabase, bool>[length];
-            DatabasePersist persist = new DatabasePersist();
-
-            for (int i = 0; i < databases.Length; i++)
-            {
-                bool checkedState = reader.ReadBoolean();
-                IDatabase database = persist.Read(reader);
-
-                Container.TreeView.CreateTreeViewNode(database, checkedState);
-            }
-
-            return databases;
-        }
-
         private void InitializeDockingConfiguration()
         {
             Container.TreeView.Text = "Databases";
@@ -215,73 +167,89 @@ namespace DatabaseBenchmark
                 Count++;
             }
 
-            return null;
+            return frame;
         }
 
         #endregion
     }
 
-    public class DatabasePersist : IPersist<IDatabase>
+    public class DatabaseXmlPersist : IXmlSerializable
     {
-        public void Write(BinaryWriter writer, IDatabase item)
+        // Key - database -> Value - database state in TreeView
+        public Dictionary<IDatabase, bool> Databases { get; set; }
+
+        public DatabaseXmlPersist()
+            : this(new Dictionary<IDatabase, bool>())
         {
-            Type type = item.GetType();
-
-            // Serialize the type.
-            writer.Write(type.FullName);
-
-            // Serialize IDatabase members.
-            writer.Write(item.DatabaseName);
-            writer.Write(item.DatabaseCollection == null ? string.Empty : item.DatabaseCollection);
-            writer.Write(item.DataDirectory);
-            writer.Write(item.ConnectionString == null ? string.Empty : item.ConnectionString);
-            writer.Write(item.Category);
-            writer.Write(item.Description);
-            writer.Write(item.Website);
-            writer.Write(item.Color.ToArgb());
-
-            writer.Write(item.Requirements.Length);
-
-            foreach (var element in item.Requirements)
-                writer.Write(element);
         }
 
-        public IDatabase Read(BinaryReader reader)
+        public DatabaseXmlPersist(Dictionary<IDatabase, bool> databases)
         {
-            string typeName = reader.ReadString();
-            Type type = Type.GetType(typeName);
-
-            IDatabase database = (IDatabase)Activator.CreateInstance(type);
-
-            database.DatabaseName = reader.ReadString();
-            database.DatabaseCollection = reader.ReadString();
-            database.DataDirectory = reader.ReadString();
-            database.ConnectionString = reader.ReadString();
-            database.Category = reader.ReadString();
-            database.Description = reader.ReadString();
-            database.Website = reader.ReadString();
-            database.Color = Color.FromArgb(reader.ReadInt32());
-
-            int length = reader.ReadInt32();
-            string[] requirements = new string[length];
-
-            for (int i = 0; i < length; i++)
-                requirements[i] = reader.ReadString();
-
-            return database;
+            Databases = databases;
         }
 
-        //private  class SerializeObjects
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            return null;
+        }
 
+        public void ReadXml(XmlReader reader)
+        {
+            reader.ReadStartElement("DatabasePersist");
+            reader.ReadStartElement("Databases");
+
+            while (reader.IsStartElement("IDatabase"))
+            {
+                Type dbType = Type.GetType(reader.GetAttribute("AssemblyQualifiedName"));
+                bool state = bool.Parse(reader.GetAttribute("CheckedState"));
+
+                reader.ReadStartElement("IDatabase");
+
+                XmlSerializer serial = new XmlSerializer(dbType);
+
+                Databases.Add((IDatabase)serial.Deserialize(reader), state);
+
+                reader.ReadEndElement(); // IDatabase.
+            }
+
+            reader.ReadEndElement(); // Databases.
+            reader.ReadEndElement(); // DatabasePersist.
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.Flush();
+            writer.WriteStartElement("Databases");
+
+            foreach (var db in Databases)
+            {
+                // Get database type.
+                var dbType = db.Key.GetType();
+
+                // Create xml element and attributes.
+                writer.WriteStartElement("IDatabase");
+                writer.WriteAttributeString("AssemblyQualifiedName", dbType.AssemblyQualifiedName);
+                writer.WriteAttributeString("CheckedState", db.Value.ToString());
+
+                // Serialize database
+                XmlSerializer serializer = new XmlSerializer(dbType);
+                serializer.Serialize(writer, db.Key);
+
+                // IDatabase.
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
+        }
     }
 
-    public class DockContainer
+    public class AppSettings
     {
         public DockPanel DockingPanel { get; set; }
         public TreeViewFrame TreeView { get; set; }
         public Dictionary<string, StepFrame> Frames { get; set; }
 
-        public DockContainer(DockPanel panel, TreeViewFrame treeView, Dictionary<string, StepFrame> frames)
+        public AppSettings(DockPanel panel, TreeViewFrame treeView, Dictionary<string, StepFrame> frames)
         {
             DockingPanel = panel;
             TreeView = treeView;
