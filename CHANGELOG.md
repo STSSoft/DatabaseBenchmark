@@ -2,7 +2,7 @@
 Database Benchmark changelog
 ------------------------------------
 
-ver. 3.0.0 (unreleased)
+ver. 3.0.0 (beta released)
 
 ---IMPORTANT IMPROVEMENTS of Database Benchmark---
 KeyTypes replaced with Randomness in the GUI. 0% value means that all of the generated keys are sequential,
