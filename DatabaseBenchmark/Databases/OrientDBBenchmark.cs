@@ -34,7 +34,7 @@ namespace DatabaseBenchmark.Databases
         {
             DatabaseName = "OrientDB";
             DatabaseCollection = "myTestDatabaseAlias";
-            Category = "SQL\\Document Databases";
+            Category = "SQL";
             Description = "OrientDB 2.0 + OrientDB-NET.binary";
             Website = "http://www.orientechnologies.com/";
             Color = System.Drawing.Color.Orange;
@@ -165,6 +165,7 @@ namespace DatabaseBenchmark.Databases
         public override void Finish()
         {
             OClient.DropDatabasePool(DatabaseCollection);
+
             foreach (var database in databases)
                 database.Close();
         }
