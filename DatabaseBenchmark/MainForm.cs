@@ -104,9 +104,12 @@ namespace DatabaseBenchmark
             ApplicationPersist = new ApplicationPersist(containerSettings, CONFIGURATION_FOLDER);
 
             // Load dock and application configuration.
-            ApplicationPersist.Load(Path.Combine(CONFIGURATION_FOLDER, "AppConfig.config"));
+            ApplicationPersist.Load(null);
 
             TestFrames[TestMethod.Write.ToString()].Select();
+
+            fdAppFileConfig.InitialDirectory = CONFIGURATION_FOLDER;
+            fbAppConfigurationPath.SelectedPath = CONFIGURATION_FOLDER;
 
             this.ResumeLayout();
         }
@@ -808,10 +811,12 @@ namespace DatabaseBenchmark
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //ApplicationPersist.Store();
-            stopButton_Click(sender, e);
+            DialogResult result = MessageBox.Show("Save changes", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            Application.Exit();
+            if (result == System.Windows.Forms.DialogResult.Yes)
+                ApplicationPersist.Store(null);
+
+            stopButton_Click(sender, e);
         }
     }
 }

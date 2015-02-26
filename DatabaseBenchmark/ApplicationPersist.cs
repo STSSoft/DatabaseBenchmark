@@ -29,6 +29,8 @@ namespace DatabaseBenchmark
         private int Count;
 
         public string DockConfigPath { get; private set; }
+        public string ApplicationConfigPath { get; private set; }
+
         public AppSettings Container { get; private set; }
 
         public ApplicationPersist(AppSettings dockingContainer, string configurationFolder)
@@ -38,23 +40,25 @@ namespace DatabaseBenchmark
             Logger = LogManager.GetLogger("ApplicationLogger");
 
             DockConfigPath = Path.Combine(configurationFolder, DOCKING_CONFIGURATION);
+            ApplicationConfigPath = Path.Combine(configurationFolder, APPLICATION_CONFIGURATION);
         }
 
         public void Store(string directoryPath)
         {
             try
             {
-                string applicationConfigPath = Path.Combine(directoryPath, APPLICATION_CONFIGURATION);
+                if(directoryPath != null)
+                    ApplicationConfigPath = Path.Combine(directoryPath, APPLICATION_CONFIGURATION);
 
                 // Docking.
                 StoreDocking();
 
                 // Remove last configuration.
-                if (File.Exists(applicationConfigPath))
-                    File.Delete(applicationConfigPath);
+                if (File.Exists(ApplicationConfigPath))
+                    File.Delete(ApplicationConfigPath);
 
                 // Databases and frames.
-                using (var stream = new FileStream(applicationConfigPath, FileMode.OpenOrCreate))
+                using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
                 {
                     Dictionary<IDatabase, bool> databases = Container.TreeView.GetAllDatabases();
                     XmlAppSettingsPersist persist = new XmlAppSettingsPersist(databases, Container.GetComboBoxSelectedItems(), Container.TrackBar.Value);
@@ -73,10 +77,13 @@ namespace DatabaseBenchmark
         {
             try
             {
+                if (filePath != null)
+                    ApplicationConfigPath = filePath;
+
                 // Docking.
                 LoadDocking();
 
-                if (!File.Exists(filePath))
+                if (!File.Exists(ApplicationConfigPath))
                 {
                     Container.TreeView.CreateTreeView();
                     return;
@@ -85,7 +92,7 @@ namespace DatabaseBenchmark
                 // Clear TreeView.
                 Container.TreeView.treeView.Nodes.Clear();
 
-                using (var stream = new FileStream(filePath, FileMode.OpenOrCreate))
+                using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
                 {
                     XmlSerializer deserializer = new XmlSerializer(typeof(XmlAppSettingsPersist));
                     XmlAppSettingsPersist deserializeObj = (XmlAppSettingsPersist)deserializer.Deserialize(stream);
