@@ -11,7 +11,7 @@ using Orient.Client.API;
 
 namespace DatabaseBenchmark.Databases
 {
-    class OrientDBBenchmark : Database
+    public class OrientDBBenchmark : Database
     {
         private const int QUERY_CAPACITY = 100000;
 
