@@ -220,7 +220,10 @@ namespace DatabaseBenchmark
 
                 XmlSerializer serial = new XmlSerializer(dbType);
 
-                Databases.Add((IDatabase)serial.Deserialize(reader), state);
+                IDatabase db = (IDatabase)serial.Deserialize(reader);
+                db.Color = ColorTranslator.FromHtml(reader.ReadContentAsString());
+
+                Databases.Add(db, state);
 
                 reader.ReadEndElement(); // IDatabase.
             }
@@ -267,6 +270,8 @@ namespace DatabaseBenchmark
                 // Serialize database
                 XmlSerializer serializer = new XmlSerializer(dbType);
                 serializer.Serialize(writer, db.Key);
+
+                writer.WriteValue(ColorTranslator.ToHtml(db.Key.Color));
 
                 // IDatabase.
                 writer.WriteEndElement();
