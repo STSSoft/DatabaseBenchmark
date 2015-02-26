@@ -91,12 +91,15 @@ namespace DatabaseBenchmark.Databases
             }
             session.Dispose();
         }
-        //TODO: Size Ravendb
+
         public override long Size
         {
             get
             {
-                return 0;
+                string directoryPath = Path.Combine(DataDirectory, "Data");
+                FileInfo info = new FileInfo(directoryPath);
+
+                return info.Length;
             }
         }
 
