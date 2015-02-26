@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using DatabaseBenchmark.Benchmarking;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark
 {
@@ -22,6 +23,8 @@ namespace DatabaseBenchmark
         public string Category { get; set; }
         public string Description { get; set; }
         public string Website { get; set; }
+
+        [XmlIgnore]
         public Color Color { get; set; }
         public string[] Requirements { get; set; }
 
