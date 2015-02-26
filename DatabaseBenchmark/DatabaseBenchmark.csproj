@@ -513,6 +513,21 @@
       <Name>STS.General</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CSV-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Auto Navigate-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view-blue.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set target=x64
