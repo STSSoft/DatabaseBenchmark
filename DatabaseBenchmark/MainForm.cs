@@ -100,12 +100,12 @@ namespace DatabaseBenchmark
             // Logger.
             Logger = LogManager.GetLogger("ApplicationLogger");
 
-            AppSettings containerSettings = new AppSettings(dockPanel1, TreeViewFrame, TestFrames);
+            AppSettings containerSettings = new AppSettings(dockPanel1, TreeViewFrame, TestFrames, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
             ApplicationPersist = new ApplicationPersist(containerSettings, CONFIGURATION_FOLDER);
 
             // Load dock and application configuration.
             ApplicationPersist.Load();
-           
+
             TestFrames[TestMethod.Write.ToString()].Select();
 
             this.ResumeLayout();
@@ -300,7 +300,7 @@ namespace DatabaseBenchmark
                 stepFrame.barChartCPU.CreateSeries("Series1", "{0:0.#}");
                 stepFrame.barChartMemory.CreateSeries("Series1", "{0:0.#}");
                 stepFrame.barChartIO.CreateSeries("Series1", "{0:0.#}");
-                
+
                 stepFrame.barChartSpeed.Title = "Speed (rec/sec)";
                 stepFrame.barChartSize.Title = "Size (MB)";
                 stepFrame.barChartTime.Title = "Time (hh:mm:ss)";
@@ -525,7 +525,7 @@ namespace DatabaseBenchmark
                 TreeViewFrame.DockState = DockState.DockLeft;
             else
                 TreeViewFrame.DockState = DockState.DockLeftAutoHide;
-        } 
+        }
 
         #endregion
 
@@ -561,7 +561,7 @@ namespace DatabaseBenchmark
             TreeViewFrame.DockState = DockState.DockLeft;
 
             TreeViewFrame.CreateTreeView();
-            
+
             foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
             {
                 StepFrame frame = CreateStepFrame(method);
@@ -587,9 +587,9 @@ namespace DatabaseBenchmark
             StepFrame frame = null;
             if (persistString == typeof(StepFrame).ToString())
             {
-                if(count == 0)
+                if (count == 0)
                     frame = TestFrames[TestMethod.Write.ToString()];
-                else if(count == 1)
+                else if (count == 1)
                     frame = TestFrames[TestMethod.Read.ToString()];
                 else if (count == 2)
                     frame = TestFrames[TestMethod.SecondaryRead.ToString()];
@@ -627,7 +627,7 @@ namespace DatabaseBenchmark
 
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StepFrame frame =  TestFrames[TestMethod.Write.ToString()];
+            StepFrame frame = TestFrames[TestMethod.Write.ToString()];
 
             if (!frame.IsDisposed)
             {

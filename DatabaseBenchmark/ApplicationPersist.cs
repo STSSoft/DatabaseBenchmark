@@ -13,6 +13,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using System.Xml.Serialization;
 using System.Xml;
 using System.IO.IsolatedStorage;
+using System.Windows.Forms;
 
 namespace DatabaseBenchmark
 {
@@ -62,9 +63,9 @@ namespace DatabaseBenchmark
                 using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
                 {
                     Dictionary<IDatabase, bool> databases = Container.TreeView.GetAllDatabases();
-                    DatabaseXmlPersist persist = new DatabaseXmlPersist(databases);
+                    XmlAppSettingsPersist persist = new XmlAppSettingsPersist(databases, Container.GetComboBoxSelectedItems(), Container.TrackBar.Value);
 
-                    XmlSerializer serializer = new XmlSerializer(typeof(DatabaseXmlPersist));
+                    XmlSerializer serializer = new XmlSerializer(typeof(XmlAppSettingsPersist));
                     serializer.Serialize(stream, persist);
                 }
             }
@@ -92,12 +93,17 @@ namespace DatabaseBenchmark
 
                 using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
                 {
-                    XmlSerializer deserializer = new XmlSerializer(typeof(DatabaseXmlPersist));
-                    DatabaseXmlPersist container = (DatabaseXmlPersist)deserializer.Deserialize(stream);
+                    XmlSerializer deserializer = new XmlSerializer(typeof(XmlAppSettingsPersist));
+                    XmlAppSettingsPersist deserializeObj = (XmlAppSettingsPersist)deserializer.Deserialize(stream);
 
                     // Add databases in TreeView.
-                    foreach (var db in container.Databases)
+                    foreach (var db in deserializeObj.Databases)
                         Container.TreeView.CreateTreeViewNode(db.Key, db.Value);
+
+                    foreach (var cb in deserializeObj.ComboBoxItems)
+                        Container.ComboBoxs.First(x => x.Name == cb.Key).Text = cb.Value;
+
+                    Container.TrackBar.Value = deserializeObj.TrackBarValue;
                 }
 
                 Container.TreeView.treeView.ExpandAll();
@@ -173,19 +179,25 @@ namespace DatabaseBenchmark
         #endregion
     }
 
-    public class DatabaseXmlPersist : IXmlSerializable
+    public class XmlAppSettingsPersist : IXmlSerializable
     {
         // Key - database -> Value - database state in TreeView
         public Dictionary<IDatabase, bool> Databases { get; set; }
 
-        public DatabaseXmlPersist()
-            : this(new Dictionary<IDatabase, bool>())
+        // Key - ComboBox name -> Value - selected value
+        public Dictionary<string, string> ComboBoxItems { get; set; }
+        public int TrackBarValue { get; set; }
+
+        public XmlAppSettingsPersist()
+            : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(), default(int))
         {
         }
 
-        public DatabaseXmlPersist(Dictionary<IDatabase, bool> databases)
+        public XmlAppSettingsPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, int trackBarValue)
         {
             Databases = databases;
+            ComboBoxItems = comboBoxItems;
+            TrackBarValue = trackBarValue;
         }
 
         public System.Xml.Schema.XmlSchema GetSchema()
@@ -195,9 +207,10 @@ namespace DatabaseBenchmark
 
         public void ReadXml(XmlReader reader)
         {
-            reader.ReadStartElement("DatabasePersist");
+            reader.ReadStartElement("XmlAppSettingsPersist");
             reader.ReadStartElement("Databases");
 
+            // Deserialize databases.
             while (reader.IsStartElement("IDatabase"))
             {
                 Type dbType = Type.GetType(reader.GetAttribute("AssemblyQualifiedName"));
@@ -213,12 +226,32 @@ namespace DatabaseBenchmark
             }
 
             reader.ReadEndElement(); // Databases.
-            reader.ReadEndElement(); // DatabasePersist.
+
+            // Deserialize ComboBoxs.
+            reader.ReadStartElement("ComboBoxs");
+
+            while (reader.IsStartElement("ComboBox"))
+            {
+                string name = reader.GetAttribute("Name");
+
+                reader.ReadStartElement("ComboBox");
+                ComboBoxItems.Add(name, reader.ReadContentAsString());
+
+                reader.ReadEndElement(); // ComboBox.
+            }
+
+            reader.ReadEndElement(); // ComboBoxs.
+
+            reader.ReadStartElement("TrackBar");
+            TrackBarValue = reader.ReadContentAsInt();
+
+            reader.ReadEndElement(); // TrackBar;
+            reader.ReadEndElement(); // DatabaseXmlPersist.
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.Flush();
+            // Serialize Databases.
             writer.WriteStartElement("Databases");
 
             foreach (var db in Databases)
@@ -240,6 +273,27 @@ namespace DatabaseBenchmark
             }
 
             writer.WriteEndElement();
+
+            // Serialize ComboBoxs.
+            writer.WriteStartElement("ComboBoxs");
+
+            foreach (var item in ComboBoxItems)
+            {
+                writer.WriteStartElement("ComboBox");
+
+                writer.WriteAttributeString("Name", item.Key);
+                writer.WriteValue(item.Value);
+
+                writer.WriteEndElement(); // ComboBox.
+            }
+
+            writer.WriteEndElement(); // ComboBoxs.
+
+            // Serialize TrackBar.
+            writer.WriteStartElement("TrackBar");
+            writer.WriteValue(TrackBarValue);
+
+            writer.WriteEndElement(); // TrackBar.
         }
     }
 
@@ -248,12 +302,26 @@ namespace DatabaseBenchmark
         public DockPanel DockingPanel { get; set; }
         public TreeViewFrame TreeView { get; set; }
         public Dictionary<string, StepFrame> Frames { get; set; }
+        public ToolStripComboBox[] ComboBoxs { get; set; }
+        public TrackBar TrackBar { get; set; }
 
-        public AppSettings(DockPanel panel, TreeViewFrame treeView, Dictionary<string, StepFrame> frames)
+        public AppSettings(DockPanel panel, TreeViewFrame treeView, Dictionary<string, StepFrame> frames, ToolStripComboBox[] comboBoxs, TrackBar trackBar)
         {
             DockingPanel = panel;
             TreeView = treeView;
             Frames = frames;
+            ComboBoxs = comboBoxs;
+            TrackBar = trackBar;
+        }
+
+        public Dictionary<string, string> GetComboBoxSelectedItems()
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            foreach (var cb in ComboBoxs)
+                result.Add(cb.Name, cb.Text);
+
+            return result;
         }
     }
 }
