@@ -9,15 +9,15 @@ KeyTypes replaced with Randomness in the GUI. 0% value means that all of the gen
 and with the increasing of the percentage the generated flow begins to contain random keys. 100% means that all keys are random.
 This change allows fine control over the generated keys and more precise tests.
 
-ADDED: Logging of exceptions thrown in the tests and the application. log4Net is used as a log tool. The logs can be found in ../Logs/ApplicationLog.txt
+* ADDED: Logging of exceptions thrown in the tests and the application. log4Net is used as a log tool. The logs can be found in ../Logs/ApplicationLog.txt
 and ../Logs/BenchmarkTestLog.txt.
 The source files of log4net can be found at: http://logging.apache.org/log4net/.
 
-ADDED: Test results report - the test results from the benchmark can now be sent to the dedicated servers of Database Benchmark.
+* ADDED: Test results report - the test results from the benchmark can now be sent to the dedicated servers of Database Benchmark.
 The computer configuration allong with the test results is converted to JSON and sent to the servers. No personal user data is sent!
 The Json for .NET library used for JSON serialization can be found at: https://sourceforge.net/projects/csjson/.
 
-ADDED: Visualization of the combined I/O operations that every database generates (excluding the ones working on a server).
+* ADDED: Visualization of the combined I/O operations that every database generates (excluding the ones working on a server).
 The I/O monitoring uses the Windows performance counters for the Process object: https://technet.microsoft.com/en-us/library/cc780836(WS.10).aspx.
 
 It monitors the following parameters:
@@ -39,13 +39,13 @@ It monitors the following parameters:
 
 * Virtual Bytes Peak - Shows the maximum size, in bytes, of virtual address space that the process has used at any one time.
 
-ADDED: The GUI now features docking capabilities for the windows. The window layout is saved automatically when the application
+* ADDED: The GUI now features docking capabilities for the windows. The window layout is saved automatically when the application
 is closing. It can also be saved from the File menu.
 The DockingPanelSuite library used for docking can be found at: https://github.com/dockpanelsuite/dockpanelsuite.
 
-CHANGED: IBenchmark interface is now renamed to IDatabase.
-CHANGED: Benchmark class is now renamed to Database.
-CHANGED: IDatabase interface. It now includes the following properties:
+* CHANGED: IBenchmark interface is now renamed to IDatabase.
+* CHANGED: Benchmark class is now renamed to Database.
+* CHANGED: IDatabase interface. It now includes the following properties:
 ```C#
 public string Category { get; set; }
 public string Description { get; set; }
@@ -60,28 +60,28 @@ New method signatures are:
 void Init(int flowCount, long flowRecordCount, KeysType keysType);
 IEnumerable<KeyValuePair<long, Tick>> Read();
 ```
-CHANGED: BenchmarkTest.cs - in Write(), each data flow is inserted from different thread into ONE database collection (table, document or etc.).
+* CHANGED: BenchmarkTest.cs - in Write(), each data flow is inserted from different thread into ONE database collection (table, document or etc.).
 The old implementation was inserting every flow into individual database collection from an individual thread.
 
-CHANGED: BenchmarkTest.cs - in Read(), only one thread is started for reading data from the database. The old implementation
+* CHANGED: BenchmarkTest.cs - in Read(), only one thread is started for reading data from the database. The old implementation
 was starting multiple threads depending on the flow count.
 
-CHANGED: the Finish() time is now added to the secondary read time. The old implementation was adding it
+* CHANGED: the Finish() time is now added to the secondary read time. The old implementation was adding it
 to the Read() time.
 
-IMPROVED: Major improvements of the internal architecture and implementations.
-IMPROVED: Major improvements of code readability.
-IMPROVED: Major optimizations of the GUI that will make it lighter and faster.
+* IMPROVED: Major improvements of the internal architecture and implementations.
+* IMPROVED: Major improvements of code readability.
+* IMPROVED: Major optimizations of the GUI that will make it lighter and faster.
 ***
 ## Important improvement of MySQL
 
-ADDED: InsertsPerQuery property in the implementation of MySQl.
+* ADDED: InsertsPerQuery property in the implementation of MySQl.
 
 "Increase the batch size for MySQL inserts from 1000 to 10000 (the MongoDB client uses batches of 30000 documents). 
 This will dramatically reduce the number of fsync() operations for ACID engines like InnoDB and TokuDB, 
 allowing them to insert data more quickly, especially on low end hard drives."
 
-IMPROVED: new size reporting query for TokuDB storage engine.
+* IMPROVED: new size reporting query for TokuDB storage engine.
             
 Special thanks to Tim Callaghan, Vice President of Engineering at Tokutek for proposing the changes.
 ***
@@ -100,60 +100,60 @@ MaxOpenFiles (default: 1000)
 Compression (default: NoCompression)
 ```
 ***
-ADDED: Redis 2.8.19 with .Net Client 3.9.71.
-ADDED: Couchbase 3.0.2 with Couchbase-Net-Client-2.0.2.
-ADDED: Aerospike 3.4.1 with .NET Client 3.0.13.
-ADDED: OrientDB 2.0 with OrientDB-NET.binary.
+* ADDED: Redis 2.8.19 with .Net Client 3.9.71.
+* ADDED: Couchbase 3.0.2 with Couchbase-Net-Client-2.0.2.
+* ADDED: Aerospike 3.4.1 with .NET Client 3.0.13.
+* ADDED: OrientDB 2.0 with OrientDB-NET.binary.
 
-ADDED: Separate implementation for TokuMX.
-ADDED: Export of the test results into a JSON file.
-ADDED: LICENSE file in the Doc folder, containing the GNU General Public License version 2
-ADDED: License header in MainForm.cs.
+* ADDED: Separate implementation for TokuMX.
+* ADDED: Export of the test results into a JSON file.
+* ADDED: LICENSE file in the Doc folder, containing the GNU General Public License version 2
+* ADDED: License header in MainForm.cs.
 
-CHANGED: Removed SetDropDups option from TokuMX and MongoDB implementation (thanks to Tim Callaghan of Tokutek).
-CHANGED: MongoDB implementation and TokuMX implementations:
+* CHANGED: Removed SetDropDups option from TokuMX and MongoDB implementation (thanks to Tim Callaghan of Tokutek).
+* CHANGED: MongoDB implementation and TokuMX implementations:
 	* ObjectId _id is used as an only index. 
 	* Instead of InsertBatch, the inserts are now performed by the Bulk().Find().Upsert().ReplaceOne(), which 
       queries the database and if no record exists with the specified _id, an insert operation is performed, otherwise it replaces the whole document.
 
-IMPROVED: TokuMX size query (thanks to Tim Callaghan of Tokutek).
-IMPROVED: SQLite benchmark.
+* IMPROVED: TokuMX size query (thanks to Tim Callaghan of Tokutek).
+* IMPROVED: SQLite benchmark.
 
-REMOVED: SiaqoDB database. 
-REMOVED: RaptorDB database.
-REMOVED: H2 database. 
-REMOVED: DerbyDb database. 
-REMOVED: NSimpleDB.
-REMOVED: all IKVM references.
+* REMOVED: SiaqoDB database. 
+* REMOVED: RaptorDB database.
+* REMOVED: H2 database. 
+* REMOVED: DerbyDb database. 
+* REMOVED: NSimpleDB.
+* REMOVED: all IKVM references.
 
-UPDATED: HamsterDB native library to version 2.1.9 and .NET wrapper recompiled for .NET 4.5.
-UPDATED: MongoDB C# drivers to 2.0.0beta2.
-UPDATED: CassandraDB to version 2.1.2.
-UPDATED: SQLite to 3.8.4.1, ADO.NET Provider for SQLite to 1.0.92.0
+* UPDATED: HamsterDB native library to version 2.1.9 and .NET wrapper recompiled for .NET 4.5.
+* UPDATED: MongoDB C# drivers to 2.0.0beta2.
+* UPDATED: CassandraDB to version 2.1.2.
+* UPDATED: SQLite to 3.8.4.1, ADO.NET Provider for SQLite to 1.0.92.0
 ***
 ver. 2.0.3 (2014-04-23)
 
-ADDED: STS.General and STS.General.GUI sources have been added to the DatabaseBenchmark solution (thanks to Artemkas).
-UPDATED: STSdb 4.0 library to STSdb 4.0.3  
+* ADDED: STS.General and STS.General.GUI sources have been added to the DatabaseBenchmark solution (thanks to Artemkas).
+* UPDATED: STSdb 4.0 library to STSdb 4.0.3  
 
 ------------------------------------
 ver. 2.0.2 (2014-03-19)
 
-FIXED: BarChart sometimes draws two identical bars for speed and misses the one for size.
+* FIXED: BarChart sometimes draws two identical bars for speed and misses the one for size.
 
-UPDATED: STSdb 4.0 library to STSdb 4.0.2
+* UPDATED: STSdb 4.0 library to STSdb 4.0.2
 
 ------------------------------------
 ver. 2.0.1 (2014-01-30)
 
-BUG FIXED: MongoDB: generated rows are always stored in one collection
-BUG FIXED: MongoDB: key index is not created when SetDropDups option is not supported (in TokuMX distribution)
-UPDATED: STSdb 4.0 to 4.0.1
+* BUG FIXED: MongoDB: generated rows are always stored in one collection
+* BUG FIXED: MongoDB: key index is not created when SetDropDups option is not supported (in TokuMX distribution)
+* UPDATED: STSdb 4.0 to 4.0.1
 
 ------------------------------------
 ver. 2.0 (2013-12-20)
 
-CHANGED: the benchmark now uses type long for the keys and type Tick for the records. The records are generated using random-walk algorithm which produces close to real-life ticks. 
+* CHANGED: the benchmark now uses type long for the keys and type Tick for the records. The records are generated using random-walk algorithm which produces close to real-life ticks. 
 
 The type Tick has the following structure:
 
@@ -172,35 +172,35 @@ public class Tick
    }
 }
 
-CHANGED: the old chart engine has been replaced with MS Charts control - removed ~1700 lines of code.
+* CHANGED: the old chart engine has been replaced with MS Charts control - removed ~1700 lines of code.
 
-FIXED: the application process remained open after clossing the application.
+* FIXED: the application process remained open after clossing the application.
 
-UPDATED: STSdb4 library to STSdb 4.0
-UPDATED: STSdb 3.5 library to 3.5.13
-UPDATED: VelocityDB Standalone Client library to 3.2.1 released Dec 8, 2013
-UPDATED: new implementation of VelocityDB (thanks to Mats Persson - founder of VelocityDB);
-UPDATED: Perst library to 4.42
-UPDATED: Oracle BerkeleyDB library to 12c Release 1 Library Version 12.1.6.0
-UPDATED: MongoDB drivers to 1.8.3
-UPDATED: MySQL connector to 6.7.4
-UPDATED: MSSQL Server Compact library to 4.0 x64
-UPDATED: H2 library to H2 1.3.174 and IKVM to 7.2.4630.5
-UPDATED: HamsterDb library to HamsterDB 2.1.3
-UPDATED: SQLite library to SQLite 3.8.1 + ADO.NET Provider for SQLite 1.0.89.0
-UPDATED: Access library to Access 2013
+* UPDATED: STSdb4 library to STSdb 4.0
+* UPDATED: STSdb 3.5 library to 3.5.13
+* UPDATED: VelocityDB Standalone Client library to 3.2.1 released Dec 8, 2013
+* UPDATED: new implementation of VelocityDB (thanks to Mats Persson - founder of VelocityDB);
+* UPDATED: Perst library to 4.42
+* UPDATED: Oracle BerkeleyDB library to 12c Release 1 Library Version 12.1.6.0
+* UPDATED: MongoDB drivers to 1.8.3
+* UPDATED: MySQL connector to 6.7.4
+* UPDATED: MSSQL Server Compact library to 4.0 x64
+* UPDATED: H2 library to H2 1.3.174 and IKVM to 7.2.4630.5
+* UPDATED: HamsterDb library to HamsterDB 2.1.3
+* UPDATED: SQLite library to SQLite 3.8.1 + ADO.NET Provider for SQLite 1.0.89.0
+* UPDATED: Access library to Access 2013
 
-ADDED: PostgreSQL (with Npgsql 2.0.13.91 .net connector)
-ADDED: CassandraDB 2.0.2 + CassandraToLinq
-ADDED: RaptorDB v3.0.6
-ADDED: Microsoft SQL Server 2012 (SP1) - 11.0.3128.0 (X64) Dec 28 2012
-ADDED: Volante 0.9
-ADDED: Derby 10.10.1.1 (via IKVM.NET)
-ADDED: Siaqodb 3.7
-ADDED: BrightstarDB 1.5.0.0 Stable - Fri Nov 22, 2013 at 10:00 AM
-ADDED: RavenDB 2.5.2750 - 2013-10-30 Embedded .NET Client
+* ADDED: PostgreSQL (with Npgsql 2.0.13.91 .net connector)
+* ADDED: CassandraDB 2.0.2 + CassandraToLinq
+* ADDED: RaptorDB v3.0.6
+* ADDED: Microsoft SQL Server 2012 (SP1) - 11.0.3128.0 (X64) Dec 28 2012
+* ADDED: Volante 0.9
+* ADDED: Derby 10.10.1.1 (via IKVM.NET)
+* ADDED: Siaqodb 3.7
+* ADDED: BrightstarDB 1.5.0.0 Stable - Fri Nov 22, 2013 at 10:00 AM
+* ADDED: RavenDB 2.5.2750 - 2013-10-30 Embedded .NET Client
 
-STARTED: NSimpleDB implementation
+* STARTED: NSimpleDB implementation
 
 NOTES:
  - MongoDB: somethimes crashes with more than 100 000 000 records in random mode (possible MongoDB bug)
