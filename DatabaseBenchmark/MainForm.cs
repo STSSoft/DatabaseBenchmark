@@ -689,7 +689,7 @@ namespace DatabaseBenchmark
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show("Save changes", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Save database settings?", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == System.Windows.Forms.DialogResult.Yes)
                 saveConfigurationToolStripMenuItem_Click(sender, e);
