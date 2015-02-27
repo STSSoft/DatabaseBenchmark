@@ -575,6 +575,7 @@ namespace DatabaseBenchmark
             this.SuspendLayout();
 
             ApplicationPersist.ResetDockingConfiguration();
+            //TreeViewFrame = ApplicationPersist.Container.TreeView;
 
             this.ResumeLayout();
         }

@@ -180,6 +180,8 @@ namespace DatabaseBenchmark.Serialization
 
             TreeViewFrame.CreateTreeView();
 
+            Container.TreeView = TreeViewFrame;
+
             foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
             {
                 StepFrame frame = CreateStepFrame(method);
