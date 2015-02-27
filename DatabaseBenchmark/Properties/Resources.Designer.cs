@@ -103,6 +103,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cpu_blue {
+            get {
+                object obj = ResourceManager.GetObject("cpu_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CSV {
             get {
                 object obj = ResourceManager.GetObject("CSV", resourceCulture);
@@ -113,9 +123,9 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CSV_blue {
+        internal static System.Drawing.Bitmap CSV_new {
             get {
-                object obj = ResourceManager.GetObject("CSV-blue", resourceCulture);
+                object obj = ResourceManager.GetObject("CSV_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +133,49 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CSV_new {
+        internal static System.Drawing.Bitmap csvfile_blue {
             get {
-                object obj = ResourceManager.GetObject("CSV_new", resourceCulture);
+                object obj = ResourceManager.GetObject("csvfile_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap io_blue {
+            get {
+                object obj = ResourceManager.GetObject("io-blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap json_blue {
+            get {
+                object obj = ResourceManager.GetObject("json_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap log_new_blue {
+            get {
+                object obj = ResourceManager.GetObject("log_new_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap memory_blue {
+            get {
+                object obj = ResourceManager.GetObject("memory_blue", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,6 +203,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap size_blue {
+            get {
+                object obj = ResourceManager.GetObject("size_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SizeView {
             get {
                 object obj = ResourceManager.GetObject("SizeView", resourceCulture);
@@ -166,6 +226,16 @@ namespace DatabaseBenchmark.Properties {
         internal static System.Drawing.Bitmap SpeedView {
             get {
                 object obj = ResourceManager.GetObject("SpeedView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SpeedView_blue {
+            get {
+                object obj = ResourceManager.GetObject("SpeedView_blue", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -196,6 +266,16 @@ namespace DatabaseBenchmark.Properties {
         internal static System.Drawing.Bitmap TimeView {
             get {
                 object obj = ResourceManager.GetObject("TimeView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TimeView_blue {
+            get {
+                object obj = ResourceManager.GetObject("TimeView_blue", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

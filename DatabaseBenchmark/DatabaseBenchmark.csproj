@@ -523,13 +523,40 @@
     <None Include="Resources\stop-blue.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\CSV-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Auto Navigate-blue.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\view-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cpu-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\json-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\log new-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\memory-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\size-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SpeedView-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimeView-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\csv-blue .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\csvfile-blue .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\io-blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

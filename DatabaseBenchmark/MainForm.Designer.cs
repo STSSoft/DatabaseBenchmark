@@ -29,22 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
+            WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
+            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient1 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin dockPaneStripSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin();
+            WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient dockPaneStripGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient2 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient3 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient dockPaneStripToolWindowGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient4 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient5 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient3 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient6 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin2 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
-            WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin2 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient4 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient8 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin dockPaneStripSkin2 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient dockPaneStripGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient9 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient5 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient10 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient dockPaneStripToolWindowGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient11 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient12 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient6 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient13 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient14 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.progressStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -55,22 +55,9 @@
             this.estimateTimeStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
-            this.btnStart = new System.Windows.Forms.ToolStripButton();
-            this.btnStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnExportCsv = new System.Windows.Forms.ToolStripButton();
-            this.btnExportJson = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnTreeView = new System.Windows.Forms.ToolStripButton();
-            this.btnAutoNavigate = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnAxisType = new System.Windows.Forms.ToolStripButton();
-            this.btnSpeedView = new System.Windows.Forms.ToolStripButton();
-            this.btnTimeView = new System.Windows.Forms.ToolStripButton();
-            this.btnSizeView = new System.Windows.Forms.ToolStripButton();
-            this.buttonCpuView = new System.Windows.Forms.ToolStripButton();
-            this.buttonMemoryView = new System.Windows.Forms.ToolStripButton();
-            this.btnIOView = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.cbFlowsCount = new System.Windows.Forms.ToolStripComboBox();
@@ -111,6 +98,19 @@
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.fdAppFileConfig = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogPersist = new System.Windows.Forms.SaveFileDialog();
+            this.btnStart = new System.Windows.Forms.ToolStripButton();
+            this.btnStop = new System.Windows.Forms.ToolStripButton();
+            this.btnExportCsv = new System.Windows.Forms.ToolStripButton();
+            this.btnExportJson = new System.Windows.Forms.ToolStripButton();
+            this.btnTreeView = new System.Windows.Forms.ToolStripButton();
+            this.btnAutoNavigate = new System.Windows.Forms.ToolStripButton();
+            this.btnAxisType = new System.Windows.Forms.ToolStripButton();
+            this.btnSpeedView = new System.Windows.Forms.ToolStripButton();
+            this.btnTimeView = new System.Windows.Forms.ToolStripButton();
+            this.btnSizeView = new System.Windows.Forms.ToolStripButton();
+            this.buttonCpuView = new System.Windows.Forms.ToolStripButton();
+            this.buttonMemoryView = new System.Windows.Forms.ToolStripButton();
+            this.btnIOView = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -218,173 +218,20 @@
             this.toolStripMain.TabIndex = 4;
             this.toolStripMain.Text = "toolStrip1";
             // 
-            // btnStart
-            // 
-            this.btnStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStart.Image = global::DatabaseBenchmark.Properties.Resources.Play;
-            this.btnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(36, 36);
-            this.btnStart.Text = "Start";
-            this.btnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnStart.Click += new System.EventHandler(this.startButton_Click);
-            // 
-            // btnStop
-            // 
-            this.btnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStop.Image = global::DatabaseBenchmark.Properties.Resources.Stop;
-            this.btnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(36, 36);
-            this.btnStop.Text = "Stop";
-            this.btnStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnStop.Click += new System.EventHandler(this.stopButton_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 39);
-            // 
-            // btnExportCsv
-            // 
-            this.btnExportCsv.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnExportCsv.Image = ((System.Drawing.Image)(resources.GetObject("btnExportCsv.Image")));
-            this.btnExportCsv.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExportCsv.Name = "btnExportCsv";
-            this.btnExportCsv.Size = new System.Drawing.Size(36, 36);
-            this.btnExportCsv.Text = "Export CSV";
-            this.btnExportCsv.Click += new System.EventHandler(this.btnExportCsv_Click);
-            // 
-            // btnExportJson
-            // 
-            this.btnExportJson.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnExportJson.Image = ((System.Drawing.Image)(resources.GetObject("btnExportJson.Image")));
-            this.btnExportJson.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExportJson.Name = "btnExportJson";
-            this.btnExportJson.Size = new System.Drawing.Size(36, 36);
-            this.btnExportJson.Text = "Export JSON";
-            this.btnExportJson.Click += new System.EventHandler(this.btnExportJson_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 39);
             // 
-            // btnTreeView
-            // 
-            this.btnTreeView.Checked = true;
-            this.btnTreeView.CheckOnClick = true;
-            this.btnTreeView.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnTreeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnTreeView.Image = global::DatabaseBenchmark.Properties.Resources.TreeView;
-            this.btnTreeView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTreeView.Name = "btnTreeView";
-            this.btnTreeView.Size = new System.Drawing.Size(36, 36);
-            this.btnTreeView.Text = "Tree View";
-            this.btnTreeView.ToolTipText = "Tree View";
-            this.btnTreeView.Click += new System.EventHandler(this.buttonTreeView_Click);
-            // 
-            // btnAutoNavigate
-            // 
-            this.btnAutoNavigate.Checked = true;
-            this.btnAutoNavigate.CheckOnClick = true;
-            this.btnAutoNavigate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnAutoNavigate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAutoNavigate.Image = global::DatabaseBenchmark.Properties.Resources.AutoNavigate;
-            this.btnAutoNavigate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAutoNavigate.Name = "btnAutoNavigate";
-            this.btnAutoNavigate.Size = new System.Drawing.Size(36, 36);
-            this.btnAutoNavigate.Text = "Auto Navigate";
-            // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 39);
-            // 
-            // btnAxisType
-            // 
-            this.btnAxisType.CheckOnClick = true;
-            this.btnAxisType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAxisType.Image = global::DatabaseBenchmark.Properties.Resources.AxisType_new;
-            this.btnAxisType.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAxisType.Name = "btnAxisType";
-            this.btnAxisType.Size = new System.Drawing.Size(36, 36);
-            this.btnAxisType.Text = "toolStripButton1";
-            this.btnAxisType.ToolTipText = "Axis Type (Normal/Logarithmic)";
-            this.btnAxisType.Click += new System.EventHandler(this.axisType_Click);
-            // 
-            // btnSpeedView
-            // 
-            this.btnSpeedView.Checked = true;
-            this.btnSpeedView.CheckOnClick = true;
-            this.btnSpeedView.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnSpeedView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSpeedView.Image = global::DatabaseBenchmark.Properties.Resources.SpeedView;
-            this.btnSpeedView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSpeedView.Name = "btnSpeedView";
-            this.btnSpeedView.Size = new System.Drawing.Size(36, 36);
-            this.btnSpeedView.Text = "toolStripButton1";
-            this.btnSpeedView.ToolTipText = "Speed View";
-            this.btnSpeedView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // btnTimeView
-            // 
-            this.btnTimeView.CheckOnClick = true;
-            this.btnTimeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnTimeView.Image = global::DatabaseBenchmark.Properties.Resources.TimeView;
-            this.btnTimeView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTimeView.Name = "btnTimeView";
-            this.btnTimeView.Size = new System.Drawing.Size(36, 36);
-            this.btnTimeView.Text = "toolStripButton1";
-            this.btnTimeView.ToolTipText = "Time View";
-            this.btnTimeView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // btnSizeView
-            // 
-            this.btnSizeView.Checked = true;
-            this.btnSizeView.CheckOnClick = true;
-            this.btnSizeView.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnSizeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSizeView.Image = global::DatabaseBenchmark.Properties.Resources.SizeView;
-            this.btnSizeView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSizeView.Name = "btnSizeView";
-            this.btnSizeView.Size = new System.Drawing.Size(36, 36);
-            this.btnSizeView.Text = "toolStripButton1";
-            this.btnSizeView.ToolTipText = "Database Size View";
-            this.btnSizeView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // buttonCpuView
-            // 
-            this.buttonCpuView.CheckOnClick = true;
-            this.buttonCpuView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonCpuView.Image = ((System.Drawing.Image)(resources.GetObject("buttonCpuView.Image")));
-            this.buttonCpuView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonCpuView.Name = "buttonCpuView";
-            this.buttonCpuView.Size = new System.Drawing.Size(36, 36);
-            this.buttonCpuView.Text = "CPU View";
-            this.buttonCpuView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // buttonMemoryView
-            // 
-            this.buttonMemoryView.CheckOnClick = true;
-            this.buttonMemoryView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonMemoryView.Image = ((System.Drawing.Image)(resources.GetObject("buttonMemoryView.Image")));
-            this.buttonMemoryView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonMemoryView.Name = "buttonMemoryView";
-            this.buttonMemoryView.Size = new System.Drawing.Size(36, 36);
-            this.buttonMemoryView.Text = "Memory View";
-            this.buttonMemoryView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // btnIOView
-            // 
-            this.btnIOView.CheckOnClick = true;
-            this.btnIOView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnIOView.Image = ((System.Drawing.Image)(resources.GetObject("btnIOView.Image")));
-            this.btnIOView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnIOView.Name = "btnIOView";
-            this.btnIOView.Size = new System.Drawing.Size(36, 36);
-            this.btnIOView.Text = "I/O View";
-            this.btnIOView.Click += new System.EventHandler(this.View_Click);
             // 
             // toolStripSeparator7
             // 
@@ -680,52 +527,52 @@
             this.dockPanel1.Location = new System.Drawing.Point(0, 66);
             this.dockPanel1.Name = "dockPanel1";
             this.dockPanel1.Size = new System.Drawing.Size(1188, 619);
-            dockPanelGradient4.EndColor = System.Drawing.SystemColors.ControlLight;
-            dockPanelGradient4.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            autoHideStripSkin2.DockStripGradient = dockPanelGradient4;
-            tabGradient8.EndColor = System.Drawing.SystemColors.Control;
-            tabGradient8.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient8.TextColor = System.Drawing.SystemColors.ControlDarkDark;
-            autoHideStripSkin2.TabGradient = tabGradient8;
-            autoHideStripSkin2.TextFont = new System.Drawing.Font("Segoe UI", 9F);
-            dockPanelSkin2.AutoHideStripSkin = autoHideStripSkin2;
-            tabGradient9.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            tabGradient9.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            tabGradient9.TextColor = System.Drawing.Color.White;
-            dockPaneStripGradient2.ActiveTabGradient = tabGradient9;
-            dockPanelGradient5.EndColor = System.Drawing.SystemColors.Control;
-            dockPanelGradient5.StartColor = System.Drawing.SystemColors.Control;
-            dockPaneStripGradient2.DockStripGradient = dockPanelGradient5;
-            tabGradient10.EndColor = System.Drawing.SystemColors.InactiveCaption;
-            tabGradient10.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient10.TextColor = System.Drawing.SystemColors.GrayText;
-            dockPaneStripGradient2.InactiveTabGradient = tabGradient10;
-            dockPaneStripSkin2.DocumentGradient = dockPaneStripGradient2;
-            dockPaneStripSkin2.TextFont = new System.Drawing.Font("Segoe UI", 9F);
-            tabGradient11.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(170)))), ((int)(((byte)(220)))));
-            tabGradient11.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            tabGradient11.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            tabGradient11.TextColor = System.Drawing.Color.White;
-            dockPaneStripToolWindowGradient2.ActiveCaptionGradient = tabGradient11;
-            tabGradient12.EndColor = System.Drawing.SystemColors.ControlLightLight;
-            tabGradient12.StartColor = System.Drawing.SystemColors.ControlLightLight;
-            tabGradient12.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            dockPaneStripToolWindowGradient2.ActiveTabGradient = tabGradient12;
-            dockPanelGradient6.EndColor = System.Drawing.SystemColors.Control;
-            dockPanelGradient6.StartColor = System.Drawing.SystemColors.Control;
-            dockPaneStripToolWindowGradient2.DockStripGradient = dockPanelGradient6;
-            tabGradient13.EndColor = System.Drawing.SystemColors.ControlDark;
-            tabGradient13.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            tabGradient13.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient13.TextColor = System.Drawing.SystemColors.GrayText;
-            dockPaneStripToolWindowGradient2.InactiveCaptionGradient = tabGradient13;
-            tabGradient14.EndColor = System.Drawing.SystemColors.Control;
-            tabGradient14.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient14.TextColor = System.Drawing.SystemColors.GrayText;
-            dockPaneStripToolWindowGradient2.InactiveTabGradient = tabGradient14;
-            dockPaneStripSkin2.ToolWindowGradient = dockPaneStripToolWindowGradient2;
-            dockPanelSkin2.DockPaneStripSkin = dockPaneStripSkin2;
-            this.dockPanel1.Skin = dockPanelSkin2;
+            dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
+            dockPanelGradient1.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
+            tabGradient1.EndColor = System.Drawing.SystemColors.Control;
+            tabGradient1.StartColor = System.Drawing.SystemColors.Control;
+            tabGradient1.TextColor = System.Drawing.SystemColors.ControlDarkDark;
+            autoHideStripSkin1.TabGradient = tabGradient1;
+            autoHideStripSkin1.TextFont = new System.Drawing.Font("Segoe UI", 9F);
+            dockPanelSkin1.AutoHideStripSkin = autoHideStripSkin1;
+            tabGradient2.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            tabGradient2.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            tabGradient2.TextColor = System.Drawing.Color.White;
+            dockPaneStripGradient1.ActiveTabGradient = tabGradient2;
+            dockPanelGradient2.EndColor = System.Drawing.SystemColors.Control;
+            dockPanelGradient2.StartColor = System.Drawing.SystemColors.Control;
+            dockPaneStripGradient1.DockStripGradient = dockPanelGradient2;
+            tabGradient3.EndColor = System.Drawing.SystemColors.InactiveCaption;
+            tabGradient3.StartColor = System.Drawing.SystemColors.Control;
+            tabGradient3.TextColor = System.Drawing.SystemColors.GrayText;
+            dockPaneStripGradient1.InactiveTabGradient = tabGradient3;
+            dockPaneStripSkin1.DocumentGradient = dockPaneStripGradient1;
+            dockPaneStripSkin1.TextFont = new System.Drawing.Font("Segoe UI", 9F);
+            tabGradient4.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(170)))), ((int)(((byte)(220)))));
+            tabGradient4.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            tabGradient4.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            tabGradient4.TextColor = System.Drawing.Color.White;
+            dockPaneStripToolWindowGradient1.ActiveCaptionGradient = tabGradient4;
+            tabGradient5.EndColor = System.Drawing.SystemColors.ControlLightLight;
+            tabGradient5.StartColor = System.Drawing.SystemColors.ControlLightLight;
+            tabGradient5.TextColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            dockPaneStripToolWindowGradient1.ActiveTabGradient = tabGradient5;
+            dockPanelGradient3.EndColor = System.Drawing.SystemColors.Control;
+            dockPanelGradient3.StartColor = System.Drawing.SystemColors.Control;
+            dockPaneStripToolWindowGradient1.DockStripGradient = dockPanelGradient3;
+            tabGradient6.EndColor = System.Drawing.SystemColors.ControlDark;
+            tabGradient6.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            tabGradient6.StartColor = System.Drawing.SystemColors.Control;
+            tabGradient6.TextColor = System.Drawing.SystemColors.GrayText;
+            dockPaneStripToolWindowGradient1.InactiveCaptionGradient = tabGradient6;
+            tabGradient7.EndColor = System.Drawing.SystemColors.Control;
+            tabGradient7.StartColor = System.Drawing.SystemColors.Control;
+            tabGradient7.TextColor = System.Drawing.SystemColors.GrayText;
+            dockPaneStripToolWindowGradient1.InactiveTabGradient = tabGradient7;
+            dockPaneStripSkin1.ToolWindowGradient = dockPaneStripToolWindowGradient1;
+            dockPanelSkin1.DockPaneStripSkin = dockPaneStripSkin1;
+            this.dockPanel1.Skin = dockPanelSkin1;
             this.dockPanel1.TabIndex = 9;
             // 
             // fdAppFileConfig
@@ -738,6 +585,159 @@
             this.saveFileDialogPersist.DefaultExt = "config";
             this.saveFileDialogPersist.Filter = "XML (*.config)|*.config";
             this.saveFileDialogPersist.Title = "Application Persist";
+            // 
+            // btnStart
+            // 
+            this.btnStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStart.Image = global::DatabaseBenchmark.Properties.Resources.play_blue;
+            this.btnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(36, 36);
+            this.btnStart.Text = "Start";
+            this.btnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnStart.Click += new System.EventHandler(this.startButton_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStop.Image = global::DatabaseBenchmark.Properties.Resources.stop_blue;
+            this.btnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(36, 36);
+            this.btnStop.Text = "Stop";
+            this.btnStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnStop.Click += new System.EventHandler(this.stopButton_Click);
+            // 
+            // btnExportCsv
+            // 
+            this.btnExportCsv.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnExportCsv.Image = global::DatabaseBenchmark.Properties.Resources.csvfile_blue;
+            this.btnExportCsv.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExportCsv.Name = "btnExportCsv";
+            this.btnExportCsv.Size = new System.Drawing.Size(36, 36);
+            this.btnExportCsv.Text = "Export CSV";
+            this.btnExportCsv.Click += new System.EventHandler(this.btnExportCsv_Click);
+            // 
+            // btnExportJson
+            // 
+            this.btnExportJson.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnExportJson.Image = global::DatabaseBenchmark.Properties.Resources.json_blue;
+            this.btnExportJson.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExportJson.Name = "btnExportJson";
+            this.btnExportJson.Size = new System.Drawing.Size(36, 36);
+            this.btnExportJson.Text = "Export JSON";
+            this.btnExportJson.Click += new System.EventHandler(this.btnExportJson_Click);
+            // 
+            // btnTreeView
+            // 
+            this.btnTreeView.Checked = true;
+            this.btnTreeView.CheckOnClick = true;
+            this.btnTreeView.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnTreeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnTreeView.Image = global::DatabaseBenchmark.Properties.Resources.view_blue;
+            this.btnTreeView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTreeView.Name = "btnTreeView";
+            this.btnTreeView.Size = new System.Drawing.Size(36, 36);
+            this.btnTreeView.Text = "Tree View";
+            this.btnTreeView.ToolTipText = "Tree View";
+            this.btnTreeView.Click += new System.EventHandler(this.buttonTreeView_Click);
+            // 
+            // btnAutoNavigate
+            // 
+            this.btnAutoNavigate.Checked = true;
+            this.btnAutoNavigate.CheckOnClick = true;
+            this.btnAutoNavigate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnAutoNavigate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAutoNavigate.Image = global::DatabaseBenchmark.Properties.Resources.Auto_Navigate_blue;
+            this.btnAutoNavigate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAutoNavigate.Name = "btnAutoNavigate";
+            this.btnAutoNavigate.Size = new System.Drawing.Size(36, 36);
+            this.btnAutoNavigate.Text = "Auto Navigate";
+            // 
+            // btnAxisType
+            // 
+            this.btnAxisType.CheckOnClick = true;
+            this.btnAxisType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAxisType.Image = global::DatabaseBenchmark.Properties.Resources.log_new_blue;
+            this.btnAxisType.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAxisType.Name = "btnAxisType";
+            this.btnAxisType.Size = new System.Drawing.Size(36, 36);
+            this.btnAxisType.Text = "toolStripButton1";
+            this.btnAxisType.ToolTipText = "Axis Type (Normal/Logarithmic)";
+            this.btnAxisType.Click += new System.EventHandler(this.axisType_Click);
+            // 
+            // btnSpeedView
+            // 
+            this.btnSpeedView.Checked = true;
+            this.btnSpeedView.CheckOnClick = true;
+            this.btnSpeedView.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnSpeedView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSpeedView.Image = global::DatabaseBenchmark.Properties.Resources.SpeedView_blue;
+            this.btnSpeedView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSpeedView.Name = "btnSpeedView";
+            this.btnSpeedView.Size = new System.Drawing.Size(36, 36);
+            this.btnSpeedView.Text = "toolStripButton1";
+            this.btnSpeedView.ToolTipText = "Speed View";
+            this.btnSpeedView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // btnTimeView
+            // 
+            this.btnTimeView.CheckOnClick = true;
+            this.btnTimeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnTimeView.Image = global::DatabaseBenchmark.Properties.Resources.TimeView_blue;
+            this.btnTimeView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTimeView.Name = "btnTimeView";
+            this.btnTimeView.Size = new System.Drawing.Size(36, 36);
+            this.btnTimeView.Text = "toolStripButton1";
+            this.btnTimeView.ToolTipText = "Time View";
+            this.btnTimeView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // btnSizeView
+            // 
+            this.btnSizeView.Checked = true;
+            this.btnSizeView.CheckOnClick = true;
+            this.btnSizeView.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnSizeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSizeView.Image = global::DatabaseBenchmark.Properties.Resources.size_blue;
+            this.btnSizeView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSizeView.Name = "btnSizeView";
+            this.btnSizeView.Size = new System.Drawing.Size(36, 36);
+            this.btnSizeView.Text = "toolStripButton1";
+            this.btnSizeView.ToolTipText = "Database Size View";
+            this.btnSizeView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // buttonCpuView
+            // 
+            this.buttonCpuView.CheckOnClick = true;
+            this.buttonCpuView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonCpuView.Image = global::DatabaseBenchmark.Properties.Resources.cpu_blue;
+            this.buttonCpuView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonCpuView.Name = "buttonCpuView";
+            this.buttonCpuView.Size = new System.Drawing.Size(36, 36);
+            this.buttonCpuView.Text = "CPU View";
+            this.buttonCpuView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // buttonMemoryView
+            // 
+            this.buttonMemoryView.CheckOnClick = true;
+            this.buttonMemoryView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonMemoryView.Image = global::DatabaseBenchmark.Properties.Resources.memory_blue;
+            this.buttonMemoryView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonMemoryView.Name = "buttonMemoryView";
+            this.buttonMemoryView.Size = new System.Drawing.Size(36, 36);
+            this.buttonMemoryView.Text = "Memory View";
+            this.buttonMemoryView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // btnIOView
+            // 
+            this.btnIOView.CheckOnClick = true;
+            this.btnIOView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnIOView.Image = global::DatabaseBenchmark.Properties.Resources.io_blue;
+            this.btnIOView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnIOView.Name = "btnIOView";
+            this.btnIOView.Size = new System.Drawing.Size(36, 36);
+            this.btnIOView.Text = "I/O View";
+            this.btnIOView.Click += new System.EventHandler(this.View_Click);
             // 
             // MainForm
             // 
