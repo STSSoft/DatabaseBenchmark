@@ -127,11 +127,20 @@
   <data name="AxisType" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AxisType.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SpeedView_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SpeedView-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="AxisType-new" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AxisType-new.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CSV-blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CSV-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="view-blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cpu_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cpu-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="csvfile_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\csvfile-blue .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TimeView" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TimeView.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,11 +151,26 @@
   <data name="CSV_new" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CSV_new.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="log_new_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\log new-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="json_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\json-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="stop-blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stop-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TimeView_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TimeView-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="size_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\size-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Stop.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="memory_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\memory-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SpeedView" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SpeedView.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -163,7 +187,7 @@
   <data name="TreeView" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TreeView.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="view-blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\view-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="io-blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\io-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
