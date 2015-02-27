@@ -23,14 +23,11 @@ namespace DatabaseBenchmark.Serialization
     public class ApplicationPersist
     {
         public static readonly string DOCKING_CONFIGURATION = "Docking.config";
-        public static readonly string APPLICATION_CONFIGURATION = "AppConfig.config";
 
         private ILog Logger;
         private int Count;
 
         public string DockConfigPath { get; private set; }
-        public string ApplicationConfigPath { get; private set; }
-
         public AppSettings Container { get; private set; }
 
         public ApplicationPersist(AppSettings dockingContainer, string configurationFolder, params TestMethod[] methods)
@@ -40,28 +37,24 @@ namespace DatabaseBenchmark.Serialization
             Logger = LogManager.GetLogger("ApplicationLogger");
 
             DockConfigPath = Path.Combine(configurationFolder, DOCKING_CONFIGURATION);
-            ApplicationConfigPath = Path.Combine(configurationFolder, APPLICATION_CONFIGURATION);
 
             foreach (var method in methods)
                 Container.Frames[method.ToString()] = CreateStepFrame(method);
         }
 
-        public void Store(string directoryPath)
+        public void Store(string filePath)
         {
             try
             {
-                if(directoryPath != null)
-                    ApplicationConfigPath = Path.Combine(directoryPath, APPLICATION_CONFIGURATION);
-
                 // Docking.
                 StoreDocking();
 
                 // Remove last configuration.
-                if (File.Exists(ApplicationConfigPath))
-                    File.Delete(ApplicationConfigPath);
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
 
                 // Databases and frames.
-                using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
+                using (var stream = new FileStream(filePath, FileMode.OpenOrCreate))
                 {
                     Dictionary<IDatabase, bool> databases = Container.TreeView.GetAllDatabases();
                     XmlAppSettingsPersist persist = new XmlAppSettingsPersist(databases, Container.GetComboBoxSelectedItems(), Container.TrackBar.Value);
@@ -80,13 +73,10 @@ namespace DatabaseBenchmark.Serialization
         {
             try
             {
-                if (filePath != null)
-                    ApplicationConfigPath = filePath;
-
                 // Docking.
                 LoadDocking();
 
-                if (!File.Exists(ApplicationConfigPath))
+                if (!File.Exists(filePath))
                 {
                     Container.TreeView.CreateTreeView();
                     return;
@@ -95,7 +85,7 @@ namespace DatabaseBenchmark.Serialization
                 // Clear TreeView.
                 Container.TreeView.treeView.Nodes.Clear();
 
-                using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
+                using (var stream = new FileStream(filePath, FileMode.OpenOrCreate))
                 {
                     XmlSerializer deserializer = new XmlSerializer(typeof(XmlAppSettingsPersist));
                     XmlAppSettingsPersist appPersist = (XmlAppSettingsPersist)deserializer.Deserialize(stream);

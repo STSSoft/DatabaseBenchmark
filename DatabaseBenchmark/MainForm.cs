@@ -100,12 +100,12 @@ namespace DatabaseBenchmark
             TestFrames = ApplicationPersist.Container.Frames;
 
             // Load dock and application configuration.
-            ApplicationPersist.Load(null);
+            ApplicationPersist.Load(Path.Combine(CONFIGURATION_FOLDER, "AppConfig.config"));
 
             TestFrames[TestMethod.Write.ToString()].Select();
 
             fdAppFileConfig.InitialDirectory = CONFIGURATION_FOLDER;
-            fbAppConfigurationPath.SelectedPath = CONFIGURATION_FOLDER;
+            saveFileDialogPersist.InitialDirectory = CONFIGURATION_FOLDER;
 
             this.ResumeLayout();
         }
@@ -532,8 +532,8 @@ namespace DatabaseBenchmark
 
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (fbAppConfigurationPath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                ApplicationPersist.Store(fbAppConfigurationPath.SelectedPath);
+            if (saveFileDialogPersist.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                ApplicationPersist.Store(saveFileDialogPersist.FileName);
         }
 
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -692,7 +692,7 @@ namespace DatabaseBenchmark
             DialogResult result = MessageBox.Show("Save changes", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == System.Windows.Forms.DialogResult.Yes)
-                ApplicationPersist.Store(null);
+                saveConfigurationToolStripMenuItem_Click(sender, e);
 
             stopButton_Click(sender, e);
         }

@@ -109,8 +109,8 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.saveFileDialogJson = new System.Windows.Forms.SaveFileDialog();
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.fbAppConfigurationPath = new System.Windows.Forms.FolderBrowserDialog();
             this.fdAppFileConfig = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialogPersist = new System.Windows.Forms.SaveFileDialog();
             this.statusStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -733,6 +733,12 @@
             this.fdAppFileConfig.DefaultExt = "config";
             this.fdAppFileConfig.Filter = "xml files (*.config)|*.config";
             // 
+            // saveFileDialogPersist
+            // 
+            this.saveFileDialogPersist.DefaultExt = "config";
+            this.saveFileDialogPersist.Filter = "XML (*.config)|*.config";
+            this.saveFileDialogPersist.Title = "Application Persist";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -829,8 +835,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton buttonCpuView;
         private System.Windows.Forms.ToolStripButton buttonMemoryView;
-        private System.Windows.Forms.FolderBrowserDialog fbAppConfigurationPath;
         private System.Windows.Forms.OpenFileDialog fdAppFileConfig;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogPersist;
     }
 }
 
