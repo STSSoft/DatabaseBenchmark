@@ -339,7 +339,7 @@
     <Compile Include="Charts\LineChartFrame.Designer.cs">
       <DependentUpon>LineChartFrame.cs</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationPersist.cs" />
+    <Compile Include="Serialization\ApplicationPersist.cs" />
     <Compile Include="Databases\AerospikeBenchmark.cs" />
     <Compile Include="Databases\GridGainBenchmark.cs" />
     <Compile Include="Databases\OrientDBBenchmark.cs" />
@@ -380,6 +380,8 @@
       <DependentUpon>TreeViewFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="IDatabase.cs" />
+    <Compile Include="Serialization\AppSettings.cs" />
+    <Compile Include="Serialization\XmlAppSettingsPersist.cs" />
     <Compile Include="Statistics\IOStatistics.cs" />
     <Compile Include="Benchmarking\KeysType.cs" />
     <Compile Include="MainForm.cs">

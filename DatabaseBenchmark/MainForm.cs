@@ -30,6 +30,7 @@ using DatabaseBenchmark.Validation;
 using log4net;
 using STS.General.GUI.Extensions;
 using WeifenLuo.WinFormsUI.Docking;
+using DatabaseBenchmark.Serialization;
 
 namespace DatabaseBenchmark
 {
@@ -88,20 +89,15 @@ namespace DatabaseBenchmark
 
             this.SuspendLayout();
 
-            // Test Frames.
-            foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
-            {
-                StepFrame stepFrame = CreateStepFrame(method);
-                TestFrames.Add(method.ToString(), stepFrame);
-            }
-
             View_Click(btnTimeView, EventArgs.Empty);
 
             // Logger.
             Logger = LogManager.GetLogger("ApplicationLogger");
 
-            AppSettings containerSettings = new AppSettings(dockPanel1, TreeViewFrame, TestFrames, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
-            ApplicationPersist = new ApplicationPersist(containerSettings, CONFIGURATION_FOLDER);
+            AppSettings containerSettings = new AppSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
+            ApplicationPersist = new ApplicationPersist(containerSettings, CONFIGURATION_FOLDER, TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead);
+
+            TestFrames = ApplicationPersist.Container.Frames;
 
             // Load dock and application configuration.
             ApplicationPersist.Load(null);
@@ -546,162 +542,41 @@ namespace DatabaseBenchmark
                 ApplicationPersist.Load(fdAppFileConfig.FileName);
         }
 
-        private void ResetDockingConfiguration()
-        {
-            this.SuspendLayout();
-
-            // Dispose existing windows.
-            TreeViewFrame.Dispose();
-
-            foreach (var frame in TestFrames)
-                frame.Value.Dispose();
-
-            TestFrames.Clear();
-
-            // Create new window layout.
-            TreeViewFrame = new TreeViewFrame();
-
-            TreeViewFrame.Text = "Databases";
-            TreeViewFrame.Show(dockPanel1);
-            TreeViewFrame.DockState = DockState.DockLeft;
-
-            TreeViewFrame.CreateTreeView();
-
-            foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
-            {
-                StepFrame frame = CreateStepFrame(method);
-                TestFrames[method.ToString()] = frame;
-            }
-
-            foreach (var item in TestFrames)
-            {
-                item.Value.Show(dockPanel1);
-                item.Value.DockState = DockState.Document;
-            }
-
-            TestFrames[TestMethod.Write.ToString()].Select();
-
-            this.ResumeLayout();
-        }
-
-        private IDockContent GetContentFromPersistString(string persistString)
-        {
-            if (persistString == typeof(TreeViewFrame).ToString())
-                return TreeViewFrame;
-
-            StepFrame frame = null;
-            if (persistString == typeof(StepFrame).ToString())
-            {
-                if (count == 0)
-                    frame = TestFrames[TestMethod.Write.ToString()];
-                else if (count == 1)
-                    frame = TestFrames[TestMethod.Read.ToString()];
-                else if (count == 2)
-                    frame = TestFrames[TestMethod.SecondaryRead.ToString()];
-
-                count++;
-            }
-
-            return frame;
-        }
-
         #endregion
 
         #region Main Menu Strip View
 
         private void databasesWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!TreeViewFrame.IsDisposed)
-            {
-                TreeViewFrame.Select();
-                return;
-            }
-
             this.SuspendLayout();
 
-            TreeViewFrame = new TreeViewFrame();
-
-            TreeViewFrame.Text = "Databases";
-            TreeViewFrame.Show(dockPanel1);
-            TreeViewFrame.DockState = DockState.DockLeft;
-
-            TreeViewFrame.CreateTreeView();
+            ApplicationPersist.SelectTreeView();
 
             this.ResumeLayout();
         }
 
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StepFrame frame = TestFrames[TestMethod.Write.ToString()];
-
-            if (!frame.IsDisposed)
-            {
-                frame.Select();
-                return;
-            }
-
-            StepFrame writeFrame = CreateStepFrame(TestMethod.Write);
-            frame = writeFrame;
-
-            writeFrame.Show(dockPanel1);
-            writeFrame.DockState = DockState.Document;
+            ApplicationPersist.SelectStepFrame(TestMethod.Write);
         }
 
         private void readWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StepFrame frame = TestFrames[TestMethod.Read.ToString()];
-
-            if (!frame.IsDisposed)
-            {
-                frame.Select();
-                return;
-            }
-
-            StepFrame readFrame = CreateStepFrame(TestMethod.Read);
-            frame = readFrame;
-
-            readFrame.Show(dockPanel1);
-            readFrame.DockState = DockState.Document;
+            ApplicationPersist.SelectStepFrame(TestMethod.Read);
         }
 
         private void secondaryReadWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StepFrame frame = TestFrames[TestMethod.SecondaryRead.ToString()];
-
-            if (!frame.IsDisposed)
-            {
-                frame.Select();
-                return;
-            }
-
-            StepFrame secondaryReadFrame = CreateStepFrame(TestMethod.SecondaryRead);
-            frame = secondaryReadFrame;
-
-            secondaryReadFrame.Show(dockPanel1);
-            secondaryReadFrame.DockState = DockState.Document;
+            ApplicationPersist.SelectStepFrame(TestMethod.SecondaryRead);
         }
 
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //if (File.Exists(DOCKING_CONFIGURATION))
-            //    File.Delete(DOCKING_CONFIGURATION);
+            this.SuspendLayout();
 
-            ResetDockingConfiguration();
-        }
+            ApplicationPersist.ResetDockingConfiguration();
 
-        private StepFrame CreateStepFrame(TestMethod method)
-        {
-            StepFrame stepFrame = new StepFrame();
-            stepFrame.Text = method.ToString();
-            stepFrame.Dock = DockStyle.Fill;
-
-            // Hide time, CPU, memory and I/O view from the layout.
-            stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
-            stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
-            stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
-            stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
-
-            return stepFrame;
+            this.ResumeLayout();
         }
 
         #endregion
