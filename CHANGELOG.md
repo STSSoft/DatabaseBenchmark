@@ -1,11 +1,11 @@
 ------------------------------------
-Database Benchmark changelog
+# Database Benchmark changelog
 ------------------------------------
 ver. 3.0.0 (beta released)
 
 ## Important improvements of Database Benchmark
 
-KeyTypes replaced with Randomness in the GUI. 0% value means that all of the generated keys are sequential,
+* ADDED: KeyTypes replaced with Randomness in the GUI. 0% value means that all of the generated keys are sequential,
 and with the increasing of the percentage the generated flow begins to contain random keys. 100% means that all keys are random.
 This change allows fine control over the generated keys and more precise tests.
 
@@ -85,8 +85,7 @@ allowing them to insert data more quickly, especially on low end hard drives."
             
 Special thanks to Tim Callaghan, Vice President of Engineering at Tokutek for proposing the changes.
 ***
-
-## IMPORTANT IMPROVEMENT OF LevelDB
+## Important improvement of LevelDB
 
 LevelDB engine is now updated to version 1.16 downloaded from http://leveldb.angeloflogic.com/.
 
