@@ -551,6 +551,7 @@ namespace DatabaseBenchmark
             this.SuspendLayout();
 
             ApplicationPersist.SelectTreeView();
+            TreeViewFrame = ApplicationPersist.Container.TreeView;
 
             this.ResumeLayout();
         }
@@ -575,7 +576,8 @@ namespace DatabaseBenchmark
             this.SuspendLayout();
 
             ApplicationPersist.ResetDockingConfiguration();
-            //TreeViewFrame = ApplicationPersist.Container.TreeView;
+            TreeViewFrame = ApplicationPersist.Container.TreeView;
+            TestFrames = ApplicationPersist.Container.Frames;
 
             this.ResumeLayout();
         }

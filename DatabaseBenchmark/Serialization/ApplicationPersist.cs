@@ -98,16 +98,16 @@ namespace DatabaseBenchmark.Serialization
                 using (var stream = new FileStream(ApplicationConfigPath, FileMode.OpenOrCreate))
                 {
                     XmlSerializer deserializer = new XmlSerializer(typeof(XmlAppSettingsPersist));
-                    XmlAppSettingsPersist deserializeObj = (XmlAppSettingsPersist)deserializer.Deserialize(stream);
+                    XmlAppSettingsPersist appPersist = (XmlAppSettingsPersist)deserializer.Deserialize(stream);
 
                     // Add databases in TreeView.
-                    foreach (var db in deserializeObj.Databases)
+                    foreach (var db in appPersist.Databases)
                         Container.TreeView.CreateTreeViewNode(db.Key, db.Value);
 
-                    foreach (var cb in deserializeObj.ComboBoxItems)
+                    foreach (var cb in appPersist.ComboBoxItems)
                         Container.ComboBoxes.First(x => x.Name == cb.Key).Text = cb.Value;
 
-                    Container.TrackBar.Value = deserializeObj.TrackBarValue;
+                    Container.TrackBar.Value = appPersist.TrackBarValue;
                 }
 
                 Container.TreeView.treeView.ExpandAll();
@@ -212,6 +212,8 @@ namespace DatabaseBenchmark.Serialization
             TreeViewFrame.DockState = DockState.DockLeft;
 
             TreeViewFrame.CreateTreeView();
+
+            Container.TreeView = TreeViewFrame;
         }
 
         #region Private Methods
