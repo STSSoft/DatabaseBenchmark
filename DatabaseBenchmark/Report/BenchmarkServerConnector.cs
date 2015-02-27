@@ -12,7 +12,6 @@ namespace DatabaseBenchmark.Validation
     public class BenchmarkServerConnector
     {
         public string Host { get; set; }
-        public string ResponseStatus { get; private set; }
 
         public BenchmarkServerConnector()
         {

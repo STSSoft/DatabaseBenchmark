@@ -16,7 +16,7 @@ namespace DatabaseBenchmark.Serialization
         public ToolStripComboBox[] ComboBoxes { get; set; }
         public TrackBar TrackBar { get; set; }
 
-        public Dictionary<string, StepFrame> Frames { get; set; }
+        public Dictionary<string, StepFrame> Frames { get; private set; }
 
         public AppSettings(DockPanel panel, TreeViewFrame treeView, ToolStripComboBox[] comboBoxes, TrackBar trackBar)
         {

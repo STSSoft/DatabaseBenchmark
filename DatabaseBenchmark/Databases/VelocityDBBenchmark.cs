@@ -41,7 +41,7 @@ namespace DatabaseBenchmark.Databases
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
         {
-            Placement place = new Placement((ushort)(flowID + 10));
+            Placement place = new Placement((ushort)checked(flowID + 10));
             Placement velocityRecordPlace = new Placement((ushort)(flowID + 10), 1000, 1, 10000, ushort.MaxValue, false, false, UInt32.MaxValue, false);
 
             BTreeMapOidShort<long, VelocityTick> map = new BTreeMapOidShort<long, VelocityTick>(null, session, 1000);

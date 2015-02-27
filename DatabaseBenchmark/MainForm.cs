@@ -39,8 +39,6 @@ namespace DatabaseBenchmark
         public static readonly string DATABASES_DIRECTORY = Path.Combine(Application.StartupPath + "\\Databases");
         public static readonly string CONFIGURATION_FOLDER = Path.Combine(Application.StartupPath + "\\Config");
 
-        private static int count = 0;
-
         private volatile Task MainTask = null;
         private CancellationTokenSource Cancellation;
 
@@ -51,7 +49,6 @@ namespace DatabaseBenchmark
         private long RecordCount;
 
         private float Randomness = 0.0f;
-        private KeysType KeysType;
 
         private string CurrentStatus;
 
@@ -334,7 +331,6 @@ namespace DatabaseBenchmark
             TableCount = Int32.Parse(cbFlowsCount.Text.Replace(" ", ""));
             RecordCount = Int64.Parse(cbRecordCount.Text.Replace(" ", ""));
             Randomness = trackBar1.Value / 20.0f;
-            KeysType = Randomness == 0f ? KeysType.Sequential : KeysType.Random;
 
             var benchmarks = TreeViewFrame.GetSelectedBenchmarks();
             if (benchmarks.Length == 0)

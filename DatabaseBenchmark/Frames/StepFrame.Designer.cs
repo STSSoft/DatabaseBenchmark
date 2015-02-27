@@ -30,8 +30,6 @@ namespace DatabaseBenchmark.Frames
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.barChartTime = new DatabaseBenchmark.Charts.BarChartFrame();
@@ -300,7 +298,6 @@ namespace DatabaseBenchmark.Frames
 
         #endregion
 
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Panel panel2;
         public System.Windows.Forms.TableLayoutPanel LayoutPanel;
         private System.Windows.Forms.Splitter splitter1;

@@ -12,10 +12,10 @@ namespace DatabaseBenchmark.Serialization
     public class XmlAppSettingsPersist : IXmlSerializable
     {
         // Key - database -> Value - database state in TreeView
-        public Dictionary<IDatabase, bool> Databases { get; set; }
+        public Dictionary<IDatabase, bool> Databases { get; private set; }
 
         // Key - ComboBox name -> Value - selected value
-        public Dictionary<string, string> ComboBoxItems { get; set; }
+        public Dictionary<string, string> ComboBoxItems { get; private set; }
         public int TrackBarValue { get; set; }
 
         public XmlAppSettingsPersist()

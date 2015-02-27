@@ -46,7 +46,7 @@ namespace DatabaseBenchmark.Databases
 
         private string CreateTableQuery(string tableName)
         {
-            return string.Format("CREATE TABLE {0} (", DatabaseCollection) +
+            return string.Format("CREATE TABLE {0} (", tableName) +
                       "[ID] BIGINT PRIMARY KEY WITH(IGNORE_DUP_KEY = ON), " +
                       "[Symbol] varchar(255), " +
                       "[Time] DateTime, " +
