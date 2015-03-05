@@ -9,7 +9,7 @@ using DatabaseBenchmark.Statistics;
 
 namespace DatabaseBenchmark.Report
 {
-    public class CsvExporter
+    public class CsvUtils
     {
         /// <summary>
         /// Exports benchmark sessions to a *.csv file.
