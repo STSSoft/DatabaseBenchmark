@@ -45,12 +45,6 @@ namespace DatabaseBenchmark.Report
 
                 var chapter = new iTextSharp.text.Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
 
-                //foreach (BarChartFrame barControl in fr.Value.LayoutPanel.Controls)
-                //{
-                //        if (item.Visible)
-                //            AddCellToTable(table, counter++, item);
-                //}
-
                 AddCellToTable(table, 1, frame.barChartSpeed);
                 AddCellToTable(table, 2, frame.barChartTime);
                 AddCellToTable(table, 3, frame.barChartSize);
