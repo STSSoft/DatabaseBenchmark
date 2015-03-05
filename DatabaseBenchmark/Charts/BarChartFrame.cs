@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Globalization;
+using System.IO;
 
 namespace DatabaseBenchmark.Charts
 {
@@ -81,6 +82,14 @@ namespace DatabaseBenchmark.Charts
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Title
         {
+            get
+            {
+                if (chart1.Titles.Count > 0)
+                    return chart1.Titles[0].Text;
+
+                return string.Empty;
+            }
+
             set
             {
                 chart1.Titles.Clear();
@@ -114,6 +123,16 @@ namespace DatabaseBenchmark.Charts
         {
             maxValue = 0;
             chart1.Series.Clear();
+        }
+
+        public byte[] ConvertToByteArray()
+        {
+            using (var chartimage = new MemoryStream())
+            {
+                chart1.SaveImage(chartimage, ChartImageFormat.Png);
+
+                return chartimage.GetBuffer();
+            }
         }
     }
 }

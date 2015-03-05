@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.IO;
 
 namespace DatabaseBenchmark.Charts
 {
@@ -66,6 +67,14 @@ namespace DatabaseBenchmark.Charts
 
         public string Title
         {
+            get
+            {
+                if (chart1.Titles.Count > 0)
+                    return chart1.Titles[0].Text;
+
+                return string.Empty;
+            }
+
             set
             {
                 chart1.Titles.Clear();
@@ -94,6 +103,16 @@ namespace DatabaseBenchmark.Charts
         {
             chart1.Series.Clear();
             cache = null;
+        }
+
+        public byte[] ConvertToByteArray()
+        {
+            using (var chartimage = new MemoryStream())
+            {
+                chart1.SaveImage(chartimage, ChartImageFormat.Png);
+
+                return chartimage.GetBuffer();
+            }
         }
     }
 }

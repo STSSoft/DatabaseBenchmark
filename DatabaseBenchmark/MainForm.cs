@@ -31,6 +31,7 @@ using log4net;
 using STS.General.GUI.Extensions;
 using WeifenLuo.WinFormsUI.Docking;
 using DatabaseBenchmark.Serialization;
+using DatabaseBenchmark.Report;
 
 namespace DatabaseBenchmark
 {
@@ -691,6 +692,16 @@ namespace DatabaseBenchmark
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
             stopButton_Click(sender, e);
+        }
+
+        private void exportResultToPDFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
+            saveFileDialogPdf.ShowDialog();
+
+            PdfExport export = new PdfExport(TestFrames);
+
+            export.Export(saveFileDialogPdf.FileName);
         }
     }
 }
