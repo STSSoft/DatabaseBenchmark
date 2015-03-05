@@ -20,6 +20,36 @@ namespace DatabaseBenchmark.Frames
             InitializeComponent();
         }
 
+        public void DrawAverageSpeed(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartAverageSpeed.AddPoint(series, item.Key, item.Value);
+        }
+
+        public void DrawMomentSpeed(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartMomentSpeed.AddPoint(series, item.Key, item.Value);
+        }
+
+        public void DrawAverageCpuUsage(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartAverageCPU.AddPoint(series, item.Key, item.Value);
+        }
+
+        public void DrawAverageMemoryUsage(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartAverageMemory.AddPoint(series, item.Key, item.Value / (1024.0 * 1024.0));
+        }
+
+        public void DrawAverageIO(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartAverageIO.AddPoint(series, item.Key, item.Value / (1024.0 * 1024.0));
+        }
+
         public void ClearCharts()
         {
             lineChartAverageSpeed.Clear();

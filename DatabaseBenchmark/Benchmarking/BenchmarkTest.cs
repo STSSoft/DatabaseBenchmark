@@ -303,7 +303,7 @@ namespace DatabaseBenchmark.Benchmarking
             }
         }
 
-        public IEnumerable<KeyValuePair<long, float>> GetAverageUserTimeProcessor(TestMethod method, int position)
+        public IEnumerable<KeyValuePair<long, double>> GetAverageUserTimeProcessor(TestMethod method, int position)
         {
             lock (ProcessorStatistics)
             {
@@ -319,7 +319,7 @@ namespace DatabaseBenchmark.Benchmarking
                     var records = array[position].Key;
                     var userTime = array[position].Value;
 
-                    yield return new KeyValuePair<long, float>(records, userTime);
+                    yield return new KeyValuePair<long, double>(records, userTime);
                 }
             }
         }
@@ -327,7 +327,7 @@ namespace DatabaseBenchmark.Benchmarking
         /// <summary>
         /// Gets the average memory working set in bytes.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> GetAverageWorkingSet(TestMethod method, int position)
+        public IEnumerable<KeyValuePair<long, double>> GetAverageWorkingSet(TestMethod method, int position)
         {
             lock (MemoryStatistics)
             {
@@ -342,7 +342,7 @@ namespace DatabaseBenchmark.Benchmarking
                     var records = array[position].Key;
                     var workingSet = array[position].Value;
 
-                    yield return new KeyValuePair<long, float>(records, workingSet);
+                    yield return new KeyValuePair<long, double>(records, workingSet);
                 }
             }
         }
@@ -350,7 +350,7 @@ namespace DatabaseBenchmark.Benchmarking
         /// <summary>
         /// Gets the average process I/O.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> GetAverageDataIO(TestMethod method, int position)
+        public IEnumerable<KeyValuePair<long, double>> GetAverageDataIO(TestMethod method, int position)
         {
             lock (IOStatistics)
             {
@@ -365,7 +365,7 @@ namespace DatabaseBenchmark.Benchmarking
                     var records = array[position].Key;
                     var io = array[position].Value;
 
-                    yield return new KeyValuePair<long, float>(records, io);
+                    yield return new KeyValuePair<long, double>(records, io);
                 }
             }
         }
