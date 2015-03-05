@@ -652,24 +652,24 @@ namespace DatabaseBenchmark
                     var momentPossition = activeFrame.lineChartMomentSpeed.GetPointsCount(database.DatabaseName);
 
                     // Average speed.
-                    foreach (var item in session.GetAverageSpeed(method, averagePossition))
-                        activeFrame.lineChartAverageSpeed.AddPoint(database.DatabaseName, item.Key, item.Value);
+                    var averageSpeedData = session.GetAverageSpeed(method, averagePossition);
+                    activeFrame.DrawAverageSpeed(database.DatabaseName, averageSpeedData);
 
                     // Moment speed.
-                    foreach (var item in session.GetMomentSpeed(method, momentPossition))
-                        activeFrame.lineChartMomentSpeed.AddPoint(database.DatabaseName, item.Key, item.Value);
+                    var momentSpeedData = session.GetMomentSpeed(method, momentPossition);
+                    activeFrame.DrawMomentSpeed(database.DatabaseName, momentSpeedData);
 
                     // Average CPU usage.
-                    foreach (var item in session.GetAverageUserTimeProcessor(method, momentPossition))
-                        activeFrame.lineChartAverageCPU.AddPoint(database.DatabaseName, item.Key, item.Value);
+                    var cpuData = session.GetAverageUserTimeProcessor(method, averagePossition);
+                    activeFrame.DrawAverageCpuUsage(database.DatabaseName, cpuData);
 
                     // Average memory usage.
-                    foreach (var item in session.GetAverageWorkingSet(method, averagePossition))
-                        activeFrame.lineChartAverageMemory.AddPoint(database.DatabaseName, item.Key, item.Value / (1024.0 * 1024.0));
+                    var memoryData = session.GetAverageWorkingSet(method, averagePossition);
+                    activeFrame.DrawAverageMemoryUsage(database.DatabaseName, memoryData);
 
                     // Average Data IO.
-                    foreach (var item in session.GetAverageDataIO(method, averagePossition))
-                        activeFrame.lineChartAverageIO.AddPoint(database.DatabaseName, item.Key, item.Value / (1024.0 * 1024.0));
+                    var ioData = session.GetAverageDataIO(method, averagePossition);
+                    activeFrame.DrawAverageIO(database.DatabaseName, ioData);
                 }
 
                 if (Math.Abs(progress - 0.0) <= double.Epsilon)
