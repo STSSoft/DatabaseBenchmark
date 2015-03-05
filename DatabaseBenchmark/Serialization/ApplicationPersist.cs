@@ -239,15 +239,10 @@ namespace DatabaseBenchmark.Serialization
             stepFrame.Dock = DockStyle.Fill;
 
             // Hide time, CPU, memory and I/O view from the layout.
-            //stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
-            //stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
-            //stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
-            //stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
-
-            stepFrame.LayoutPanel.Controls[1].Visible = false;
-            stepFrame.LayoutPanel.Controls[3].Visible = false;
-            stepFrame.LayoutPanel.Controls[4].Visible = false;
-            stepFrame.LayoutPanel.Controls[5].Visible = false;
+            stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
+            stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
+            stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
+            stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
 
             return stepFrame;
         }

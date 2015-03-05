@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
             WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
             WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
@@ -44,7 +45,6 @@
             WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient3 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
             WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient6 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.progressStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -60,6 +60,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnExportCsv = new System.Windows.Forms.ToolStripButton();
             this.btnExportJson = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPdfExport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.btnTreeView = new System.Windows.Forms.ToolStripButton();
             this.btnAutoNavigate = new System.Windows.Forms.ToolStripButton();
@@ -88,6 +89,7 @@
             this.saveFileDialogCsv = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
@@ -113,7 +115,6 @@
             this.openFileDialogAppConfig = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogPersist = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -193,6 +194,7 @@
             this.toolStripSeparator2,
             this.btnExportCsv,
             this.btnExportJson,
+            this.toolStripButtonPdfExport,
             this.toolStripSeparator4,
             this.btnTreeView,
             this.btnAutoNavigate,
@@ -267,6 +269,15 @@
             this.btnExportJson.Size = new System.Drawing.Size(36, 36);
             this.btnExportJson.Text = "Export JSON";
             this.btnExportJson.Click += new System.EventHandler(this.btnExportJson_Click);
+            // 
+            // toolStripButtonPdfExport
+            // 
+            this.toolStripButtonPdfExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPdfExport.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPdfExport.Image")));
+            this.toolStripButtonPdfExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPdfExport.Name = "toolStripButtonPdfExport";
+            this.toolStripButtonPdfExport.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonPdfExport.Text = "toolStripButton1";
             // 
             // toolStripSeparator4
             // 
@@ -500,6 +511,9 @@
             // 
             // saveFileDialogCsv
             // 
+            this.saveFileDialogCsv.DefaultExt = "csv";
+            this.saveFileDialogCsv.Filter = "Microsoft Excel (*.csv)|*.csv";
+            this.saveFileDialogCsv.Title = "Export Results";
             this.saveFileDialogCsv.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
             // menuStrip1
@@ -527,29 +541,36 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
             // saveConfigurationToolStripMenuItem
             // 
             this.saveConfigurationToolStripMenuItem.Name = "saveConfigurationToolStripMenuItem";
-            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.saveConfigurationToolStripMenuItem.Text = "Save";
             this.saveConfigurationToolStripMenuItem.Click += new System.EventHandler(this.saveConfigurationToolStripMenuItem_Click);
             // 
             // loadConfigurationToolStripMenuItem
             // 
             this.loadConfigurationToolStripMenuItem.Name = "loadConfigurationToolStripMenuItem";
-            this.loadConfigurationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadConfigurationToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.loadConfigurationToolStripMenuItem.Text = "Load";
             this.loadConfigurationToolStripMenuItem.Click += new System.EventHandler(this.loadConfigurationToolStripMenuItem_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(97, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -680,6 +701,9 @@
             // 
             // saveFileDialogJson
             // 
+            this.saveFileDialogJson.DefaultExt = "json";
+            this.saveFileDialogJson.Filter = "JSON (*.json)|*.json";
+            this.saveFileDialogJson.Title = "Export Results";
             this.saveFileDialogJson.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog2_FileOk);
             // 
             // dockPanel1
@@ -756,13 +780,6 @@
             this.saveFileDialogPdf.DefaultExt = "pdf";
             this.saveFileDialogPdf.Filter = "PDF (*.pdf)|*.pdf";
             this.saveFileDialogPdf.Title = "Export Results";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.newToolStripMenuItem.Text = "New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -865,6 +882,7 @@
         private System.Windows.Forms.ToolStripMenuItem exportResultToPDFToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialogPdf;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButtonPdfExport;
     }
 }
 
