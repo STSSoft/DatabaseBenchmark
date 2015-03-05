@@ -698,9 +698,7 @@ namespace DatabaseBenchmark
             saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
             saveFileDialogPdf.ShowDialog();
 
-            PdfUtils export = new PdfUtils(TestFrames);
-
-            export.Export(saveFileDialogPdf.FileName);
+            PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames);
         }
     }
 }

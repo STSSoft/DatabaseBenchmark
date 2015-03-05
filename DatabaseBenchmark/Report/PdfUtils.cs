@@ -15,19 +15,20 @@ namespace DatabaseBenchmark.Report
 {
     public class PdfUtils
     {
-        private Dictionary<string, StepFrame> Frames;
-
-        public PdfUtils(Dictionary<string, StepFrame> frames)
-        {
-            Frames = frames;
-        }
-
-        public void Export(string file)
+        public static void Export(string file, Dictionary<string, StepFrame> frames)
         {
             var doc = new iTextSharp.text.Document(PageSize.A4);
 
             if (File.Exists(file))
                 File.Delete(file);
+
+            int barChartCount = 0;
+
+            foreach (Control control in frames.First().Value.LayoutPanel.Controls)
+            {
+                if (control.Visible)
+                    barChartCount++;
+            }
 
             var fileStream = new FileStream(file, FileMode.OpenOrCreate);
             iTextSharp.text.pdf.PdfWriter.GetInstance(doc, fileStream);
@@ -36,19 +37,27 @@ namespace DatabaseBenchmark.Report
             doc.Add(new iTextSharp.text.Paragraph("Chart"));
 
             int chapterCount = 1;
-            foreach (var fr in Frames)
+
+
+            foreach (var fr in frames)
             {
                 StepFrame frame = fr.Value;
-                var chapter = new iTextSharp.text.Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
-
                 PdfPTable table = new PdfPTable(3);
                 table.HorizontalAlignment = Element.ALIGN_CENTER;
 
-                AddCellToTable(table, 1, frame.barChartSpeed);
-                AddCellToTable(table, 2, frame.barChartSize);
-                AddCellToTable(table, 3, frame.barChartTime);
+                var chapter = new iTextSharp.text.Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
 
-                chapter.Add(new Chunk('\n'));
+                //foreach (BarChartFrame barControl in fr.Value.LayoutPanel.Controls)
+                //{
+                //        if (item.Visible)
+                //            AddCellToTable(table, counter++, item);
+                //}
+
+                AddCellToTable(table, 1, frame.barChartSpeed);
+                AddCellToTable(table, 2, frame.barChartTime);
+                AddCellToTable(table, 3, frame.barChartSize);
+
+                chapter.Add(new Chunk("\n"));
                 chapter.Add(table);
 
                 doc.Add(chapter);
@@ -68,7 +77,7 @@ namespace DatabaseBenchmark.Report
             doc.Close();
         }
 
-        private void AddCellToTable(PdfPTable table, int cellIndex, BarChartFrame frame)
+        private static void AddCellToTable(PdfPTable table, int cellIndex, BarChartFrame frame)
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
             PdfPCell cell = new PdfPCell();
@@ -80,7 +89,7 @@ namespace DatabaseBenchmark.Report
             table.AddCell(image);
         }
 
-        private void AddLineChartToDocument(Document doc, LineChartFrame frame)
+        private static void AddLineChartToDocument(Document doc, LineChartFrame frame)
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
             image.ScalePercent(60f);
