@@ -420,7 +420,7 @@ namespace DatabaseBenchmark
 
             try
             {
-                CsvExporter.ExportTestResults(History, fileName);
+                CsvUtils.ExportTestResults(History, fileName);
             }
             catch (Exception exc)
             {
@@ -698,7 +698,7 @@ namespace DatabaseBenchmark
             saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
             saveFileDialogPdf.ShowDialog();
 
-            PdfExport export = new PdfExport(TestFrames);
+            PdfUtils export = new PdfUtils(TestFrames);
 
             export.Export(saveFileDialogPdf.FileName);
         }

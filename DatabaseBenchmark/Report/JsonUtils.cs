@@ -12,11 +12,16 @@ namespace DatabaseBenchmark.Validation
 {
     public static class JsonUtils
     {
-        public static void ExportToJson(string fileName, ComputerConfiguration configuration, List<BenchmarkTest> benchmarks)
+        public static void ExportToJson(string path, ComputerConfiguration configuration, List<BenchmarkTest> benchmarks)
         {
-            var jsonData = ConvertToJson(configuration, benchmarks);
+            JsonObjectCollection jsonData = new JsonObjectCollection();
 
-            using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
+            jsonData.Add(ConvertToJson(configuration));
+
+            foreach (var benchmark in benchmarks)
+                jsonData.Add(ConvertToJson(benchmark));
+
+            using (FileStream stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
             {
                 StreamWriter writer = new StreamWriter(stream);
                 jsonData.WriteTo(writer);
@@ -37,24 +42,6 @@ namespace DatabaseBenchmark.Validation
             var jsonComputer = ConvertToJson(configuration);
             json.Add(jsonComputer);
             
-            // Benchmark test.
-            foreach (var benchmark in benchmarks)
-            {
-                var jsonTest = ConvertToJson(benchmark);
-                json.Add(jsonTest);
-            }
-
-            return new JsonObjectCollection(json);
-        }
-
-        public static JsonObjectCollection ConvertToJson(ComputerConfiguration configuration, List<BenchmarkTest> benchmarks)
-        {
-            List<JsonObjectCollection> json = new List<JsonObjectCollection>();
-
-            // Computer configuration.
-            var jsonComputer = ConvertToJson(configuration);
-            json.Add(jsonComputer);
-
             // Benchmark test.
             foreach (var benchmark in benchmarks)
             {
@@ -112,6 +99,8 @@ namespace DatabaseBenchmark.Validation
             return jsonBenchmark;
         }
 
+        #region Statistics to JSON
+
         public static JsonObjectCollection ConvertStatisticToJson(SpeedStatistics statistic, string statisticName)
         {
             JsonObjectCollection jsonTest = new JsonObjectCollection(statisticName);
@@ -144,6 +133,8 @@ namespace DatabaseBenchmark.Validation
 
             return jsonTest;
         }
+
+        #endregion
 
         #region Computer configuration to JSON
 

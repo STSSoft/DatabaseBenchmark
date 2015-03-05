@@ -13,11 +13,11 @@ using System.Windows.Forms;
 
 namespace DatabaseBenchmark.Report
 {
-    public class PdfExport
+    public class PdfUtils
     {
         private Dictionary<string, StepFrame> Frames;
 
-        public PdfExport(Dictionary<string, StepFrame> frames)
+        public PdfUtils(Dictionary<string, StepFrame> frames)
         {
             Frames = frames;
         }

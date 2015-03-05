@@ -344,8 +344,8 @@
     <Compile Include="Charts\LineChartFrame.Designer.cs">
       <DependentUpon>LineChartFrame.cs</DependentUpon>
     </Compile>
-    <Compile Include="Report\CsvExporter.cs" />
-    <Compile Include="Report\PdfExport.cs" />
+    <Compile Include="Report\CsvUtils.cs" />
+    <Compile Include="Report\PdfUtils.cs" />
     <Compile Include="Serialization\ApplicationPersist.cs" />
     <Compile Include="Databases\AerospikeBenchmark.cs" />
     <Compile Include="Databases\GridGainBenchmark.cs" />
