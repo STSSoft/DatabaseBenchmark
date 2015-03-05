@@ -110,6 +110,19 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
+        public void Reset()
+        {
+            ResetDockingConfiguration();
+
+            // Clear TreeView.
+            SettingsContainer.TreeView.treeView.Nodes.Clear();
+
+            SettingsContainer.TreeView.CreateTreeView();
+            SettingsContainer.TrackBar.Value = 20;
+            SettingsContainer.ComboBoxes[0].SelectedIndex = 0;
+            SettingsContainer.ComboBoxes[1].SelectedIndex = 5;
+        }
+
         public void StoreDocking()
         {
             SettingsContainer.DockingPanel.SaveAsXml(DockConfigPath);
@@ -226,10 +239,15 @@ namespace DatabaseBenchmark.Serialization
             stepFrame.Dock = DockStyle.Fill;
 
             // Hide time, CPU, memory and I/O view from the layout.
-            stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
-            stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
-            stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
-            stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
+            //stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
+            //stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
+            //stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
+            //stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
+
+            stepFrame.LayoutPanel.Controls[1].Visible = false;
+            stepFrame.LayoutPanel.Controls[3].Visible = false;
+            stepFrame.LayoutPanel.Controls[4].Visible = false;
+            stepFrame.LayoutPanel.Controls[5].Visible = false;
 
             return stepFrame;
         }

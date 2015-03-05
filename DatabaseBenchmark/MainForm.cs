@@ -538,6 +538,11 @@ namespace DatabaseBenchmark
                 ApplicationPersist.Load(openFileDialogAppConfig.FileName);
         }
 
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationPersist.Reset();
+        }
+
         #endregion
 
         #region Main Menu Strip View
