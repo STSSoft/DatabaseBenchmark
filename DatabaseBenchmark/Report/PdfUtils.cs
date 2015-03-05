@@ -34,7 +34,18 @@ namespace DatabaseBenchmark.Report
             iTextSharp.text.pdf.PdfWriter.GetInstance(doc, fileStream);
             doc.Open();
 
-            doc.Add(new iTextSharp.text.Paragraph("Chart"));
+            PdfPTable title = new PdfPTable(1);
+            PdfPCell titleText = new PdfPCell();
+            titleText.VerticalAlignment = Element.ALIGN_MIDDLE;
+            titleText.MinimumHeight = doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin);
+
+            Paragraph paragraph = new Paragraph("DATABASE BENCHAMRK RESULTS");
+            paragraph.Font = new Font(Font.NORMAL, 16f,Font.BOLD, Color.BLUE);
+            paragraph.Alignment = Element.ALIGN_MIDDLE;
+
+            titleText.AddElement(paragraph);
+            title.AddCell(titleText);
+            doc.Add(title);
 
             int chapterCount = 1;
 
@@ -42,14 +53,15 @@ namespace DatabaseBenchmark.Report
             {
                 StepFrame frame = fr.Value;
                 PdfPTable table = new PdfPTable(barChartCount >= 3 ? 3 : barChartCount);
+                table.WidthPercentage = 100;
 
                 var chapter = new iTextSharp.text.Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
 
-                AddCellToTable(table, 1, frame.barChartSpeed);
-                AddCellToTable(table, 2, frame.barChartTime);
-                AddCellToTable(table, 3, frame.barChartSize);
+                //AddCellToTable(table, 1, frame.barChartSpeed);
+                //AddCellToTable(table, 2, frame.barChartTime);
+                //AddCellToTable(table, 3, frame.barChartSize);
 
-                chapter.Add(new Chunk("\n"));
+                //chapter.Add(new Chunk("\n"));
                 chapter.Add(table);
 
                 doc.Add(chapter);
