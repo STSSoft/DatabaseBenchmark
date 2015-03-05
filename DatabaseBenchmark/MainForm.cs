@@ -278,7 +278,7 @@ namespace DatabaseBenchmark
 
         #region Charts
 
-        private void InitializeCharts(Database[] benchmarks)
+        private void InitializeCharts(Database[] databases)
         {
             StepFrame stepFrame = null;
 
@@ -288,7 +288,7 @@ namespace DatabaseBenchmark
                 stepFrame = item.Value;
 
                 stepFrame.ClearCharts();
-                stepFrame.InitializeCharts(benchmarks.Select(x => new KeyValuePair<string, Color>(x.DatabaseName, x.Color)));
+                stepFrame.InitializeCharts(databases.Select(x => new KeyValuePair<string, Color>(x.DatabaseName, x.Color)));
             }
         }
 
