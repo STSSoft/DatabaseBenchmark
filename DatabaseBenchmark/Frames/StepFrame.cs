@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using WeifenLuo.WinFormsUI.Docking;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace DatabaseBenchmark.Frames
 {
@@ -20,34 +21,34 @@ namespace DatabaseBenchmark.Frames
             InitializeComponent();
         }
 
-        public void DrawAverageSpeed(string series, IEnumerable<KeyValuePair<long, double>> data)
+        public void InitializeCharts(IEnumerable<KeyValuePair<string, Color>> lineSeries)
         {
-            foreach (var item in data)
-                lineChartAverageSpeed.AddPoint(series, item.Key, item.Value);
-        }
+            // Bar charts.
+            barChartSpeed.CreateSeries("Series1", "{#,#}");
+            barChartSize.CreateSeries("Series1", "{0:0.#}");
+            barChartTime.CreateSeries("Series1", "HH:mm:ss");
+            barChartTime.AxisYValueType = ChartValueType.DateTime;
 
-        public void DrawMomentSpeed(string series, IEnumerable<KeyValuePair<long, double>> data)
-        {
-            foreach (var item in data)
-                lineChartMomentSpeed.AddPoint(series, item.Key, item.Value);
-        }
+            barChartCPU.CreateSeries("Series1", "{0:0.#}");
+            barChartMemory.CreateSeries("Series1", "{0:0.#}");
+            barChartIO.CreateSeries("Series1", "{0:0.#}");
 
-        public void DrawAverageCpuUsage(string series, IEnumerable<KeyValuePair<long, double>> data)
-        {
-            foreach (var item in data)
-                lineChartAverageCPU.AddPoint(series, item.Key, item.Value);
-        }
+            barChartSpeed.Title = "Speed (rec/sec)";
+            barChartSize.Title = "Size (MB)";
+            barChartTime.Title = "Time (hh:mm:ss)";
+            barChartCPU.Title = "CPU usage (%)";
+            barChartMemory.Title = "Memory usage (MB)";
+            barChartIO.Title = "IO Data (MB/sec)";
 
-        public void DrawAverageMemoryUsage(string series, IEnumerable<KeyValuePair<long, double>> data)
-        {
-            foreach (var item in data)
-                lineChartAverageMemory.AddPoint(series, item.Key, item.Value / (1024.0 * 1024.0));
-        }
-
-        public void DrawAverageIO(string series, IEnumerable<KeyValuePair<long, double>> data)
-        {
-            foreach (var item in data)
-                lineChartAverageIO.AddPoint(series, item.Key, item.Value / (1024.0 * 1024.0));
+            // Line charts.
+            foreach (var item in lineSeries)
+            {
+                lineChartAverageSpeed.CreateSeries(item.Key, item.Value);
+                lineChartMomentSpeed.CreateSeries(item.Key, item.Value);
+                lineChartAverageCPU.CreateSeries(item.Key, item.Value);
+                lineChartAverageMemory.CreateSeries(item.Key, item.Value);
+                lineChartAverageIO.CreateSeries(item.Key, item.Value);
+            }
         }
 
         public void ClearCharts()
@@ -65,6 +66,74 @@ namespace DatabaseBenchmark.Frames
             barChartMemory.Clear();
             barChartIO.Clear();
         }
+
+        #region Add points to LineChart
+
+        public void AddAverageSpeed(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartAverageSpeed.AddPoint(series, item.Key, item.Value);
+        }
+
+        public void AddMomentSpeed(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartMomentSpeed.AddPoint(series, item.Key, item.Value);
+        }
+
+        public void AddAverageCpuUsage(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartAverageCPU.AddPoint(series, item.Key, item.Value);
+        }
+
+        public void AddAverageMemoryUsage(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartAverageMemory.AddPoint(series, item.Key, item.Value / (1024.0 * 1024.0));
+        }
+
+        public void AddAverageIO(string series, IEnumerable<KeyValuePair<long, double>> data)
+        {
+            foreach (var item in data)
+                lineChartAverageIO.AddPoint(series, item.Key, item.Value / (1024.0 * 1024.0));
+        }
+
+        #endregion
+
+        #region Add points to BarChart
+
+        public void AddAverageSpeedToBar(string label, object y, Color color)
+        {
+            barChartSpeed.AddPoint(label, y, color);
+        }
+
+        public void AddSizeToBar(string label, object y, Color color)
+        {
+            barChartSize.AddPoint(label, y, color);
+        }
+
+        public void AddTimeToBar(string label, object y, Color color)
+        {
+            barChartTime.AddPoint(label, y, color);
+        }
+
+        public void AddCpuUsageToBar(string label, object y, Color color)
+        {
+            barChartCPU.AddPoint(label, y, color);
+        }
+
+        public void AddMemoryUsageToBar(string label, object y, Color color)
+        {
+            barChartMemory.AddPoint(label, y, color);
+        }
+
+        public void AddIoUsageToBar(string label, object y, Color color)
+        {
+             barChartIO.AddPoint(label, y, color);
+        }
+
+        #endregion
 
         public override string Text
         {

@@ -165,27 +165,27 @@ namespace DatabaseBenchmark
                 Color databaseColor = benchmark.Database.Color;
 
                 // Speed chart.
-                updateChart = ActiveStepFrame.barChartSpeed.AddPoint;
+                updateChart = ActiveStepFrame.AddAverageSpeedToBar;
                 ReportSpeed(databaseName, databaseColor, updateChart, benchmark.GetSpeed(method));
 
                 // Size chart.
-                updateChart = ActiveStepFrame.barChartSize.AddPoint;
+                updateChart = ActiveStepFrame.AddSizeToBar;
                 ReportSize(databaseName, databaseColor, updateChart, benchmark.Database.Size);
 
                 // Time chart.
-                updateChart = ActiveStepFrame.barChartTime.AddPoint;
+                updateChart = ActiveStepFrame.AddTimeToBar;
                 ReportTime(databaseName, databaseColor, updateChart, benchmark.GetTime(method));
 
                 // CPU chart.
-                updateChart = ActiveStepFrame.barChartCPU.AddPoint;
+                updateChart = ActiveStepFrame.AddCpuUsageToBar;
                 ReportCPU(databaseName, databaseColor, updateChart, benchmark.GetAverageProcessorTime(method));
 
                 // Memory chart.
-                updateChart = ActiveStepFrame.barChartMemory.AddPoint;
+                updateChart = ActiveStepFrame.AddMemoryUsageToBar;
                 ReportMemory(databaseName, databaseColor, updateChart, benchmark.GetPeakWorkingSet(method));
 
                 // I/O chart.
-                updateChart = ActiveStepFrame.barChartIO.AddPoint;
+                updateChart = ActiveStepFrame.AddIoUsageToBar;
                 ReportIO(databaseName, databaseColor, updateChart, benchmark.GetAverageIOData(method));
             }
             catch (Exception exc)
@@ -286,32 +286,9 @@ namespace DatabaseBenchmark
             foreach (var item in TestFrames)
             {
                 stepFrame = item.Value;
+
                 stepFrame.ClearCharts();
-
-                stepFrame.barChartSpeed.CreateSeries("Series1", "{#,#}");
-                stepFrame.barChartSize.CreateSeries("Series1", "{0:0.#}");
-                stepFrame.barChartTime.CreateSeries("Series1", "HH:mm:ss");
-                stepFrame.barChartTime.AxisYValueType = ChartValueType.DateTime;
-
-                stepFrame.barChartCPU.CreateSeries("Series1", "{0:0.#}");
-                stepFrame.barChartMemory.CreateSeries("Series1", "{0:0.#}");
-                stepFrame.barChartIO.CreateSeries("Series1", "{0:0.#}");
-
-                stepFrame.barChartSpeed.Title = "Speed (rec/sec)";
-                stepFrame.barChartSize.Title = "Size (MB)";
-                stepFrame.barChartTime.Title = "Time (hh:mm:ss)";
-                stepFrame.barChartCPU.Title = "CPU usage (%)";
-                stepFrame.barChartMemory.Title = "Memory usage (MB)";
-                stepFrame.barChartIO.Title = "IO Data (MB/sec)";
-
-                foreach (var benchmark in benchmarks)
-                {
-                    stepFrame.lineChartAverageSpeed.CreateSeries(benchmark.DatabaseName, benchmark.Color);
-                    stepFrame.lineChartMomentSpeed.CreateSeries(benchmark.DatabaseName, benchmark.Color);
-                    stepFrame.lineChartAverageCPU.CreateSeries(benchmark.DatabaseName, benchmark.Color);
-                    stepFrame.lineChartAverageMemory.CreateSeries(benchmark.DatabaseName, benchmark.Color);
-                    stepFrame.lineChartAverageIO.CreateSeries(benchmark.DatabaseName, benchmark.Color);
-                }
+                stepFrame.InitializeCharts(benchmarks.Select(x => new KeyValuePair<string, Color>(x.DatabaseName, x.Color)));
             }
         }
 
@@ -645,23 +622,23 @@ namespace DatabaseBenchmark
 
                     // Average speed.
                     var averageSpeedData = session.GetAverageSpeed(method, averagePossition);
-                    activeFrame.DrawAverageSpeed(database.DatabaseName, averageSpeedData);
+                    activeFrame.AddAverageSpeed(database.DatabaseName, averageSpeedData);
 
                     // Moment speed.
                     var momentSpeedData = session.GetMomentSpeed(method, momentPossition);
-                    activeFrame.DrawMomentSpeed(database.DatabaseName, momentSpeedData);
+                    activeFrame.AddMomentSpeed(database.DatabaseName, momentSpeedData);
 
                     // Average CPU usage.
                     var cpuData = session.GetAverageUserTimeProcessor(method, averagePossition);
-                    activeFrame.DrawAverageCpuUsage(database.DatabaseName, cpuData);
+                    activeFrame.AddAverageCpuUsage(database.DatabaseName, cpuData);
 
                     // Average memory usage.
                     var memoryData = session.GetAverageWorkingSet(method, averagePossition);
-                    activeFrame.DrawAverageMemoryUsage(database.DatabaseName, memoryData);
+                    activeFrame.AddAverageMemoryUsage(database.DatabaseName, memoryData);
 
                     // Average Data IO.
                     var ioData = session.GetAverageDataIO(method, averagePossition);
-                    activeFrame.DrawAverageIO(database.DatabaseName, ioData);
+                    activeFrame.AddAverageIO(database.DatabaseName, ioData);
                 }
 
                 if (Math.Abs(progress - 0.0) <= double.Epsilon)

@@ -191,6 +191,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageSpeed.Name = "lineChartAverageSpeed";
             this.lineChartAverageSpeed.Size = new System.Drawing.Size(1026, 236);
             this.lineChartAverageSpeed.TabIndex = 0;
+            this.lineChartAverageSpeed.Title = "";
             // 
             // tabPage2
             // 
@@ -212,6 +213,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartMomentSpeed.Name = "lineChartMomentSpeed";
             this.lineChartMomentSpeed.Size = new System.Drawing.Size(1026, 236);
             this.lineChartMomentSpeed.TabIndex = 0;
+            this.lineChartMomentSpeed.Title = "";
             // 
             // tabPage5
             // 
@@ -232,6 +234,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageCPU.Name = "lineChartAverageCPU";
             this.lineChartAverageCPU.Size = new System.Drawing.Size(1026, 236);
             this.lineChartAverageCPU.TabIndex = 0;
+            this.lineChartAverageCPU.Title = "";
             // 
             // tabPage4
             // 
@@ -252,6 +255,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageMemory.Name = "lineChartAverageMemory";
             this.lineChartAverageMemory.Size = new System.Drawing.Size(1026, 236);
             this.lineChartAverageMemory.TabIndex = 0;
+            this.lineChartAverageMemory.Title = "";
             // 
             // tabPage3
             // 
@@ -271,6 +275,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageIO.Name = "lineChartAverageIO";
             this.lineChartAverageIO.Size = new System.Drawing.Size(1032, 242);
             this.lineChartAverageIO.TabIndex = 0;
+            this.lineChartAverageIO.Title = "";
             // 
             // StepFrame
             // 
@@ -306,17 +311,17 @@ namespace DatabaseBenchmark.Frames
         private System.Windows.Forms.TabPage tabPage2;
         public LineChartFrame lineChartAverageSpeed;
         public LineChartFrame lineChartMomentSpeed;
-        public BarChartFrame barChartSpeed;
-        public BarChartFrame barChartTime;
-        public BarChartFrame barChartSize;
         private System.Windows.Forms.TabPage tabPage3;
         public LineChartFrame lineChartAverageIO;
-        public BarChartFrame barChartIO;
         private System.Windows.Forms.TabPage tabPage4;
         public LineChartFrame lineChartAverageMemory;
         private System.Windows.Forms.TabPage tabPage5;
         public LineChartFrame lineChartAverageCPU;
-        public BarChartFrame barChartCPU;
-        public BarChartFrame barChartMemory;
+        private BarChartFrame barChartSpeed;
+        private BarChartFrame barChartTime;
+        private BarChartFrame barChartSize;
+        private BarChartFrame barChartIO;
+        private BarChartFrame barChartCPU;
+        private BarChartFrame barChartMemory;
     }
 }
