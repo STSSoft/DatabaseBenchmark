@@ -369,6 +369,11 @@ namespace DatabaseBenchmark
             btnExportJson_Click(sender, e);
         }
 
+        private void exportResultToPDFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripButtonPdfExport_Click(sender, e);
+        }
+
         private void reportResultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (History.Count == 0)
@@ -383,11 +388,7 @@ namespace DatabaseBenchmark
 
         private void btnExportCsv_Click(object sender, EventArgs e)
         {
-            saveFileDialogCsv.Title = "Export Results";
-            saveFileDialogCsv.Filter = "Microsoft Excel (*.csv)|*.csv";
             saveFileDialogCsv.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
-            saveFileDialogCsv.DefaultExt = "csv";
-
             saveFileDialogCsv.ShowDialog();
         }
 
@@ -407,11 +408,7 @@ namespace DatabaseBenchmark
 
         private void btnExportJson_Click(object sender, EventArgs e)
         {
-            saveFileDialogJson.Title = "Export Results";
-            saveFileDialogJson.Filter = "JSON (*.json)|*.json";
             saveFileDialogJson.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
-            saveFileDialogJson.DefaultExt = "json";
-
             saveFileDialogJson.ShowDialog();
         }
 
@@ -427,6 +424,24 @@ namespace DatabaseBenchmark
             catch (Exception exc)
             {
                 Logger.Error("Export results to JSON failed...", exc);
+            }
+        }
+
+        private void toolStripButtonPdfExport_Click(object sender, EventArgs e)
+        {
+            saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
+            saveFileDialogPdf.ShowDialog();
+        }
+
+        private void saveFileDialogPdf_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames);
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("Export results to PDF failed...", exc);
             }
         }
 
@@ -673,14 +688,6 @@ namespace DatabaseBenchmark
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
             stopButton_Click(sender, e);
-        }
-
-        private void exportResultToPDFToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
-            saveFileDialogPdf.ShowDialog();
-
-            PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames);
         }
     }
 }
