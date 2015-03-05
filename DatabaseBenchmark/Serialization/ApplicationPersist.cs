@@ -92,11 +92,11 @@ namespace DatabaseBenchmark.Serialization
                     XmlAppSettingsPersist appPersist = (XmlAppSettingsPersist)deserializer.Deserialize(stream);
 
                     // Add databases in TreeView.
-                    foreach (var db in appPersist.Databases)
-                        SettingsContainer.TreeView.CreateTreeViewNode(db.Key, db.Value);
+                    foreach (var database in appPersist.Databases)
+                        SettingsContainer.TreeView.CreateTreeViewNode(database.Key, database.Value);
 
-                    foreach (var cb in appPersist.ComboBoxItems)
-                        SettingsContainer.ComboBoxes.First(x => x.Name == cb.Key).Text = cb.Value;
+                    foreach (var comboBox in appPersist.ComboBoxItems)
+                        SettingsContainer.ComboBoxes.First(x => x.Name == comboBox.Key).Text = comboBox.Value;
 
                     SettingsContainer.TrackBar.Value = appPersist.TrackBarValue;
                 }

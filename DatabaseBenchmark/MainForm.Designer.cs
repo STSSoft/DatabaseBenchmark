@@ -109,7 +109,7 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.saveFileDialogJson = new System.Windows.Forms.SaveFileDialog();
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.fdAppFileConfig = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialogAppConfig = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogPersist = new System.Windows.Forms.SaveFileDialog();
             this.exportResultToPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
@@ -733,8 +733,8 @@
             // 
             // fdAppFileConfig
             // 
-            this.fdAppFileConfig.DefaultExt = "config";
-            this.fdAppFileConfig.Filter = "xml files (*.config)|*.config";
+            this.openFileDialogAppConfig.DefaultExt = "config";
+            this.openFileDialogAppConfig.Filter = "xml files (*.config)|*.config";
             // 
             // saveFileDialogPersist
             // 
@@ -851,7 +851,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton buttonCpuView;
         private System.Windows.Forms.ToolStripButton buttonMemoryView;
-        private System.Windows.Forms.OpenFileDialog fdAppFileConfig;
+        private System.Windows.Forms.OpenFileDialog openFileDialogAppConfig;
         private System.Windows.Forms.SaveFileDialog saveFileDialogPersist;
         private System.Windows.Forms.ToolStripMenuItem exportResultToPDFToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialogPdf;

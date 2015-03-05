@@ -24,14 +24,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using DatabaseBenchmark.Benchmarking;
-using DatabaseBenchmark.Databases;
 using DatabaseBenchmark.Frames;
+using DatabaseBenchmark.Report;
+using DatabaseBenchmark.Serialization;
 using DatabaseBenchmark.Validation;
 using log4net;
 using STS.General.GUI.Extensions;
 using WeifenLuo.WinFormsUI.Docking;
-using DatabaseBenchmark.Serialization;
-using DatabaseBenchmark.Report;
 
 namespace DatabaseBenchmark
 {
@@ -102,7 +101,7 @@ namespace DatabaseBenchmark
 
             TestFrames[TestMethod.Write.ToString()].Select();
 
-            fdAppFileConfig.InitialDirectory = CONFIGURATION_FOLDER;
+            openFileDialogAppConfig.InitialDirectory = CONFIGURATION_FOLDER;
             saveFileDialogPersist.InitialDirectory = CONFIGURATION_FOLDER;
 
             this.ResumeLayout();
@@ -535,8 +534,8 @@ namespace DatabaseBenchmark
 
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (fdAppFileConfig.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                ApplicationPersist.Load(fdAppFileConfig.FileName);
+            if (openFileDialogAppConfig.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                ApplicationPersist.Load(openFileDialogAppConfig.FileName);
         }
 
         #endregion
