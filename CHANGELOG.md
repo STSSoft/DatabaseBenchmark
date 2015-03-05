@@ -73,6 +73,7 @@ to the Read() time.
 * IMPROVED: Major improvements of code readability.
 * IMPROVED: Major optimizations of the GUI that will make it lighter and faster.
 ***
+
 ## Important improvement of MySQL
 
 * ADDED: InsertsPerQuery property in the implementation of MySQl.
