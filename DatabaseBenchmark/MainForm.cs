@@ -93,9 +93,9 @@ namespace DatabaseBenchmark
             Logger = LogManager.GetLogger("ApplicationLogger");
 
             AppSettings containerSettings = new AppSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
-            ApplicationPersist = new ApplicationPersist(containerSettings, CONFIGURATION_FOLDER, TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead);
+            ApplicationPersist = new ApplicationPersist(containerSettings, CONFIGURATION_FOLDER);
 
-            TestFrames = ApplicationPersist.Container.Frames;
+            TestFrames = ApplicationPersist.SettingsContainer.Frames;
 
             // Load dock and application configuration.
             ApplicationPersist.Load(Path.Combine(CONFIGURATION_FOLDER, "AppConfig.config"));
@@ -548,7 +548,7 @@ namespace DatabaseBenchmark
             this.SuspendLayout();
 
             ApplicationPersist.SelectTreeView();
-            TreeViewFrame = ApplicationPersist.Container.TreeView;
+            TreeViewFrame = ApplicationPersist.SettingsContainer.TreeView;
 
             this.ResumeLayout();
         }
@@ -573,8 +573,8 @@ namespace DatabaseBenchmark
             this.SuspendLayout();
 
             ApplicationPersist.ResetDockingConfiguration();
-            TreeViewFrame = ApplicationPersist.Container.TreeView;
-            TestFrames = ApplicationPersist.Container.Frames;
+            TreeViewFrame = ApplicationPersist.SettingsContainer.TreeView;
+            TestFrames = ApplicationPersist.SettingsContainer.Frames;
 
             this.ResumeLayout();
         }

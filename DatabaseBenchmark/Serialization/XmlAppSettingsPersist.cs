@@ -5,18 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Serialization
 {
     public class XmlAppSettingsPersist : IXmlSerializable
     {
-        // Key - database -> Value - database state in TreeView
+        // Database -> Checked state in TreeView.
         public Dictionary<IDatabase, bool> Databases { get; private set; }
 
-        // Key - ComboBox name -> Value - selected value
+        // ComboBox name -> Selected value.
         public Dictionary<string, string> ComboBoxItems { get; private set; }
-        public int TrackBarValue { get; set; }
+
+        public int TrackBarValue { get; private set; }
 
         public XmlAppSettingsPersist()
             : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(), default(int))
@@ -30,9 +32,53 @@ namespace DatabaseBenchmark.Serialization
             TrackBarValue = trackBarValue;
         }
 
-        public System.Xml.Schema.XmlSchema GetSchema()
+        public void WriteXml(XmlWriter writer)
         {
-            return null;
+            // Serialize databases.
+            writer.WriteStartElement("Databases");
+
+            foreach (var database in Databases)
+            {
+                // Get database type.
+                var databaseType = database.Key.GetType();
+
+                // Create xml element and attributes.
+                writer.WriteStartElement("IDatabase");
+                writer.WriteAttributeString("AssemblyQualifiedName", databaseType.AssemblyQualifiedName);
+                writer.WriteAttributeString("CheckedState", database.Value.ToString());
+
+                // Serialize database.
+                XmlSerializer serializer = new XmlSerializer(databaseType);
+                serializer.Serialize(writer, database.Key);
+
+                writer.WriteValue(ColorTranslator.ToHtml(database.Key.Color));
+
+                // IDatabase.
+                writer.WriteEndElement();
+            }
+
+            writer.WriteEndElement();
+
+            // Serialize ComboBoxes.
+            writer.WriteStartElement("ComboBoxes");
+
+            foreach (var item in ComboBoxItems)
+            {
+                writer.WriteStartElement("ComboBox");
+
+                writer.WriteAttributeString("Name", item.Key);
+                writer.WriteValue(item.Value);
+
+                writer.WriteEndElement(); // ComboBox.
+            }
+
+            writer.WriteEndElement(); // ComboBoxes.
+
+            // Serialize TrackBar.
+            writer.WriteStartElement("TrackBar");
+            writer.WriteValue(TrackBarValue);
+
+            writer.WriteEndElement(); // TrackBar.
         }
 
         public void ReadXml(XmlReader reader)
@@ -82,53 +128,9 @@ namespace DatabaseBenchmark.Serialization
             reader.ReadEndElement(); // DatabaseXmlPersist.
         }
 
-        public void WriteXml(XmlWriter writer)
+        public XmlSchema GetSchema()
         {
-            // Serialize Databases.
-            writer.WriteStartElement("Databases");
-
-            foreach (var db in Databases)
-            {
-                // Get database type.
-                var dbType = db.Key.GetType();
-
-                // Create xml element and attributes.
-                writer.WriteStartElement("IDatabase");
-                writer.WriteAttributeString("AssemblyQualifiedName", dbType.AssemblyQualifiedName);
-                writer.WriteAttributeString("CheckedState", db.Value.ToString());
-
-                // Serialize database
-                XmlSerializer serializer = new XmlSerializer(dbType);
-                serializer.Serialize(writer, db.Key);
-
-                writer.WriteValue(ColorTranslator.ToHtml(db.Key.Color));
-
-                // IDatabase.
-                writer.WriteEndElement();
-            }
-
-            writer.WriteEndElement();
-
-            // Serialize ComboBoxes.
-            writer.WriteStartElement("ComboBoxes");
-
-            foreach (var item in ComboBoxItems)
-            {
-                writer.WriteStartElement("ComboBox");
-
-                writer.WriteAttributeString("Name", item.Key);
-                writer.WriteValue(item.Value);
-
-                writer.WriteEndElement(); // ComboBox.
-            }
-
-            writer.WriteEndElement(); // ComboBoxes.
-
-            // Serialize TrackBar.
-            writer.WriteStartElement("TrackBar");
-            writer.WriteValue(TrackBarValue);
-
-            writer.WriteEndElement(); // TrackBar.
+            return null;
         }
     }
 }

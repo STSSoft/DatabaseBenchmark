@@ -27,15 +27,5 @@ namespace DatabaseBenchmark.Serialization
 
             Frames = new Dictionary<string, StepFrame>();
         }
-
-        public Dictionary<string, string> GetComboBoxSelectedItems()
-        {
-            Dictionary<string, string> result = new Dictionary<string, string>();
-
-            foreach (var cb in ComboBoxes)
-                result.Add(cb.Name, cb.Text);
-
-            return result;
-        }
     }
 }
