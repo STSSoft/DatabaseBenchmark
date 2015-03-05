@@ -435,17 +435,6 @@ namespace DatabaseBenchmark
             saveFileDialogJson.ShowDialog();
         }
 
-        private void toolStripButtonPdfExport_Click(object sender, EventArgs e)
-        {
-            saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
-            saveFileDialogPdf.ShowDialog();
-        }
-
-        private void saveFileDialogPdf_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames);
-        }
-
         private void saveFileDialog2_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             string fileName = saveFileDialogJson.FileName;
@@ -458,6 +447,24 @@ namespace DatabaseBenchmark
             catch (Exception exc)
             {
                 Logger.Error("Export results to JSON failed...", exc);
+            }
+        }
+
+        private void toolStripButtonPdfExport_Click(object sender, EventArgs e)
+        {
+            saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
+            saveFileDialogPdf.ShowDialog();
+        }
+
+        private void saveFileDialogPdf_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames);
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("Export results to PDF failed...", exc);
             }
         }
 
