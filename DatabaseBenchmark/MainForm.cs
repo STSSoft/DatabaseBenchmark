@@ -420,7 +420,7 @@ namespace DatabaseBenchmark
 
             try
             {
-                BenchmarkTest.ExportSessions(History, fileName);
+                CsvExporter.ExportTestResults(History, fileName);
             }
             catch (Exception exc)
             {
