@@ -125,6 +125,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\HamsterDb-dotnet.dll</HintPath>
     </Reference>
+    <Reference Include="iTextSharp, Version=4.1.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\STS.Project.Fix\DatabaseBenchmark\bin\Debug\iTextSharp.dll</HintPath>
+    </Reference>
     <Reference Include="LevelDB.NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\LevelDB.NET.dll</HintPath>
@@ -598,6 +602,7 @@ if exist %25drive%25 (
    xcopy /d /y /r "%25thirdParty%25\log4net\1.2.13\*.dll" "$(TargetDir)"
    xcopy /d /y /r "%25thirdParty%25\Json for .NET 1.2\*.dll" "$(TargetDir)"
    xcopy /d /y /r "%25thirdParty%25\DockingSuite\2.9.0\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\PdfExport\*.dll" "$(TargetDir)"
 )
 </PreBuildEvent>
   </PropertyGroup>
