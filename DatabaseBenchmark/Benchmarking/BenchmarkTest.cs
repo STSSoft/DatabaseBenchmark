@@ -47,7 +47,7 @@ namespace DatabaseBenchmark.Benchmarking
             Randomness = randomness;
             KeysType =  Randomness == 0f ? KeysType.Sequential : KeysType.Random;
 
-            // Speed, Memory and I/O statistics.
+            // Statistics.
             int length = Enum.GetValues(typeof(TestMethod)).Length - 1;
 
             SpeedStatistics = new SpeedStatistics[length];
@@ -55,19 +55,21 @@ namespace DatabaseBenchmark.Benchmarking
             MemoryStatistics = new MemoryStatistics[length];
             IOStatistics = new IOStatistics[length];
 
+            int step = (int)((recordCount) / INTERVAL_COUNT);
+
             for (int i = 0; i < length; i++)
             {
                 SpeedStatistics[i] = new SpeedStatistics(INTERVAL_COUNT);
-                SpeedStatistics[i].Step = (int)((recordCount) / INTERVAL_COUNT);
+                SpeedStatistics[i].Step = step;
 
                 ProcessorStatistics[i] = new ProcessorStatistics(INTERVAL_COUNT);
-                ProcessorStatistics[i].Step = (int)((recordCount) / INTERVAL_COUNT);
+                ProcessorStatistics[i].Step = step;
 
                 MemoryStatistics[i] = new MemoryStatistics(INTERVAL_COUNT);
-                MemoryStatistics[i].Step = (int)((recordCount) / INTERVAL_COUNT);
+                MemoryStatistics[i].Step = step;
 
                 IOStatistics[i] = new IOStatistics(INTERVAL_COUNT);
-                IOStatistics[i].Step = (int)((recordCount) / INTERVAL_COUNT);
+                IOStatistics[i].Step = step;
             }
 
             Cancellation = cancellation;
@@ -136,8 +138,8 @@ namespace DatabaseBenchmark.Benchmarking
             {
                 SpeedStatistics[method].Start();
                 ProcessorStatistics[method].Start();
-                MemoryStatistics[(int)TestMethod.Read].Start();
-                IOStatistics[(int)TestMethod.Read].Start();
+                MemoryStatistics[method].Start();
+                IOStatistics[method].Start();
 
                 Task task = DoRead(TestMethod.Read);
                 Task.WaitAll(task);
