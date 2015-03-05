@@ -41,8 +41,7 @@ namespace DatabaseBenchmark.Report
             foreach (var fr in frames)
             {
                 StepFrame frame = fr.Value;
-                PdfPTable table = new PdfPTable(3);
-                table.HorizontalAlignment = Element.ALIGN_CENTER;
+                PdfPTable table = new PdfPTable(barChartCount >= 3 ? 3 : barChartCount);
 
                 var chapter = new iTextSharp.text.Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
 
