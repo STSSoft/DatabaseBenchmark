@@ -13,18 +13,19 @@ This change allows fine control over the generated keys and more precise tests.
 
 * ADDED: Logging of exceptions thrown in the tests and the application. log4Net is used as a log tool. The logs can be found in ../Logs/ApplicationLog.txt
 and ../Logs/BenchmarkTestLog.txt.
+
 The source files of log4net can be found at: http://logging.apache.org/log4net/.
 
 ***
 
-* ADDED: Test results report - the test results from the benchmark can now be sent to the dedicated servers of Database Benchmark.
+* ADDED: Online report of the test results - the test results from the benchmark can be sent to the dedicated servers of Database Benchmark.
 The computer configuration allong with the test results is converted to JSON and sent to the servers. No personal user data is sent!
+
 The Json for .NET library used for JSON serialization can be found at: https://sourceforge.net/projects/csjson/.
 
 ***
 
-* ADDED: Monitoring of the combined I/O operations that every database generates (excluding the ones working on a server).
-The I/O monitoring uses the Windows performance counters for the Process object: https://technet.microsoft.com/en-us/library/cc780836(WS.10).aspx.
+* ADDED: Monitoring of the combined I/O operations that every database generates (for a database working on a remote server, the I/O usage will be only for the driver that connects the application to the server).
 
 It monitors the following parameters:
 
@@ -64,6 +65,7 @@ All resource monitors use the Windows performance counters for the Process objec
 
 * ADDED: The GUI now features docking capabilities for the windows. The window layout is saved automatically when the application
 is closing. It can also be saved from the File menu.
+
 The DockingPanelSuite library used for docking can be found at: https://github.com/dockpanelsuite/dockpanelsuite.
 
 ***
@@ -129,10 +131,9 @@ Compression (default: NoCompression)
 * ADDED: Couchbase 3.0.2 with Couchbase-Net-Client-2.0.2.
 * ADDED: Aerospike 3.4.1 with .NET Client 3.0.13.
 * ADDED: OrientDB 2.0 with OrientDB-NET.binary.
-
 * ADDED: Separate implementation for TokuMX.
 * ADDED: Export of the test results into a JSON file.
-* ADDED: LICENSE file in the Doc folder, containing the GNU General Public License version 2
+* ADDED
 * ADDED: License header in MainForm.cs.
 
 * CHANGED: Removed SetDropDups option from TokuMX and MongoDB implementation (thanks to Tim Callaghan of Tokutek).
