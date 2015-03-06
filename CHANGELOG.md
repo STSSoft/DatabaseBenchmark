@@ -5,13 +5,13 @@ ver. 3.0.0 (beta released)
 
 ## Important improvements of Database Benchmark
 
-* ADDED: KeyTypes replaced with Randomness in the GUI. 0% value means that all of the generated keys are sequential,
-and with the increasing of the percentage the generated flow begins to contain random keys. 100% means that all keys are random.
+* ADDED: KeyTypes combo box replaced with Randomness slider in the GUI. 0% value means that all of the generated keys are sequential, and with the increasing of the percentage the generated flow begins to contain random keys. 100% means that all keys are random.
+
 This change allows fine control over the generated keys and more precise tests.
 
 ***
 
-* ADDED: Logging of exceptions thrown in the tests and the application. log4Net is used as a log tool. The logs can be found in ../Logs/ApplicationLog.txt
+* ADDED: Logging of exceptions in the application. log4Net is used as a log tool. The logs can be found in ../Logs/ApplicationLog.txt
 and ../Logs/BenchmarkTestLog.txt.
 
 The source files of log4net can be found at: http://logging.apache.org/log4net/.
@@ -19,6 +19,7 @@ The source files of log4net can be found at: http://logging.apache.org/log4net/.
 ***
 
 * ADDED: Online report of the test results - the test results from the benchmark can be sent to the dedicated servers of Database Benchmark.
+* 
 The computer configuration allong with the test results is converted to JSON and sent to the servers. No personal user data is sent!
 
 The Json for .NET library used for JSON serialization can be found at: https://sourceforge.net/projects/csjson/.
@@ -87,11 +88,10 @@ New method signatures are:
 void Init(int flowCount, long flowRecordCount, KeysType keysType);
 IEnumerable<KeyValuePair<long, Tick>> Read();
 ```
-* CHANGED: BenchmarkTest.cs - in Write(), each data flow is inserted from different thread into ONE database collection (table, document or etc.).
-The old implementation was inserting every flow into individual database collection from an individual thread.
+* CHANGED: BenchmarkTest.cs - in Write(), each data flow is inserted from a separate thread into ONE database collection (table and etc.).
+The old implementation was inserting every flow into separate database collection from a separate thread.
 
-* CHANGED: BenchmarkTest.cs - in Read(), only one thread is started for reading data from the database. The old implementation
-was starting multiple threads depending on the flow count.
+* CHANGED: BenchmarkTest.cs - in Read(), only one thread is started for reading data from the database. The old implementation was starting multiple threads depending on the flow count.
 
 * CHANGED: the Finish() time is now added to the secondary read time. The old implementation was adding it
 to the Read() time.
