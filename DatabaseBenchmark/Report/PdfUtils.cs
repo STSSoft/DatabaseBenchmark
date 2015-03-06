@@ -22,7 +22,6 @@ namespace DatabaseBenchmark.Report
             if (File.Exists(file))
                 File.Delete(file);
 
-
             var fileStream = new FileStream(file, FileMode.OpenOrCreate);
             iTextSharp.text.pdf.PdfWriter.GetInstance(doc, fileStream);
             doc.Open();
@@ -56,8 +55,10 @@ namespace DatabaseBenchmark.Report
 
                 var chapter = new iTextSharp.text.Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
 
+                chapter.Add(new Chunk("\n"));
+
                 for (int i = 0; i < cellCount; i++)
-                    AddCellToTable(table, i, 1, barCharts[i]);
+                    AddCellToTable(table, i, barCharts[i]);
 
                 chapter.Add(table);
 
@@ -66,51 +67,44 @@ namespace DatabaseBenchmark.Report
                     table = new PdfPTable(barCharts.Count - cellCount);
                     table.WidthPercentage = 100;
 
-                    for (int i = cellCount; i < barCharts.Count; i++)
-                        AddCellToTable(table, barCharts.Count - i, 2, barCharts[i]);
+                    for (int i = cellCount, index = 0; i < barCharts.Count; i++, index++)
+                        AddCellToTable(table, index, barCharts[i]);
 
                     chapter.Add(table);
                 }
 
-                chapter.Add(new Chunk("\n"));
+                chapter.Add(new Paragraph("Average Speed"));
+                AddLineChartToDocument(chapter, frame.lineChartAverageSpeed);
 
+                chapter.Add(new Paragraph("Moment Speed"));
+                AddLineChartToDocument(chapter, frame.lineChartMomentSpeed);
+
+                chapter.Add(new Paragraph("Average Memory"));
+                AddLineChartToDocument(chapter, frame.lineChartAverageMemory);
+                
                 doc.Add(chapter);
-
-                doc.Add(new Paragraph("Average Speed"));
-                AddLineChartToDocument(doc, frame.lineChartAverageSpeed);
-
-                doc.Add(new Paragraph("Moment Speed"));
-                AddLineChartToDocument(doc, frame.lineChartMomentSpeed);
-
-                doc.Add(new Paragraph("Average Memory"));
-                AddLineChartToDocument(doc, frame.lineChartAverageMemory);
-
-                doc.NewPage();
             }
 
             doc.Close();
         }
 
-        private static void AddCellToTable(PdfPTable table, int cellIndex, int rowIndex, BarChartFrame frame)
+        private static void AddCellToTable(PdfPTable table, int cellIndex, BarChartFrame frame)
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
-            image.ScalePercent(60f);
-
             PdfPCell cell = new PdfPCell();
 
-            cell.Rowspan = rowIndex;
             cell.Colspan = cellIndex;
             cell.AddElement(image);
 
             table.AddCell(cell);
         }
 
-        private static void AddLineChartToDocument(Document doc, LineChartFrame frame)
+        private static void AddLineChartToDocument(Chapter chapter, LineChartFrame frame)
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
             image.ScalePercent(60f);
 
-            doc.Add(image);
+            chapter.Add(image);
         }
     }
 }
