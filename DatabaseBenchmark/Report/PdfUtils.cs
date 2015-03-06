@@ -26,18 +26,16 @@ namespace DatabaseBenchmark.Report
             iTextSharp.text.pdf.PdfWriter.GetInstance(doc, fileStream);
             doc.Open();
 
-            PdfPTable title = new PdfPTable(1);
-            PdfPCell titleText = new PdfPCell();
-            titleText.VerticalAlignment = Element.ALIGN_MIDDLE;
-            titleText.HorizontalAlignment = Element.ALIGN_MIDDLE;
-            titleText.MinimumHeight = doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin);
+            PdfPCell title = new PdfPCell(new PdfPTable(1));
+            title.VerticalAlignment = Element.ALIGN_MIDDLE;
+            title.HorizontalAlignment = Element.ALIGN_CENTER;
+            title.MinimumHeight = doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin);
 
             Paragraph paragraph = new Paragraph("DATABASE BENCHAMRK RESULTS");
             paragraph.Font = new Font(Font.NORMAL, 16f, Font.BOLD, Color.BLUE);
             paragraph.Alignment = Element.ALIGN_MIDDLE;
 
-            titleText.AddElement(paragraph);
-            title.AddCell(titleText);
+            title.AddElement(paragraph);
             doc.Add(title);
 
             int chapterCount = 1;
@@ -74,7 +72,7 @@ namespace DatabaseBenchmark.Report
             doc.Close();
         }
 
-        private static void AddCellToTable(PdfPTable table, BarChart frame)
+        private static void AddCellToTable(PdfPTable table,BarChart frame)
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
             PdfPCell cell = new PdfPCell();
@@ -87,7 +85,8 @@ namespace DatabaseBenchmark.Report
         private static void AddLineChartToDocument(Chapter chapter, LineChart frame)
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
-            image.ScalePercent(60f);
+            //image.ScalePercent(50f);
+            image.WidthPercentage = 40f;
 
             chapter.Add(image);
         }
