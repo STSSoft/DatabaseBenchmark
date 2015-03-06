@@ -47,8 +47,16 @@ namespace DatabaseBenchmark.Report
                 StepFrame frame = fr.Value;
                 List<BarChart> barCharts = frame.GetSelectedBarCharts();
 
-                int cellPerRow = 3;
-                int cellCount = barCharts.Count > cellPerRow ? cellPerRow : barCharts.Count;
+                int cellPerRow = 4;
+                int cellCount = barCharts.Count;
+
+                if(barCharts.Count > cellPerRow )
+                {
+                    if(barCharts.Count == 4)
+                        cellCount = 2;
+                    else
+                        cellCount = 3;
+                }
 
                 PdfPTable table = new PdfPTable(cellCount);
                 table.WidthPercentage = 100;
@@ -60,12 +68,16 @@ namespace DatabaseBenchmark.Report
                 for (int i = 0; i < cellCount; i++)
                     AddCellToTable(table, i, barCharts[i]);
 
+                table.CompleteRow();
                 chapter.Add(table);
 
                 if (barCharts.Count > cellPerRow)
                 {
-                    table = new PdfPTable(barCharts.Count - cellCount);
-                    table.WidthPercentage = 100;
+                    if (barCharts.Count == 4)
+                    {
+                        table = new PdfPTable(barCharts.Count - cellCount);
+                        table.WidthPercentage = 100;
+                    }
 
                     for (int i = cellCount, index = 0; i < barCharts.Count; i++, index++)
                         AddCellToTable(table, index, barCharts[i]);

@@ -152,6 +152,16 @@ namespace DatabaseBenchmark.Frames
             return allBarCharts;
         }
 
+        public List<BarChart> GetAllBarCharts()
+        {
+            List<BarChart> barCharts = new List<BarChart>();
+
+            foreach (Control item in LayoutPanel.Controls)
+                barCharts.Add(item as BarChart);
+
+            return barCharts;
+        }
+
         public override string Text
         {
             get { return text; }
