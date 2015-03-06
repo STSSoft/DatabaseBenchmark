@@ -64,7 +64,7 @@ namespace DatabaseBenchmark.Validation
             }
             catch (Exception exc)
             {
-                Logger.Error("GetCpuInfo() error...", exc);
+                Logger.Error("GetOperatingSystem() error...", exc);
                 system = null;
             }
 
@@ -105,7 +105,7 @@ namespace DatabaseBenchmark.Validation
             }
             catch (Exception exc)
             {
-                Logger.Error("GetCpuInfo() error...", exc);
+                Logger.Error("GetProcessors() error...", exc);
                 processors = null;
             }
 
@@ -147,7 +147,7 @@ namespace DatabaseBenchmark.Validation
             }
             catch (Exception exc)
             {
-                Logger.Error("GetMemoryInfo() error...", exc);
+                Logger.Error("GetMemory() error...", exc);
                 memoryModules = null;
             }
 
@@ -191,7 +191,7 @@ namespace DatabaseBenchmark.Validation
             }
             catch (Exception exc)
             {
-                Logger.Error("GetHddInfo() error...", exc);
+                Logger.Error("GetStorageDevices() error...", exc);
                 storages = null;
             }
 

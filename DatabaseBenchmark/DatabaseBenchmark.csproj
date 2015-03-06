@@ -401,7 +401,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statistics\IStatistic.cs" />
     <Compile Include="Report\JsonUtils.cs" />
-    <Compile Include="Report\InfoStructures.cs" />
+    <Compile Include="Report\SystemInfo.cs" />
     <Compile Include="Report\ServerConnection.cs" />
     <Compile Include="Statistics\MemoryStatistics.cs" />
     <Compile Include="Statistics\ProcessorStatistics.cs" />
