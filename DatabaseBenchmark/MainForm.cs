@@ -374,13 +374,18 @@ namespace DatabaseBenchmark
 
         private void View_Click(object sender, EventArgs e)
         {
-            ToolStripButton button = (ToolStripButton)sender;
-            int column = Int32.Parse(button.Tag.ToString());
+            foreach (var item in TestFrames)
+            {
+                StepFrame frame = item.Value;
 
-            if (button.Checked)
-                ActiveStepFrame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Percent, 18);
-            else
-                ActiveStepFrame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Absolute, 0);
+                ToolStripButton button = (ToolStripButton)sender;
+                int column = Int32.Parse(button.Tag.ToString());
+
+                if (button.Checked)
+                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Percent, 18);
+                else
+                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Absolute, 0);
+            }
         }
 
         private void axisType_Click(object sender, EventArgs e)
