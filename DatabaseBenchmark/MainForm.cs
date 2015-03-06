@@ -70,13 +70,6 @@ namespace DatabaseBenchmark
             TreeViewFrame = new TreeViewFrame();
             TestFrames = new Dictionary<string, StepFrame>();
 
-            btnSpeedView.Tag = 0;
-            btnTimeView.Tag = 1;
-            btnSizeView.Tag = 2;
-            btnIOView.Tag = 3;
-            buttonCpuView.Tag = 4;
-            buttonMemoryView.Tag = 5;
-
             cbFlowsCount.SelectedIndex = 0;
             cbRecordCount.SelectedIndex = 5;
 
@@ -86,7 +79,7 @@ namespace DatabaseBenchmark
 
             this.SuspendLayout();
 
-            View_Click(btnTimeView, EventArgs.Empty);
+            View_Click(btnSizeView, EventArgs.Empty);
 
             // Logger.
             Logger = LogManager.GetLogger("ApplicationLogger");
@@ -166,27 +159,27 @@ namespace DatabaseBenchmark
 
                 // Speed chart.
                 updateChart = ActiveStepFrame.AddAverageSpeedToBar;
-                ReportSpeed(databaseName, databaseColor, updateChart, benchmark.GetSpeed(method));
+                Report(databaseName, databaseColor, updateChart, benchmark.GetSpeed(method));
 
                 // Size chart.
                 updateChart = ActiveStepFrame.AddSizeToBar;
-                ReportSize(databaseName, databaseColor, updateChart, benchmark.Database.Size);
+                Report(databaseName, databaseColor, updateChart, benchmark.Database.Size / (1024.0 * 1024.0));
 
                 // Time chart.
                 updateChart = ActiveStepFrame.AddTimeToBar;
-                ReportTime(databaseName, databaseColor, updateChart, benchmark.GetTime(method));
+                Report(databaseName, databaseColor, updateChart, new DateTime(benchmark.GetTime(method).Ticks));
 
                 // CPU chart.
                 updateChart = ActiveStepFrame.AddCpuUsageToBar;
-                ReportCPU(databaseName, databaseColor, updateChart, benchmark.GetAverageProcessorTime(method));
+                Report(databaseName, databaseColor, updateChart, benchmark.GetAverageProcessorTime(method));
 
                 // Memory chart.
                 updateChart = ActiveStepFrame.AddMemoryUsageToBar;
-                ReportMemory(databaseName, databaseColor, updateChart, benchmark.GetPeakWorkingSet(method));
+                Report(databaseName, databaseColor, updateChart, benchmark.GetPeakWorkingSet(method) / (1024.0 * 1024.0));
 
                 // I/O chart.
                 updateChart = ActiveStepFrame.AddIoUsageToBar;
-                ReportIO(databaseName, databaseColor, updateChart, benchmark.GetAverageIOData(method));
+                Report(databaseName, databaseColor, updateChart, benchmark.GetAverageIOData(method) / (1024.0 * 1024.0));
             }
             catch (Exception exc)
             {
@@ -194,83 +187,15 @@ namespace DatabaseBenchmark
             }
         }
 
-        private void ReportSpeed(string databaseName, Color databaseColor, Action<string, object, Color> addPoint, double speed)
+        private void Report(string series, Color seriesColor, Action<string, object, Color> addPoint, object data)
         {
             try
             {
-                Invoke(addPoint, databaseName, speed, databaseColor);
+                Invoke(addPoint, series, data, seriesColor);
             }
             catch (Exception exc)
             {
-                Logger.Error("Report speed exception occured...", exc);
-            }
-        }
-
-        private void ReportSize(string databaseName, Color databaseColor, Action<string, object, Color> addPoint, long size)
-        {
-            try
-            {
-                double databaseSize = size / (1024.0 * 1024.0);
-
-                Invoke(addPoint, databaseName, databaseSize, databaseColor);
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Report size exception occured...", exc);
-            }
-        }
-
-        private void ReportTime(string databaseName, Color databaseColor, Action<string, object, Color> addPoint, TimeSpan time)
-        {
-            try
-            {
-                DateTime elapsed = new DateTime(time.Ticks);
-
-                Invoke(addPoint, databaseName, elapsed, databaseColor);
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Report time exception occured...", exc);
-            }
-        }
-
-        private void ReportCPU(string databaseName, Color databaseColor, Action<string, object, Color> addPoint, float cpu)
-        {
-            try
-            {
-                Invoke(addPoint, databaseName, cpu, databaseColor);
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Report CPU exception occured...", exc);
-            }
-        }
-
-        private void ReportMemory(string databaseName, Color databaseColor, Action<string, object, Color> addPoint, float memory)
-        {
-            try
-            {
-                float memoryMBytes = memory / (1024.0f * 1024.0f);
-
-                Invoke(addPoint, databaseName, memoryMBytes, databaseColor);
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Report memory exception occured...", exc);
-            }
-        }
-
-        private void ReportIO(string databaseName, Color databaseColor, Action<string, object, Color> addPoint, float io)
-        {
-            try
-            {
-                float ioMBytes = io / (1024.0f * 1024.0f);
-
-                Invoke(addPoint, databaseName, ioMBytes, databaseColor);
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Report I/O exception occured...", exc);
+                Logger.Error("Report exception occured...", exc);
             }
         }
 
@@ -449,20 +374,13 @@ namespace DatabaseBenchmark
 
         private void View_Click(object sender, EventArgs e)
         {
-            foreach (var control in this.Controls.Iterate())
-            {
-                StepFrame step = control as StepFrame;
-                if (step == null)
-                    continue;
+            ToolStripButton button = (ToolStripButton)sender;
+            int column = Int32.Parse(button.Tag.ToString());
 
-                ToolStripButton button = (ToolStripButton)sender;
-                int column = (int)button.Tag;
-
-                if (button.Checked)
-                    step.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Percent, 18);
-                else
-                    step.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Absolute, 0);
-            }
+            if (button.Checked)
+                ActiveStepFrame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Percent, 18);
+            else
+                ActiveStepFrame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Absolute, 0);
         }
 
         private void axisType_Click(object sender, EventArgs e)
@@ -473,19 +391,7 @@ namespace DatabaseBenchmark
             foreach (var item in TestFrames)
             {
                 step = item.Value;
-
-                if (isChecked)
-                {
-                    step.lineChartAverageSpeed.IsLogarithmic = true;
-                    step.lineChartMomentSpeed.IsLogarithmic = true;
-                    step.lineChartAverageIO.IsLogarithmic = true;
-                }
-                else
-                {
-                    step.lineChartAverageSpeed.IsLogarithmic = false;
-                    step.lineChartMomentSpeed.IsLogarithmic = false;
-                    step.lineChartAverageIO.IsLogarithmic = false;
-                }
+                step.SetLogarithmic(isChecked);
             }
         }
 
@@ -520,13 +426,13 @@ namespace DatabaseBenchmark
 
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveFileDialogPersist.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (saveFileDialogPersist.ShowDialog() == DialogResult.OK)
                 ApplicationPersist.Store(saveFileDialogPersist.FileName);
         }
 
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialogAppConfig.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openFileDialogAppConfig.ShowDialog() == DialogResult.OK)
                 ApplicationPersist.Load(openFileDialogAppConfig.FileName);
         }
 
@@ -632,27 +538,19 @@ namespace DatabaseBenchmark
                 // Draw charts.
                 if (activeFrame.Text != null) // Frame is in write, read or other mode.
                 {
-                    var averagePossition = activeFrame.lineChartAverageSpeed.GetPointsCount(database.DatabaseName);
-                    var momentPossition = activeFrame.lineChartMomentSpeed.GetPointsCount(database.DatabaseName);
+                    int averagePossition = activeFrame.lineChartAverageSpeed.GetPointsCount(database.DatabaseName);
+                    int momentPossition = activeFrame.lineChartMomentSpeed.GetPointsCount(database.DatabaseName);
 
-                    // Average speed.
                     var averageSpeedData = session.GetAverageSpeed(method, averagePossition);
-                    activeFrame.AddAverageSpeed(database.DatabaseName, averageSpeedData);
-
-                    // Moment speed.
                     var momentSpeedData = session.GetMomentSpeed(method, momentPossition);
-                    activeFrame.AddMomentSpeed(database.DatabaseName, momentSpeedData);
-
-                    // Average CPU usage.
                     var cpuData = session.GetAverageUserTimeProcessor(method, averagePossition);
-                    activeFrame.AddAverageCpuUsage(database.DatabaseName, cpuData);
-
-                    // Average memory usage.
                     var memoryData = session.GetAverageWorkingSet(method, averagePossition);
-                    activeFrame.AddAverageMemoryUsage(database.DatabaseName, memoryData);
-
-                    // Average Data IO.
                     var ioData = session.GetAverageDataIO(method, averagePossition);
+
+                    activeFrame.AddAverageSpeed(database.DatabaseName, averageSpeedData);
+                    activeFrame.AddMomentSpeed(database.DatabaseName, momentSpeedData);
+                    activeFrame.AddAverageCpuUsage(database.DatabaseName, cpuData);
+                    activeFrame.AddAverageMemoryUsage(database.DatabaseName, memoryData);
                     activeFrame.AddAverageIO(database.DatabaseName, ioData);
                 }
 
@@ -684,7 +582,7 @@ namespace DatabaseBenchmark
         {
             DialogResult result = MessageBox.Show("Save database settings?", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            if (result == System.Windows.Forms.DialogResult.Yes)
+            if (result == DialogResult.Yes)
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
             stopButton_Click(sender, e);

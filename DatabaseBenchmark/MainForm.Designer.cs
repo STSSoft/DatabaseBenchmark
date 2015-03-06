@@ -338,6 +338,7 @@
             this.btnSpeedView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSpeedView.Name = "btnSpeedView";
             this.btnSpeedView.Size = new System.Drawing.Size(36, 36);
+            this.btnSpeedView.Tag = "0";
             this.btnSpeedView.Text = "toolStripButton1";
             this.btnSpeedView.ToolTipText = "Speed View";
             this.btnSpeedView.Click += new System.EventHandler(this.View_Click);
@@ -350,7 +351,8 @@
             this.btnTimeView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnTimeView.Name = "btnTimeView";
             this.btnTimeView.Size = new System.Drawing.Size(36, 36);
-            this.btnTimeView.Text = "toolStripButton1";
+            this.btnTimeView.Tag = "1";
+            this.btnTimeView.Text = "Time View";
             this.btnTimeView.ToolTipText = "Time View";
             this.btnTimeView.Click += new System.EventHandler(this.View_Click);
             // 
@@ -364,7 +366,8 @@
             this.btnSizeView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSizeView.Name = "btnSizeView";
             this.btnSizeView.Size = new System.Drawing.Size(36, 36);
-            this.btnSizeView.Text = "toolStripButton1";
+            this.btnSizeView.Tag = "2";
+            this.btnSizeView.Text = "Database Size View";
             this.btnSizeView.ToolTipText = "Database Size View";
             this.btnSizeView.Click += new System.EventHandler(this.View_Click);
             // 
@@ -376,6 +379,7 @@
             this.buttonCpuView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonCpuView.Name = "buttonCpuView";
             this.buttonCpuView.Size = new System.Drawing.Size(36, 36);
+            this.buttonCpuView.Tag = "3";
             this.buttonCpuView.Text = "CPU View";
             this.buttonCpuView.Click += new System.EventHandler(this.View_Click);
             // 
@@ -387,6 +391,7 @@
             this.buttonMemoryView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonMemoryView.Name = "buttonMemoryView";
             this.buttonMemoryView.Size = new System.Drawing.Size(36, 36);
+            this.buttonMemoryView.Tag = "4";
             this.buttonMemoryView.Text = "Memory View";
             this.buttonMemoryView.Click += new System.EventHandler(this.View_Click);
             // 
@@ -398,6 +403,7 @@
             this.btnIOView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnIOView.Name = "btnIOView";
             this.btnIOView.Size = new System.Drawing.Size(36, 36);
+            this.btnIOView.Tag = "5";
             this.btnIOView.Text = "I/O View";
             this.btnIOView.Click += new System.EventHandler(this.View_Click);
             // 

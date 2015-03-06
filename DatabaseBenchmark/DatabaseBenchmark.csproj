@@ -402,7 +402,7 @@
     <Compile Include="Statistics\IStatistic.cs" />
     <Compile Include="Report\JsonUtils.cs" />
     <Compile Include="Report\InfoStructures.cs" />
-    <Compile Include="Report\BenchmarkServerConnector.cs" />
+    <Compile Include="Report\ServerConnection.cs" />
     <Compile Include="Statistics\MemoryStatistics.cs" />
     <Compile Include="Statistics\ProcessorStatistics.cs" />
     <Compile Include="Statistics\SpeedStatistics.cs" />

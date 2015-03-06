@@ -32,24 +32,24 @@ namespace DatabaseBenchmark.Validation
 
         public static JsonObjectCollection ConvertToJson(UserInfo user, ComputerConfiguration configuration, List<BenchmarkTest> benchmarks)
         {
-            List<JsonObjectCollection> json = new List<JsonObjectCollection>();
+            List<JsonObjectCollection> jsonData = new List<JsonObjectCollection>();
 
             // User.
             var jsonUser = ConvertToJson(user);
-            json.Add(jsonUser);
+            jsonData.Add(jsonUser);
 
             // Computer configuration.
             var jsonComputer = ConvertToJson(configuration);
-            json.Add(jsonComputer);
+            jsonData.Add(jsonComputer);
             
             // Benchmark test.
             foreach (var benchmark in benchmarks)
             {
                 var jsonTest = ConvertToJson(benchmark);
-                json.Add(jsonTest);
+                jsonData.Add(jsonTest);
             }
 
-            return new JsonObjectCollection(json);
+            return new JsonObjectCollection(jsonData);
         }
 
         public static JsonObjectCollection ConvertToJson(UserInfo user)

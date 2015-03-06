@@ -21,14 +21,14 @@ namespace DatabaseBenchmark.Validation
         private ILog Logger;
         private ComputerConfiguration Configuration;
 
-        private BenchmarkServerConnector ServerConnector;
+        private ServerConnection ServerConnector;
         public List<BenchmarkTest> BenchmarkTests { get; private set; }
 
         public ReportForm(List<BenchmarkTest> benchmarkTests)
             : this()
         {
-            BenchmarkTests = benchmarkTests;
             Logger = LogManager.GetLogger("ApplicationLogger");
+            BenchmarkTests = benchmarkTests;
 
             PopulateHardwareInfo();
         }
@@ -90,7 +90,7 @@ namespace DatabaseBenchmark.Validation
                 Configuration.StorageDevices.RemoveAll(device => device.Model == comboBoxStorageModel.Text);
 
                 string jsonData = JsonUtils.ConvertToJson(user, Configuration, BenchmarkTests).ToString();
-                ServerConnector = new BenchmarkServerConnector();
+                ServerConnector = new ServerConnection();
 
                 Logger.Info("Sending data to server...");
                 HttpStatusCode responseCode = ServerConnector.SendData(jsonData);

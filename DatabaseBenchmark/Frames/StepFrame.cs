@@ -60,11 +60,20 @@ namespace DatabaseBenchmark.Frames
             lineChartAverageIO.Clear();
 
             barChartSpeed.Clear();
-            barChartSize.Clear();
             barChartTime.Clear();
+            barChartSize.Clear();
             barChartCPU.Clear();
             barChartMemory.Clear();
             barChartIO.Clear();
+        }
+
+        public void SetLogarithmic(bool isLogarithmic)
+        {
+            lineChartAverageSpeed.IsLogarithmic = isLogarithmic;
+            lineChartMomentSpeed.IsLogarithmic = isLogarithmic;
+            lineChartAverageCPU.IsLogarithmic = isLogarithmic;
+            lineChartAverageMemory.IsLogarithmic = isLogarithmic;
+            lineChartAverageIO.IsLogarithmic = isLogarithmic;
         }
 
         #region Add points to LineChart

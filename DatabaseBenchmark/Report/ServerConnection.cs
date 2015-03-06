@@ -9,11 +9,11 @@ namespace DatabaseBenchmark.Validation
     /// <summary>
     /// Sends the test data and computer configuration to the dedicated servers of DatabaseBenchmark.
     /// </summary>
-    public class BenchmarkServerConnector
+    public class ServerConnection
     {
         public string Host { get; set; }
 
-        public BenchmarkServerConnector()
+        public ServerConnection()
         {
             Host = "http://benchmarks.dev/api/v1/benchmarks";
         }
