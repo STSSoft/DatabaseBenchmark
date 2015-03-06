@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms.DataVisualization.Charting;
+using DatabaseBenchmark.Charts;
 
 namespace DatabaseBenchmark.Frames
 {
@@ -139,10 +140,23 @@ namespace DatabaseBenchmark.Frames
 
         public void AddIoUsageToBar(string label, object y, Color color)
         {
-             barChartIO.AddPoint(label, y, color);
+            barChartIO.AddPoint(label, y, color);
         }
 
         #endregion
+
+        public List<BarChartFrame> GetSelectedBarCharts()
+        {
+            List<BarChartFrame> allBarCharts = new List<BarChartFrame>();
+
+            foreach (Control item in LayoutPanel.Controls)
+            {
+                if (LayoutPanel.ColumnStyles[LayoutPanel.GetColumn(item)].SizeType == SizeType.Percent)
+                    allBarCharts.Add(item as BarChartFrame);
+            }
+
+            return allBarCharts;
+        }
 
         public override string Text
         {
