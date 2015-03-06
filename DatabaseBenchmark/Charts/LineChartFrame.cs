@@ -52,6 +52,10 @@ namespace DatabaseBenchmark.Charts
             if (cache.Name != series)
                 cache = chart1.Series.FindByName(series);
 
+            // If you switch to logarithmic scale and the chart contains 0's, it will throw an exception.
+            if (y == 0)
+                y = double.NaN;
+
             cache.Points.AddXY(x, y);
         }
 
