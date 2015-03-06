@@ -243,6 +243,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap logicon_48x48 {
+            get {
+                object obj = ResourceManager.GetObject("logicon_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap memory_blue {
             get {
                 object obj = ResourceManager.GetObject("memory_blue", resourceCulture);

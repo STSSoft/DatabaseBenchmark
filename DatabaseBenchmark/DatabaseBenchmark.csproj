@@ -612,6 +612,9 @@
   <ItemGroup>
     <None Include="Resources\ioicon_48x481.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logicon_48x48.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set target=x64

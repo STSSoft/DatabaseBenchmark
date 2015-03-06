@@ -55,9 +55,23 @@
             this.estimateTimeStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
+            this.btnStart = new System.Windows.Forms.ToolStripButton();
+            this.btnStop = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnExportCsv = new System.Windows.Forms.ToolStripButton();
+            this.btnExportJson = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonPdfExport = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnTreeView = new System.Windows.Forms.ToolStripButton();
+            this.btnAutoNavigate = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnAxisType = new System.Windows.Forms.ToolStripButton();
+            this.btnSpeedView = new System.Windows.Forms.ToolStripButton();
+            this.btnTimeView = new System.Windows.Forms.ToolStripButton();
+            this.btnSizeView = new System.Windows.Forms.ToolStripButton();
+            this.buttonCpuView = new System.Windows.Forms.ToolStripButton();
+            this.buttonMemoryView = new System.Windows.Forms.ToolStripButton();
+            this.btnIOView = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.cbFlowsCount = new System.Windows.Forms.ToolStripComboBox();
@@ -101,20 +115,6 @@
             this.openFileDialogAppConfig = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogPersist = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
-            this.btnStart = new System.Windows.Forms.ToolStripButton();
-            this.btnStop = new System.Windows.Forms.ToolStripButton();
-            this.btnExportCsv = new System.Windows.Forms.ToolStripButton();
-            this.btnExportJson = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonPdfExport = new System.Windows.Forms.ToolStripButton();
-            this.btnTreeView = new System.Windows.Forms.ToolStripButton();
-            this.btnAutoNavigate = new System.Windows.Forms.ToolStripButton();
-            this.btnAxisType = new System.Windows.Forms.ToolStripButton();
-            this.btnSpeedView = new System.Windows.Forms.ToolStripButton();
-            this.btnTimeView = new System.Windows.Forms.ToolStripButton();
-            this.btnSizeView = new System.Windows.Forms.ToolStripButton();
-            this.buttonCpuView = new System.Windows.Forms.ToolStripButton();
-            this.buttonMemoryView = new System.Windows.Forms.ToolStripButton();
-            this.btnIOView = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -224,20 +224,190 @@
             this.toolStripMain.TabIndex = 4;
             this.toolStripMain.Text = "toolStrip1";
             // 
+            // btnStart
+            // 
+            this.btnStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStart.Image = global::DatabaseBenchmark.Properties.Resources.start_48x48;
+            this.btnStart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(52, 52);
+            this.btnStart.Text = "Start";
+            this.btnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnStart.Click += new System.EventHandler(this.startButton_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStop.Image = global::DatabaseBenchmark.Properties.Resources.stop_48x48;
+            this.btnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(52, 52);
+            this.btnStop.Text = "Stop";
+            this.btnStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnStop.Click += new System.EventHandler(this.stopButton_Click);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 55);
+            // 
+            // btnExportCsv
+            // 
+            this.btnExportCsv.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnExportCsv.Image = global::DatabaseBenchmark.Properties.Resources.CSVicon_48x48;
+            this.btnExportCsv.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExportCsv.Name = "btnExportCsv";
+            this.btnExportCsv.Size = new System.Drawing.Size(52, 52);
+            this.btnExportCsv.Text = "Export CSV";
+            this.btnExportCsv.Click += new System.EventHandler(this.btnExportCsv_Click);
+            // 
+            // btnExportJson
+            // 
+            this.btnExportJson.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnExportJson.Image = global::DatabaseBenchmark.Properties.Resources.JSONicon_48x48;
+            this.btnExportJson.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExportJson.Name = "btnExportJson";
+            this.btnExportJson.Size = new System.Drawing.Size(52, 52);
+            this.btnExportJson.Text = "Export JSON";
+            this.btnExportJson.Click += new System.EventHandler(this.btnExportJson_Click);
+            // 
+            // toolStripButtonPdfExport
+            // 
+            this.toolStripButtonPdfExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonPdfExport.Image = global::DatabaseBenchmark.Properties.Resources.PDFicon_48x48;
+            this.toolStripButtonPdfExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonPdfExport.Name = "toolStripButtonPdfExport";
+            this.toolStripButtonPdfExport.Size = new System.Drawing.Size(52, 52);
+            this.toolStripButtonPdfExport.Text = "toolStripButton1";
+            this.toolStripButtonPdfExport.Click += new System.EventHandler(this.toolStripButtonPdfExport_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 55);
             // 
+            // btnTreeView
+            // 
+            this.btnTreeView.Checked = true;
+            this.btnTreeView.CheckOnClick = true;
+            this.btnTreeView.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnTreeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnTreeView.Image = global::DatabaseBenchmark.Properties.Resources.view_48x48;
+            this.btnTreeView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTreeView.Name = "btnTreeView";
+            this.btnTreeView.Size = new System.Drawing.Size(52, 52);
+            this.btnTreeView.Text = "Tree View";
+            this.btnTreeView.ToolTipText = "Tree View";
+            this.btnTreeView.Click += new System.EventHandler(this.buttonTreeView_Click);
+            // 
+            // btnAutoNavigate
+            // 
+            this.btnAutoNavigate.Checked = true;
+            this.btnAutoNavigate.CheckOnClick = true;
+            this.btnAutoNavigate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnAutoNavigate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAutoNavigate.Image = global::DatabaseBenchmark.Properties.Resources.AutoNavigate_48x48;
+            this.btnAutoNavigate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAutoNavigate.Name = "btnAutoNavigate";
+            this.btnAutoNavigate.Size = new System.Drawing.Size(52, 52);
+            this.btnAutoNavigate.Text = "Auto Navigate";
+            // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 55);
+            // 
+            // btnAxisType
+            // 
+            this.btnAxisType.CheckOnClick = true;
+            this.btnAxisType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnAxisType.Image = global::DatabaseBenchmark.Properties.Resources.logicon_48x48;
+            this.btnAxisType.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAxisType.Name = "btnAxisType";
+            this.btnAxisType.Size = new System.Drawing.Size(52, 52);
+            this.btnAxisType.Text = "toolStripButton1";
+            this.btnAxisType.ToolTipText = "Axis Type (Normal/Logarithmic)";
+            this.btnAxisType.Click += new System.EventHandler(this.axisType_Click);
+            // 
+            // btnSpeedView
+            // 
+            this.btnSpeedView.Checked = true;
+            this.btnSpeedView.CheckOnClick = true;
+            this.btnSpeedView.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnSpeedView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSpeedView.Image = global::DatabaseBenchmark.Properties.Resources.SpeedView_48x48;
+            this.btnSpeedView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSpeedView.Name = "btnSpeedView";
+            this.btnSpeedView.Size = new System.Drawing.Size(52, 52);
+            this.btnSpeedView.Tag = "0";
+            this.btnSpeedView.Text = "toolStripButton1";
+            this.btnSpeedView.ToolTipText = "Speed View";
+            this.btnSpeedView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // btnTimeView
+            // 
+            this.btnTimeView.CheckOnClick = true;
+            this.btnTimeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnTimeView.Image = global::DatabaseBenchmark.Properties.Resources.TimeView_48x48;
+            this.btnTimeView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTimeView.Name = "btnTimeView";
+            this.btnTimeView.Size = new System.Drawing.Size(52, 52);
+            this.btnTimeView.Tag = "1";
+            this.btnTimeView.Text = "Time View";
+            this.btnTimeView.ToolTipText = "Time View";
+            this.btnTimeView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // btnSizeView
+            // 
+            this.btnSizeView.Checked = true;
+            this.btnSizeView.CheckOnClick = true;
+            this.btnSizeView.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnSizeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSizeView.Image = global::DatabaseBenchmark.Properties.Resources.sizeview48x48;
+            this.btnSizeView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSizeView.Name = "btnSizeView";
+            this.btnSizeView.Size = new System.Drawing.Size(52, 52);
+            this.btnSizeView.Tag = "2";
+            this.btnSizeView.Text = "Database Size View";
+            this.btnSizeView.ToolTipText = "Database Size View";
+            this.btnSizeView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // buttonCpuView
+            // 
+            this.buttonCpuView.CheckOnClick = true;
+            this.buttonCpuView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonCpuView.Image = global::DatabaseBenchmark.Properties.Resources.processor_48x48;
+            this.buttonCpuView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonCpuView.Name = "buttonCpuView";
+            this.buttonCpuView.Size = new System.Drawing.Size(52, 52);
+            this.buttonCpuView.Tag = "3";
+            this.buttonCpuView.Text = "CPU View";
+            this.buttonCpuView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // buttonMemoryView
+            // 
+            this.buttonMemoryView.CheckOnClick = true;
+            this.buttonMemoryView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buttonMemoryView.Image = global::DatabaseBenchmark.Properties.Resources.SDCard_512_48x48;
+            this.buttonMemoryView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonMemoryView.Name = "buttonMemoryView";
+            this.buttonMemoryView.Size = new System.Drawing.Size(52, 52);
+            this.buttonMemoryView.Tag = "4";
+            this.buttonMemoryView.Text = "Memory View";
+            this.buttonMemoryView.Click += new System.EventHandler(this.View_Click);
+            // 
+            // btnIOView
+            // 
+            this.btnIOView.CheckOnClick = true;
+            this.btnIOView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnIOView.Image = global::DatabaseBenchmark.Properties.Resources.ioicon_48x481;
+            this.btnIOView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnIOView.Name = "btnIOView";
+            this.btnIOView.Size = new System.Drawing.Size(52, 52);
+            this.btnIOView.Tag = "5";
+            this.btnIOView.Text = "I/O View";
+            this.btnIOView.Click += new System.EventHandler(this.View_Click);
             // 
             // toolStripSeparator7
             // 
@@ -620,176 +790,6 @@
             this.saveFileDialogPdf.Filter = "PDF (*.pdf)|*.pdf";
             this.saveFileDialogPdf.Title = "Export Results";
             this.saveFileDialogPdf.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialogPdf_FileOk);
-            // 
-            // btnStart
-            // 
-            this.btnStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStart.Image = global::DatabaseBenchmark.Properties.Resources.start_48x48;
-            this.btnStart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(52, 52);
-            this.btnStart.Text = "Start";
-            this.btnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnStart.Click += new System.EventHandler(this.startButton_Click);
-            // 
-            // btnStop
-            // 
-            this.btnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStop.Image = global::DatabaseBenchmark.Properties.Resources.stop_48x48;
-            this.btnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(52, 52);
-            this.btnStop.Text = "Stop";
-            this.btnStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnStop.Click += new System.EventHandler(this.stopButton_Click);
-            // 
-            // btnExportCsv
-            // 
-            this.btnExportCsv.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnExportCsv.Image = global::DatabaseBenchmark.Properties.Resources.CSVicon_48x48;
-            this.btnExportCsv.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExportCsv.Name = "btnExportCsv";
-            this.btnExportCsv.Size = new System.Drawing.Size(52, 52);
-            this.btnExportCsv.Text = "Export CSV";
-            this.btnExportCsv.Click += new System.EventHandler(this.btnExportCsv_Click);
-            // 
-            // btnExportJson
-            // 
-            this.btnExportJson.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnExportJson.Image = global::DatabaseBenchmark.Properties.Resources.JSONicon_48x48;
-            this.btnExportJson.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExportJson.Name = "btnExportJson";
-            this.btnExportJson.Size = new System.Drawing.Size(52, 52);
-            this.btnExportJson.Text = "Export JSON";
-            this.btnExportJson.Click += new System.EventHandler(this.btnExportJson_Click);
-            // 
-            // toolStripButtonPdfExport
-            // 
-            this.toolStripButtonPdfExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPdfExport.Image = global::DatabaseBenchmark.Properties.Resources.PDFicon_48x48;
-            this.toolStripButtonPdfExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPdfExport.Name = "toolStripButtonPdfExport";
-            this.toolStripButtonPdfExport.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonPdfExport.Text = "toolStripButton1";
-            this.toolStripButtonPdfExport.Click += new System.EventHandler(this.toolStripButtonPdfExport_Click);
-            // 
-            // btnTreeView
-            // 
-            this.btnTreeView.Checked = true;
-            this.btnTreeView.CheckOnClick = true;
-            this.btnTreeView.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnTreeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnTreeView.Image = global::DatabaseBenchmark.Properties.Resources.view_48x48;
-            this.btnTreeView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTreeView.Name = "btnTreeView";
-            this.btnTreeView.Size = new System.Drawing.Size(52, 52);
-            this.btnTreeView.Text = "Tree View";
-            this.btnTreeView.ToolTipText = "Tree View";
-            this.btnTreeView.Click += new System.EventHandler(this.buttonTreeView_Click);
-            // 
-            // btnAutoNavigate
-            // 
-            this.btnAutoNavigate.Checked = true;
-            this.btnAutoNavigate.CheckOnClick = true;
-            this.btnAutoNavigate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnAutoNavigate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAutoNavigate.Image = global::DatabaseBenchmark.Properties.Resources.AutoNavigate_48x48;
-            this.btnAutoNavigate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAutoNavigate.Name = "btnAutoNavigate";
-            this.btnAutoNavigate.Size = new System.Drawing.Size(52, 52);
-            this.btnAutoNavigate.Text = "Auto Navigate";
-            // 
-            // btnAxisType
-            // 
-            this.btnAxisType.CheckOnClick = true;
-            this.btnAxisType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAxisType.Image = global::DatabaseBenchmark.Properties.Resources.log_48x48;
-            this.btnAxisType.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAxisType.Name = "btnAxisType";
-            this.btnAxisType.Size = new System.Drawing.Size(52, 52);
-            this.btnAxisType.Text = "toolStripButton1";
-            this.btnAxisType.ToolTipText = "Axis Type (Normal/Logarithmic)";
-            this.btnAxisType.Click += new System.EventHandler(this.axisType_Click);
-            // 
-            // btnSpeedView
-            // 
-            this.btnSpeedView.Checked = true;
-            this.btnSpeedView.CheckOnClick = true;
-            this.btnSpeedView.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnSpeedView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSpeedView.Image = global::DatabaseBenchmark.Properties.Resources.SpeedView_48x48;
-            this.btnSpeedView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSpeedView.Name = "btnSpeedView";
-            this.btnSpeedView.Size = new System.Drawing.Size(52, 52);
-            this.btnSpeedView.Tag = "0";
-            this.btnSpeedView.Text = "toolStripButton1";
-            this.btnSpeedView.ToolTipText = "Speed View";
-            this.btnSpeedView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // btnTimeView
-            // 
-            this.btnTimeView.CheckOnClick = true;
-            this.btnTimeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnTimeView.Image = global::DatabaseBenchmark.Properties.Resources.TimeView_48x48;
-            this.btnTimeView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTimeView.Name = "btnTimeView";
-            this.btnTimeView.Size = new System.Drawing.Size(52, 52);
-            this.btnTimeView.Tag = "1";
-            this.btnTimeView.Text = "Time View";
-            this.btnTimeView.ToolTipText = "Time View";
-            this.btnTimeView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // btnSizeView
-            // 
-            this.btnSizeView.Checked = true;
-            this.btnSizeView.CheckOnClick = true;
-            this.btnSizeView.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnSizeView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnSizeView.Image = global::DatabaseBenchmark.Properties.Resources.sizeview48x48;
-            this.btnSizeView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSizeView.Name = "btnSizeView";
-            this.btnSizeView.Size = new System.Drawing.Size(52, 52);
-            this.btnSizeView.Tag = "2";
-            this.btnSizeView.Text = "Database Size View";
-            this.btnSizeView.ToolTipText = "Database Size View";
-            this.btnSizeView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // buttonCpuView
-            // 
-            this.buttonCpuView.CheckOnClick = true;
-            this.buttonCpuView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonCpuView.Image = global::DatabaseBenchmark.Properties.Resources.processor_48x48;
-            this.buttonCpuView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonCpuView.Name = "buttonCpuView";
-            this.buttonCpuView.Size = new System.Drawing.Size(52, 52);
-            this.buttonCpuView.Tag = "3";
-            this.buttonCpuView.Text = "CPU View";
-            this.buttonCpuView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // buttonMemoryView
-            // 
-            this.buttonMemoryView.CheckOnClick = true;
-            this.buttonMemoryView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buttonMemoryView.Image = global::DatabaseBenchmark.Properties.Resources.SDCard_512_48x48;
-            this.buttonMemoryView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonMemoryView.Name = "buttonMemoryView";
-            this.buttonMemoryView.Size = new System.Drawing.Size(52, 52);
-            this.buttonMemoryView.Tag = "4";
-            this.buttonMemoryView.Text = "Memory View";
-            this.buttonMemoryView.Click += new System.EventHandler(this.View_Click);
-            // 
-            // btnIOView
-            // 
-            this.btnIOView.CheckOnClick = true;
-            this.btnIOView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnIOView.Image = global::DatabaseBenchmark.Properties.Resources.ioicon_48x481;
-            this.btnIOView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnIOView.Name = "btnIOView";
-            this.btnIOView.Size = new System.Drawing.Size(52, 52);
-            this.btnIOView.Tag = "5";
-            this.btnIOView.Text = "I/O View";
-            this.btnIOView.Click += new System.EventHandler(this.View_Click);
             // 
             // MainForm
             // 

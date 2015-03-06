@@ -142,8 +142,8 @@
   <data name="stop-blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stop-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CSV" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CSV.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SizeView" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SizeView.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Stop.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,8 +178,8 @@
   <data name="Auto Navigate-blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Auto Navigate-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="memory_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\memory-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="json_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\json-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CSVicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CSVicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -190,6 +190,9 @@
   <data name="TimeView" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TimeView.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ioicon_48x481" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ioicon_48x481.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="log_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\log_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -199,8 +202,8 @@
   <data name="SDCard-512_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SDCard-512_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="json_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\json-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="memory_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\memory-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="cpu_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cpu-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -220,8 +223,8 @@
   <data name="ioicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ioicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SizeView" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SizeView.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CSV" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CSV.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AxisType" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AxisType.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -232,7 +235,7 @@
   <data name="SpeedView" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SpeedView.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ioicon_48x481" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ioicon_48x481.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="logicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
