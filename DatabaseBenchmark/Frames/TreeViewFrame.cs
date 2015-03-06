@@ -15,6 +15,12 @@ namespace DatabaseBenchmark.Frames
         private BenchmarkInstanceProperies Properties;
         private ILog Logger;
 
+        public bool TreeViewEnabled
+        {
+            get { return treeView.Enabled; }
+            set { treeView.Enabled = value; }
+        }
+
         public TreeViewFrame()
         {
             InitializeComponent();
@@ -80,6 +86,16 @@ namespace DatabaseBenchmark.Frames
             Invalidate();
 
             this.ResumeLayout();
+        }
+
+        public void ClearTreeViewNodes()
+        {
+            treeView.Nodes.Clear();
+        }
+
+        public void ExpandAll()
+        {
+            treeView.ExpandAll();
         }
 
         public Database[] GetSelectedBenchmarks()

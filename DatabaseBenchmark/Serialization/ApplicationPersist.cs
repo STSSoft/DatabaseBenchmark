@@ -84,7 +84,7 @@ namespace DatabaseBenchmark.Serialization
                 }
 
                 // Clear TreeView.
-                SettingsContainer.TreeView.treeView.Nodes.Clear();
+                SettingsContainer.TreeView.ClearTreeViewNodes();
 
                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                 {
@@ -101,7 +101,7 @@ namespace DatabaseBenchmark.Serialization
                     SettingsContainer.TrackBar.Value = appPersist.TrackBarValue;
                 }
 
-                SettingsContainer.TreeView.treeView.ExpandAll();
+                SettingsContainer.TreeView.ExpandAll();
             }
             catch (Exception exc)
             {
@@ -115,7 +115,7 @@ namespace DatabaseBenchmark.Serialization
             ResetDockingConfiguration();
 
             // Clear TreeView.
-            SettingsContainer.TreeView.treeView.Nodes.Clear();
+            SettingsContainer.TreeView.ClearTreeViewNodes();
 
             SettingsContainer.TreeView.CreateTreeView();
             SettingsContainer.TrackBar.Value = 20;

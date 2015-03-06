@@ -496,7 +496,7 @@ namespace DatabaseBenchmark
                 btnStart.Enabled = !btnStop.Enabled;
                 btnExportCsv.Enabled = !btnStop.Enabled;
 
-                TreeViewFrame.treeView.Enabled = btnStart.Enabled;
+                TreeViewFrame.TreeViewEnabled = btnStart.Enabled;
                 cbFlowsCount.Enabled = btnStart.Enabled;
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;

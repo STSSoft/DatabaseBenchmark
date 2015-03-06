@@ -142,7 +142,6 @@
 
         #endregion
 
-        public System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.ContextMenuStrip contextMenuDatabase;
         private System.Windows.Forms.ToolStripMenuItem cloneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
@@ -152,6 +151,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem propertiesToolStripMenuItem;
         private System.Windows.Forms.ImageList imageListTreeView;
+        private System.Windows.Forms.TreeView treeView;
 
     }
 }
