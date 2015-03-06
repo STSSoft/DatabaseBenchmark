@@ -88,11 +88,7 @@ namespace DatabaseBenchmark.Report
             doc.Close();
         }
 
-<<<<<<< HEAD
-        private static void AddCellToTable(PdfPTable table, int cellIndex, BarChartFrame frame)
-=======
-        private static void AddCellToTable(PdfPTable table, int cellIndex, int rowIndex, BarChart frame)
->>>>>>> origin/master
+        private static void AddCellToTable(PdfPTable table, int cellIndex, BarChart frame)
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
             PdfPCell cell = new PdfPCell();
@@ -103,11 +99,7 @@ namespace DatabaseBenchmark.Report
             table.AddCell(cell);
         }
 
-<<<<<<< HEAD
-        private static void AddLineChartToDocument(Chapter chapter, LineChartFrame frame)
-=======
-        private static void AddLineChartToDocument(Document doc, LineChart frame)
->>>>>>> origin/master
+        private static void AddLineChartToDocument(Chapter chapter, LineChart frame)
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
             image.ScalePercent(60f);
