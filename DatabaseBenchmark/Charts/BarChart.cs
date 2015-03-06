@@ -12,12 +12,12 @@ using System.IO;
 
 namespace DatabaseBenchmark.Charts
 {
-    public partial class BarChartFrame : UserControl
+    public partial class BarChart : UserControl
     {
         private double maxValue;
         private ChartArea chartArea;
 
-        public BarChartFrame()
+        public BarChart()
         {
             InitializeComponent();
 

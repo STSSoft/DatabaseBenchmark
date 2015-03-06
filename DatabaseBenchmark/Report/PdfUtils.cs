@@ -45,7 +45,7 @@ namespace DatabaseBenchmark.Report
             foreach (var fr in frames)
             {
                 StepFrame frame = fr.Value;
-                List<BarChartFrame> barCharts = frame.GetSelectedBarCharts();
+                List<BarChart> barCharts = frame.GetSelectedBarCharts();
 
                 int cellPerRow = 3;
                 int cellCount = barCharts.Count > cellPerRow ? cellPerRow : barCharts.Count;
@@ -88,7 +88,11 @@ namespace DatabaseBenchmark.Report
             doc.Close();
         }
 
+<<<<<<< HEAD
         private static void AddCellToTable(PdfPTable table, int cellIndex, BarChartFrame frame)
+=======
+        private static void AddCellToTable(PdfPTable table, int cellIndex, int rowIndex, BarChart frame)
+>>>>>>> origin/master
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
             PdfPCell cell = new PdfPCell();
@@ -99,7 +103,11 @@ namespace DatabaseBenchmark.Report
             table.AddCell(cell);
         }
 
+<<<<<<< HEAD
         private static void AddLineChartToDocument(Chapter chapter, LineChartFrame frame)
+=======
+        private static void AddLineChartToDocument(Document doc, LineChart frame)
+>>>>>>> origin/master
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
             image.ScalePercent(60f);
