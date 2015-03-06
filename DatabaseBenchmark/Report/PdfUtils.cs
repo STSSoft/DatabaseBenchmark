@@ -47,43 +47,17 @@ namespace DatabaseBenchmark.Report
                 StepFrame frame = fr.Value;
                 List<BarChart> barCharts = frame.GetSelectedBarCharts();
 
-                int cellPerRow = 4;
-                int cellCount = barCharts.Count;
-
-                if(barCharts.Count > cellPerRow )
-                {
-                    if(barCharts.Count == 4)
-                        cellCount = 2;
-                    else
-                        cellCount = 3;
-                }
-
-                PdfPTable table = new PdfPTable(cellCount);
+                PdfPTable table = new PdfPTable(barCharts.Count);
                 table.WidthPercentage = 100;
 
                 var chapter = new iTextSharp.text.Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
 
                 chapter.Add(new Chunk("\n"));
 
-                for (int i = 0; i < cellCount; i++)
-                    AddCellToTable(table, i, barCharts[i]);
+                for (int i = 0; i < barCharts.Count; i++)
+                    AddCellToTable(table, barCharts[i]);
 
-                table.CompleteRow();
                 chapter.Add(table);
-
-                if (barCharts.Count > cellPerRow)
-                {
-                    if (barCharts.Count == 4)
-                    {
-                        table = new PdfPTable(barCharts.Count - cellCount);
-                        table.WidthPercentage = 100;
-                    }
-
-                    for (int i = cellCount, index = 0; i < barCharts.Count; i++, index++)
-                        AddCellToTable(table, index, barCharts[i]);
-
-                    chapter.Add(table);
-                }
 
                 chapter.Add(new Paragraph("Average Speed"));
                 AddLineChartToDocument(chapter, frame.lineChartAverageSpeed);
@@ -100,12 +74,11 @@ namespace DatabaseBenchmark.Report
             doc.Close();
         }
 
-        private static void AddCellToTable(PdfPTable table, int cellIndex, BarChart frame)
+        private static void AddCellToTable(PdfPTable table, BarChart frame)
         {
             Image image = Image.GetInstance(frame.ConvertToByteArray());
             PdfPCell cell = new PdfPCell();
 
-            cell.Colspan = cellIndex;
             cell.AddElement(image);
 
             table.AddCell(cell);
