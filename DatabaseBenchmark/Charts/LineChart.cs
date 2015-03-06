@@ -11,12 +11,12 @@ using System.IO;
 
 namespace DatabaseBenchmark.Charts
 {
-    public partial class LineChartFrame : UserControl
+    public partial class LineChart : UserControl
     {
         private ChartArea chartArea;
         private Series cache;
 
-        public LineChartFrame()
+        public LineChart()
         {
             InitializeComponent();
 

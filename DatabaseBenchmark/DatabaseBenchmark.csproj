@@ -332,17 +332,17 @@
     </Compile>
     <Compile Include="Benchmarking\BenchmarkTest.cs" />
     <Compile Include="Benchmarking\BenchmarkSuite.cs" />
-    <Compile Include="Charts\BarChartFrame.cs">
+    <Compile Include="Charts\BarChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Charts\BarChartFrame.Designer.cs">
-      <DependentUpon>BarChartFrame.cs</DependentUpon>
+    <Compile Include="Charts\BarChart.Designer.cs">
+      <DependentUpon>BarChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Charts\LineChartFrame.cs">
+    <Compile Include="Charts\LineChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Charts\LineChartFrame.Designer.cs">
-      <DependentUpon>LineChartFrame.cs</DependentUpon>
+    <Compile Include="Charts\LineChart.Designer.cs">
+      <DependentUpon>LineChart.cs</DependentUpon>
     </Compile>
     <Compile Include="Report\CsvUtils.cs" />
     <Compile Include="Report\PdfUtils.cs" />
@@ -420,11 +420,11 @@
     <EmbeddedResource Include="BenchmarkInstanceProperies.resx">
       <DependentUpon>BenchmarkInstanceProperies.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Charts\BarChartFrame.resx">
-      <DependentUpon>BarChartFrame.cs</DependentUpon>
+    <EmbeddedResource Include="Charts\BarChart.resx">
+      <DependentUpon>BarChart.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Charts\LineChartFrame.resx">
-      <DependentUpon>LineChartFrame.cs</DependentUpon>
+    <EmbeddedResource Include="Charts\LineChart.resx">
+      <DependentUpon>LineChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frames\StepFrame.resx">
       <DependentUpon>StepFrame.cs</DependentUpon>

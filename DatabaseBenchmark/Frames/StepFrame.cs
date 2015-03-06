@@ -145,14 +145,14 @@ namespace DatabaseBenchmark.Frames
 
         #endregion
 
-        public List<BarChartFrame> GetSelectedBarCharts()
+        public List<BarChart> GetSelectedBarCharts()
         {
-            List<BarChartFrame> allBarCharts = new List<BarChartFrame>();
+            List<BarChart> allBarCharts = new List<BarChart>();
 
             foreach (Control item in LayoutPanel.Controls)
             {
                 if (LayoutPanel.ColumnStyles[LayoutPanel.GetColumn(item)].SizeType == SizeType.Percent)
-                    allBarCharts.Add(item as BarChartFrame);
+                    allBarCharts.Add(item as BarChart);
             }
 
             return allBarCharts;

@@ -282,7 +282,45 @@ namespace DatabaseBenchmark
             }
         }
 
-        #region Export & Report
+        private void View_Click(object sender, EventArgs e)
+        {
+            foreach (var item in TestFrames)
+            {
+                StepFrame frame = item.Value;
+
+                ToolStripButton button = (ToolStripButton)sender;
+                int column = Int32.Parse(button.Tag.ToString());
+
+                if (button.Checked)
+                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Percent, 18);
+                else
+                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Absolute, 0);
+            }
+        }
+
+        private void axisType_Click(object sender, EventArgs e)
+        {
+            bool isChecked = (sender as ToolStripButton).Checked;
+            StepFrame step = null;
+
+            foreach (var item in TestFrames)
+            {
+                step = item.Value;
+                step.SetLogarithmic(isChecked);
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutBox().ShowDialog();
+        }
+
+        #region Export
 
         private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -371,44 +409,6 @@ namespace DatabaseBenchmark
         }
 
         #endregion
-
-        private void View_Click(object sender, EventArgs e)
-        {
-            foreach (var item in TestFrames)
-            {
-                StepFrame frame = item.Value;
-
-                ToolStripButton button = (ToolStripButton)sender;
-                int column = Int32.Parse(button.Tag.ToString());
-
-                if (button.Checked)
-                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Percent, 18);
-                else
-                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Absolute, 0);
-            }
-        }
-
-        private void axisType_Click(object sender, EventArgs e)
-        {
-            bool isChecked = (sender as ToolStripButton).Checked;
-            StepFrame step = null;
-
-            foreach (var item in TestFrames)
-            {
-                step = item.Value;
-                step.SetLogarithmic(isChecked);
-            }
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new AboutBox().ShowDialog();
-        }
 
         #endregion
 
