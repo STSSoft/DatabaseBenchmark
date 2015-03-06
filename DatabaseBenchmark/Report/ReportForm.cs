@@ -40,7 +40,7 @@ namespace DatabaseBenchmark.Validation
 
         private void PopulateHardwareInfo()
         {
-            Configuration = ComputerUtils.GetComputerConfiguration();
+            Configuration = SystemUtils.GetComputerConfiguration();
 
             OperatingSystemInfo operatingSystem = Configuration.OperatingSystem;
             List<CpuInfo> processors = Configuration.Processors;

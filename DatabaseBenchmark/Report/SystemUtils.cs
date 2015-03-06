@@ -10,11 +10,11 @@ using log4net;
 
 namespace DatabaseBenchmark.Validation
 {
-    public static class ComputerUtils
+    public static class SystemUtils
     {
         private static ILog Logger;
 
-        static ComputerUtils()
+        static SystemUtils()
         {
             Logger = LogManager.GetLogger("ApplicationLogger");
         }

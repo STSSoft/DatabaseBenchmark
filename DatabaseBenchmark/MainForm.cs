@@ -381,7 +381,7 @@ namespace DatabaseBenchmark
 
             try
             {
-                ComputerConfiguration configuration = ComputerUtils.GetComputerConfiguration();
+                ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
                 JsonUtils.ExportToJson(fileName, configuration, History);
             }
             catch (Exception exc)

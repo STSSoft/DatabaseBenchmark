@@ -406,7 +406,7 @@
     <Compile Include="Statistics\MemoryStatistics.cs" />
     <Compile Include="Statistics\ProcessorStatistics.cs" />
     <Compile Include="Statistics\SpeedStatistics.cs" />
-    <Compile Include="Report\ComputerUtils.cs" />
+    <Compile Include="Report\SystemUtils.cs" />
     <Compile Include="Benchmarking\TestMethod.cs" />
     <Compile Include="Report\ReportForm.cs">
       <SubType>Form</SubType>
