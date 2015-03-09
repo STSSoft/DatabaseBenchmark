@@ -35,6 +35,17 @@ namespace DatabaseBenchmark.Frames
             barChartMemory.Title = "Memory usage (MB)";
             barChartIO.Title = "IO Data (MB/sec)";
 
+            lineChartAverageSpeed.AxisXTitle = "Record";
+            lineChartAverageSpeed.AxisYTitle = "Record/Sec";
+            lineChartMomentSpeed.AxisXTitle = "Record";
+            lineChartMomentSpeed.AxisYTitle = "Record/Sec";
+            lineChartAverageCPU.AxisXTitle = "Record";
+            lineChartAverageCPU.AxisYTitle = "Percent (%)";
+            lineChartAverageMemory.AxisXTitle = "Record";
+            lineChartAverageMemory.AxisYTitle = "MB";
+            lineChartAverageIO.AxisXTitle = "Record";
+            lineChartAverageIO.AxisYTitle = "MB"; 
+
             // Line charts.
             foreach (var item in lineSeries)
             {

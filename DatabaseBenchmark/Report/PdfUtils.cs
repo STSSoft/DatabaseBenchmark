@@ -53,7 +53,6 @@ namespace DatabaseBenchmark.Report
                 table.WidthPercentage = 100;
 
                 Chapter chapter = new Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
-
                 chapter.Add(new Chunk("\n"));
 
                 for (int i = 0; i < barCharts.Count; i++)
