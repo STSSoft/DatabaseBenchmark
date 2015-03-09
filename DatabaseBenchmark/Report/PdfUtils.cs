@@ -26,7 +26,9 @@ namespace DatabaseBenchmark.Report
             iTextSharp.text.pdf.PdfWriter.GetInstance(doc, fileStream);
             doc.Open();
 
-            PdfPCell title = new PdfPCell(new PdfPTable(1));
+            // Add header page.
+            PdfPTable firstPageTable = new PdfPTable(1);
+            PdfPCell title = new PdfPCell();
             title.VerticalAlignment = Element.ALIGN_MIDDLE;
             title.HorizontalAlignment = Element.ALIGN_CENTER;
             title.MinimumHeight = doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin);
@@ -36,7 +38,9 @@ namespace DatabaseBenchmark.Report
             paragraph.Alignment = Element.ALIGN_MIDDLE;
 
             title.AddElement(paragraph);
-            doc.Add(title);
+            firstPageTable.AddCell(title);
+
+            doc.Add(firstPageTable);
 
             int chapterCount = 1;
 
@@ -48,47 +52,37 @@ namespace DatabaseBenchmark.Report
                 PdfPTable table = new PdfPTable(barCharts.Count);
                 table.WidthPercentage = 100;
 
-                var chapter = new iTextSharp.text.Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
+                Chapter chapter = new Chapter(fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary Read" : fr.Key, chapterCount++);
 
                 chapter.Add(new Chunk("\n"));
 
                 for (int i = 0; i < barCharts.Count; i++)
-                    AddCellToTable(table, barCharts[i]);
+                    AddCellToTable(table, barCharts[i].ConvertToByteArray);
 
                 chapter.Add(table);
 
-                chapter.Add(new Paragraph("Average Speed"));
-                AddLineChartToDocument(chapter, frame.lineChartAverageSpeed);
+                table = new PdfPTable(1);
+                table.WidthPercentage = 100;
 
-                chapter.Add(new Paragraph("Moment Speed"));
-                AddLineChartToDocument(chapter, frame.lineChartMomentSpeed);
+                AddCellToTable(table, frame.lineChartAverageSpeed.ConvertToByteArray);
+                AddCellToTable(table, frame.lineChartMomentSpeed.ConvertToByteArray);
+                AddCellToTable(table, frame.lineChartAverageMemory.ConvertToByteArray);
 
-                chapter.Add(new Paragraph("Average Memory"));
-                AddLineChartToDocument(chapter, frame.lineChartAverageMemory);
-                
+                chapter.Add(table);
                 doc.Add(chapter);
             }
 
             doc.Close();
         }
 
-        private static void AddCellToTable(PdfPTable table,BarChart frame)
+        private static void AddCellToTable(PdfPTable table, Func<byte[]> converter)
         {
-            Image image = Image.GetInstance(frame.ConvertToByteArray());
+            Image image = Image.GetInstance(converter());
             PdfPCell cell = new PdfPCell();
 
             cell.AddElement(image);
 
             table.AddCell(cell);
-        }
-
-        private static void AddLineChartToDocument(Chapter chapter, LineChart frame)
-        {
-            Image image = Image.GetInstance(frame.ConvertToByteArray());
-            //image.ScalePercent(50f);
-            image.WidthPercentage = 40f;
-
-            chapter.Add(image);
         }
     }
 }
