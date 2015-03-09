@@ -169,6 +169,8 @@ namespace DatabaseBenchmark.Frames
 
         private void treeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            treeView.SelectedNode = e.Node;
+
             if (e.Button == MouseButtons.Right)
             {
                 contextMenuDatabase.Items[0].Enabled = e.Node.Tag != null;

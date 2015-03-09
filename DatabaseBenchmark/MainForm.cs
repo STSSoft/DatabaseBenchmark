@@ -501,15 +501,17 @@ namespace DatabaseBenchmark
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;
 
-                if (History.Count == 0)
+                if (History.Count == 0 || MainTask != null)
                 {
                     btnExportCsv.Enabled = false;
                     btnExportJson.Enabled = false;
+                    toolStripButtonPdfExport.Enabled = false;
                 }
                 else
                 {
                     btnExportCsv.Enabled = true;
                     btnExportJson.Enabled = true;
+                    toolStripButtonPdfExport.Enabled = true;
                 }
 
                 var activeFrame = ActiveStepFrame;
