@@ -57,16 +57,18 @@ namespace DatabaseBenchmark.Report
                 chapter.Add(new Chunk("\n"));
 
                 for (int i = 0; i < barCharts.Count; i++)
-                    AddCellToTable(table, barCharts[i].ConvertToByteArray);
+                    AddCellToTable(table, string.Empty, barCharts[i].ConvertToByteArray);
 
                 chapter.Add(table);
 
                 table = new PdfPTable(1);
                 table.WidthPercentage = 100;
 
-                AddCellToTable(table, frame.lineChartAverageSpeed.ConvertToByteArray);
-                AddCellToTable(table, frame.lineChartMomentSpeed.ConvertToByteArray);
-                AddCellToTable(table, frame.lineChartAverageMemory.ConvertToByteArray);
+                AddCellToTable(table, "Average Speed:", frame.lineChartAverageSpeed.ConvertToByteArray);
+                AddCellToTable(table, "Moment Speed:", frame.lineChartMomentSpeed.ConvertToByteArray);
+                AddCellToTable(table, "Average Memory:", frame.lineChartAverageMemory.ConvertToByteArray);
+                AddCellToTable(table, "Average CPU:", frame.lineChartAverageCPU.ConvertToByteArray);
+                AddCellToTable(table, "Average I/O:", frame.lineChartAverageIO.ConvertToByteArray);
 
                 chapter.Add(table);
                 doc.Add(chapter);
@@ -75,11 +77,13 @@ namespace DatabaseBenchmark.Report
             doc.Close();
         }
 
-        private static void AddCellToTable(PdfPTable table, Func<byte[]> converter)
+        private static void AddCellToTable(PdfPTable table, string text, Func<byte[]> converter)
         {
             Image image = Image.GetInstance(converter());
             PdfPCell cell = new PdfPCell();
 
+            cell.AddElement(new Paragraph(text));
+            cell.AddElement(new Chunk("\n"));
             cell.AddElement(image);
 
             table.AddCell(cell);
