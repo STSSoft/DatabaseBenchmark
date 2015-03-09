@@ -42,9 +42,9 @@ namespace DatabaseBenchmark.Frames
             lineChartAverageCPU.AxisXTitle = "Record";
             lineChartAverageCPU.AxisYTitle = "Percent (%)";
             lineChartAverageMemory.AxisXTitle = "Record";
-            lineChartAverageMemory.AxisYTitle = "MB";
+            lineChartAverageMemory.AxisYTitle = "Size (MB)";
             lineChartAverageIO.AxisXTitle = "Record";
-            lineChartAverageIO.AxisYTitle = "MB"; 
+            lineChartAverageIO.AxisYTitle = "Size (MB)"; 
 
             // Line charts.
             foreach (var item in lineSeries)
