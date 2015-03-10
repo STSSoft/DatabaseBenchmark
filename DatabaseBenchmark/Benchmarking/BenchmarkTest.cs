@@ -111,7 +111,7 @@ namespace DatabaseBenchmark.Benchmarking
                 IOStatistics[method].Start();
 
                 Task[] tasks = DoWrite(flows);
-                Task.WaitAll(tasks);
+                Task.WaitAll(tasks, Cancellation.Token);
             }
             finally
             {
@@ -140,7 +140,7 @@ namespace DatabaseBenchmark.Benchmarking
                 IOStatistics[method].Start();
 
                 Task task = DoRead(TestMethod.Read);
-                Task.WaitAll(task);
+                Task.WaitAll(new Task[] { task }, Cancellation.Token);
             }
             finally
             {
@@ -168,8 +168,8 @@ namespace DatabaseBenchmark.Benchmarking
                 MemoryStatistics[method].Start();
                 IOStatistics[method].Start();
 
-                Task tasks = DoRead(TestMethod.SecondaryRead);
-                Task.WaitAll(tasks);
+                Task task = DoRead(TestMethod.SecondaryRead);
+                Task.WaitAll(new Task[] { task }, Cancellation.Token);
             }
             finally
             {
