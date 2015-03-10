@@ -44,7 +44,7 @@ namespace DatabaseBenchmark.Frames
             lineChartAverageMemory.AxisXTitle = "Record";
             lineChartAverageMemory.AxisYTitle = "Size (MB)";
             lineChartAverageIO.AxisXTitle = "Record";
-            lineChartAverageIO.AxisYTitle = "Size (MB)"; 
+            lineChartAverageIO.AxisYTitle = "Size (MB)";
 
             // Line charts.
             foreach (var item in lineSeries)

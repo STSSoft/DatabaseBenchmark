@@ -43,7 +43,16 @@ namespace DatabaseBenchmark.Frames
                     Directory.CreateDirectory(MainForm.DATABASES_DIRECTORY);
 
                 foreach (var directory in Directory.GetDirectories(MainForm.DATABASES_DIRECTORY))
-                    Directory.Delete(directory, true);
+                {
+                    try // Some databases hold rights to directory
+                    {
+                        Directory.Delete(directory, true);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error("Database initialization error...", e);
+                    }
+                }
 
                 foreach (var database in databases)
                 {
