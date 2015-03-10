@@ -393,7 +393,7 @@ namespace DatabaseBenchmark
         {
             try
             {
-                PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames);
+                PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, SystemUtils.GetComputerConfiguration());
             }
             catch (Exception exc)
             {
