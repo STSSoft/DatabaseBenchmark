@@ -91,6 +91,7 @@ namespace DatabaseBenchmark
 
             // Load dock and application configuration.
             ApplicationPersist.Load(Path.Combine(CONFIGURATION_FOLDER, "AppConfig.config"));
+            ApplicationPersist.LoadDocking();
 
             TestFrames[TestMethod.Write.ToString()].Select();
 
@@ -494,7 +495,6 @@ namespace DatabaseBenchmark
             {
                 btnStop.Enabled = MainTask != null;
                 btnStart.Enabled = !btnStop.Enabled;
-                btnExportCsv.Enabled = !btnStop.Enabled;
 
                 TreeViewFrame.TreeViewEnabled = btnStart.Enabled;
                 cbFlowsCount.Enabled = btnStart.Enabled;
@@ -506,12 +506,20 @@ namespace DatabaseBenchmark
                     btnExportCsv.Enabled = false;
                     btnExportJson.Enabled = false;
                     toolStripButtonPdfExport.Enabled = false;
+
+                    exportResultToPDFToolStripMenuItem.Enabled = false;
+                    exportToCSVToolStripMenuItem.Enabled = false;
+                    exportToJSONToolStripMenuItem.Enabled = false;
                 }
                 else
                 {
                     btnExportCsv.Enabled = true;
                     btnExportJson.Enabled = true;
                     toolStripButtonPdfExport.Enabled = true;
+
+                    exportResultToPDFToolStripMenuItem.Enabled = true;
+                    exportToCSVToolStripMenuItem.Enabled = true;
+                    exportToJSONToolStripMenuItem.Enabled = true;
                 }
 
                 var activeFrame = ActiveStepFrame;

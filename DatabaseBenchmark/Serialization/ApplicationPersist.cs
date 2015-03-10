@@ -74,9 +74,6 @@ namespace DatabaseBenchmark.Serialization
         {
             try
             {
-                // Docking.
-                LoadDocking();
-
                 if (!File.Exists(path))
                 {
                     SettingsContainer.TreeView.CreateTreeView();
