@@ -141,7 +141,6 @@ namespace DatabaseBenchmark
             finally
             {
                 Current = null;
-                MainTask = null;
             }
         }
 
@@ -270,17 +269,10 @@ namespace DatabaseBenchmark
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (MainTask == null)
-                    return;
+            if (MainTask == null)
+                return;
 
-                Cancellation.Cancel();
-            }
-            finally
-            {
-                MainTask = null;
-            }
+            Cancellation.Cancel();
         }
 
         private void View_Click(object sender, EventArgs e)
@@ -493,7 +485,9 @@ namespace DatabaseBenchmark
         {
             try
             {
-                btnStop.Enabled = MainTask != null;
+                if (MainTask != null)
+                    btnStop.Enabled = MainTask.Status == TaskStatus.Running ? true : false;
+
                 btnStart.Enabled = !btnStop.Enabled;
 
                 TreeViewFrame.TreeViewEnabled = btnStart.Enabled;
@@ -501,7 +495,7 @@ namespace DatabaseBenchmark
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;
 
-                if (History.Count == 0 || MainTask != null)
+                if (History.Count == 0 || MainTask.Status == TaskStatus.Running)
                 {
                     btnExportCsv.Enabled = false;
                     btnExportJson.Enabled = false;
