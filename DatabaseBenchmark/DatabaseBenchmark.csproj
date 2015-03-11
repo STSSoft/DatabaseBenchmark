@@ -344,6 +344,12 @@
     <Compile Include="Charts\LineChart.Designer.cs">
       <DependentUpon>LineChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Loading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Loading.Designer.cs">
+      <DependentUpon>Loading.cs</DependentUpon>
+    </Compile>
     <Compile Include="Report\CsvUtils.cs" />
     <Compile Include="Report\PdfUtils.cs" />
     <Compile Include="Report\ReportType.cs" />
@@ -432,6 +438,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frames\TreeViewFrame.resx">
       <DependentUpon>TreeViewFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loading.resx">
+      <DependentUpon>Loading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -615,6 +624,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logicon_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading_throbber_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading_200.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

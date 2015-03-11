@@ -350,11 +350,18 @@ namespace DatabaseBenchmark
             {
                 try
                 {
+                    Loading.Start("Waiting export to CSV...");
+
+                    this.Enabled = false;
                     CsvUtils.ExportResults(History, saveFileDialogCsv.FileName, reportType);
+                    this.Enabled = true;
+
+                    Loading.Stop();
                 }
                 catch (Exception exc)
                 {
                     Logger.Error("Export results to CSV failed...", exc);
+                    Enabled = true;
                 }
             }
         }
@@ -382,8 +389,12 @@ namespace DatabaseBenchmark
             {
                 try
                 {
+                    Loading.Start("Waiting export to JSON...");
+
                     ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
                     JsonUtils.ExportToJson(saveFileDialogJson.FileName, configuration, History, type);
+
+                    Loading.Stop();
                 }
                 catch (Exception exc)
                 {
@@ -415,11 +426,18 @@ namespace DatabaseBenchmark
             {
                 try
                 {
+                    Loading.Start("Waiting export to PDF...");
+
+                    Enabled = false;
                     PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, SystemUtils.GetComputerConfiguration(), reportType);
+                    Enabled = true;
+
+                    Loading.Stop();
                 }
                 catch (Exception exc)
                 {
                     Logger.Error("Export results to PDF failed...", exc);
+                    Enabled = true;
                 }
             }
         }

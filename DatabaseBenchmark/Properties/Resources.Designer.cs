@@ -223,6 +223,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap loading_throbber_icon {
+            get {
+                object obj = ResourceManager.GetObject("loading_throbber_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap log_48x48 {
             get {
                 object obj = ResourceManager.GetObject("log_48x48", resourceCulture);
