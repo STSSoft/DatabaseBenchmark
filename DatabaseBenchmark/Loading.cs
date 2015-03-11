@@ -57,12 +57,11 @@ namespace DatabaseBenchmark
         {
             Graphics graphics = e.Graphics;
             Image img = DatabaseBenchmark.Properties.Resources.loading_throbber_icon;
- 
             SizeF textSize = e.Graphics.MeasureString(Text, Font);
 
-            graphics.FillRectangle(Brushes.White, this.Bounds);
-            var state = e.Graphics.Save();
+            GraphicsState state = e.Graphics.Save();
 
+            // Draw and rotate image.
             graphics.TranslateTransform(Width / 2  - img.Width / 2, Height / 2 - img.Height / 2);
             graphics.TranslateTransform(img.Width / 2, img.Height / 2);
             graphics.RotateTransform(Angle);
@@ -72,7 +71,6 @@ namespace DatabaseBenchmark
             graphics.Restore(state);
 
             Font font = new Font("Times New Roman", 12.0f, FontStyle.Bold);
-
             graphics.DrawString(Text, font, Brushes.Black, new PointF(Width / 2 - textSize.Width / 2, Height / 2 + img.Height / 2 + 10 ));
         }
     }

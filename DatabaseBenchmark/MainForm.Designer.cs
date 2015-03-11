@@ -286,7 +286,7 @@
             this.toolStripButtonPdfExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonPdfExport.Name = "toolStripButtonPdfExport";
             this.toolStripButtonPdfExport.Size = new System.Drawing.Size(52, 52);
-            this.toolStripButtonPdfExport.Text = "toolStripButton1";
+            this.toolStripButtonPdfExport.Text = "Export PDF";
             this.toolStripButtonPdfExport.Click += new System.EventHandler(this.toolStripButtonPdfExport_Click);
             // 
             // toolStripSeparator4
