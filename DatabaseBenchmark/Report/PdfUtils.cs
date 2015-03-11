@@ -16,7 +16,7 @@ namespace DatabaseBenchmark.Report
 {
     public static class PdfUtils
     {
-        public static void Export(string file, Dictionary<string, StepFrame> frames, ComputerConfiguration computerInfo)
+        public static void Export(string file, Dictionary<string, StepFrame> frames, ComputerConfiguration computerInfo, bool isSummaryRemort)
         {
             var doc = new iTextSharp.text.Document(PageSize.A4);
 
@@ -49,7 +49,12 @@ namespace DatabaseBenchmark.Report
             foreach (var fr in frames)
             {
                 StepFrame frame = fr.Value;
-                List<BarChart> barCharts = frame.GetSelectedBarCharts();
+                List<BarChart> barCharts;
+                
+                if(isSummaryRemort)
+                    barCharts = frame.GetAllBarCharts().Where(x=>x.Title == "Speed (rec/sec)" || x.Title == "Size (MB)").ToList();
+                else
+                    barCharts = frame.GetSelectedBarCharts();
 
                 PdfPTable table = new PdfPTable(barCharts.Count);
                 table.WidthPercentage = 100;
@@ -69,8 +74,12 @@ namespace DatabaseBenchmark.Report
                 AddCellToTable(table, "Average Speed:", frame.lineChartAverageSpeed.ConvertToByteArray);
                 AddCellToTable(table, "Moment Speed:", frame.lineChartMomentSpeed.ConvertToByteArray);
                 AddCellToTable(table, "Average Memory:", frame.lineChartAverageMemory.ConvertToByteArray);
-                AddCellToTable(table, "Average CPU:", frame.lineChartAverageCPU.ConvertToByteArray);
-                AddCellToTable(table, "Average I/O:", frame.lineChartAverageIO.ConvertToByteArray);
+
+                if (!isSummaryRemort)
+                {
+                    AddCellToTable(table, "Average CPU:", frame.lineChartAverageCPU.ConvertToByteArray);
+                    AddCellToTable(table, "Average I/O:", frame.lineChartAverageIO.ConvertToByteArray);
+                }
 
                 chapter.Add(table);
                 doc.Add(chapter);

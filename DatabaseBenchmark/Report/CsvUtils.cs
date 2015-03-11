@@ -90,7 +90,7 @@ namespace DatabaseBenchmark.Report
 
                 // write settings
                 writer.WriteLine("Settings:");
-                writer.WriteLine(String.Join(";", Enumerable.Repeat("Table count;Record count;Keys type;Randomness", 1)));
+                writer.WriteLine("Table count;Record count;Keys type;Randomness");
                 writer.Write(tableCount + ";");
                 writer.Write(recordCount + ";");
                 writer.Write(sequential + ";");
