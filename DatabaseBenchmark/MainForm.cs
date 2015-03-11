@@ -352,9 +352,9 @@ namespace DatabaseBenchmark
                 {
                     Loading.Start("Waiting export to CSV...");
 
-                    this.Enabled = false;
+                    Enabled = false;
                     CsvUtils.ExportResults(History, saveFileDialogCsv.FileName, reportType);
-                    this.Enabled = true;
+                    Enabled = true;
 
                     Loading.Stop();
                 }
@@ -390,15 +390,18 @@ namespace DatabaseBenchmark
                 try
                 {
                     Loading.Start("Waiting export to JSON...");
+                    Enabled = false;
 
                     ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
                     JsonUtils.ExportToJson(saveFileDialogJson.FileName, configuration, History, type);
 
+                    Enabled = true;
                     Loading.Stop();
                 }
                 catch (Exception exc)
                 {
                     Logger.Error("Export results to JSON failed...", exc);
+                    Enabled = true;
                 }
             }
         }

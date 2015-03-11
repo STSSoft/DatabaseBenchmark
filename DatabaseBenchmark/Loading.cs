@@ -22,10 +22,6 @@ namespace DatabaseBenchmark
         public Loading(string loadingText)
         {
             InitializeComponent();
-            CenterToScreen();
-
-            TransparencyKey = Color.Turquoise;
-            BackColor = Color.Turquoise;
 
             Text = loadingText;
             Angle = 0;
@@ -60,10 +56,11 @@ namespace DatabaseBenchmark
         private void Loading_Paint(object sender, PaintEventArgs e)
         {
             Graphics graphics = e.Graphics;
-
             Image img = DatabaseBenchmark.Properties.Resources.loading_throbber_icon;
+ 
             SizeF textSize = e.Graphics.MeasureString(Text, Font);
 
+            graphics.FillRectangle(Brushes.White, this.Bounds);
             var state = e.Graphics.Save();
 
             graphics.TranslateTransform(Width / 2  - img.Width / 2, Height / 2 - img.Height / 2);
