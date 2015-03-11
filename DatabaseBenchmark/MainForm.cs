@@ -354,7 +354,7 @@ namespace DatabaseBenchmark
 
             try
             {
-                CsvUtils.ExportTestResults(History, fileName);
+                CsvUtils.ExportDetailedTestResults(History, fileName);
             }
             catch (Exception exc)
             {
