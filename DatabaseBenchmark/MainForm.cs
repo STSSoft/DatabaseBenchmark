@@ -315,11 +315,6 @@ namespace DatabaseBenchmark
 
         #region Export
 
-        private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            btnExportCsv_Click(sender, e);
-        }
-
         private void exportToJSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
             btnExportJson_Click(sender, e);
@@ -342,23 +337,38 @@ namespace DatabaseBenchmark
             form.Show();
         }
 
-        private void btnExportCsv_Click(object sender, EventArgs e)
+        private void detailedReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveFileDialogCsv.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
-            saveFileDialogCsv.ShowDialog();
+            ExportToCsv(false);
         }
 
-        private void saveFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void summaryReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string fileName = saveFileDialogCsv.FileName;
+            ExportToCsv(true);
+        }
 
-            try
+        private void btnExportCsv_Click(object sender, EventArgs e)
+        {
+            ExportToCsv(false);
+        }
+
+        private void ExportToCsv(bool isSummaryReport)
+        {
+            saveFileDialogCsv.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
+
+            if (saveFileDialogCsv.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                CsvUtils.ExportDetailedTestResults(History, fileName);
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Export results to CSV failed...", exc);
+                try
+                {
+                    if (isSummaryReport)
+                        CsvUtils.ExportSummaryTestResults(History, saveFileDialogCsv.FileName);
+                    else
+                        CsvUtils.ExportDetailedTestResults(History, saveFileDialogCsv.FileName);
+                }
+                catch (Exception exc)
+                {
+                    Logger.Error("Export results to CSV failed...", exc);
+                }
             }
         }
 
@@ -383,21 +393,35 @@ namespace DatabaseBenchmark
             }
         }
 
-        private void toolStripButtonPdfExport_Click(object sender, EventArgs e)
+        private void summaryReportToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
-            saveFileDialogPdf.ShowDialog();
+            ExportToPdf(true);
         }
 
-        private void saveFileDialogPdf_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void toolStripButtonPdfExport_Click(object sender, EventArgs e)
         {
-            try
+            ExportToPdf(false);
+        }
+
+        private void detailedReportToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ExportToPdf(false);
+        }
+
+        private void ExportToPdf(bool isSummaryReport)
+        {
+            saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
+
+            if (saveFileDialogPdf.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, SystemUtils.GetComputerConfiguration(), true);
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Export results to PDF failed...", exc);
+                try
+                {
+                    PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, SystemUtils.GetComputerConfiguration(), isSummaryReport);
+                }
+                catch (Exception exc)
+                {
+                    Logger.Error("Export results to PDF failed...", exc);
+                }
             }
         }
 
