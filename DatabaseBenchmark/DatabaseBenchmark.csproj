@@ -346,6 +346,7 @@
     </Compile>
     <Compile Include="Report\CsvUtils.cs" />
     <Compile Include="Report\PdfUtils.cs" />
+    <Compile Include="Report\ReportType.cs" />
     <Compile Include="Serialization\ApplicationPersist.cs" />
     <Compile Include="Databases\AerospikeBenchmark.cs" />
     <Compile Include="Databases\GridGainBenchmark.cs" />

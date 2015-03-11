@@ -16,7 +16,7 @@ namespace DatabaseBenchmark.Report
 {
     public static class PdfUtils
     {
-        public static void Export(string file, Dictionary<string, StepFrame> frames, ComputerConfiguration computerInfo, bool isSummaryRemort)
+        public static void Export(string file, Dictionary<string, StepFrame> frames, ComputerConfiguration computerInfo, ReportType type)
         {
             var doc = new iTextSharp.text.Document(PageSize.A4);
 
@@ -50,8 +50,8 @@ namespace DatabaseBenchmark.Report
             {
                 StepFrame frame = fr.Value;
                 List<BarChart> barCharts;
-                
-                if(isSummaryRemort)
+
+                if (type == ReportType.Summary)
                     barCharts = frame.GetAllBarCharts().Where(x=>x.Title == "Speed (rec/sec)" || x.Title == "Size (MB)").ToList();
                 else
                     barCharts = frame.GetSelectedBarCharts();
@@ -74,7 +74,7 @@ namespace DatabaseBenchmark.Report
                 AddCellToTable(table, "Average Speed:", frame.lineChartAverageSpeed.ConvertToByteArray);
                 AddCellToTable(table, "Moment Speed:", frame.lineChartMomentSpeed.ConvertToByteArray);
 
-                if (!isSummaryRemort)
+                if (type == ReportType.Detailed)
                 {
                     AddCellToTable(table, "Average Memory:", frame.lineChartAverageMemory.ConvertToByteArray);
                     AddCellToTable(table, "Average CPU:", frame.lineChartAverageCPU.ConvertToByteArray);

@@ -15,6 +15,16 @@ namespace DatabaseBenchmark.Report
         /// <summary>
         /// Exports benchmark sessions to a *.csv file.
         /// </summary>
+        /// 
+
+        public static void ExportResults(List<BenchmarkTest> sessions, string path, ReportType type)
+        {
+            if (type == ReportType.Detailed)
+                ExportDetailedTestResults(sessions, path);
+            else
+                ExportDetailedTestResults(sessions, path);
+        }
+
         public static void ExportSummaryTestResults(List<BenchmarkTest> sessions, string path)
         {
             // ---Write Summary File---

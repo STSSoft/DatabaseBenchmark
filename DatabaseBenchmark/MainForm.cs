@@ -339,20 +339,20 @@ namespace DatabaseBenchmark
 
         private void detailedReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExportToCsv(false);
+            ExportToCsv(ReportType.Detailed);
         }
 
         private void summaryReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ExportToCsv(true);
+            ExportToCsv(ReportType.Summary);
         }
 
         private void btnExportCsv_Click(object sender, EventArgs e)
         {
-            ExportToCsv(false);
+            ExportToCsv(ReportType.Detailed);
         }
 
-        private void ExportToCsv(bool isSummaryReport)
+        private void ExportToCsv(ReportType reportType)
         {
             saveFileDialogCsv.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
 
@@ -360,10 +360,7 @@ namespace DatabaseBenchmark
             {
                 try
                 {
-                    if (isSummaryReport)
-                        CsvUtils.ExportSummaryTestResults(History, saveFileDialogCsv.FileName);
-                    else
-                        CsvUtils.ExportDetailedTestResults(History, saveFileDialogCsv.FileName);
+                    CsvUtils.ExportResults(History, saveFileDialogCsv.FileName, reportType);
                 }
                 catch (Exception exc)
                 {
@@ -395,20 +392,20 @@ namespace DatabaseBenchmark
 
         private void summaryReportToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ExportToPdf(true);
-        }
-
-        private void toolStripButtonPdfExport_Click(object sender, EventArgs e)
-        {
-            ExportToPdf(false);
+            ExportToPdf(ReportType.Summary);
         }
 
         private void detailedReportToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ExportToPdf(false);
+            ExportToPdf(ReportType.Detailed);
         }
 
-        private void ExportToPdf(bool isSummaryReport)
+        private void toolStripButtonPdfExport_Click(object sender, EventArgs e)
+        {
+            ExportToPdf(ReportType.Detailed);
+        }
+
+        private void ExportToPdf(ReportType reportType)
         {
             saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
 
@@ -416,7 +413,7 @@ namespace DatabaseBenchmark
             {
                 try
                 {
-                    PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, SystemUtils.GetComputerConfiguration(), isSummaryReport);
+                    PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, SystemUtils.GetComputerConfiguration(), reportType);
                 }
                 catch (Exception exc)
                 {
