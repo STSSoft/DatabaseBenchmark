@@ -20,7 +20,7 @@ namespace DatabaseBenchmark.Report
             if (type == ReportType.Detailed)
                 ExportDetailedTestResults(sessions, path);
             else
-                ExportDetailedTestResults(sessions, path);
+                ExportSummaryTestResults(sessions, path);
         }
 
         public static void ExportSummaryTestResults(List<BenchmarkTest> sessions, string path)
@@ -74,6 +74,8 @@ namespace DatabaseBenchmark.Report
 
                     builder2.Clear();
                 }
+
+                streamWriter.WriteLine();
 
                 ExportConputerConfiguration(streamWriter, SystemUtils.GetComputerConfiguration());
             }

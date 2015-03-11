@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 using DatabaseBenchmark.Benchmarking;
 using DatabaseBenchmark.Statistics;
 
-namespace DatabaseBenchmark.Validation
+namespace DatabaseBenchmark.Report
 {
     public static class JsonUtils
     {
-        public static void ExportToJson(string path, ComputerConfiguration configuration, List<BenchmarkTest> benchmarks)
+        public static void ExportToJson(string path, ComputerConfiguration configuration, List<BenchmarkTest> benchmarks, ReportType type)
         {
             JsonObjectCollection jsonData = new JsonObjectCollection();
 
             jsonData.Add(ConvertToJson(configuration));
 
             foreach (var benchmark in benchmarks)
-                jsonData.Add(ConvertToJson(benchmark));
+                jsonData.Add(ConvertToJson(benchmark, type));
 
             using (FileStream stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
             {
@@ -45,7 +45,7 @@ namespace DatabaseBenchmark.Validation
             // Benchmark test.
             foreach (var benchmark in benchmarks)
             {
-                var jsonTest = ConvertToJson(benchmark);
+                var jsonTest = ConvertToJson(benchmark, ReportType.Detailed);
                 jsonData.Add(jsonTest);
             }
 
@@ -61,7 +61,7 @@ namespace DatabaseBenchmark.Validation
             return jsonUser;
         }
 
-        public static JsonObjectCollection ConvertToJson(BenchmarkTest benchmark)
+        public static JsonObjectCollection ConvertToJson(BenchmarkTest benchmark, ReportType type)
         {
             JsonObjectCollection jsonBenchmark = new JsonObjectCollection("BenchmarkTest");
 
@@ -78,15 +78,27 @@ namespace DatabaseBenchmark.Validation
 
             // Write test data.
             JsonObjectCollection jsonTestData = new JsonObjectCollection("TestResults");
+            JsonObject jsonWrite;
+            JsonObject jsonRead ;
+            JsonObject jsonSecondaryRead;
 
-            // Get statistics and convert them to JSON.
-            SpeedStatistics writeStat = benchmark.SpeedStatistics[(int)TestMethod.Write];
-            SpeedStatistics readStat = benchmark.SpeedStatistics[(int)TestMethod.Read];
-            SpeedStatistics secondaryReadStat = benchmark.SpeedStatistics[(int)TestMethod.SecondaryRead];
+            if (type == ReportType.Summary)
+            {
+                jsonWrite = new JsonNumericValue("Write", benchmark.GetSpeed(TestMethod.Write));
+                jsonRead = new JsonNumericValue("Read", benchmark.GetSpeed(TestMethod.Read));
+                jsonSecondaryRead = new JsonNumericValue("SecondaryRead", benchmark.GetSpeed(TestMethod.SecondaryRead));
+            }
+            else
+            {
+                // Get statistics and convert them to JSON.
+                SpeedStatistics writeStat = benchmark.SpeedStatistics[(int)TestMethod.Write];
+                SpeedStatistics readStat = benchmark.SpeedStatistics[(int)TestMethod.Read];
+                SpeedStatistics secondaryReadStat = benchmark.SpeedStatistics[(int)TestMethod.SecondaryRead];
 
-            var jsonWrite = ConvertStatisticToJson(writeStat, "Write");
-            var jsonRead = ConvertStatisticToJson(writeStat, "Read");
-            var jsonSecondaryRead = ConvertStatisticToJson(writeStat, "SecondaryRead");
+                jsonWrite = ConvertStatisticToJson(writeStat, "Write");
+                jsonRead = ConvertStatisticToJson(writeStat, "Read");
+                jsonSecondaryRead = ConvertStatisticToJson(writeStat, "SecondaryRead");
+            }
 
             // Form the end JSON structure.
             jsonTestData.Add(jsonWrite);

@@ -106,9 +106,11 @@
             this.summaryReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.detailedReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.summaryReportToolStripMenuItemJson = new System.Windows.Forms.ToolStripMenuItem();
+            this.detailedReportToolStripMenuItemJson = new System.Windows.Forms.ToolStripMenuItem();
             this.exportResultToPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.summaryReportToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.detailedReportToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.summaryReportToolStripMenuItemPDF = new System.Windows.Forms.ToolStripMenuItem();
+            this.detailedReportToolStripMenuItemPDF = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.reportResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -677,34 +679,49 @@
             // 
             // exportToJSONToolStripMenuItem
             // 
+            this.exportToJSONToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.summaryReportToolStripMenuItemJson,
+            this.detailedReportToolStripMenuItemJson});
             this.exportToJSONToolStripMenuItem.Name = "exportToJSONToolStripMenuItem";
             this.exportToJSONToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.exportToJSONToolStripMenuItem.Text = "Export results to JSON";
-            this.exportToJSONToolStripMenuItem.Click += new System.EventHandler(this.exportToJSONToolStripMenuItem_Click);
+            // 
+            // summaryReportToolStripMenuItemJson
+            // 
+            this.summaryReportToolStripMenuItemJson.Name = "summaryReportToolStripMenuItemJson";
+            this.summaryReportToolStripMenuItemJson.Size = new System.Drawing.Size(163, 22);
+            this.summaryReportToolStripMenuItemJson.Text = "Summary Report";
+            this.summaryReportToolStripMenuItemJson.Click += new System.EventHandler(this.summaryReportToolStripMenuItemJson_Click);
+            // 
+            // detailedReportToolStripMenuItemJson
+            // 
+            this.detailedReportToolStripMenuItemJson.Name = "detailedReportToolStripMenuItemJson";
+            this.detailedReportToolStripMenuItemJson.Size = new System.Drawing.Size(163, 22);
+            this.detailedReportToolStripMenuItemJson.Text = "Detailed Report";
+            this.detailedReportToolStripMenuItemJson.Click += new System.EventHandler(this.detailedReportToolStripMenuItemJson_Click);
             // 
             // exportResultToPDFToolStripMenuItem
             // 
             this.exportResultToPDFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.summaryReportToolStripMenuItem1,
-            this.detailedReportToolStripMenuItem1});
+            this.summaryReportToolStripMenuItemPDF,
+            this.detailedReportToolStripMenuItemPDF});
             this.exportResultToPDFToolStripMenuItem.Name = "exportResultToPDFToolStripMenuItem";
             this.exportResultToPDFToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.exportResultToPDFToolStripMenuItem.Text = "Export result to PDF";
-            this.exportResultToPDFToolStripMenuItem.Click += new System.EventHandler(this.exportResultToPDFToolStripMenuItem_Click);
             // 
-            // summaryReportToolStripMenuItem1
+            // summaryReportToolStripMenuItemPDF
             // 
-            this.summaryReportToolStripMenuItem1.Name = "summaryReportToolStripMenuItem1";
-            this.summaryReportToolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
-            this.summaryReportToolStripMenuItem1.Text = "Summary Report";
-            this.summaryReportToolStripMenuItem1.Click += new System.EventHandler(this.summaryReportToolStripMenuItem1_Click);
+            this.summaryReportToolStripMenuItemPDF.Name = "summaryReportToolStripMenuItemPDF";
+            this.summaryReportToolStripMenuItemPDF.Size = new System.Drawing.Size(163, 22);
+            this.summaryReportToolStripMenuItemPDF.Text = "Summary Report";
+            this.summaryReportToolStripMenuItemPDF.Click += new System.EventHandler(this.summaryReportToolStripMenuItemPdf_Click);
             // 
-            // detailedReportToolStripMenuItem1
+            // detailedReportToolStripMenuItemPDF
             // 
-            this.detailedReportToolStripMenuItem1.Name = "detailedReportToolStripMenuItem1";
-            this.detailedReportToolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
-            this.detailedReportToolStripMenuItem1.Text = "Detailed Report";
-            this.detailedReportToolStripMenuItem1.Click += new System.EventHandler(this.detailedReportToolStripMenuItem1_Click);
+            this.detailedReportToolStripMenuItemPDF.Name = "detailedReportToolStripMenuItemPDF";
+            this.detailedReportToolStripMenuItemPDF.Size = new System.Drawing.Size(163, 22);
+            this.detailedReportToolStripMenuItemPDF.Text = "Detailed Report";
+            this.detailedReportToolStripMenuItemPDF.Click += new System.EventHandler(this.detailedReportToolStripMenuItemPdf_Click);
             // 
             // toolStripSeparator1
             // 
@@ -750,7 +767,6 @@
             this.saveFileDialogJson.DefaultExt = "json";
             this.saveFileDialogJson.Filter = "JSON (*.json)|*.json";
             this.saveFileDialogJson.Title = "Export Results";
-            this.saveFileDialogJson.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog2_FileOk);
             // 
             // dockPanel1
             // 
@@ -931,8 +947,10 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonPdfExport;
         private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemPDF;
+        private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemPDF;
+        private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemJson;
+        private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemJson;
     }
 }
 

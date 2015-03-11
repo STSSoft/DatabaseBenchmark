@@ -315,16 +315,6 @@ namespace DatabaseBenchmark
 
         #region Export
 
-        private void exportToJSONToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            btnExportJson_Click(sender, e);
-        }
-
-        private void exportResultToPDFToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            toolStripButtonPdfExport_Click(sender, e);
-        }
-
         private void reportResultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (History.Count == 0)
@@ -371,31 +361,43 @@ namespace DatabaseBenchmark
 
         private void btnExportJson_Click(object sender, EventArgs e)
         {
-            saveFileDialogJson.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
-            saveFileDialogJson.ShowDialog();
+            ExportToJson(ReportType.Detailed);
         }
 
-        private void saveFileDialog2_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void summaryReportToolStripMenuItemJson_Click(object sender, EventArgs e)
         {
-            string fileName = saveFileDialogJson.FileName;
+            ExportToJson(ReportType.Summary);
+        }
 
-            try
+        private void detailedReportToolStripMenuItemJson_Click(object sender, EventArgs e)
+        {
+            ExportToJson(ReportType.Detailed);
+        }
+
+        private void ExportToJson(ReportType type)
+        {
+            saveFileDialogJson.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
+
+            if (saveFileDialogJson.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
-                JsonUtils.ExportToJson(fileName, configuration, History);
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Export results to JSON failed...", exc);
+                try
+                {
+                    ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
+                    JsonUtils.ExportToJson(saveFileDialogJson.FileName, configuration, History, type);
+                }
+                catch (Exception exc)
+                {
+                    Logger.Error("Export results to JSON failed...", exc);
+                }
             }
         }
 
-        private void summaryReportToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void summaryReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
         {
             ExportToPdf(ReportType.Summary);
         }
 
-        private void detailedReportToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void detailedReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
         {
             ExportToPdf(ReportType.Detailed);
         }

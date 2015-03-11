@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseBenchmark.Validation
+namespace DatabaseBenchmark.Report
 {
     /// <summary>
     /// Represents a description of a user.
