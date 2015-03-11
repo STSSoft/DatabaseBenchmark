@@ -15,8 +15,6 @@ namespace DatabaseBenchmark.Report
         /// <summary>
         /// Exports benchmark sessions to a *.csv file.
         /// </summary>
-        /// 
-
         public static void ExportResults(List<BenchmarkTest> sessions, string path, ReportType type)
         {
             if (type == ReportType.Detailed)
@@ -81,9 +79,6 @@ namespace DatabaseBenchmark.Report
             }
         }
 
-        /// <summary>
-        /// Exports benchmark sessions to a *.csv file.
-        /// </summary>
         public static void ExportDetailedTestResults(List<BenchmarkTest> sessions, string path)
         {
             if (sessions.Count == 0)
@@ -170,7 +165,7 @@ namespace DatabaseBenchmark.Report
             }
         }
 
-        private static void ExportConputerConfiguration(StreamWriter writer, ComputerConfiguration computerInfo)
+        public static void ExportConputerConfiguration(StreamWriter writer, ComputerConfiguration computerInfo)
         {
             StringBuilder builder = new StringBuilder();
 
