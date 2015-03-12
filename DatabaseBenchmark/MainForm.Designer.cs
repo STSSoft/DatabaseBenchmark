@@ -128,10 +128,14 @@
             this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogProject = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.statusStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
+            this.toolStripContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenuItem2
@@ -199,7 +203,7 @@
             // 
             // toolStripMain
             // 
-            this.toolStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripMain.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStripMain.ImageScalingSize = new System.Drawing.Size(48, 48);
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnStart,
@@ -229,11 +233,10 @@
             this.toolStripLabel4,
             this.toolStripLabel2,
             this.toolStripSeparator10});
-            this.toolStripMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStripMain.Location = new System.Drawing.Point(0, 24);
+            this.toolStripMain.Location = new System.Drawing.Point(3, 0);
             this.toolStripMain.Name = "toolStripMain";
             this.toolStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripMain.Size = new System.Drawing.Size(1284, 55);
+            this.toolStripMain.Size = new System.Drawing.Size(1234, 55);
             this.toolStripMain.TabIndex = 4;
             this.toolStripMain.Text = "toolStrip1";
             // 
@@ -831,14 +834,13 @@
             // 
             // dockPanel1
             // 
-            this.dockPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dockPanel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel1.DockBackColor = System.Drawing.SystemColors.Control;
-            this.dockPanel1.Location = new System.Drawing.Point(0, 82);
+            this.dockPanel1.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
+            this.dockPanel1.Location = new System.Drawing.Point(0, 0);
             this.dockPanel1.Name = "dockPanel1";
-            this.dockPanel1.Size = new System.Drawing.Size(1284, 603);
+            this.dockPanel1.Size = new System.Drawing.Size(1284, 606);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -906,16 +908,33 @@
             this.saveFileDialogPdf.Filter = "PDF (*.pdf)|*.pdf";
             this.saveFileDialogPdf.Title = "Export Results";
             // 
+            // toolStripContainer1
+            // 
+            // 
+            // toolStripContainer1.ContentPanel
+            // 
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.dockPanel1);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1284, 606);
+            this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripContainer1.Location = new System.Drawing.Point(0, 24);
+            this.toolStripContainer1.Name = "toolStripContainer1";
+            this.toolStripContainer1.Size = new System.Drawing.Size(1284, 661);
+            this.toolStripContainer1.TabIndex = 12;
+            this.toolStripContainer1.Text = "toolStripContainer1";
+            // 
+            // toolStripContainer1.TopToolStripPanel
+            // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStripMain);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1284, 709);
+            this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.toolStripMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.dockPanel1);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
@@ -931,6 +950,11 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.PerformLayout();
+            this.toolStripContainer1.ResumeLayout(false);
+            this.toolStripContainer1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1021,6 +1045,7 @@
         private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemPdf2;
         private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemPdf2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
     }
 }
 
