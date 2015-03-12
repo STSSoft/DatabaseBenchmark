@@ -315,7 +315,7 @@ namespace DatabaseBenchmark
 
         #region Export
 
-        private void reportResultsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void onlineReportResultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (History.Count == 0)
             {
@@ -327,19 +327,37 @@ namespace DatabaseBenchmark
             form.Show();
         }
 
-        private void detailedReportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ExportToCsv(ReportType.Detailed);
-        }
-
-        private void summaryReportToolStripMenuItem_Click(object sender, EventArgs e)
+        // CSV.
+        private void summaryReportToolStripMenuItemCsv_Click(object sender, EventArgs e)
         {
             ExportToCsv(ReportType.Summary);
         }
 
-        private void btnExportCsv_Click(object sender, EventArgs e)
+        private void detailedReportToolStripMenuItemCsv_Click(object sender, EventArgs e)
         {
             ExportToCsv(ReportType.Detailed);
+        }
+
+        // JSON.
+        private void summaryReportToolStripMenuItemJson_Click(object sender, EventArgs e)
+        {
+            ExportToJson(ReportType.Summary);
+        }
+
+        private void detailedReportToolStripMenuItemJson_Click(object sender, EventArgs e)
+        {
+            ExportToJson(ReportType.Detailed);
+        }
+
+        // PDF.
+        private void summaryReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
+        {
+            ExportToPdf(ReportType.Summary);
+        }
+
+        private void detailedReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
+        {
+            ExportToPdf(ReportType.Detailed);
         }
 
         private void ExportToCsv(ReportType reportType)
@@ -366,21 +384,6 @@ namespace DatabaseBenchmark
             }
         }
 
-        private void btnExportJson_Click(object sender, EventArgs e)
-        {
-            ExportToJson(ReportType.Detailed);
-        }
-
-        private void summaryReportToolStripMenuItemJson_Click(object sender, EventArgs e)
-        {
-            ExportToJson(ReportType.Summary);
-        }
-
-        private void detailedReportToolStripMenuItemJson_Click(object sender, EventArgs e)
-        {
-            ExportToJson(ReportType.Detailed);
-        }
-
         private void ExportToJson(ReportType type)
         {
             saveFileDialogJson.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
@@ -404,21 +407,6 @@ namespace DatabaseBenchmark
                     Enabled = true;
                 }
             }
-        }
-
-        private void summaryReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
-        {
-            ExportToPdf(ReportType.Summary);
-        }
-
-        private void detailedReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
-        {
-            ExportToPdf(ReportType.Detailed);
-        }
-
-        private void toolStripButtonPdfExport_Click(object sender, EventArgs e)
-        {
-            ExportToPdf(ReportType.Detailed);
         }
 
         private void ExportToPdf(ReportType reportType)
@@ -485,7 +473,7 @@ namespace DatabaseBenchmark
 
         #endregion
 
-        #region Main Menu Strip View
+        #region View Toolstrip Menu
 
         private void databasesWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -633,7 +621,7 @@ namespace DatabaseBenchmark
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show("Save database settings?", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Save project settings?", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
                 saveConfigurationToolStripMenuItem_Click(sender, e);
