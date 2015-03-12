@@ -40,6 +40,8 @@ namespace DatabaseBenchmark.Report
             paragraph.Alignment = Element.ALIGN_CENTER;
 
             title.AddElement(paragraph);
+            title.AddElement(Image.GetInstance((System.Drawing.Image)DatabaseBenchmark.Properties.Resources.logo_01, Color.WHITE));
+
             firstPageTable.AddCell(title);
 
             doc.Add(firstPageTable);
