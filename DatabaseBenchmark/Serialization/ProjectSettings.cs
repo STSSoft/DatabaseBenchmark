@@ -9,7 +9,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark.Serialization
 {
-    public class AppSettings
+    public class ProjectSettings
     {
         public DockPanel DockingPanel { get; set; }
         public TreeViewFrame TreeView { get; set; }
@@ -18,7 +18,7 @@ namespace DatabaseBenchmark.Serialization
 
         public Dictionary<string, StepFrame> Frames { get; private set; }
 
-        public AppSettings(DockPanel panel, TreeViewFrame treeView, ToolStripComboBox[] comboBoxes, TrackBar trackBar)
+        public ProjectSettings(DockPanel panel, TreeViewFrame treeView, ToolStripComboBox[] comboBoxes, TrackBar trackBar)
         {
             DockingPanel = panel;
             TreeView = treeView;

@@ -58,7 +58,7 @@ namespace DatabaseBenchmark
 
         private ILog Logger;
 
-        private ApplicationPersist ApplicationPersist;
+        private ProjectPersist ApplicationPersist;
 
         public MainForm()
         {
@@ -84,8 +84,8 @@ namespace DatabaseBenchmark
             // Logger.
             Logger = LogManager.GetLogger("ApplicationLogger");
 
-            AppSettings containerSettings = new AppSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
-            ApplicationPersist = new ApplicationPersist(containerSettings, CONFIGURATION_FOLDER);
+            ProjectSettings containerSettings = new ProjectSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
+            ApplicationPersist = new ProjectPersist(containerSettings, CONFIGURATION_FOLDER);
 
             TestFrames = ApplicationPersist.SettingsContainer.Frames;
 
@@ -95,8 +95,8 @@ namespace DatabaseBenchmark
 
             TestFrames[TestMethod.Write.ToString()].Select();
 
-            openFileDialogAppConfig.InitialDirectory = CONFIGURATION_FOLDER;
-            saveFileDialogPersist.InitialDirectory = CONFIGURATION_FOLDER;
+            openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
+            saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
 
             this.ResumeLayout();
         }
@@ -456,18 +456,23 @@ namespace DatabaseBenchmark
 
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveFileDialogPersist.ShowDialog() == DialogResult.OK)
-                ApplicationPersist.Store(saveFileDialogPersist.FileName);
+            if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
+                ApplicationPersist.Store(saveFileDialogProject.FileName);
         }
 
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialogAppConfig.ShowDialog() == DialogResult.OK)
-                ApplicationPersist.Load(openFileDialogAppConfig.FileName);
+            if (openFileDialogProject.ShowDialog() == DialogResult.OK)
+                ApplicationPersist.Load(openFileDialogProject.FileName);
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Save current project ?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+                saveConfigurationToolStripMenuItem_Click(sender, e);
+
             ApplicationPersist.Reset();
         }
 
@@ -621,7 +626,7 @@ namespace DatabaseBenchmark
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show("Save project settings?", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Save current project?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
                 saveConfigurationToolStripMenuItem_Click(sender, e);

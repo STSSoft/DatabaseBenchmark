@@ -20,7 +20,7 @@ namespace DatabaseBenchmark.Serialization
     /// <summary>
     /// Persists the state of the application (including: application settings, database settings, window layout).
     /// </summary>
-    public class ApplicationPersist
+    public class ProjectPersist
     {
         public const string DOCKING_CONFIGURATION = "Docking.config";
 
@@ -28,9 +28,9 @@ namespace DatabaseBenchmark.Serialization
         private int Count;
 
         public string DockConfigPath { get; private set; }
-        public AppSettings SettingsContainer { get; private set; }
+        public ProjectSettings SettingsContainer { get; private set; }
 
-        public ApplicationPersist(AppSettings settings, string path)
+        public ProjectPersist(ProjectSettings settings, string path)
         {
             Logger = LogManager.GetLogger("ApplicationLogger");
 
@@ -58,9 +58,9 @@ namespace DatabaseBenchmark.Serialization
                     Dictionary<IDatabase, bool> databases = SettingsContainer.TreeView.GetAllDatabases();
                     Dictionary<string, string> selectedItmes = GetSelectedFromComboBoxes(SettingsContainer.ComboBoxes);
 
-                    XmlAppSettingsPersist persist = new XmlAppSettingsPersist(databases, selectedItmes, SettingsContainer.TrackBar.Value);
+                    XmlProjectPersist persist = new XmlProjectPersist(databases, selectedItmes, SettingsContainer.TrackBar.Value);
 
-                    XmlSerializer serializer = new XmlSerializer(typeof(XmlAppSettingsPersist));
+                    XmlSerializer serializer = new XmlSerializer(typeof(XmlProjectPersist));
                     serializer.Serialize(stream, persist);
                 }
             }
@@ -85,8 +85,8 @@ namespace DatabaseBenchmark.Serialization
 
                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                 {
-                    XmlSerializer deserializer = new XmlSerializer(typeof(XmlAppSettingsPersist));
-                    XmlAppSettingsPersist appPersist = (XmlAppSettingsPersist)deserializer.Deserialize(stream);
+                    XmlSerializer deserializer = new XmlSerializer(typeof(XmlProjectPersist));
+                    XmlProjectPersist appPersist = (XmlProjectPersist)deserializer.Deserialize(stream);
 
                     // Add databases in TreeView.
                     foreach (var database in appPersist.Databases)

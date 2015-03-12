@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Serialization
 {
-    public class XmlAppSettingsPersist : IXmlSerializable
+    public class XmlProjectPersist : IXmlSerializable
     {
         // Database -> Checked state in TreeView.
         public Dictionary<IDatabase, bool> Databases { get; private set; }
@@ -20,12 +20,12 @@ namespace DatabaseBenchmark.Serialization
 
         public int TrackBarValue { get; private set; }
 
-        public XmlAppSettingsPersist()
+        public XmlProjectPersist()
             : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(), default(int))
         {
         }
 
-        public XmlAppSettingsPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, int trackBarValue)
+        public XmlProjectPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, int trackBarValue)
         {
             Databases = databases;
             ComboBoxItems = comboBoxItems;

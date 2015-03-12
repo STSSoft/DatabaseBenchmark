@@ -353,7 +353,7 @@
     <Compile Include="Report\CsvUtils.cs" />
     <Compile Include="Report\PdfUtils.cs" />
     <Compile Include="Report\ReportType.cs" />
-    <Compile Include="Serialization\ApplicationPersist.cs" />
+    <Compile Include="Serialization\ProjectPersist.cs" />
     <Compile Include="Databases\AerospikeBenchmark.cs" />
     <Compile Include="Databases\GridGainBenchmark.cs" />
     <Compile Include="Databases\OrientDBBenchmark.cs" />
@@ -394,8 +394,8 @@
       <DependentUpon>TreeViewFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="IDatabase.cs" />
-    <Compile Include="Serialization\AppSettings.cs" />
-    <Compile Include="Serialization\XmlAppSettingsPersist.cs" />
+    <Compile Include="Serialization\ProjectSettings.cs" />
+    <Compile Include="Serialization\XmlProjectPersist.cs" />
     <Compile Include="Statistics\IOStatistics.cs" />
     <Compile Include="Benchmarking\KeysType.cs" />
     <Compile Include="MainForm.cs">
