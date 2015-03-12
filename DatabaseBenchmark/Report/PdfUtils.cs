@@ -30,20 +30,14 @@ namespace DatabaseBenchmark.Report
             // Add header page.
             PdfPTable firstPageTable = new PdfPTable(1);
             firstPageTable.WidthPercentage = 100;
+
             PdfPCell title = new PdfPCell();
             title.VerticalAlignment = Element.ALIGN_MIDDLE;
             title.HorizontalAlignment = Element.ALIGN_CENTER;
             title.MinimumHeight = doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin);
-
-            Paragraph paragraph = new Paragraph("DATABASE BENCHAMRK RESULTS");
-            paragraph.Font = new Font(Font.TIMES_ROMAN, 32f, Font.TIMES_ROMAN, new Color(System.Drawing.Color.CornflowerBlue));
-            paragraph.Alignment = Element.ALIGN_CENTER;
-
-            title.AddElement(paragraph);
             title.AddElement(Image.GetInstance((System.Drawing.Image)DatabaseBenchmark.Properties.Resources.logo_01, Color.WHITE));
 
             firstPageTable.AddCell(title);
-
             doc.Add(firstPageTable);
 
             int chapterCount = 1;
@@ -109,7 +103,7 @@ namespace DatabaseBenchmark.Report
             {
                 processor.Add(new Paragraph(string.Format("\t \t Name: {0}", pr.Name)));
                 processor.Add(new Paragraph(string.Format("\t \t Threads: {0}", pr.Threads)));
-                processor.Add(new Paragraph(string.Format("\t \t Max clock speed: {0} МHz", pr.MaxClockSpeed)));
+                processor.Add(new Paragraph(string.Format("\t \t Max clock speed: {0} MHz", pr.MaxClockSpeed)));
             }
 
             chapterPC.Add(new Chunk("\n"));
@@ -119,7 +113,7 @@ namespace DatabaseBenchmark.Report
 
             table.AddCell(CreateHeaderPdfPCell("Type"));
             table.AddCell(CreateHeaderPdfPCell("Capacity (GB)"));
-            table.AddCell(CreateHeaderPdfPCell("Speed (МHz)"));
+            table.AddCell(CreateHeaderPdfPCell("Speed (MHz)"));
 
             foreach (var mem in computerInfo.MemoryModules)
             {

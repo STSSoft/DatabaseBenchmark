@@ -83,7 +83,7 @@ namespace DatabaseBenchmark.Serialization
 
         public void ReadXml(XmlReader reader)
         {
-            reader.ReadStartElement("XmlAppSettingsPersist");
+            reader.ReadStartElement("XmlProjectPersist");
             reader.ReadStartElement("Databases");
 
             // Deserialize databases.
