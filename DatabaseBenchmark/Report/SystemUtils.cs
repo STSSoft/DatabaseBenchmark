@@ -138,7 +138,6 @@ namespace DatabaseBenchmark.Validation
                     RamInfo ram = new RamInfo();
 
                     ram.MemoryType = RamInfo.ObtainType((UInt32.Parse(item["MemoryType"].ToString())));
-
                     ram.Capacity = (int)(UInt64.Parse(item["Capacity"].ToString()) / 1073741824);
                     ram.Speed = Int32.Parse(item["Speed"].ToString());
 
