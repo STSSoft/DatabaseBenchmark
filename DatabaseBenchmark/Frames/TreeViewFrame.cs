@@ -278,13 +278,5 @@ namespace DatabaseBenchmark.Frames
         }
 
         #endregion
-
-        private void treeView_BeforeCheck(object sender, TreeViewCancelEventArgs e)
-        {
-            var node = e.Node;
-
-            foreach (var n in node.Nodes.Iterate())
-                n.Checked = !node.Checked;
-        }
     }
 }
