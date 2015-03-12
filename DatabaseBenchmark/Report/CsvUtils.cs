@@ -144,10 +144,10 @@ namespace DatabaseBenchmark.Report
 
         public static void ExportSettings(StreamWriter writer, BenchmarkTest session)
         {
-            var tableCount = session.FlowCount;
-            var recordCount = session.RecordCount;
-            var sequential = session.KeysType.ToString();
-            var randomness = string.Format("{0}", session.Randomness);
+            int tableCount = session.FlowCount;
+            long recordCount = session.RecordCount;
+            string sequential = session.KeysType.ToString();
+            string randomness = string.Format("{0}", session.Randomness);
 
             writer.WriteLine("Settings:");
             writer.WriteLine("Table count;Record count;Keys type;Randomness");
