@@ -26,7 +26,6 @@ namespace DatabaseBenchmark.Frames
             InitializeComponent();
 
             Logger = LogManager.GetLogger("ApplicationLogger");
-            treeView.ImageList = imageListTreeView;
         }
 
         public void CreateTreeView()
@@ -183,10 +182,12 @@ namespace DatabaseBenchmark.Frames
 
             if (e.Button == MouseButtons.Right)
             {
-                contextMenuDatabase.Items[0].Enabled = e.Node.Tag != null;
-                contextMenuDatabase.Items[1].Enabled = e.Node.Tag != null;
-                contextMenuDatabase.Items[4].Enabled = e.Node.Tag != null;
-                contextMenuDatabase.Items[7].Enabled = e.Node.Tag != null;
+                bool state = e.Node.Tag != null;
+
+                contextMenuDatabase.Items[0].Enabled = state;
+                contextMenuDatabase.Items[1].Enabled = state;
+                contextMenuDatabase.Items[4].Enabled = state;
+                contextMenuDatabase.Items[7].Enabled = state;
 
                 contextMenuDatabase.Show(MousePosition);
             }
@@ -277,5 +278,13 @@ namespace DatabaseBenchmark.Frames
         }
 
         #endregion
+
+        private void treeView_BeforeCheck(object sender, TreeViewCancelEventArgs e)
+        {
+            var node = e.Node;
+
+            foreach (var n in node.Nodes.Iterate())
+                n.Checked = !node.Checked;
+        }
     }
 }
