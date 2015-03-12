@@ -35,7 +35,11 @@ namespace DatabaseBenchmark
 
         public static void Stop()
         {
+            if (Worker == null)
+                return;
+
             Worker.Abort();
+            Worker = null;
         }
 
         private static void Work(object text)
@@ -57,9 +61,11 @@ namespace DatabaseBenchmark
         {
             Graphics graphics = e.Graphics;
             Image img = DatabaseBenchmark.Properties.Resources.loading_throbber_icon;
-            SizeF textSize = e.Graphics.MeasureString(Text, Font);
+            SizeF textSize = graphics.MeasureString(Text, Font);
 
-            GraphicsState state = e.Graphics.Save();
+            GraphicsState state = graphics.Save();
+
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
 
             // Draw and rotate image.
             graphics.TranslateTransform(Width / 2  - img.Width / 2, Height / 2 - img.Height / 2);
