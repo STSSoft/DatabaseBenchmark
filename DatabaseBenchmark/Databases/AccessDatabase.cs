@@ -14,12 +14,12 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class AccessBenchmark : Database
+    public class AccessDatabase : Database
     {
         private IDbConnection[] connections;
         private IDbCommand[] commands;
 
-        public AccessBenchmark()
+        public AccessDatabase()
         {
             SyncRoot = new object();
 

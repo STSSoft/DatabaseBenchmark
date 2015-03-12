@@ -12,11 +12,11 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class PostgreSQLBenchmark : Database
+    public class PostgreSQLDatabase : Database
     {
         private IDbConnection[] connections;
 
-        public PostgreSQLBenchmark()
+        public PostgreSQLDatabase()
         {    
             DatabaseName = "Postgre";
             DatabaseCollection = "table1";

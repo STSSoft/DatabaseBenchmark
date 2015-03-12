@@ -8,13 +8,13 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class PerstBenchmark : Database
+    public class PerstDatabase : Database
     {
         private Storage perst;
         private Index index;
         private string FileName;
 
-        public PerstBenchmark()
+        public PerstDatabase()
         { 
             DatabaseName = "Perst";
             DatabaseCollection = "table";

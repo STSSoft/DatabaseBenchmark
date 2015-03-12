@@ -9,11 +9,11 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class OracleBerkeleyDBBenchmark : Database
+    public class OracleBerkeleyDBDatabase : Database
     {
         private BTreeDatabase Database;
 
-        public OracleBerkeleyDBBenchmark()
+        public OracleBerkeleyDBDatabase()
         {
             SyncRoot = new object();
 

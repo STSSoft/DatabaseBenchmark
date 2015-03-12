@@ -10,13 +10,13 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class Db4objectsBenchmark : Database
+    public class Db4objectsDatabase : Database
     {
         private IObjectContainer[] sessions;
         private IEmbeddedObjectContainer database;
         private string FileName;
 
-        public Db4objectsBenchmark()
+        public Db4objectsDatabase()
         {
             DatabaseName = "Db4objects";
             DatabaseCollection = "database";

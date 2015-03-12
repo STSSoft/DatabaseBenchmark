@@ -7,12 +7,12 @@ using STS.General.Generators;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class STSdbBenchmark : Database
+    public class STSdbDatabase : Database
     {
         private StorageEngine engine;
         private XTable<long, Tick> table;
 
-        public STSdbBenchmark()
+        public STSdbDatabase()
         {
             SyncRoot = new object();
 

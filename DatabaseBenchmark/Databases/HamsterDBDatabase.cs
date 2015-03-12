@@ -8,14 +8,14 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class HamsterDBBenchmark : Database
+    public class HamsterDBDatabase : Database
     {
         private const long CACHE_SIZE = 2000 * 1024 * 1024; // 2GB 
 
         private Hamster.Environment enviroment;
         private Hamster.Database database;
 
-        public HamsterDBBenchmark()
+        public HamsterDBDatabase()
         {
             SyncRoot = new object();
 

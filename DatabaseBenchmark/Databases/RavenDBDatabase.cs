@@ -15,13 +15,13 @@ using System.IO;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class RavenDBBenchmark : Database
+    public class RavenDBDatabase : Database
     {
         private int recordsCount;
         private EmbeddableDocumentStore dataStore;
         private BulkInsertOperation[] bulkInsertSessions;
 
-        public RavenDBBenchmark()
+        public RavenDBDatabase()
         {
             DatabaseName = "RavenDB";
             DatabaseCollection = "database";

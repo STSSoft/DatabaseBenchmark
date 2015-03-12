@@ -11,7 +11,7 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class SQLiteBenchmark : Database
+    public class SQLiteDatabase : Database
     {
         private const int MAX_RECORDS_PER_QUERY = 120; //The maximum number is 120
 
@@ -45,7 +45,7 @@ namespace DatabaseBenchmark.Databases
             }
         }
 
-        public SQLiteBenchmark()
+        public SQLiteDatabase()
         {
             SyncRoot = new object();
 
