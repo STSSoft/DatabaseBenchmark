@@ -151,7 +151,7 @@ namespace DatabaseBenchmark.Serialization
 
             if (!frame.IsDisposed)
             {
-                frame.Select();
+                frame.Show(SettingsContainer.DockingPanel);
                 return;
             }
 
