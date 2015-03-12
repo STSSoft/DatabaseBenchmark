@@ -90,7 +90,7 @@ namespace DatabaseBenchmark
             TestFrames = ApplicationPersist.SettingsContainer.Frames;
 
             // Load dock and application configuration.
-            ApplicationPersist.Load(Path.Combine(CONFIGURATION_FOLDER, "AppConfig.config"));
+            ApplicationPersist.Load(Path.Combine(CONFIGURATION_FOLDER, "Database Benchmark.dbproj"));
             ApplicationPersist.LoadDocking();
 
             TestFrames[TestMethod.Write.ToString()].Select();
@@ -457,13 +457,21 @@ namespace DatabaseBenchmark
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
+            {
+                Loading.Start("Waiting to save settings...");
                 ApplicationPersist.Store(saveFileDialogProject.FileName);
+                Loading.Stop();
+            }
         }
 
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialogProject.ShowDialog() == DialogResult.OK)
+            {
+                Loading.Start("Waiting to load settings...");
                 ApplicationPersist.Load(openFileDialogProject.FileName);
+                Loading.Stop();
+            }
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -473,7 +481,9 @@ namespace DatabaseBenchmark
             if (result == DialogResult.Yes)
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
+            Loading.Start("Waiting...");
             ApplicationPersist.Reset();
+            Loading.Stop();
         }
 
         #endregion
