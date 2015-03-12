@@ -155,11 +155,13 @@ namespace DatabaseBenchmark.Serialization
                 return;
             }
 
-            StepFrame readFrame = CreateStepFrame(method);
-            frame = readFrame;
+            StepFrame newFrame = CreateStepFrame(method);
+            frame = newFrame;
 
-            readFrame.Show(SettingsContainer.DockingPanel);
-            readFrame.DockState = DockState.Document;
+            newFrame.Show(SettingsContainer.DockingPanel);
+            newFrame.DockState = DockState.Document;
+
+            SettingsContainer.Frames[method.ToString()] = newFrame;
         }
 
         public void ResetDockingConfiguration()
