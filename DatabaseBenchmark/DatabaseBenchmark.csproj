@@ -355,7 +355,6 @@
     <Compile Include="Report\ReportType.cs" />
     <Compile Include="Serialization\ProjectPersist.cs" />
     <Compile Include="Databases\AerospikeDatabase.cs" />
-    <Compile Include="Databases\GridGainDatabase.cs" />
     <Compile Include="Databases\OrientDBDatabase.cs" />
     <Compile Include="Databases\RedisDatabase.cs" />
     <Compile Include="Frames\StepFrame.cs">

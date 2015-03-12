@@ -50,7 +50,7 @@ namespace DatabaseBenchmark.Frames
                     }
                     catch (Exception e)
                     {
-                        Logger.Error("Database initialization error...", e);
+                        Logger.Error("Database delete directory error...", e);
                     }
                 }
 
@@ -133,11 +133,12 @@ namespace DatabaseBenchmark.Frames
             }
 
             TreeNode node = treeView.Nodes.Iterate().Where(x => x.Tag == database).FirstOrDefault();
-            node.ImageIndex = 0;
-            node.Checked = state;
+            TreeNodeCollection nodes = node.Parent != null ? node.Parent.Nodes : treeView.Nodes;
 
-            var nodes = node.Parent != null ? node.Parent.Nodes : treeView.Nodes;
-            nodes.Insert(node.Index + 1, newDatabase.DatabaseName).Tag = newDatabase;
+            TreeNode newNode = nodes.Insert(node.Index + 1, newDatabase.DatabaseName);
+            newNode.Tag = newDatabase;
+            newNode.Checked = state;
+            newNode.ImageIndex = 0;
         }
 
         #region TreeView events
@@ -184,7 +185,8 @@ namespace DatabaseBenchmark.Frames
             {
                 contextMenuDatabase.Items[0].Enabled = e.Node.Tag != null;
                 contextMenuDatabase.Items[1].Enabled = e.Node.Tag != null;
-                contextMenuDatabase.Items[6].Enabled = e.Node.Tag != null;
+                contextMenuDatabase.Items[4].Enabled = e.Node.Tag != null;
+                contextMenuDatabase.Items[7].Enabled = e.Node.Tag != null;
 
                 contextMenuDatabase.Show(MousePosition);
             }
@@ -229,11 +231,16 @@ namespace DatabaseBenchmark.Frames
         {
             this.SuspendLayout();
 
-            TreeNode selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).ToArray()[0];
-            treeView.Nodes.Remove(selectedDatabase);
-
+            treeView.Nodes.Remove(treeView.SelectedNode);
             treeView.Update();
 
+            this.ResumeLayout();
+        }
+
+        private void restoreDefaultAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.SuspendLayout();
+            CreateTreeView();
             this.ResumeLayout();
         }
 
@@ -241,7 +248,13 @@ namespace DatabaseBenchmark.Frames
         {
             this.SuspendLayout();
 
-            CreateTreeView();
+            TreeNode selectedNode = treeView.SelectedNode;
+            TreeNode prevNode = selectedNode.PrevNode;
+            IDatabase instance = Activator.CreateInstance(selectedNode.Tag.GetType()) as IDatabase;
+
+            deleteToolStripMenuItem_Click(sender, e);
+            AddAfter(prevNode.Tag as IDatabase, instance, selectedNode.Checked);
+            treeView.SelectedNode = treeView.Nodes.Iterate().First(x => x.Tag == instance);
 
             this.ResumeLayout();
         }
