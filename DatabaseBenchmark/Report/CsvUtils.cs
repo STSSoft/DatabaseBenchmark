@@ -34,50 +34,34 @@ namespace DatabaseBenchmark.Report
             string[] fullPath = path.Split(new string[] { extension }, StringSplitOptions.None);
             string summaryFileName = fullPath[0] + ".summary" + extension;
 
-            using (StreamWriter streamWriter = new StreamWriter(summaryFileName))
+            using (StreamWriter writer = new StreamWriter(summaryFileName))
             {
-                StringBuilder builder2 = new StringBuilder();
-
-                var tableCount = sessions[0].FlowCount;
-                var recordCount = sessions[0].RecordCount;
-                var sequential = sessions[0].KeysType.ToString();
-                var randomness = string.Format("{0}", sessions[0].Randomness);
-
                 // write settings
-                builder2.AppendLine("Settings:");
-                builder2.AppendLine(String.Join(";", Enumerable.Repeat("Table count;Record count;Keys type;Randomness", 1)));
-                builder2.Append(tableCount + ";");
-                builder2.Append(recordCount + ";");
-                builder2.Append(sequential + ";");
-                builder2.AppendLine(randomness + ";");
+                ExportSettings(writer, sessions[0]);
 
-                builder2.AppendLine();
+                // write computer configuration
+                writer.WriteLine();
+                ExportConputerConfiguration(writer, SystemUtils.GetComputerConfiguration());
+
+                writer.WriteLine();
 
                 // write date
-                builder2.AppendLine(DateTime.Now.ToString("yyyy-MM-dd HH.mm"));
-                builder2.AppendLine();
+                writer.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH.mm"));
+                writer.WriteLine();
 
-                builder2.AppendLine(String.Join(";", "Database;Write speed(rec/sec);Read speed(rec/sec);Seconady read speed(rec/sec);Size(MB)"));
+                writer.WriteLine(String.Join(";", "Database;Write speed(rec/sec);Read speed(rec/sec);Seconady read speed(rec/sec);Size(MB)"));
 
                 for (int i = 0; i < sessions.Count; i++)
                 {
                     BenchmarkTest test = sessions[i];
 
                     // write database info
-                    builder2.Append(test.Database.DatabaseName + ";");
-                    builder2.Append(test.GetSpeed(TestMethod.Write) + ";");
-                    builder2.Append(test.GetSpeed(TestMethod.Read) + ";");
-                    builder2.Append(test.GetSpeed(TestMethod.SecondaryRead) + ";");
-                    builder2.Append(test.DatabaseSize / (1024.0 * 1024.0) + ";");
-
-                    streamWriter.WriteLine(builder2.ToString());
-
-                    builder2.Clear();
+                    writer.Write(test.Database.DatabaseName + ";");
+                    writer.Write(test.GetSpeed(TestMethod.Write) + ";");
+                    writer.Write(test.GetSpeed(TestMethod.Read) + ";");
+                    writer.Write(test.GetSpeed(TestMethod.SecondaryRead) + ";");
+                    writer.WriteLine(test.DatabaseSize / (1024.0 * 1024.0) + ";");
                 }
-
-                streamWriter.WriteLine();
-
-                ExportConputerConfiguration(streamWriter, SystemUtils.GetComputerConfiguration());
             }
         }
 
@@ -90,18 +74,12 @@ namespace DatabaseBenchmark.Report
 
             using (StreamWriter writer = new StreamWriter(path))
             {
-                var tableCount = sessions[0].FlowCount;
-                var recordCount = sessions[0].RecordCount;
-                var sequential = sessions[0].KeysType.ToString();
-                var randomness = string.Format("{0}", sessions[0].Randomness);
-
                 // write settings
-                writer.WriteLine("Settings:");
-                writer.WriteLine("Table count;Record count;Keys type;Randomness");
-                writer.Write(tableCount + ";");
-                writer.Write(recordCount + ";");
-                writer.Write(sequential + ";");
-                writer.WriteLine(randomness + ";");
+                ExportSettings(writer, sessions[0]);
+
+                // write computer configuration
+                writer.WriteLine();
+                ExportConputerConfiguration(writer, SystemUtils.GetComputerConfiguration());
 
                 writer.WriteLine();
 
@@ -161,10 +139,22 @@ namespace DatabaseBenchmark.Report
                 writer.WriteLine();
                 writer.WriteLine(String.Join(";;;;;;;;;;;", Enumerable.Repeat("Size(MB)", sessions.Count)));
                 writer.WriteLine(String.Join(";;;;;;;;;;;", sessions.Select(x => x.Database.Size / (1024.0 * 1024.0))));
-                writer.WriteLine();
-
-                ExportConputerConfiguration(writer, SystemUtils.GetComputerConfiguration());
             }
+        }
+
+        public static void ExportSettings(StreamWriter writer, BenchmarkTest session)
+        {
+            var tableCount = session.FlowCount;
+            var recordCount = session.RecordCount;
+            var sequential = session.KeysType.ToString();
+            var randomness = string.Format("{0}", session.Randomness);
+
+            writer.WriteLine("Settings:");
+            writer.WriteLine("Table count;Record count;Keys type;Randomness");
+            writer.Write(tableCount + ";");
+            writer.Write(recordCount + ";");
+            writer.Write(sequential + ";");
+            writer.WriteLine(randomness + ";");
         }
 
         public static void ExportConputerConfiguration(StreamWriter writer, ComputerConfiguration computerInfo)
@@ -172,8 +162,8 @@ namespace DatabaseBenchmark.Report
             StringBuilder builder = new StringBuilder();
 
             builder.AppendLine("Computer specification:");
-            builder.AppendLine("Operating system;;;Processors;;;;Memory modules;;;;Storages");
-            builder.AppendLine("Name;Is64Bit;;Name;Threads;Max clock speed (kHz);;Type;Capacity (GB);Speed (kHz);;Model;Size (GB);Partitions;");
+            builder.AppendLine("Operating system:;;;Processors:;;;;Memory modules:;;;;Storages:");
+            builder.AppendLine("Name;Is64Bit;;Name;Threads;Max clock speed (MHz);;Type;Capacity (GB);Speed (MHz);;Model;Size (GB);Partitions;");
 
             builder.Append(computerInfo.OperatingSystem.Name + ";");
             builder.Append(computerInfo.OperatingSystem.Is64bit + ";;");
