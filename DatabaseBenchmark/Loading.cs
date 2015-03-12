@@ -41,7 +41,6 @@ namespace DatabaseBenchmark
         private static void Work(object text)
         {
             Loading form = new Loading((string)text);
-            form.DoubleBuffered = true;
 
             Application.Run(form);
         }

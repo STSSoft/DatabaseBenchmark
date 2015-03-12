@@ -24,13 +24,14 @@ namespace DatabaseBenchmark.Report
                 File.Delete(file);
 
             var fileStream = new FileStream(file, FileMode.OpenOrCreate);
-            iTextSharp.text.pdf.PdfWriter.GetInstance(doc, fileStream);
+            PdfWriter.GetInstance(doc, fileStream);
             doc.Open();
 
             // Add header page.
             PdfPTable firstPageTable = new PdfPTable(1);
+            firstPageTable.WidthPercentage = 100;
             PdfPCell title = new PdfPCell();
-            title.VerticalAlignment = Element.ALIGN_CENTER;
+            title.VerticalAlignment = Element.ALIGN_MIDDLE;
             title.HorizontalAlignment = Element.ALIGN_CENTER;
             title.MinimumHeight = doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin);
 
@@ -106,7 +107,7 @@ namespace DatabaseBenchmark.Report
             {
                 processor.Add(new Paragraph(string.Format("\t \t Name: {0}", pr.Name)));
                 processor.Add(new Paragraph(string.Format("\t \t Threads: {0}", pr.Threads)));
-                processor.Add(new Paragraph(string.Format("\t \t Max clock speed: {0} kHz", pr.MaxClockSpeed)));
+                processor.Add(new Paragraph(string.Format("\t \t Max clock speed: {0} МHz", pr.MaxClockSpeed)));
             }
 
             chapterPC.Add(new Chunk("\n"));
@@ -116,7 +117,7 @@ namespace DatabaseBenchmark.Report
 
             table.AddCell(CreateHeaderPdfPCell("Type"));
             table.AddCell(CreateHeaderPdfPCell("Capacity (GB)"));
-            table.AddCell(CreateHeaderPdfPCell("Speed (kHz)"));
+            table.AddCell(CreateHeaderPdfPCell("Speed (МHz)"));
 
             foreach (var mem in computerInfo.MemoryModules)
             {
