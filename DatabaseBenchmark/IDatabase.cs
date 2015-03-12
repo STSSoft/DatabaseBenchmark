@@ -17,6 +17,7 @@ namespace DatabaseBenchmark
     /// <summary>
     /// Represents a single database instance.
     /// This interface is implemented by all databases which participate in the benchmark.
+	/// 
     /// </summary>
     public interface IDatabase
     {
