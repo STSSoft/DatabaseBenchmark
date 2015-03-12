@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using log4net;
 
-namespace DatabaseBenchmark.Validation
+namespace DatabaseBenchmark.Report
 {
     public static class SystemUtils
     {

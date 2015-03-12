@@ -69,6 +69,18 @@ namespace DatabaseBenchmark.Charts
             set { chartArea.AxisY.IsLogarithmic = value; }
         }
 
+        public string AxisXTitle
+        {
+            get { return chartArea.AxisX.Title; }
+            set { chartArea.AxisX.Title = value; }
+        }
+
+        public string AxisYTitle
+        {
+            get { return chartArea.AxisY.Title; }
+            set { chartArea.AxisY.Title = value; }
+        }
+
         public string Title
         {
             get

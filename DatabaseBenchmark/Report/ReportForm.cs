@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DatabaseBenchmark.Benchmarking;
-using DatabaseBenchmark.Validation;
+using DatabaseBenchmark.Report;
 using log4net;
 
 namespace DatabaseBenchmark.Validation
