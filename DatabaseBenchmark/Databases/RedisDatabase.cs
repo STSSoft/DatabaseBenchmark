@@ -10,7 +10,7 @@ using ServiceStack.Redis.Generic;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class RedisBenchmark : Database
+    public class RedisDatabase : Database
     {
         private RedisTypedClient<KeyValuePair<long, TickRecord>>[] clients;
         private RedisSortedSet sortedSet;
@@ -18,7 +18,7 @@ namespace DatabaseBenchmark.Databases
         public string Server { get; set; }
         public int Port { get; set; }
 
-        public RedisBenchmark()
+        public RedisDatabase()
         {
             DatabaseName = "Redis";
             DatabaseCollection = "0";

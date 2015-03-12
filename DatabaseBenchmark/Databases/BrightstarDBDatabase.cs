@@ -10,7 +10,7 @@ using DatabaseBenchmark.Benchmarking;
 namespace DatabaseBenchmark.Databases
 {
     //Manual commit, very slow and hard for work.
-    public class BrightstarDBBenchmark : Database
+    public class BrightstarDBDatabase : Database
     {
         private MyEntityContext[] Contexts;
 
@@ -19,7 +19,7 @@ namespace DatabaseBenchmark.Databases
         /// </summary>
         public int InsertsPerQuery { get; set; }
 
-        public BrightstarDBBenchmark()
+        public BrightstarDBDatabase()
         {
             DatabaseName = "BrightstarDB";
             DatabaseCollection = "table1";

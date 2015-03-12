@@ -11,7 +11,7 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class MSSQLServerCompactBenchmark : Database
+    public class MSSQLServerCompactDatabase : Database
     {
         private IDbConnection[] connections;
         private IDbCommand[] commands;
@@ -21,7 +21,7 @@ namespace DatabaseBenchmark.Databases
             get { return Path.Combine(DataDirectory, "test.sdf"); }
         }
 
-        public MSSQLServerCompactBenchmark()
+        public MSSQLServerCompactDatabase()
         {
             SyncRoot = new object();
 

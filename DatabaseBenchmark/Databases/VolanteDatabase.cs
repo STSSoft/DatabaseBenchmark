@@ -10,7 +10,7 @@ using STS.General.Generators;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class VolanteBenchmark : Database
+    public class VolanteDatabase : Database
     {
         private const int COMMIT_COUNT = 500000;
         private const int CACHE_SIZE_IN_BYTES = 1024 * 1024 * 2000;
@@ -18,7 +18,7 @@ namespace DatabaseBenchmark.Databases
         private Volante.IDatabase database = DatabaseFactory.CreateDatabase();
         private IIndex<long, TickEntity> table;
 
-        public VolanteBenchmark()
+        public VolanteDatabase()
         {
             SyncRoot = new object();
 

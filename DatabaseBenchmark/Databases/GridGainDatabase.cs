@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseBenchmark.Databases
 {
-    class GridGainBenchmark
+    class GridGainDatabase
     {
     }
 }

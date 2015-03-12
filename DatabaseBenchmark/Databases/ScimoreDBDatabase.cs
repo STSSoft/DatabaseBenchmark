@@ -9,14 +9,14 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class ScimoreDBBenchmark : Database//Return 1 record less and slower with prepared statement
+    public class ScimoreDBDatabase : Database//Return 1 record less and slower with prepared statement
     {
         private ScimoreEmbedded scimore;
 
         private IDbConnection[] connections;
         private IDbCommand[] commands;
 
-        public ScimoreDBBenchmark()
+        public ScimoreDBDatabase()
         {
             SyncRoot = new object();
 

@@ -8,7 +8,7 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class STSdb4Benchmark : Database
+    public class STSdb4Database : Database
     {
         private IStorageEngine engine;
         private ITable<long, Tick> table;
@@ -16,7 +16,7 @@ namespace DatabaseBenchmark.Databases
         public int CacheSize { get; set; }
         public bool InMemoryDatabase { get; set; }
 
-        public STSdb4Benchmark()
+        public STSdb4Database()
         {
             SyncRoot = new object();
 

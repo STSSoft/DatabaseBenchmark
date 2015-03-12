@@ -19,7 +19,7 @@ namespace DatabaseBenchmark.Databases
         BLACKHOLE
     }
 
-    public class MySQLBenchmark : Database
+    public class MySQLDatabase : Database
     {
         private IDbConnection[] connections;
         private SQLMultiInsert[] helpers;
@@ -31,7 +31,7 @@ namespace DatabaseBenchmark.Databases
 
         public MySQLStorageEngine StorageEngine { get; set; }
 
-        public MySQLBenchmark()
+        public MySQLDatabase()
         {
             DatabaseName = String.Format("MySQL ({0})", StorageEngine);
             Category = "SQL";

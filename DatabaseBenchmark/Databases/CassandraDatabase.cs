@@ -10,7 +10,7 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class CassandraBenchmark : Database
+    public class CassandraDatabase : Database
     {
         private const int TABLE_ID = 0;
         private const int QUERY_READ_LIMIT = 10000;
@@ -24,7 +24,7 @@ namespace DatabaseBenchmark.Databases
         /// </summary>
         public int InsertsPerQuery { get; set; }
 
-        public CassandraBenchmark()
+        public CassandraDatabase()
         {
             DatabaseName = "CassandraDB";
             DatabaseCollection = "table1";

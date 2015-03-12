@@ -8,7 +8,7 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class LevelDBBenchmark : Database
+    public class LevelDBDatabase : Database
     {
         private DB database;
         private Options options;
@@ -63,7 +63,7 @@ namespace DatabaseBenchmark.Databases
         /// </summary>
         public CompressionLevel Compression { get; set; }
 
-        public LevelDBBenchmark()
+        public LevelDBDatabase()
         {
             SyncRoot = new object();
 

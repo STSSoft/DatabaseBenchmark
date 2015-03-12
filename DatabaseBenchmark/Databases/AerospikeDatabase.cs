@@ -10,12 +10,12 @@ using System.Collections;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class AerospikeBenchmark : Database
+    public class AerospikeDatabase : Database
     {
         private AerospikeClient client;
         private LargeList[] indexes;
 
-        public AerospikeBenchmark()
+        public AerospikeDatabase()
         {
             DatabaseName = "Aerospike";
             DatabaseCollection = "table1";

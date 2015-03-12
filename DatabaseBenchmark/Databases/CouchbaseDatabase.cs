@@ -12,7 +12,7 @@ using Couchbase.Views;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class CouchbaseBenchmark : Database
+    public class CouchbaseDatabase : Database
     {
         private IBucket[] buckets;
         private Cluster cluster;
@@ -20,7 +20,7 @@ namespace DatabaseBenchmark.Databases
         public string DocDesignName { get; set; }
         public string ViewName { get; set; }
 
-        public CouchbaseBenchmark()
+        public CouchbaseDatabase()
         {
             SyncRoot = new object();
 

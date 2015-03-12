@@ -11,7 +11,7 @@ using Orient.Client.API;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class OrientDBBenchmark : Database
+    public class OrientDBDatabase : Database
     {
         private const int QUERY_CAPACITY = 100000;
 
@@ -30,7 +30,7 @@ namespace DatabaseBenchmark.Databases
         public string Ussername { get; set; }
         public string Password { get; set; }
 
-        public OrientDBBenchmark()
+        public OrientDBDatabase()
         {
             DatabaseName = "OrientDB";
             DatabaseCollection = "myTestDatabaseAlias";

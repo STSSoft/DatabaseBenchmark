@@ -11,7 +11,7 @@ using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
-    public class FirebirdBenchmark : Database
+    public class FirebirdDatabase : Database
     {
         //Contexts of Relation/Procedure/Views maximum allowed is 255 and limit the string is 64kB
         private const int MAX_INSERT_PER_QUERY = 80;
@@ -37,7 +37,7 @@ namespace DatabaseBenchmark.Databases
             }
         }
 
-        public FirebirdBenchmark()
+        public FirebirdDatabase()
         {
             DatabaseName = "Firebird";
             DatabaseCollection = "table1";
