@@ -1,6 +1,10 @@
 ------------------------------------
 # Database Benchmark changelog
 ------------------------------------
+
+TODO: always serialize the the window layout .
+TODO: check the ProjectPersist for remaining bugs.
+
 ver. 3.0.0 (beta released)
 
 ## Important improvements of Database Benchmark
