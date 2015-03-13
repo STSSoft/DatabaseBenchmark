@@ -75,7 +75,7 @@ namespace DatabaseBenchmark
 
             // Trackbar.
             trackBar1.Value = 20; // Sets the randomness to 100%.
-            toolStripMain.Items.Insert(toolStripMain.Items.Count - 2, new ToolStripControlHost(trackBar1));
+            toolStripSettings.Items.Insert(toolStripSettings.Items.Count - 1, new ToolStripControlHost(trackBar1));
 
             this.SuspendLayout();
 
@@ -545,9 +545,9 @@ namespace DatabaseBenchmark
 
                 if (History.Count == 0 || MainTask.Status == TaskStatus.Running)
                 {
-                    btnExportCsv.Enabled = false;
                     btnExportJson.Enabled = false;
-                    toolStripButtonPdfExport.Enabled = false;
+                    btnExportPdf.Enabled = false;
+                    btnExportCsv.Enabled = false;
 
                     exportResultToPDFToolStripMenuItem.Enabled = false;
                     exportToCSVToolStripMenuItem.Enabled = false;
@@ -555,9 +555,9 @@ namespace DatabaseBenchmark
                 }
                 else
                 {
-                    btnExportCsv.Enabled = true;
                     btnExportJson.Enabled = true;
-                    toolStripButtonPdfExport.Enabled = true;
+                    btnExportPdf.Enabled = true;
+                    btnExportCsv.Enabled = true;
 
                     exportResultToPDFToolStripMenuItem.Enabled = true;
                     exportToCSVToolStripMenuItem.Enabled = true;
@@ -632,7 +632,7 @@ namespace DatabaseBenchmark
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            toolStripLabel2.Text = (trackBar1.Value * 5).ToString() + " %";
+            toolStripLabelPercent.Text = (trackBar1.Value * 5).ToString() + " %";
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

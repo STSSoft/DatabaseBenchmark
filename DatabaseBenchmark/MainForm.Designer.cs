@@ -55,19 +55,7 @@
             this.estimateTimeStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
-            this.cbFlowsCount = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.cbRecordCount = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
@@ -75,7 +63,6 @@
             this.saveFileDialogCsv = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,17 +93,18 @@
             this.saveFileDialogProject = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.btnStart = new System.Windows.Forms.ToolStripButton();
-            this.btnStop = new System.Windows.Forms.ToolStripButton();
-            this.btnExportCsv = new System.Windows.Forms.ToolStripDropDownButton();
-            this.summaryReportToolStripMenuItemCSV2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.detailedReportToolStripMenuItemCSV2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnExportJson = new System.Windows.Forms.ToolStripDropDownButton();
-            this.summaryReportToolStripMenuItemJson2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.detailedReportToolStripMenuItemJson2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButtonPdfExport = new System.Windows.Forms.ToolStripDropDownButton();
-            this.summaryReportToolStripMenuItemPdf2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.detailedReportToolStripMenuItemPdf2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSettings = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabelFlows = new System.Windows.Forms.ToolStripLabel();
+            this.cbFlowsCount = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabelRecords = new System.Windows.Forms.ToolStripLabel();
+            this.cbRecordCount = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabelRandomness = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabelPercent = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.btnTreeView = new System.Windows.Forms.ToolStripButton();
             this.btnAutoNavigate = new System.Windows.Forms.ToolStripButton();
             this.btnAxisType = new System.Windows.Forms.ToolStripButton();
@@ -126,6 +114,18 @@
             this.buttonCpuView = new System.Windows.Forms.ToolStripButton();
             this.buttonMemoryView = new System.Windows.Forms.ToolStripButton();
             this.btnIOView = new System.Windows.Forms.ToolStripButton();
+            this.btnExportCsv = new System.Windows.Forms.ToolStripDropDownButton();
+            this.summaryReportToolStripMenuItemCSV2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.detailedReportToolStripMenuItemCSV2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExportJson = new System.Windows.Forms.ToolStripDropDownButton();
+            this.summaryReportToolStripMenuItemJson2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.detailedReportToolStripMenuItemJson2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnExportPdf = new System.Windows.Forms.ToolStripDropDownButton();
+            this.summaryReportToolStripMenuItemPdf2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.detailedReportToolStripMenuItemPdf2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnStart = new System.Windows.Forms.ToolStripButton();
+            this.btnStop = new System.Windows.Forms.ToolStripButton();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -136,6 +136,9 @@
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
+            this.toolStripSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenuItem2
@@ -152,9 +155,9 @@
             this.fit,
             this.elapsedTimeStatus,
             this.estimateTimeStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 685);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 666);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1284, 24);
+            this.statusStrip1.Size = new System.Drawing.Size(1405, 24);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -180,7 +183,7 @@
             // 
             this.fit.AutoSize = false;
             this.fit.Name = "fit";
-            this.fit.Size = new System.Drawing.Size(1006, 19);
+            this.fit.Size = new System.Drawing.Size(1127, 19);
             this.fit.Spring = true;
             // 
             // elapsedTimeStatus
@@ -206,13 +209,6 @@
             this.toolStripMain.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStripMain.ImageScalingSize = new System.Drawing.Size(48, 48);
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnStart,
-            this.btnStop,
-            this.toolStripSeparator2,
-            this.btnExportCsv,
-            this.btnExportJson,
-            this.toolStripButtonPdfExport,
-            this.toolStripSeparator4,
             this.btnTreeView,
             this.btnAutoNavigate,
             this.toolStripSeparator8,
@@ -222,127 +218,18 @@
             this.btnSizeView,
             this.buttonCpuView,
             this.buttonMemoryView,
-            this.btnIOView,
-            this.toolStripSeparator7,
-            this.toolStripLabel5,
-            this.cbFlowsCount,
-            this.toolStripSeparator5,
-            this.toolStripLabel1,
-            this.cbRecordCount,
-            this.toolStripSeparator6,
-            this.toolStripLabel4,
-            this.toolStripLabel2,
-            this.toolStripSeparator10});
-            this.toolStripMain.Location = new System.Drawing.Point(3, 0);
+            this.btnIOView});
+            this.toolStripMain.Location = new System.Drawing.Point(319, 0);
             this.toolStripMain.Name = "toolStripMain";
             this.toolStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripMain.Size = new System.Drawing.Size(1203, 55);
+            this.toolStripMain.Size = new System.Drawing.Size(486, 55);
             this.toolStripMain.TabIndex = 4;
             this.toolStripMain.Text = "toolStrip1";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 55);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripLabel5
-            // 
-            this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(40, 52);
-            this.toolStripLabel5.Text = "Flows:";
-            // 
-            // cbFlowsCount
-            // 
-            this.cbFlowsCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbFlowsCount.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "5",
-            "10",
-            "100",
-            "1000"});
-            this.cbFlowsCount.Name = "cbFlowsCount";
-            this.cbFlowsCount.Size = new System.Drawing.Size(75, 55);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(60, 52);
-            this.toolStripLabel1.Text = "x Records:";
-            // 
-            // cbRecordCount
-            // 
-            this.cbRecordCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbRecordCount.Items.AddRange(new object[] {
-            "100",
-            "50 000",
-            "100 000",
-            "200 000",
-            "300 000",
-            "1 000 000",
-            "2 000 000",
-            "3 000 000",
-            "4 000 000",
-            "5 000 000",
-            "6 000 000",
-            "7 000 000",
-            "8 000 000",
-            "9 000 000",
-            "10 000 000",
-            "20 000 000",
-            "50 000 000",
-            "100 000 000",
-            "200 000 000",
-            "500 000 000",
-            "1 000 000 000",
-            "5 000 000 000",
-            "10 000 000 000",
-            "100 000 000 000",
-            "1 000 000 000 000"});
-            this.cbRecordCount.Name = "cbRecordCount";
-            this.cbRecordCount.Size = new System.Drawing.Size(92, 55);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripLabel4
-            // 
-            this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(100, 52);
-            this.toolStripLabel4.Text = "Key Randomness:";
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(23, 52);
-            this.toolStripLabel2.Text = "0%";
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 55);
             // 
             // toolStripMenuItem1
             // 
@@ -379,7 +266,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1284, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1405, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -396,23 +283,15 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.newicon;
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.newToolStripMenuItem.Text = "New project";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
-            // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(140, 6);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(140, 6);
             // 
             // viewToolStripMenuItem
             // 
@@ -601,7 +480,7 @@
             this.dockPanel1.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
             this.dockPanel1.Location = new System.Drawing.Point(0, 0);
             this.dockPanel1.Name = "dockPanel1";
-            this.dockPanel1.Size = new System.Drawing.Size(1284, 606);
+            this.dockPanel1.Size = new System.Drawing.Size(1405, 587);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -675,119 +554,154 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.dockPanel1);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1284, 606);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1405, 587);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 24);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(1284, 661);
+            this.toolStripContainer1.Size = new System.Drawing.Size(1405, 642);
             this.toolStripContainer1.TabIndex = 12;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip2);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStripMain);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStripSettings);
             // 
-            // btnStart
+            // toolStrip1
             // 
-            this.btnStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStart.Image = global::DatabaseBenchmark.Properties.Resources.start_48x48;
-            this.btnStart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(52, 52);
-            this.btnStart.Text = "Start";
-            this.btnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnStart.Click += new System.EventHandler(this.startButton_Click);
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnExportCsv,
+            this.btnExportJson,
+            this.btnExportPdf});
+            this.toolStrip1.Location = new System.Drawing.Point(120, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStrip1.Size = new System.Drawing.Size(195, 55);
+            this.toolStrip1.TabIndex = 10;
+            this.toolStrip1.Text = "toolStrip1";
             // 
-            // btnStop
+            // toolStrip2
             // 
-            this.btnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnStop.Enabled = false;
-            this.btnStop.Image = global::DatabaseBenchmark.Properties.Resources.stop_48x48;
-            this.btnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(52, 52);
-            this.btnStop.Text = "Stop";
-            this.btnStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnStop.Click += new System.EventHandler(this.stopButton_Click);
+            this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnStart,
+            this.btnStop});
+            this.toolStrip2.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStrip2.Size = new System.Drawing.Size(116, 55);
+            this.toolStrip2.TabIndex = 10;
+            this.toolStrip2.Text = "toolStrip2";
             // 
-            // btnExportCsv
+            // toolStripSettings
             // 
-            this.btnExportCsv.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnExportCsv.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.summaryReportToolStripMenuItemCSV2,
-            this.detailedReportToolStripMenuItemCSV2});
-            this.btnExportCsv.Image = global::DatabaseBenchmark.Properties.Resources.CSVicon_48x48;
-            this.btnExportCsv.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExportCsv.Name = "btnExportCsv";
-            this.btnExportCsv.Size = new System.Drawing.Size(61, 52);
-            this.btnExportCsv.Text = "Export CSV";
+            this.toolStripSettings.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripSettings.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabelFlows,
+            this.cbFlowsCount,
+            this.toolStripSeparator2,
+            this.toolStripLabelRecords,
+            this.cbRecordCount,
+            this.toolStripSeparator4,
+            this.toolStripLabelRandomness,
+            this.toolStripLabelPercent,
+            this.toolStripLabel2});
+            this.toolStripSettings.Location = new System.Drawing.Point(808, 0);
+            this.toolStripSettings.Name = "toolStripSettings";
+            this.toolStripSettings.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStripSettings.Size = new System.Drawing.Size(465, 51);
+            this.toolStripSettings.TabIndex = 11;
             // 
-            // summaryReportToolStripMenuItemCSV2
+            // toolStripLabelFlows
             // 
-            this.summaryReportToolStripMenuItemCSV2.Name = "summaryReportToolStripMenuItemCSV2";
-            this.summaryReportToolStripMenuItemCSV2.Size = new System.Drawing.Size(160, 22);
-            this.summaryReportToolStripMenuItemCSV2.Text = "Summary report";
-            this.summaryReportToolStripMenuItemCSV2.Click += new System.EventHandler(this.summaryReportToolStripMenuItemCsv_Click);
+            this.toolStripLabelFlows.Name = "toolStripLabelFlows";
+            this.toolStripLabelFlows.Size = new System.Drawing.Size(40, 48);
+            this.toolStripLabelFlows.Text = "Flows:";
             // 
-            // detailedReportToolStripMenuItemCSV2
+            // cbFlowsCount
             // 
-            this.detailedReportToolStripMenuItemCSV2.Name = "detailedReportToolStripMenuItemCSV2";
-            this.detailedReportToolStripMenuItemCSV2.Size = new System.Drawing.Size(160, 22);
-            this.detailedReportToolStripMenuItemCSV2.Text = "Detailed report";
-            this.detailedReportToolStripMenuItemCSV2.Click += new System.EventHandler(this.detailedReportToolStripMenuItemCsv_Click);
+            this.cbFlowsCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFlowsCount.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "5",
+            "10",
+            "100",
+            "1000"});
+            this.cbFlowsCount.Name = "cbFlowsCount";
+            this.cbFlowsCount.Size = new System.Drawing.Size(75, 51);
             // 
-            // btnExportJson
+            // toolStripSeparator2
             // 
-            this.btnExportJson.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnExportJson.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.summaryReportToolStripMenuItemJson2,
-            this.detailedReportToolStripMenuItemJson2});
-            this.btnExportJson.Image = global::DatabaseBenchmark.Properties.Resources.JSONicon_48x48;
-            this.btnExportJson.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnExportJson.Name = "btnExportJson";
-            this.btnExportJson.Size = new System.Drawing.Size(61, 52);
-            this.btnExportJson.Text = "Export JSON";
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 51);
             // 
-            // summaryReportToolStripMenuItemJson2
+            // toolStripLabelRecords
             // 
-            this.summaryReportToolStripMenuItemJson2.Name = "summaryReportToolStripMenuItemJson2";
-            this.summaryReportToolStripMenuItemJson2.Size = new System.Drawing.Size(160, 22);
-            this.summaryReportToolStripMenuItemJson2.Text = "Summary report";
-            this.summaryReportToolStripMenuItemJson2.Click += new System.EventHandler(this.summaryReportToolStripMenuItemJson_Click);
+            this.toolStripLabelRecords.Name = "toolStripLabelRecords";
+            this.toolStripLabelRecords.Size = new System.Drawing.Size(60, 48);
+            this.toolStripLabelRecords.Text = "x Records:";
             // 
-            // detailedReportToolStripMenuItemJson2
+            // cbRecordCount
             // 
-            this.detailedReportToolStripMenuItemJson2.Name = "detailedReportToolStripMenuItemJson2";
-            this.detailedReportToolStripMenuItemJson2.Size = new System.Drawing.Size(160, 22);
-            this.detailedReportToolStripMenuItemJson2.Text = "Detailed report";
-            this.detailedReportToolStripMenuItemJson2.Click += new System.EventHandler(this.detailedReportToolStripMenuItemJson_Click);
+            this.cbRecordCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRecordCount.Items.AddRange(new object[] {
+            "100",
+            "50 000",
+            "100 000",
+            "200 000",
+            "300 000",
+            "1 000 000",
+            "2 000 000",
+            "3 000 000",
+            "4 000 000",
+            "5 000 000",
+            "6 000 000",
+            "7 000 000",
+            "8 000 000",
+            "9 000 000",
+            "10 000 000",
+            "20 000 000",
+            "50 000 000",
+            "100 000 000",
+            "200 000 000",
+            "500 000 000",
+            "1 000 000 000",
+            "5 000 000 000",
+            "10 000 000 000",
+            "100 000 000 000",
+            "1 000 000 000 000"});
+            this.cbRecordCount.Name = "cbRecordCount";
+            this.cbRecordCount.Size = new System.Drawing.Size(91, 51);
             // 
-            // toolStripButtonPdfExport
+            // toolStripSeparator4
             // 
-            this.toolStripButtonPdfExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPdfExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.summaryReportToolStripMenuItemPdf2,
-            this.detailedReportToolStripMenuItemPdf2});
-            this.toolStripButtonPdfExport.Image = global::DatabaseBenchmark.Properties.Resources.PDFicon_48x48;
-            this.toolStripButtonPdfExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPdfExport.Name = "toolStripButtonPdfExport";
-            this.toolStripButtonPdfExport.Size = new System.Drawing.Size(61, 52);
-            this.toolStripButtonPdfExport.Text = "Export PDF";
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 51);
             // 
-            // summaryReportToolStripMenuItemPdf2
+            // toolStripLabelRandomness
             // 
-            this.summaryReportToolStripMenuItemPdf2.Name = "summaryReportToolStripMenuItemPdf2";
-            this.summaryReportToolStripMenuItemPdf2.Size = new System.Drawing.Size(160, 22);
-            this.summaryReportToolStripMenuItemPdf2.Text = "Summary report";
-            this.summaryReportToolStripMenuItemPdf2.Click += new System.EventHandler(this.summaryReportToolStripMenuItemPdf_Click);
+            this.toolStripLabelRandomness.Name = "toolStripLabelRandomness";
+            this.toolStripLabelRandomness.Size = new System.Drawing.Size(100, 48);
+            this.toolStripLabelRandomness.Text = "Key Randomness:";
             // 
-            // detailedReportToolStripMenuItemPdf2
+            // toolStripLabelPercent
             // 
-            this.detailedReportToolStripMenuItemPdf2.Name = "detailedReportToolStripMenuItemPdf2";
-            this.detailedReportToolStripMenuItemPdf2.Size = new System.Drawing.Size(160, 22);
-            this.detailedReportToolStripMenuItemPdf2.Text = "Detailed report";
-            this.detailedReportToolStripMenuItemPdf2.Click += new System.EventHandler(this.detailedReportToolStripMenuItemPdf_Click);
+            this.toolStripLabelPercent.Name = "toolStripLabelPercent";
+            this.toolStripLabelPercent.Size = new System.Drawing.Size(23, 48);
+            this.toolStripLabelPercent.Text = "0%";
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripLabel2.Image = global::DatabaseBenchmark.Properties.Resources.transperant48x48;
+            this.toolStripLabel2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(48, 48);
+            this.toolStripLabel2.Text = "toolStripLabel2";
             // 
             // btnTreeView
             // 
@@ -906,11 +820,125 @@
             this.btnIOView.Text = "I/O View";
             this.btnIOView.Click += new System.EventHandler(this.View_Click);
             // 
+            // btnExportCsv
+            // 
+            this.btnExportCsv.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnExportCsv.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.summaryReportToolStripMenuItemCSV2,
+            this.detailedReportToolStripMenuItemCSV2});
+            this.btnExportCsv.Image = global::DatabaseBenchmark.Properties.Resources.CSVicon_48x48;
+            this.btnExportCsv.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnExportCsv.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExportCsv.Name = "btnExportCsv";
+            this.btnExportCsv.Size = new System.Drawing.Size(61, 52);
+            this.btnExportCsv.Text = "Export CSV";
+            // 
+            // summaryReportToolStripMenuItemCSV2
+            // 
+            this.summaryReportToolStripMenuItemCSV2.Name = "summaryReportToolStripMenuItemCSV2";
+            this.summaryReportToolStripMenuItemCSV2.Size = new System.Drawing.Size(160, 22);
+            this.summaryReportToolStripMenuItemCSV2.Text = "Summary report";
+            this.summaryReportToolStripMenuItemCSV2.Click += new System.EventHandler(this.summaryReportToolStripMenuItemCsv_Click);
+            // 
+            // detailedReportToolStripMenuItemCSV2
+            // 
+            this.detailedReportToolStripMenuItemCSV2.Name = "detailedReportToolStripMenuItemCSV2";
+            this.detailedReportToolStripMenuItemCSV2.Size = new System.Drawing.Size(160, 22);
+            this.detailedReportToolStripMenuItemCSV2.Text = "Detailed report";
+            this.detailedReportToolStripMenuItemCSV2.Click += new System.EventHandler(this.detailedReportToolStripMenuItemCsv_Click);
+            // 
+            // btnExportJson
+            // 
+            this.btnExportJson.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnExportJson.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.summaryReportToolStripMenuItemJson2,
+            this.detailedReportToolStripMenuItemJson2});
+            this.btnExportJson.Image = global::DatabaseBenchmark.Properties.Resources.JSONicon_48x48;
+            this.btnExportJson.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnExportJson.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExportJson.Name = "btnExportJson";
+            this.btnExportJson.Size = new System.Drawing.Size(61, 52);
+            this.btnExportJson.Text = "Export JSON";
+            // 
+            // summaryReportToolStripMenuItemJson2
+            // 
+            this.summaryReportToolStripMenuItemJson2.Name = "summaryReportToolStripMenuItemJson2";
+            this.summaryReportToolStripMenuItemJson2.Size = new System.Drawing.Size(160, 22);
+            this.summaryReportToolStripMenuItemJson2.Text = "Summary report";
+            this.summaryReportToolStripMenuItemJson2.Click += new System.EventHandler(this.summaryReportToolStripMenuItemJson_Click);
+            // 
+            // detailedReportToolStripMenuItemJson2
+            // 
+            this.detailedReportToolStripMenuItemJson2.Name = "detailedReportToolStripMenuItemJson2";
+            this.detailedReportToolStripMenuItemJson2.Size = new System.Drawing.Size(160, 22);
+            this.detailedReportToolStripMenuItemJson2.Text = "Detailed report";
+            this.detailedReportToolStripMenuItemJson2.Click += new System.EventHandler(this.detailedReportToolStripMenuItemJson_Click);
+            // 
+            // btnExportPdf
+            // 
+            this.btnExportPdf.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnExportPdf.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.summaryReportToolStripMenuItemPdf2,
+            this.detailedReportToolStripMenuItemPdf2});
+            this.btnExportPdf.Image = global::DatabaseBenchmark.Properties.Resources.PDFicon_48x48;
+            this.btnExportPdf.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnExportPdf.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnExportPdf.Name = "btnExportPdf";
+            this.btnExportPdf.Size = new System.Drawing.Size(61, 52);
+            this.btnExportPdf.Text = "Export PDF";
+            // 
+            // summaryReportToolStripMenuItemPdf2
+            // 
+            this.summaryReportToolStripMenuItemPdf2.Name = "summaryReportToolStripMenuItemPdf2";
+            this.summaryReportToolStripMenuItemPdf2.Size = new System.Drawing.Size(160, 22);
+            this.summaryReportToolStripMenuItemPdf2.Text = "Summary report";
+            this.summaryReportToolStripMenuItemPdf2.Click += new System.EventHandler(this.summaryReportToolStripMenuItemPdf_Click);
+            // 
+            // detailedReportToolStripMenuItemPdf2
+            // 
+            this.detailedReportToolStripMenuItemPdf2.Name = "detailedReportToolStripMenuItemPdf2";
+            this.detailedReportToolStripMenuItemPdf2.Size = new System.Drawing.Size(160, 22);
+            this.detailedReportToolStripMenuItemPdf2.Text = "Detailed report";
+            this.detailedReportToolStripMenuItemPdf2.Click += new System.EventHandler(this.detailedReportToolStripMenuItemPdf_Click);
+            // 
+            // btnStart
+            // 
+            this.btnStart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStart.Image = global::DatabaseBenchmark.Properties.Resources.start_48x48;
+            this.btnStart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStart.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(52, 52);
+            this.btnStart.Text = "Start";
+            this.btnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnStart.Click += new System.EventHandler(this.startButton_Click);
+            // 
+            // btnStop
+            // 
+            this.btnStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnStop.Enabled = false;
+            this.btnStop.Image = global::DatabaseBenchmark.Properties.Resources.stop_48x48;
+            this.btnStop.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnStop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(52, 52);
+            this.btnStop.Text = "Stop";
+            this.btnStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnStop.Click += new System.EventHandler(this.stopButton_Click);
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.newicon;
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.newToolStripMenuItem.Text = "New project";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
             // loadConfigurationToolStripMenuItem
             // 
             this.loadConfigurationToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.load_icon;
             this.loadConfigurationToolStripMenuItem.Name = "loadConfigurationToolStripMenuItem";
-            this.loadConfigurationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadConfigurationToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.loadConfigurationToolStripMenuItem.Text = "Open project";
             this.loadConfigurationToolStripMenuItem.Click += new System.EventHandler(this.loadConfigurationToolStripMenuItem_Click);
             // 
@@ -918,7 +946,7 @@
             // 
             this.saveConfigurationToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.save_icon;
             this.saveConfigurationToolStripMenuItem.Name = "saveConfigurationToolStripMenuItem";
-            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.saveConfigurationToolStripMenuItem.Text = "Save project";
             this.saveConfigurationToolStripMenuItem.Click += new System.EventHandler(this.saveConfigurationToolStripMenuItem_Click);
             // 
@@ -926,7 +954,7 @@
             // 
             this.exitToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.close_icon;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -934,7 +962,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 709);
+            this.ClientSize = new System.Drawing.Size(1405, 690);
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.statusStrip1);
@@ -959,6 +987,12 @@
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
+            this.toolStripSettings.ResumeLayout(false);
+            this.toolStripSettings.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -971,13 +1005,7 @@
         private System.Windows.Forms.ToolStripProgressBar progressBar;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStrip toolStripMain;
-        private System.Windows.Forms.ToolStripButton btnStart;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripComboBox cbRecordCount;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton btnStop;
         private System.Windows.Forms.ToolStripStatusLabel fit;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton btnSpeedView;
         private System.Windows.Forms.ToolStripButton btnTimeView;
         private System.Windows.Forms.ToolStripButton btnSizeView;
@@ -993,21 +1021,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton btnAutoNavigate;
         private System.Windows.Forms.ToolStripButton btnAxisType;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel5;
-        private System.Windows.Forms.ToolStripComboBox cbFlowsCount;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.SaveFileDialog saveFileDialogCsv;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.SaveFileDialog saveFileDialogJson;
         private System.Windows.Forms.ToolStripButton btnIOView;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
@@ -1039,17 +1059,31 @@
         private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemPdf;
         private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemJson;
         private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemJson;
-        private System.Windows.Forms.ToolStripDropDownButton btnExportCsv;
-        private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemCSV2;
-        private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemCSV2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton btnExportJson;
         private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemJson2;
         private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemJson2;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripButtonPdfExport;
+        private System.Windows.Forms.ToolStripDropDownButton btnExportPdf;
         private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemPdf2;
         private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemPdf2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
-        private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.ToolStripDropDownButton btnExportCsv;
+        private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemCSV2;
+        private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemCSV2;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton btnStart;
+        private System.Windows.Forms.ToolStripButton btnStop;
+        private System.Windows.Forms.ToolStrip toolStripSettings;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelFlows;
+        private System.Windows.Forms.ToolStripComboBox cbFlowsCount;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelRecords;
+        private System.Windows.Forms.ToolStripComboBox cbRecordCount;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelRandomness;
+        private System.Windows.Forms.ToolStripLabel toolStripLabelPercent;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
     }
 }
 

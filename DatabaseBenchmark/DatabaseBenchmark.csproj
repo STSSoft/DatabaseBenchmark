@@ -648,6 +648,9 @@
   <ItemGroup>
     <None Include="Resources\newicon1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\transperant48x48.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set target=x64
