@@ -502,17 +502,17 @@ namespace DatabaseBenchmark
 
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationPersist.SelectStepFrame(TestMethod.Write);
+            ApplicationPersist.SelectFrame(TestMethod.Write);
         }
 
         private void readWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationPersist.SelectStepFrame(TestMethod.Read);
+            ApplicationPersist.SelectFrame(TestMethod.Read);
         }
 
         private void secondaryReadWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationPersist.SelectStepFrame(TestMethod.SecondaryRead);
+            ApplicationPersist.SelectFrame(TestMethod.SecondaryRead);
         }
 
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
