@@ -648,6 +648,30 @@
   <ItemGroup>
     <None Include="Resources\newicon1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UniWindowIcon_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about_24x24%281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pdfmini_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load-icon2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save-icon2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\csvmini_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jsonmini_24x24.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set target=x64
