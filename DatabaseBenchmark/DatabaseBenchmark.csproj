@@ -636,6 +636,18 @@
   <ItemGroup>
     <None Include="Resources\logo-01.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\newicon1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set target=x64
