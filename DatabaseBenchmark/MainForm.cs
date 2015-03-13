@@ -58,7 +58,7 @@ namespace DatabaseBenchmark
 
         private ILog Logger;
 
-        private ProjectPersist ApplicationPersist;
+        private ProjectManager ApplicationPersist;
 
         public MainForm()
         {
@@ -75,7 +75,7 @@ namespace DatabaseBenchmark
 
             // Trackbar.
             trackBar1.Value = 20; // Sets the randomness to 100%.
-            toolStripMain.Items.Insert(toolStripMain.Items.Count - 2, new ToolStripControlHost(trackBar1));
+            toolStripSettings.Items.Insert(toolStripSettings.Items.Count - 1, new ToolStripControlHost(trackBar1));
 
             this.SuspendLayout();
 
@@ -85,7 +85,7 @@ namespace DatabaseBenchmark
             Logger = LogManager.GetLogger("ApplicationLogger");
 
             ProjectSettings containerSettings = new ProjectSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
-            ApplicationPersist = new ProjectPersist(containerSettings, CONFIGURATION_FOLDER);
+            ApplicationPersist = new ProjectManager(containerSettings, CONFIGURATION_FOLDER);
 
             TestFrames = ApplicationPersist.SettingsContainer.Frames;
 
@@ -420,7 +420,8 @@ namespace DatabaseBenchmark
                     Loading.Start("Waiting export to PDF...");
 
                     Enabled = false;
-                    PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, SystemUtils.GetComputerConfiguration(), reportType);
+                    BenchmarkTest test = History[0];
+                    PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
                     Enabled = true;
 
                     Loading.Stop();
@@ -458,7 +459,7 @@ namespace DatabaseBenchmark
         {
             if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                Loading.Start("Waiting to save settings...");
+                Loading.Start("Saving project...");
                 ApplicationPersist.Store(saveFileDialogProject.FileName);
                 Loading.Stop();
             }
@@ -468,7 +469,7 @@ namespace DatabaseBenchmark
         {
             if (openFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                Loading.Start("Waiting to load settings...");
+                Loading.Start("Loading project...");
                 ApplicationPersist.Load(openFileDialogProject.FileName);
                 Loading.Stop();
             }
@@ -481,7 +482,7 @@ namespace DatabaseBenchmark
             if (result == DialogResult.Yes)
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
-            Loading.Start("Waiting...");
+            Loading.Start("Creating project...");
             ApplicationPersist.Reset();
             Loading.Stop();
         }
@@ -544,9 +545,9 @@ namespace DatabaseBenchmark
 
                 if (History.Count == 0 || MainTask.Status == TaskStatus.Running)
                 {
-                    btnExportCsv.Enabled = false;
                     btnExportJson.Enabled = false;
-                    toolStripButtonPdfExport.Enabled = false;
+                    btnExportPdf.Enabled = false;
+                    btnExportCsv.Enabled = false;
 
                     exportResultToPDFToolStripMenuItem.Enabled = false;
                     exportToCSVToolStripMenuItem.Enabled = false;
@@ -554,9 +555,9 @@ namespace DatabaseBenchmark
                 }
                 else
                 {
-                    btnExportCsv.Enabled = true;
                     btnExportJson.Enabled = true;
-                    toolStripButtonPdfExport.Enabled = true;
+                    btnExportPdf.Enabled = true;
+                    btnExportCsv.Enabled = true;
 
                     exportResultToPDFToolStripMenuItem.Enabled = true;
                     exportToCSVToolStripMenuItem.Enabled = true;
@@ -631,7 +632,7 @@ namespace DatabaseBenchmark
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            toolStripLabel2.Text = (trackBar1.Value * 5).ToString() + " %";
+            toolStripLabelPercent.Text = (trackBar1.Value * 5).ToString() + " %";
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

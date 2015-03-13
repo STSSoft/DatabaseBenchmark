@@ -145,6 +145,7 @@
             this.Controls.Add(this.treeView);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.HideOnClose = true;
             this.Name = "TreeViewFrame";
             this.Text = "TreeViewFrame";
             this.contextMenuDatabase.ResumeLayout(false);
