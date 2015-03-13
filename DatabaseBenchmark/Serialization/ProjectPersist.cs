@@ -30,11 +30,19 @@ namespace DatabaseBenchmark.Serialization
         public string DockConfigPath { get; private set; }
         public ProjectSettings SettingsContainer { get; private set; }
 
+        private TreeViewFrame TreeView;
+        private DockPanel Panel;
+        private Dictionary<string, StepFrame> Frames;
+
         public ProjectPersist(ProjectSettings settings, string path)
         {
             Logger = LogManager.GetLogger("ApplicationLogger");
 
             SettingsContainer = settings;
+
+            TreeView = SettingsContainer.TreeView;
+            Panel = SettingsContainer.DockingPanel;
+            Frames = SettingsContainer.Frames;
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -42,7 +50,7 @@ namespace DatabaseBenchmark.Serialization
             DockConfigPath = Path.Combine(path, DOCKING_CONFIGURATION);
 
             foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
-                SettingsContainer.Frames[method.ToString()] = CreateStepFrame(method);
+                Frames[method.ToString()] = CreateStepFrame(method);
         }
 
         public void Store(string path)
@@ -59,7 +67,7 @@ namespace DatabaseBenchmark.Serialization
                 // Databases and frames.
                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                 {
-                    Dictionary<IDatabase, bool> databases = SettingsContainer.TreeView.GetAllDatabases();
+                    Dictionary<IDatabase, bool> databases = TreeView.GetAllDatabases();
                     Dictionary<string, string> selectedItmes = GetSelectedFromComboBoxes(SettingsContainer.ComboBoxes);
 
                     XmlProjectPersist persist = new XmlProjectPersist(databases, selectedItmes, SettingsContainer.TrackBar.Value);
@@ -80,12 +88,12 @@ namespace DatabaseBenchmark.Serialization
             {
                 if (!File.Exists(path))
                 {
-                    SettingsContainer.TreeView.CreateTreeView();
+                    TreeView.CreateTreeView();
                     return;
                 }
 
                 // Clear TreeView.
-                SettingsContainer.TreeView.ClearTreeViewNodes();
+                TreeView.ClearTreeViewNodes();
 
                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                 {
@@ -94,7 +102,7 @@ namespace DatabaseBenchmark.Serialization
 
                     // Add databases in TreeView.
                     foreach (var database in appPersist.Databases)
-                        SettingsContainer.TreeView.CreateTreeViewNode(database.Key, database.Value);
+                        TreeView.CreateTreeViewNode(database.Key, database.Value);
 
                     foreach (var comboBox in appPersist.ComboBoxItems)
                         SettingsContainer.ComboBoxes.First(x => x.Name == comboBox.Key).Text = comboBox.Value;
@@ -102,12 +110,12 @@ namespace DatabaseBenchmark.Serialization
                     SettingsContainer.TrackBar.Value = appPersist.TrackBarValue;
                 }
 
-                SettingsContainer.TreeView.ExpandAll();
+                TreeView.ExpandAll();
             }
             catch (Exception exc)
             {
                 Logger.Error("Persist load error ...", exc);
-                SettingsContainer.TreeView.CreateTreeView();
+                TreeView.CreateTreeView();
             }
         }
 
@@ -116,9 +124,9 @@ namespace DatabaseBenchmark.Serialization
             ResetDockingConfiguration();
 
             // Clear TreeView.
-            SettingsContainer.TreeView.ClearTreeViewNodes();
+            TreeView.ClearTreeViewNodes();
 
-            SettingsContainer.TreeView.CreateTreeView();
+            TreeView.CreateTreeView();
             SettingsContainer.TrackBar.Value = 20;
             SettingsContainer.ComboBoxes[0].SelectedIndex = 0;
             SettingsContainer.ComboBoxes[1].SelectedIndex = 5;
@@ -126,7 +134,7 @@ namespace DatabaseBenchmark.Serialization
 
         public void StoreDocking()
         {
-            SettingsContainer.DockingPanel.SaveAsXml(DockConfigPath);
+            Panel.SaveAsXml(DockConfigPath);
         }
 
         public void LoadDocking()
@@ -134,7 +142,7 @@ namespace DatabaseBenchmark.Serialization
             try
             {
                 if (File.Exists(DockConfigPath))
-                    SettingsContainer.DockingPanel.LoadFromXml(DockConfigPath, new DeserializeDockContent(GetContentFromPersistString));
+                    Panel.LoadFromXml(DockConfigPath, new DeserializeDockContent(GetContentFromPersistString));
                 else
                     InitializeDockingConfiguration();
             }
@@ -145,69 +153,36 @@ namespace DatabaseBenchmark.Serialization
             }
             finally
             {
-                SettingsContainer.TreeView.Text = "Databases";
+                TreeView.Text = "Databases";
             }
         }
 
         public void SelectFrame(TestMethod method)
         {
-            StepFrame frame = SettingsContainer.Frames[method.ToString()];
-            frame.Show(SettingsContainer.DockingPanel);
+            StepFrame frame = Frames[method.ToString()];
+            frame.Show(Panel);
         }
 
         public void ResetDockingConfiguration()
         {
-            // Dispose existing windows.
-            SettingsContainer.TreeView.Dispose();
+            TreeView.Show(Panel);
+            TreeView.DockState = DockState.DockLeft;
 
-            foreach (var frame in SettingsContainer.Frames)
-                frame.Value.Close();
-
-            SettingsContainer.Frames.Clear();
-
-            // Create new window layout.
-            TreeViewFrame TreeViewFrame = new TreeViewFrame();
-
-            TreeViewFrame.Text = "Databases";
-            TreeViewFrame.Show(SettingsContainer.DockingPanel);
-            TreeViewFrame.DockState = DockState.DockLeft;
-
-            TreeViewFrame.CreateTreeView();
-
-            SettingsContainer.TreeView = TreeViewFrame;
-
-            foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
+            foreach (var item in Frames)
             {
-                StepFrame frame = CreateStepFrame(method);
-                SettingsContainer.Frames[method.ToString()] = frame;
-            }
-
-            foreach (var item in SettingsContainer.Frames)
-            {
-                item.Value.Show(SettingsContainer.DockingPanel);
+                item.Value.Show(Panel);
                 item.Value.DockState = DockState.Document;
             }
 
-            SettingsContainer.Frames[TestMethod.Write.ToString()].Select();
+            Frames[TestMethod.Write.ToString()].Activate();
         }
 
         public void SelectTreeView()
         {
-            if (!SettingsContainer.TreeView.IsDisposed)
-            {
-                SettingsContainer.TreeView.Select();
-                return;
-            }
-
-            TreeViewFrame TreeViewFrame = new TreeViewFrame();
-
-            TreeViewFrame.Text = "Databases";
-            TreeViewFrame.Show(SettingsContainer.DockingPanel);
-            TreeViewFrame.DockState = DockState.DockLeft;
-
-            TreeViewFrame.CreateTreeView();
-
-            SettingsContainer.TreeView = TreeViewFrame;
+            if (TreeView.IsHidden)
+                TreeView.Show(Panel);
+            else
+                TreeView.Show(Panel);
         }
 
         #region Private Methods
@@ -239,13 +214,13 @@ namespace DatabaseBenchmark.Serialization
 
         private void InitializeDockingConfiguration()
         {
-            SettingsContainer.TreeView.Text = "Databases";
-            SettingsContainer.TreeView.Show(SettingsContainer.DockingPanel);
-            SettingsContainer.TreeView.DockState = DockState.DockLeft;
+            TreeView.Text = "Databases";
+            TreeView.Show(Panel);
+            TreeView.DockState = DockState.DockLeft;
 
-            foreach (var item in SettingsContainer.Frames)
+            foreach (var item in Frames)
             {
-                item.Value.Show(SettingsContainer.DockingPanel);
+                item.Value.Show(Panel);
                 item.Value.DockState = DockState.Document;
             }
         }
@@ -253,17 +228,17 @@ namespace DatabaseBenchmark.Serialization
         private IDockContent GetContentFromPersistString(string persistString)
         {
             if (persistString == typeof(TreeViewFrame).ToString())
-                return SettingsContainer.TreeView;
+                return TreeView;
 
             StepFrame frame = null;
             if (persistString == typeof(StepFrame).ToString())
             {
                 if (Count == 0)
-                    frame = SettingsContainer.Frames[TestMethod.Write.ToString()];
+                    frame = Frames[TestMethod.Write.ToString()];
                 else if (Count == 1)
-                    frame = SettingsContainer.Frames[TestMethod.Read.ToString()];
+                    frame = Frames[TestMethod.Read.ToString()];
                 else if (Count == 2)
-                    frame = SettingsContainer.Frames[TestMethod.SecondaryRead.ToString()];
+                    frame = Frames[TestMethod.SecondaryRead.ToString()];
 
                 Count++;
             }
