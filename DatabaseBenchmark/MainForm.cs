@@ -420,7 +420,8 @@ namespace DatabaseBenchmark
                     Loading.Start("Waiting export to PDF...");
 
                     Enabled = false;
-                    PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, SystemUtils.GetComputerConfiguration(), reportType);
+                    BenchmarkTest test = History[0];
+                    PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
                     Enabled = true;
 
                     Loading.Stop();

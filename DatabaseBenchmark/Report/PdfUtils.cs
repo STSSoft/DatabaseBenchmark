@@ -6,8 +6,10 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,9 +18,9 @@ namespace DatabaseBenchmark.Report
 {
     public static class PdfUtils
     {
-        public static void Export(string file, Dictionary<string, StepFrame> frames, ComputerConfiguration computerInfo, ReportType type)
+        public static void Export(string file, Dictionary<string, StepFrame> frames, int flowCount, long recordCount, float randomness, ComputerConfiguration computerInfo, ReportType type)
         {
-            var doc = new iTextSharp.text.Document(PageSize.A4);
+            var doc = new Document(PageSize.A4);
 
             if (File.Exists(file))
                 File.Delete(file);
@@ -43,13 +45,21 @@ namespace DatabaseBenchmark.Report
             int chapterCount = 1;
             Font chapterFont = new Font(Font.TIMES_ROMAN, 16f, Font.TIMES_ROMAN, new Color(System.Drawing.Color.CornflowerBlue));
 
+            Chapter benchamrkConfiguration = new Chapter(new Paragraph("Benchmark parameters.", chapterFont), chapterCount++);
+            benchamrkConfiguration.Add(new Chunk("\n"));
+
+            ExportTestSettings(benchamrkConfiguration, chapterFont, flowCount, recordCount, randomness);
+            ExportComputerSpecification(benchamrkConfiguration, chapterFont, computerInfo);
+
+            doc.Add(benchamrkConfiguration);
+
             foreach (var fr in frames)
             {
                 StepFrame frame = fr.Value;
                 List<BarChart> barCharts;
 
                 if (type == ReportType.Summary)
-                    barCharts = frame.GetAllBarCharts().Where(x=>x.Title == "Speed (rec/sec)" || x.Title == "Size (MB)").ToList();
+                    barCharts = frame.GetAllBarCharts().Where(x => x.Title == "Speed (rec/sec)" || x.Title == "Size (MB)").ToList();
                 else
                     barCharts = frame.GetSelectedBarCharts();
 
@@ -82,23 +92,38 @@ namespace DatabaseBenchmark.Report
                 doc.Add(chapter);
             }
 
-            ExportComputerSpecification(computerInfo, doc, chapterCount++, chapterFont);
-
             doc.Close();
         }
 
-        public static void ExportComputerSpecification(ComputerConfiguration computerInfo, Document doc, int chapterNumber, Font font)
+        public static void ExportTestSettings(Chapter chapter, Font font, int flowCount, long recordCount, float randomness)
         {
-            Chapter chapterPC = new Chapter(new Paragraph("Computer specification.", font), chapterNumber);
-            chapterPC.Add(new Chunk("\n"));
+            Section settings = chapter.AddSection(new Paragraph("Test settings.", font));
 
-            Section osSection = chapterPC.AddSection(new Paragraph("Operating System.", font));
-            osSection.Add(new Paragraph(string.Format("\t \t Name: {0}", computerInfo.OperatingSystem.Name)));
-            osSection.Add(new Paragraph(string.Format("\t \t Is64Bit: {0}", computerInfo.OperatingSystem.Is64bit)));
+            string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+            settings.Add(new Paragraph(string.Format("\t \t Benchmark - {0}", version)));
+            settings.Add(new Paragraph(string.Format("\t \t Export date - {0}", DateTime.Now)));
+            settings.Add(new Chunk("\n"));
 
-            chapterPC.Add(new Chunk("\n"));
+            Section testSettings = chapter.AddSection(new Paragraph("Settings.", font));
+            testSettings.Add(new Paragraph(string.Format("\t \t Flow count - {0}", flowCount)));
+            testSettings.Add(new Paragraph(string.Format("\t \t Record count - {0}", recordCount)));
+            testSettings.Add(new Paragraph(string.Format("\t \t Randomness - {0}%", randomness * 100)));
+            testSettings.Add(new Paragraph(string.Format("\t \t Key type - {0}", randomness == 0f ? KeysType.Sequential : KeysType.Random)));
+            testSettings.Add(new Chunk("\n"));
+        }
 
-            Section processor = chapterPC.AddSection(new Paragraph("Processors.", font));
+        public static void ExportComputerSpecification(Chapter chapter, Font font, ComputerConfiguration computerInfo)
+        {
+            Section sectionPC = chapter.AddSection(new Paragraph("Computer specification.", font));
+            sectionPC.Add(new Chunk("\n"));
+
+            Section osSection = sectionPC.AddSection(new Paragraph("Operating System.", font));
+            string bits = computerInfo.OperatingSystem.Is64bit ? " 64bit" : "32bit";
+            osSection.Add(new Paragraph(string.Format("\t \t {0} {1}", computerInfo.OperatingSystem.Name, bits)));
+
+            sectionPC.Add(new Chunk("\n"));
+
+            Section processor = sectionPC.AddSection(new Paragraph("Processors.", font));
             foreach (var pr in computerInfo.Processors)
             {
                 processor.Add(new Paragraph(string.Format("\t \t Name: {0}", pr.Name)));
@@ -106,9 +131,9 @@ namespace DatabaseBenchmark.Report
                 processor.Add(new Paragraph(string.Format("\t \t Max clock speed: {0} MHz", pr.MaxClockSpeed)));
             }
 
-            chapterPC.Add(new Chunk("\n"));
+            sectionPC.Add(new Chunk("\n"));
 
-            Section memory = chapterPC.AddSection(new Paragraph("Memory modules.", font));
+            Section memory = sectionPC.AddSection(new Paragraph("Memory modules.", font));
             PdfPTable table = new PdfPTable(3);
 
             table.AddCell(CreateHeaderPdfPCell("Type"));
@@ -125,9 +150,9 @@ namespace DatabaseBenchmark.Report
             memory.Add(new Chunk("\n"));
             memory.Add(table);
 
-            chapterPC.Add(new Chunk("\n"));
+            sectionPC.Add(new Chunk("\n"));
 
-            Section storage = chapterPC.AddSection(new Paragraph("Storages.", font));
+            Section storage = sectionPC.AddSection(new Paragraph("Storages.", font));
             table = new PdfPTable(3);
 
             table.AddCell(CreateHeaderPdfPCell("Model"));
@@ -143,8 +168,6 @@ namespace DatabaseBenchmark.Report
 
             storage.Add(new Chunk("\n"));
             storage.Add(table);
-
-            doc.Add(chapterPC);
         }
 
         private static void AddCellToTable(PdfPTable table, string text, Func<byte[]> converter)
