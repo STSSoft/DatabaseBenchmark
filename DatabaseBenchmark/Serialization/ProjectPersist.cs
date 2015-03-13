@@ -35,6 +35,10 @@ namespace DatabaseBenchmark.Serialization
             Logger = LogManager.GetLogger("ApplicationLogger");
 
             SettingsContainer = settings;
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
             DockConfigPath = Path.Combine(path, DOCKING_CONFIGURATION);
 
             foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
@@ -145,23 +149,10 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
-        public void SelectStepFrame(TestMethod method)
+        public void SelectFrame(TestMethod method)
         {
             StepFrame frame = SettingsContainer.Frames[method.ToString()];
-
-            if (!frame.IsDisposed)
-            {
-                frame.Show(SettingsContainer.DockingPanel);
-                return;
-            }
-
-            StepFrame newFrame = CreateStepFrame(method);
-            frame = newFrame;
-
-            newFrame.Show(SettingsContainer.DockingPanel);
-            newFrame.DockState = DockState.Document;
-
-            SettingsContainer.Frames[method.ToString()] = newFrame;
+            frame.Show(SettingsContainer.DockingPanel);
         }
 
         public void ResetDockingConfiguration()
@@ -170,7 +161,7 @@ namespace DatabaseBenchmark.Serialization
             SettingsContainer.TreeView.Dispose();
 
             foreach (var frame in SettingsContainer.Frames)
-                frame.Value.Dispose();
+                frame.Value.Close();
 
             SettingsContainer.Frames.Clear();
 
