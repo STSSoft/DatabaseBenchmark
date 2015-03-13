@@ -20,7 +20,7 @@ namespace DatabaseBenchmark.Serialization
     /// <summary>
     /// Persists the state of the application (including: application settings, database settings, window layout).
     /// </summary>
-    public class ProjectPersist
+    public class ProjectManager
     {
         public const string DOCKING_CONFIGURATION = "Docking.config";
 
@@ -34,7 +34,7 @@ namespace DatabaseBenchmark.Serialization
         private DockPanel Panel;
         private Dictionary<string, StepFrame> Frames;
 
-        public ProjectPersist(ProjectSettings settings, string path)
+        public ProjectManager(ProjectSettings settings, string path)
         {
             Logger = LogManager.GetLogger("ApplicationLogger");
 

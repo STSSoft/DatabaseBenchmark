@@ -58,7 +58,7 @@ namespace DatabaseBenchmark
 
         private ILog Logger;
 
-        private ProjectPersist ApplicationPersist;
+        private ProjectManager ApplicationPersist;
 
         public MainForm()
         {
@@ -85,7 +85,7 @@ namespace DatabaseBenchmark
             Logger = LogManager.GetLogger("ApplicationLogger");
 
             ProjectSettings containerSettings = new ProjectSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
-            ApplicationPersist = new ProjectPersist(containerSettings, CONFIGURATION_FOLDER);
+            ApplicationPersist = new ProjectManager(containerSettings, CONFIGURATION_FOLDER);
 
             TestFrames = ApplicationPersist.SettingsContainer.Frames;
 
