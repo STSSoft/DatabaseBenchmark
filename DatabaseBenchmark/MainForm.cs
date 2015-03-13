@@ -636,12 +636,22 @@ namespace DatabaseBenchmark
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show("Save current project?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Save current project?", "Save project", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-            if (result == DialogResult.Yes)
+            if (result == DialogResult.Cancel)
+                e.Cancel = true;
+            else if (result == DialogResult.No)
+            {
+                stopButton_Click(sender, e);
+                ApplicationPersist.StoreDocking();
+            }
+            else if (result == DialogResult.Yes)
+            {
+                stopButton_Click(sender, e);
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
-            stopButton_Click(sender, e);
+                ApplicationPersist.StoreDocking();
+            }
         }
     }
 }
