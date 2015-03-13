@@ -69,7 +69,7 @@ namespace DatabaseBenchmark.Report
             JsonObjectCollection jsonSettings = new JsonObjectCollection("TestInfo");
             jsonSettings.Add(new JsonNumericValue("FlowCount", benchmark.FlowCount));
             jsonSettings.Add(new JsonNumericValue("RecordCount", benchmark.FlowCount));
-            jsonSettings.Add(new JsonNumericValue("Randomness", benchmark.Randomness));
+            jsonSettings.Add(new JsonNumericValue("Randomness", benchmark.Randomness * 100));
 
             long elapsedTime = benchmark.EndTime.Ticks - benchmark.StartTime.Ticks;
             jsonSettings.Add(new JsonNumericValue("ElapsedTime", elapsedTime));

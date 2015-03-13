@@ -147,7 +147,7 @@ namespace DatabaseBenchmark.Report
             int tableCount = session.FlowCount;
             long recordCount = session.RecordCount;
             string sequential = session.KeysType.ToString();
-            string randomness = string.Format("{0}", session.Randomness);
+            string randomness = string.Format("{0}%", session.Randomness * 100);
 
             writer.WriteLine("Settings:");
             writer.WriteLine("Table count;Record count;Keys type;Randomness");
