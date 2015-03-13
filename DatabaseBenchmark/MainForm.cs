@@ -458,7 +458,7 @@ namespace DatabaseBenchmark
         {
             if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                Loading.Start("Waiting to save settings...");
+                Loading.Start("Saving project...");
                 ApplicationPersist.Store(saveFileDialogProject.FileName);
                 Loading.Stop();
             }
@@ -468,7 +468,7 @@ namespace DatabaseBenchmark
         {
             if (openFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                Loading.Start("Waiting to load settings...");
+                Loading.Start("Loading project...");
                 ApplicationPersist.Load(openFileDialogProject.FileName);
                 Loading.Stop();
             }
@@ -481,7 +481,7 @@ namespace DatabaseBenchmark
             if (result == DialogResult.Yes)
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
-            Loading.Start("Waiting...");
+            Loading.Start("Creating project...");
             ApplicationPersist.Reset();
             Loading.Stop();
         }
