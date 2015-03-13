@@ -466,7 +466,7 @@
             // 
             this.btnIOView.CheckOnClick = true;
             this.btnIOView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnIOView.Image = global::DatabaseBenchmark.Properties.Resources.ioicon_48x481;
+            this.btnIOView.Image = global::DatabaseBenchmark.Properties.Resources.ioicon_48x48;
             this.btnIOView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnIOView.Name = "btnIOView";
             this.btnIOView.Size = new System.Drawing.Size(52, 52);
