@@ -438,6 +438,9 @@
     <EmbeddedResource Include="Charts\LineChart.resx">
       <DependentUpon>LineChart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Frames\LogFrame.resx">
+      <DependentUpon>LogFrame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frames\StepFrame.resx">
       <DependentUpon>StepFrame.cs</DependentUpon>
     </EmbeddedResource>
