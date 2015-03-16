@@ -87,7 +87,7 @@ namespace DatabaseBenchmark.Validation
             
             try
             {
-                Configuration.StorageDevices.RemoveAll(device => device.Model == comboBoxStorageModel.Text);
+                Configuration.StorageDevices.RemoveAll(device => device.Model != comboBoxStorageModel.Text);
 
                 string jsonData = JsonUtils.ConvertToJson(user, Configuration, BenchmarkTests).ToString();
                 ServerConnector = new ServerConnection();
@@ -102,7 +102,7 @@ namespace DatabaseBenchmark.Validation
                     MessageBox.Show("Data sent successfully to server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // TODO: Add the real link.
-                    Process.Start("http://stssoft.com/products/database-benchmark/");
+                    Process.Start("http://stssoft.com/draft2014/benchmarks/public/benchmarks");
 
                     this.Close();
                 }
