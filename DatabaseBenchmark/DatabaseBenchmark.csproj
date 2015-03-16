@@ -344,7 +344,9 @@
     <Compile Include="Charts\LineChart.Designer.cs">
       <DependentUpon>LineChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frames\LogFrame.cs" />
+    <Compile Include="Frames\LogFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Frames\LogFrame.Designer.cs">
       <DependentUpon>LogFrame.cs</DependentUpon>
     </Compile>

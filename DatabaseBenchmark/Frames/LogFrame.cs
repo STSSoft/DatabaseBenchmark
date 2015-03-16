@@ -7,11 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark.Frames
 {
-    public partial class LogFrame : DockContent
+    public partial class LogFrame : Form
     {
         public LogFrame()
         {
