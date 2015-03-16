@@ -45,6 +45,15 @@ namespace DatabaseBenchmark.Charts
             cache.Color = color;
             cache.BorderWidth = 2;
             cache.ChartType = SeriesChartType.Line;
+
+            Legend legend = new Legend(name);
+            legend.Position = new ElementPosition(90, 0, 10, 100);
+            legend.Position.Auto = false;
+            legend.DockedToChartArea = "ChartAreaLegend";
+            legend.Title = "Legend";
+            legend.Name = name;
+
+            chart1.Legends.Add(legend);
         }
 
         public void AddPoint(string series, long x, double y)
@@ -118,6 +127,7 @@ namespace DatabaseBenchmark.Charts
         public void Clear()
         {
             chart1.Series.Clear();
+            chart1.Legends.Clear();
             cache = null;
         }
 
