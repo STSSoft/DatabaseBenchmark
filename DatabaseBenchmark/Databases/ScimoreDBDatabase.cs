@@ -1,11 +1,9 @@
 ﻿using Scimore.Data.ScimoreClient;
 using STS.General.Extensions;
 using STS.General.Generators;
-using STS.General.SQL;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {

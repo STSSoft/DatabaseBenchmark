@@ -1,4 +1,10 @@
-﻿/*
+﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Frames;
+using DatabaseBenchmark.Report;
+using DatabaseBenchmark.Serialization;
+using DatabaseBenchmark.Validation;
+using log4net;
+/*
  * Copyright (c) 2010-2015 STS Soft SC
  * 
  * This file is part of Database Benchmark.
@@ -22,14 +28,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
-using DatabaseBenchmark.Benchmarking;
-using DatabaseBenchmark.Frames;
-using DatabaseBenchmark.Report;
-using DatabaseBenchmark.Serialization;
-using DatabaseBenchmark.Validation;
-using log4net;
-using STS.General.GUI.Extensions;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark

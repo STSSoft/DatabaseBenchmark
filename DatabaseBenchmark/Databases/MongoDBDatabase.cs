@@ -6,9 +6,7 @@ using STS.General.Generators;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading;
 using System.Linq;
-using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {

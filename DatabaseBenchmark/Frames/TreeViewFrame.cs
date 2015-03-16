@@ -1,11 +1,11 @@
-﻿using System;
+﻿using log4net;
+using STS.General.GUI.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using log4net;
-using STS.General.GUI.Extensions;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark.Frames

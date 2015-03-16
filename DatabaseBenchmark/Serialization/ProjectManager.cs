@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DatabaseBenchmark.Benchmarking;
+﻿using DatabaseBenchmark.Benchmarking;
 using DatabaseBenchmark.Frames;
 using log4net;
-using STS.General.Persist;
-using WeifenLuo.WinFormsUI.Docking;
-using System.Xml.Serialization;
-using System.Xml;
-using System.IO.IsolatedStorage;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Serialization;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark.Serialization
 {

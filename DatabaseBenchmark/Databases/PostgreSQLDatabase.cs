@@ -1,14 +1,10 @@
 ﻿using Npgsql;
-using STS.General.SQL;
 using STS.General.Extensions;
+using STS.General.Generators;
+using STS.General.SQL;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using STS.General.Generators;
-using System.Globalization;
-using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {

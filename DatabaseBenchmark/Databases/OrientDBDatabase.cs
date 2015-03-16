@@ -2,12 +2,7 @@
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Orient.Client.Transactions;
-using Orient.Client.API;
 
 namespace DatabaseBenchmark.Databases
 {

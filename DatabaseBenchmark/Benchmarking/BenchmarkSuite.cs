@@ -1,5 +1,5 @@
-﻿using System;
-using log4net;
+﻿using log4net;
+using System;
 
 namespace DatabaseBenchmark.Benchmarking
 {

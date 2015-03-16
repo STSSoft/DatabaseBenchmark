@@ -1,9 +1,8 @@
-﻿using STSdb.Data;
+﻿using STS.General.Generators;
+using STSdb.Data;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using DatabaseBenchmark.Benchmarking;
-using STS.General.Generators;
 
 namespace DatabaseBenchmark.Databases
 {

@@ -2,11 +2,9 @@
 using Db4objects.Db4o.Config;
 using Db4objects.Db4o.Query;
 using STS.General.Generators;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {
