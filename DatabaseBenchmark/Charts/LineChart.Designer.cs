@@ -72,7 +72,7 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.legendToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(114, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(146, 26);
             // 
             // legendToolStripMenuItem
             // 
@@ -80,8 +80,8 @@
             this.legendToolStripMenuItem.CheckOnClick = true;
             this.legendToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.legendToolStripMenuItem.Name = "legendToolStripMenuItem";
-            this.legendToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
-            this.legendToolStripMenuItem.Text = "Legend";
+            this.legendToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.legendToolStripMenuItem.Text = "Show Legend";
             this.legendToolStripMenuItem.CheckedChanged += new System.EventHandler(this.legendToolStripMenuItem_CheckedChanged);
             // 
             // LineChart
