@@ -47,7 +47,7 @@ namespace DatabaseBenchmark.Charts
             cache.ChartType = SeriesChartType.Line;
 
             Legend legend = new Legend(name);
-            legend.Position = new ElementPosition(90, 0, 10, 100);
+            legend.Position = new ElementPosition(90, 0, 9, 100);
             legend.Position.Auto = false;
             legend.DockedToChartArea = "ChartAreaLegend";
             legend.Title = "Legend";
@@ -66,6 +66,16 @@ namespace DatabaseBenchmark.Charts
                 y = double.NaN;
 
             cache.Points.AddXY(x, y);
+        }
+
+        private void legendToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            chart1.ChartAreas["ChartAreaLegend"].Visible = legendToolStripMenuItem.Checked;
+
+            if (legendToolStripMenuItem.Checked)
+                chart1.ChartAreas["ChartAreaChart"].Position = new ElementPosition(0, 0, 90, 100);
+            else
+                chart1.ChartAreas["ChartAreaChart"].Position = new ElementPosition(0, 0, 100, 100);
         }
 
         /// <summary>
