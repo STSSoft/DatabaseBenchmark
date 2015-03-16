@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using STS.General.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using STS.General.Extensions;
 
 namespace DatabaseBenchmark.Statistics
 {

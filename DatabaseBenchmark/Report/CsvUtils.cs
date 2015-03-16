@@ -1,12 +1,10 @@
-﻿using System;
+﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Statistics;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using DatabaseBenchmark.Benchmarking;
-using DatabaseBenchmark.Statistics;
-using DatabaseBenchmark.Validation;
 
 namespace DatabaseBenchmark.Report
 {

@@ -1,12 +1,8 @@
-﻿using System;
+﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Statistics;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Json;
-using System.Text;
-using System.Threading.Tasks;
-using DatabaseBenchmark.Benchmarking;
-using DatabaseBenchmark.Statistics;
 
 namespace DatabaseBenchmark.Report
 {

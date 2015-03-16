@@ -48,7 +48,7 @@ namespace DatabaseBenchmark.Charts
             series.BorderWidth = 1;
             series.IsValueShownAsLabel = true;
             
-            series.LabelFormat = labelFormat;    
+            series.LabelFormat = labelFormat;
         }
 
         public void AddPoint(string label, object y, Color color)

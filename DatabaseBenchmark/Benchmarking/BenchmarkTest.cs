@@ -1,10 +1,10 @@
-﻿using System;
+﻿using DatabaseBenchmark.Statistics;
+using STS.General.Generators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DatabaseBenchmark.Statistics;
-using STS.General.Generators;
 
 namespace DatabaseBenchmark.Benchmarking
 {

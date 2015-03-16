@@ -1,13 +1,10 @@
 ﻿using STS.General.Extensions;
 using STS.General.Generators;
-using STS.General.SQL;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlServerCe;
 using System.IO;
-using System.Windows.Forms;
-using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {

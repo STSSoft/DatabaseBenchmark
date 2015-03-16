@@ -7,7 +7,6 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {

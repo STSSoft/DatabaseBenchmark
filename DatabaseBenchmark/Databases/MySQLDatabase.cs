@@ -1,12 +1,11 @@
-﻿using System.Data;
-using MySql.Data.MySqlClient;
-using STS.General.SQL;
+﻿using MySql.Data.MySqlClient;
 using STS.General.Extensions;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using STS.General.Generators;
-using DatabaseBenchmark.Benchmarking;
+using STS.General.SQL;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace DatabaseBenchmark.Databases
 {

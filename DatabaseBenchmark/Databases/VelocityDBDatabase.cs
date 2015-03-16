@@ -1,11 +1,10 @@
-﻿using System;
+﻿using STS.General.Generators;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using VelocityDb;
 using VelocityDb.Collection.BTree;
 using VelocityDb.Session;
-using DatabaseBenchmark.Benchmarking;
-using STS.General.Generators;
 
 namespace DatabaseBenchmark.Databases
 {

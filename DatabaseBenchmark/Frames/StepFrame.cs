@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using DatabaseBenchmark.Charts;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using DatabaseBenchmark.Charts;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark.Frames

@@ -3,8 +3,6 @@ using STSdb4.Database;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Diagnostics;
-using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {

@@ -1,7 +1,6 @@
 ﻿using DatabaseBenchmark.Benchmarking;
 using DatabaseBenchmark.Charts;
 using DatabaseBenchmark.Frames;
-using DatabaseBenchmark.Validation;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -10,9 +9,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DatabaseBenchmark.Report
 {

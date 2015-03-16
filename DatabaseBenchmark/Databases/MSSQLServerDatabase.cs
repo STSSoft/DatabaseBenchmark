@@ -1,11 +1,9 @@
 ﻿using STS.General.Extensions;
 using STS.General.Generators;
-using STS.General.SQL;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark.Databases
 {

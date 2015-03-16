@@ -1,5 +1,7 @@
 # Database Benchmark
 
+<img src="http://stssoft.com/files/logo-database-benchmark.png" alt="Logo" width="300" height="136"/>
+
 Database Benchmark is a benchmark application designed to test different databases with heavy data flows. The application performs two main test scenarios:
 
 - Insertion of large amount of randomly generated records with sequential or random keys;

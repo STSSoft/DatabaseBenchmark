@@ -1,14 +1,10 @@
-﻿using STS.General.Generators;
+﻿using Couchbase;
+using Couchbase.Configuration.Client;
+using Couchbase.Core;
+using Couchbase.Views;
+using STS.General.Generators;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DatabaseBenchmark.Benchmarking;
-using Couchbase;
-using Couchbase.Core;
-using Couchbase.Configuration.Client;
-using Couchbase.Views;
 
 namespace DatabaseBenchmark.Databases
 {

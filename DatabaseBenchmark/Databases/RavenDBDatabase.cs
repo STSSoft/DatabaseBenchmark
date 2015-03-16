@@ -1,17 +1,14 @@
 ﻿using Raven.Abstractions.Indexing;
-using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Embedded;
 using Raven.Client.Indexes;
-using Raven.Database.Indexing;
+using Raven.Database.Extensions;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using DatabaseBenchmark.Benchmarking;
-using Raven.Database.Extensions;
 using System.IO;
+using System.Linq;
 
 namespace DatabaseBenchmark.Databases
 {
