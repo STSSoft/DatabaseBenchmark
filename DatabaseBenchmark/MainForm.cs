@@ -53,6 +53,7 @@ namespace DatabaseBenchmark
         private volatile StepFrame ActiveStepFrame;
         private TreeViewFrame TreeViewFrame;
         private Dictionary<string, StepFrame> TestFrames;
+        private LogFrame LogFrame;
 
         private ILog Logger;
 
@@ -67,6 +68,7 @@ namespace DatabaseBenchmark
             ActiveStepFrame = new StepFrame();
             TreeViewFrame = new TreeViewFrame();
             TestFrames = new Dictionary<string, StepFrame>();
+            LogFrame = new LogFrame();
 
             cbFlowsCount.SelectedIndex = 0;
             cbRecordCount.SelectedIndex = 5;
@@ -95,6 +97,10 @@ namespace DatabaseBenchmark
 
             openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
             saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
+
+            // Just a temporary solution.
+            LogFrame.Show(dockPanel1);
+            LogFrame.DockState = DockState.DockBottomAutoHide;
 
             this.ResumeLayout();
         }
