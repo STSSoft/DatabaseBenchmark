@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 
 namespace DatabaseBenchmark.Validation
 {
@@ -34,7 +36,8 @@ namespace DatabaseBenchmark.Validation
                 var values = new List<KeyValuePair<string, string>>();
                 values.Add(new KeyValuePair<string, string>("Data", output));
 
-                var content = new FormUrlEncodedContent(values);
+                var jsonString = JsonConvert.SerializeObject(values);
+                var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
                 var response = client.PostAsync(Host, content).Result;
                 Uri uri = response.Content.Headers.ContentLocation;
