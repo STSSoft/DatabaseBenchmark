@@ -18,7 +18,7 @@ namespace DatabaseBenchmark.Validation
 
         public ServerConnection()
         {
-            Host = "http://stssoft.com/draft2014/benchmarks/public/api/v1/benchmarks";
+            Host = "http://presence.bg/bm/public/api/v1/benchmarks";
         }
 
         public HttpStatusCode SendData(string jsonData)

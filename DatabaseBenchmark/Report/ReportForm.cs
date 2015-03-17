@@ -97,7 +97,7 @@ namespace DatabaseBenchmark.Validation
                     MessageBox.Show("Data sent successfully to server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // TODO: Add the real link.
-                    Process.Start("http://stssoft.com/draft2014/benchmarks/public/benchmarks");
+                    Process.Start("http://presence.bg/bm/public/benchmark/13/view");
 
                     this.Close();
                 }
