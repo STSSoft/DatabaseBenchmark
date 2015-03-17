@@ -36,8 +36,8 @@ namespace DatabaseBenchmark.Validation
                 var values = new List<KeyValuePair<string, string>>();
                 values.Add(new KeyValuePair<string, string>("Data", output));
 
-                var jsonString = JsonConvert.SerializeObject(values);
-                var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                string jsonString = JsonConvert.SerializeObject(values);
+                StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
                 var response = client.PostAsync(Host, content).Result;
                 Uri uri = response.Content.Headers.ContentLocation;
