@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DatabaseBenchmark.Report;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -23,24 +24,15 @@ namespace DatabaseBenchmark.Validation
 
         public HttpStatusCode SendData(string jsonData)
         {
-            return ExecutePostQuery(jsonData);
-        }
-
-        private HttpStatusCode ExecutePostQuery(string jsonData)
-        {
             // Remove control characters from string.
             string output = new String(jsonData.Where(c => !char.IsControl(c)).ToArray());
 
             using (var client = new HttpClient())
             {
-                var values = new List<KeyValuePair<string, string>>();
-                values.Add(new KeyValuePair<string, string>("Data", output));
+                string json = JsonUtils.ConvertJsonToPostQuery(jsonData).ToString();
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                string jsonString = JsonConvert.SerializeObject(values);
-                StringContent content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-
-                var response = client.PostAsync(Host, content).Result;
-                Uri uri = response.Content.Headers.ContentLocation;
+                HttpResponseMessage response = client.PostAsync(Host, content).Result;
 
                 return response.StatusCode;
             }

@@ -107,6 +107,14 @@ namespace DatabaseBenchmark.Report
             return jsonBenchmark;
         }
 
+        public static JsonObjectCollection ConvertJsonToPostQuery(string json)
+        {
+            JsonObjectCollection jsonData = new JsonObjectCollection("Data");
+            jsonData.Add(new JsonStringValue(json));
+
+            return jsonData;
+        }
+
         #region Statistics to JSON
 
         public static JsonObjectCollection ConvertStatisticToJson(SpeedStatistics statistic, string statisticName)
