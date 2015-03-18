@@ -657,6 +657,45 @@
   <ItemGroup>
     <None Include="Resources\newicon1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\csvmini_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load-icon3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save-icon3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jsonmini_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pdfmini_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UniWindowIcon_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about_24x24%281%291.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\w_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Very-Basic-Reload-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set target=x64
