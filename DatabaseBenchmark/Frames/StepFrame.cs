@@ -9,8 +9,6 @@ namespace DatabaseBenchmark.Frames
 {
     public partial class StepFrame : DockContent
     {
-        private string text;
-
         public StepFrame()
         {
             InitializeComponent();
@@ -171,12 +169,6 @@ namespace DatabaseBenchmark.Frames
                 barCharts.Add(item as BarChart);
 
             return barCharts;
-        }
-
-        public override string Text
-        {
-            get { return text; }
-            set { text = value; }
         }
     }
 }

@@ -57,7 +57,7 @@ namespace DatabaseBenchmark
 
         private ILog Logger;
 
-        private ProjectManager ApplicationPersist;
+        private ProjectManager ApplicationManager;
 
         public MainForm()
         {
@@ -85,13 +85,13 @@ namespace DatabaseBenchmark
             Logger = LogManager.GetLogger("ApplicationLogger");
 
             ProjectSettings containerSettings = new ProjectSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
-            ApplicationPersist = new ProjectManager(containerSettings, CONFIGURATION_FOLDER);
+            ApplicationManager = new ProjectManager(containerSettings, CONFIGURATION_FOLDER);
 
-            TestFrames = ApplicationPersist.SettingsContainer.Frames;
+            TestFrames = ApplicationManager.SettingsContainer.Frames;
 
             // Load dock and application configuration.
-            ApplicationPersist.Load(Path.Combine(CONFIGURATION_FOLDER, "Database Benchmark.dbproj"));
-            ApplicationPersist.LoadDocking();
+            ApplicationManager.Load(Path.Combine(CONFIGURATION_FOLDER, "Database Benchmark.dbproj"));
+            ApplicationManager.LoadDocking();
 
             TestFrames[TestMethod.Write.ToString()].Select();
 
@@ -464,7 +464,7 @@ namespace DatabaseBenchmark
             if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
             {
                 Loading.Start("Saving project...");
-                ApplicationPersist.Store(saveFileDialogProject.FileName);
+                ApplicationManager.Store(saveFileDialogProject.FileName);
                 Loading.Stop();
             }
         }
@@ -474,7 +474,7 @@ namespace DatabaseBenchmark
             if (openFileDialogProject.ShowDialog() == DialogResult.OK)
             {
                 Loading.Start("Loading project...");
-                ApplicationPersist.Load(openFileDialogProject.FileName);
+                ApplicationManager.Load(openFileDialogProject.FileName);
                 Loading.Stop();
             }
         }
@@ -487,7 +487,7 @@ namespace DatabaseBenchmark
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
             Loading.Start("Creating project...");
-            ApplicationPersist.Reset();
+            ApplicationManager.Reset();
             Loading.Stop();
         }
 
@@ -499,34 +499,34 @@ namespace DatabaseBenchmark
         {
             this.SuspendLayout();
 
-            ApplicationPersist.SelectTreeView();
-            TreeViewFrame = ApplicationPersist.SettingsContainer.TreeView;
+            ApplicationManager.SelectTreeView();
+            TreeViewFrame = ApplicationManager.SettingsContainer.TreeView;
 
             this.ResumeLayout();
         }
 
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationPersist.SelectFrame(TestMethod.Write);
+            ApplicationManager.SelectFrame(TestMethod.Write);
         }
 
         private void readWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationPersist.SelectFrame(TestMethod.Read);
+            ApplicationManager.SelectFrame(TestMethod.Read);
         }
 
         private void secondaryReadWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationPersist.SelectFrame(TestMethod.SecondaryRead);
+            ApplicationManager.SelectFrame(TestMethod.SecondaryRead);
         }
 
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
 
-            ApplicationPersist.ResetDockingConfiguration();
-            TreeViewFrame = ApplicationPersist.SettingsContainer.TreeView;
-            TestFrames = ApplicationPersist.SettingsContainer.Frames;
+            ApplicationManager.ResetDockingConfiguration();
+            TreeViewFrame = ApplicationManager.SettingsContainer.TreeView;
+            TestFrames = ApplicationManager.SettingsContainer.Frames;
 
             this.ResumeLayout();
         }
@@ -648,14 +648,14 @@ namespace DatabaseBenchmark
             else if (result == DialogResult.No)
             {
                 stopButton_Click(sender, e);
-                ApplicationPersist.StoreDocking();
+                ApplicationManager.StoreDocking();
             }
             else if (result == DialogResult.Yes)
             {
                 stopButton_Click(sender, e);
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
-                ApplicationPersist.StoreDocking();
+                ApplicationManager.StoreDocking();
             }
         }
     }

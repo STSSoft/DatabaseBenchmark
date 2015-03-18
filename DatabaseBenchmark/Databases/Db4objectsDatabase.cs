@@ -12,7 +12,7 @@ namespace DatabaseBenchmark.Databases
     {
         private IObjectContainer[] sessions;
         private IEmbeddedObjectContainer database;
-        private string FileName;
+        private string fileName;
 
         public Db4objectsDatabase()
         {
@@ -32,11 +32,11 @@ namespace DatabaseBenchmark.Databases
         public override void Init(int flowCount, long flowRecordCount)
         {
             sessions = new IObjectContainer[flowCount];
-            FileName = Path.Combine(DataDirectory, DatabaseCollection + ".db4objects");
+            fileName = Path.Combine(DataDirectory, DatabaseCollection + ".db4objects");
 
             IEmbeddedConfiguration config = Db4oEmbedded.NewConfiguration();
             config.Common.ObjectClass(typeof(long)).ObjectField("Key").Indexed(true);
-            database = Db4oEmbedded.OpenFile(config, FileName);
+            database = Db4oEmbedded.OpenFile(config, fileName);
 
             for (int i = 0; i < flowCount; i++)
             {

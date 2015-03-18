@@ -144,7 +144,7 @@ namespace DatabaseBenchmark.Frames
 
         private void treeView_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            var node = e.Node;
+            TreeNode node = e.Node;
 
             foreach (var n in node.Nodes.Iterate())
                 n.Checked = node.Checked;
@@ -154,9 +154,9 @@ namespace DatabaseBenchmark.Frames
         {
             if (e.Label != null && e.Node.Tag != null)
             {
-                var renamedNode = e.Node;
-                var newLabel = e.Label;
-                var oldLabel = renamedNode.Text;
+                TreeNode renamedNode = e.Node;
+                string newLabel = e.Label;
+                string oldLabel = renamedNode.Text;
 
                 foreach (var item in treeView.Nodes.Iterate().Where(x => x.Tag != null))
                 {
@@ -205,8 +205,8 @@ namespace DatabaseBenchmark.Frames
 
             if (selectedDatabase != null)
             {
-                var databaseType = selectedDatabase.GetType();
-                var tempDatabase = (Database)Activator.CreateInstance(databaseType);
+                Type databaseType = selectedDatabase.GetType();
+                Database tempDatabase = (Database)Activator.CreateInstance(databaseType);
 
                 tempDatabase.DatabaseName = treeView.SelectedNode.Text + " Clone";
                 tempDatabase.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, tempDatabase.DatabaseName);

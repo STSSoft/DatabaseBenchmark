@@ -11,7 +11,7 @@ namespace DatabaseBenchmark.Databases
     //Manual commit, very slow and hard for work.
     public class BrightstarDBDatabase : Database
     {
-        private MyEntityContext[] Contexts;
+        private MyEntityContext[] contexts;
 
         /// <summary>
         /// Specifies how many records are inserted with every batch.
@@ -37,12 +37,12 @@ namespace DatabaseBenchmark.Databases
 
         public override void Init(int flowCount, long flowRecordCount)
         {
-            Contexts = new MyEntityContext[flowCount];
+            contexts = new MyEntityContext[flowCount];
 
             string connectionString = string.Format(@"Type=embedded;storesDirectory={0};StoreName={1}", DataDirectory, DatabaseCollection);
 
             for (int i = 0; i < flowCount; i++)
-                Contexts[i] = new MyEntityContext(connectionString, true);
+                contexts[i] = new MyEntityContext(connectionString, true);
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
@@ -51,7 +51,7 @@ namespace DatabaseBenchmark.Databases
 
             foreach (var item in flow)
             {
-                var element = Contexts[flowID].Ticks.Create();
+                var element = contexts[flowID].Ticks.Create();
                 element.Key = item.Key;
                 element.Symbol = item.Value.Symbol;
                 element.Timestamp = item.Value.Timestamp;
@@ -67,29 +67,29 @@ namespace DatabaseBenchmark.Databases
                 {
                     try
                     {
-                        Contexts[flowID].Save();
+                        contexts[flowID].Save();
                     }
                     catch (TransactionPreconditionsFailedException)
                     {
-                        Contexts[flowID].Refresh(RefreshMode.StoreWins, Contexts[flowID].Ticks);
+                        contexts[flowID].Refresh(RefreshMode.StoreWins, contexts[flowID].Ticks);
                     }
 
                     count = 0;
                 }
             }
 
-            Contexts[flowID].Save();
+            contexts[flowID].Save();
         }
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            foreach (var flow in Contexts[0].Ticks.OrderBy(tick => tick.Key))
+            foreach (var flow in contexts[0].Ticks.OrderBy(tick => tick.Key))
                 yield return new KeyValuePair<long, Tick>(flow.Key, new Tick(flow.Symbol, flow.Timestamp, flow.Bid, flow.Ask, flow.BidSize, flow.AskSize, flow.Provider));
         }
 
         public override void Finish()
         {
-            foreach (var context in Contexts)
+            foreach (var context in contexts)
                 context.Dispose();
         }
 
