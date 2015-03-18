@@ -26,10 +26,6 @@ namespace DatabaseBenchmark.Charts
             // Chart area.
             chartArea.AxisX.MajorGrid.LineWidth = 0;
             chartArea.AxisY.MajorGrid.LineWidth = 0;
-            chartArea.AxisX.MajorGrid.LineWidth = 0;
-            chartArea.AxisY.MajorGrid.LineWidth = 0;
-            chartArea.AxisX.MajorGrid.LineWidth = 0;
-            chartArea.AxisY.MajorGrid.LineWidth = 0;
 
             chartArea.AxisX.IsLabelAutoFit = true;
             chartArea.AxisX.Interval = 1;

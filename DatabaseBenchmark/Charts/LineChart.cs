@@ -143,11 +143,11 @@ namespace DatabaseBenchmark.Charts
 
         public byte[] ConvertToByteArray()
         {
-            using (var chartimage = new MemoryStream())
+            using (var chartImage = new MemoryStream())
             {
-                chart1.SaveImage(chartimage, ChartImageFormat.Png);
+                chart1.SaveImage(chartImage, ChartImageFormat.Png);
 
-                return chartimage.GetBuffer();
+                return chartImage.GetBuffer();
             }
         }
     }
