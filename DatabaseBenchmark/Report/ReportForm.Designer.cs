@@ -393,6 +393,8 @@
             this.Controls.Add(this.btnValidate);
             this.Controls.Add(this.groupBoxConfiguration);
             this.Name = "ReportForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Report Results";
             this.groupBoxConfiguration.ResumeLayout(false);

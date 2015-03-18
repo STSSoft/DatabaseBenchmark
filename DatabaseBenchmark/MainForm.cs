@@ -328,7 +328,7 @@ namespace DatabaseBenchmark
             }
 
             ReportForm form = new ReportForm(History);
-            form.Show();
+            form.ShowDialog();
         }
 
         // CSV.
