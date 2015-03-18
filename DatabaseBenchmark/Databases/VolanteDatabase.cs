@@ -9,7 +9,7 @@ namespace DatabaseBenchmark.Databases
     public class VolanteDatabase : Database
     {
         private const int COMMIT_COUNT = 500000;
-        private const int CACHE_SIZE_IN_BYTES = 1024 * 1024 * 2000;
+        private const int CACHE_SIZE_IN_BYTES = 2000 * 1024 * 1024; // 2GB
 
         private Volante.IDatabase database = DatabaseFactory.CreateDatabase();
         private IIndex<long, TickEntity> table;
@@ -65,6 +65,7 @@ namespace DatabaseBenchmark.Databases
                         insertCount = 0;
                     }
                 }
+
                 table.Store();
                 database.Commit();
             }

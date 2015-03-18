@@ -11,7 +11,7 @@ namespace DatabaseBenchmark.Databases
     {
         private Storage perst;
         private Index index;
-        private string FileName;
+        private string fileName;
 
         public PerstDatabase()
         { 
@@ -30,11 +30,11 @@ namespace DatabaseBenchmark.Databases
 
         public override void Init(int flowCount, long flowRecordCount)
         {
-            FileName = Path.Combine(DataDirectory, string.Format("{0}.perst", DatabaseCollection));
+            fileName = Path.Combine(DataDirectory, string.Format("{0}.perst", DatabaseCollection));
 
             perst = StorageFactory.Instance.CreateStorage();
             perst.SetProperty("perst.multiclient.support", true);
-            perst.Open(FileName);
+            perst.Open(fileName);
 
             index = perst.CreateIndex(typeof(long), false);
         }
@@ -53,8 +53,10 @@ namespace DatabaseBenchmark.Databases
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
             perst.BeginThreadTransaction(TransactionMode.ReadOnly);
+
             foreach (var rec in index)
                 yield return (KeyValuePair<long, Tick>)rec;
+
             perst.EndThreadTransaction();
         }
 

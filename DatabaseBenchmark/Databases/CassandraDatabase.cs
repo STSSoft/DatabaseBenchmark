@@ -207,27 +207,5 @@ namespace DatabaseBenchmark.Databases
 
             return confPath.Remove(confPath.Length - 5);
         }
-
-        public static string FindDataPath(string configPath)
-        {
-            var configFile = File.ReadAllText(Path.Combine(configPath, "cassandra.yaml"));
-
-            string dataFileDirectories = "data_file_directories:";
-            int indexData = configFile.IndexOf(dataFileDirectories) + dataFileDirectories.Length + 1;
-            string dataDir = string.Empty;
-
-            while (configFile[indexData] != '\n')
-            {
-                dataDir += configFile[indexData];
-                indexData++;
-            }
-
-            dataDir = new string(dataDir.ToCharArray().Where(x => x != ' ').ToArray()).Substring(1);
-
-            if (!dataDir.Contains(":"))
-                dataDir = configPath.Substring(0, 2) + dataDir;
-
-            return dataDir;
-        }
     }
 }

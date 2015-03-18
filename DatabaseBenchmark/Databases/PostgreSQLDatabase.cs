@@ -61,24 +61,6 @@ namespace DatabaseBenchmark.Databases
                 ");";
         }
 
-        private SQLMultiInsert GetInsertHelper(IDbConnection conn, string tableName)
-        {
-            SQLMultiInsert helper = new SQLMultiInsert(conn, tableName, 200);
-
-            helper.AddField("ID", DbType.Int64, 0);
-            helper.AddField("Symbol", DbType.String, 255);
-            helper.AddField("Time", DbType.DateTime, 0);
-            helper.AddField("Bid", DbType.Double, 0);
-            helper.AddField("Ask", DbType.Double, 0);
-            helper.AddField("BidSize", DbType.Int32, 0);
-            helper.AddField("AskSize", DbType.Int32, 0);
-            helper.AddField("Provider", DbType.String, 255);
-
-            helper.Prepare();
-
-            return helper;
-        }
-
         public override void Init(int flowCount, long flowRecordCount)
         {
             connections = new IDbConnection[flowCount];

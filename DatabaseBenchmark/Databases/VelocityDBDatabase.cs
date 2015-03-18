@@ -11,7 +11,7 @@ namespace DatabaseBenchmark.Databases
     public class VelocityDBDatabase : Database
     {
         protected UInt64 mapId;
-        SessionNoServerShared session;
+        private SessionNoServerShared session;
 
         public VelocityDBDatabase()
         {

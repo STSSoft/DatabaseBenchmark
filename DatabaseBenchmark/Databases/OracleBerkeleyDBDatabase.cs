@@ -9,7 +9,7 @@ namespace DatabaseBenchmark.Databases
 {
     public class OracleBerkeleyDBDatabase : Database
     {
-        private BTreeDatabase Database;
+        private BTreeDatabase database;
 
         public OracleBerkeleyDBDatabase()
         {
@@ -41,7 +41,7 @@ namespace DatabaseBenchmark.Databases
             config.Duplicates = DuplicatesPolicy.NONE;
 
             string fileName = Path.Combine(DataDirectory, string.Format("{0}.oracle", DatabaseCollection));
-            Database = BTreeDatabase.Open(fileName, config);
+            database = BTreeDatabase.Open(fileName, config);
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
@@ -53,16 +53,16 @@ namespace DatabaseBenchmark.Databases
                     DatabaseEntry key = new DatabaseEntry(BitConverter.GetBytes(item.Key));
                     DatabaseEntry value = new DatabaseEntry(FromTick(item.Value));
 
-                    Database.Put(key, value);
+                    database.Put(key, value);
                 }
 
-                Database.Sync();
+                database.Sync();
             }
         }
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            Cursor cursor = Database.Cursor();
+            Cursor cursor = database.Cursor();
 
             foreach (var kv in cursor)
             {
@@ -77,7 +77,7 @@ namespace DatabaseBenchmark.Databases
 
         public override void Finish()
         {
-            Database.Close();
+            database.Close();
         }
 
         #region Helper Methods
