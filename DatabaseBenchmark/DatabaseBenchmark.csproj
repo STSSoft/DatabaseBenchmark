@@ -356,7 +356,7 @@
     <Compile Include="Loading.Designer.cs">
       <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
-    <Compile Include="OutputApender.cs" />
+    <Compile Include="StringAppender.cs" />
     <Compile Include="Report\CsvUtils.cs" />
     <Compile Include="Report\PdfUtils.cs" />
     <Compile Include="Report\ReportType.cs" />
