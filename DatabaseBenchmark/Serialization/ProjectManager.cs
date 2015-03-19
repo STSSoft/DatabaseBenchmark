@@ -28,6 +28,7 @@ namespace DatabaseBenchmark.Serialization
         private TreeViewFrame TreeView;
         private DockPanel Panel;
         private Dictionary<string, StepFrame> Frames;
+        private LogFrame LogFrame;
 
         public ProjectManager(ProjectSettings settings, string path)
         {
@@ -38,6 +39,7 @@ namespace DatabaseBenchmark.Serialization
             TreeView = SettingsContainer.TreeView;
             Panel = SettingsContainer.DockingPanel;
             Frames = SettingsContainer.Frames;
+            LogFrame = SettingsContainer.LogFrame;
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -137,6 +139,8 @@ namespace DatabaseBenchmark.Serialization
         public void StoreDocking()
         {
             Panel.SaveAsXml(DockConfigPath);
+
+            LogFrame.Stop();
         }
 
         public void LoadDocking()
@@ -147,11 +151,14 @@ namespace DatabaseBenchmark.Serialization
                     Panel.LoadFromXml(DockConfigPath, new DeserializeDockContent(GetContentFromPersistString));
                 else
                     InitializeDockingConfiguration();
+
+                LogFrame.Start();
             }
             catch (Exception exc)
             {
                 Logger.Error("Load docking configuration error...", exc);
                 InitializeDockingConfiguration();
+                LogFrame.Start();
             }
             finally
             {
@@ -225,12 +232,19 @@ namespace DatabaseBenchmark.Serialization
                 item.Value.Show(Panel);
                 item.Value.DockState = DockState.Document;
             }
+
+            LogFrame.Text = "Logs";
+            LogFrame.Show(Panel);
+            LogFrame.DockState = DockState.DockBottomAutoHide;
         }
 
         private IDockContent GetContentFromPersistString(string persistString)
         {
             if (persistString == typeof(TreeViewFrame).ToString())
                 return TreeView;
+
+            if (persistString == typeof(LogFrame).ToString())
+                return LogFrame;
 
             StepFrame frame = null;
             if (persistString == typeof(StepFrame).ToString())

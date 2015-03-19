@@ -15,14 +15,14 @@ namespace DatabaseBenchmark.Serialization
 
         public Dictionary<string, StepFrame> Frames { get; private set; }
 
-        public ProjectSettings(DockPanel panel, TreeViewFrame treeView, ToolStripComboBox[] comboBoxes, TrackBar trackBar, LogFrame logFrame)
+        public ProjectSettings(DockPanel panel, TreeViewFrame treeView, ToolStripComboBox[] comboBoxes, TrackBar trackBar)
         {
             DockingPanel = panel;
             TreeView = treeView;
             ComboBoxes = comboBoxes;
             TrackBar = trackBar;
-            LogFrame = logFrame;
 
+            LogFrame = new LogFrame();
             Frames = new Dictionary<string, StepFrame>();
         }
     }
