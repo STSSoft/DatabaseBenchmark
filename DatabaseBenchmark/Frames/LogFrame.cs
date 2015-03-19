@@ -1,66 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using log4net;
-using log4net.Config;
-using log4net.Repository.Hierarchy;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark.Frames
 {
     public partial class LogFrame : DockContent
     {
-        private Task Worker;
-        private CancellationTokenSource Cancellation;
+        System.Threading.Timer timer;
 
-        private StringAppender Appender;
+        private StringAppender ApplicationAppender;
+        private StringAppender TestAppender;
 
         public LogFrame()
         {
             InitializeComponent();
 
-            Cancellation = new CancellationTokenSource();
-
-            var hierarchy = (Hierarchy)LogManager.GetRepository();
-            Appender = (StringAppender)hierarchy.Root.GetAppender("BenchmarkTestLogger");
+            TestAppender = (StringAppender)LogManager.GetRepository().GetAppenders().First(appender => appender.Name.Equals("StringLoggerTest"));
+            ApplicationAppender = (StringAppender)LogManager.GetRepository().GetAppenders().First(appender => appender.Name.Equals("StringLoggerApplication"));
+            
+            timer = new System.Threading.Timer(DoWork, null, Timeout.Infinite, 1000);
         }
 
         public void Start()
         {
-            if (Worker != null)
-                return;
-
-            Worker = Task.Factory.StartNew(DoWork, Appender, Cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            timer.Change(0, 1000);
         }
 
         public void Stop()
         {
-            if (Worker == null)
-                return;
-
-            Cancellation.Cancel();
-            Worker = null;
+            timer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         private void DoWork(object state)
         {
-            StringAppender appender = (StringAppender)state;
+            Action update = UpdateTextBox;
 
-            while (true)
+            try
             {
-                if (Cancellation.IsCancellationRequested)
-                    break;
-
-                textBox1.Text = appender.GetString();
+                Invoke(update);
             }
+            catch(Exception exc) { }
+        }
+
+        private void UpdateTextBox()
+        {
+            textBoxApplicationLogs.Clear();
+            textBoxTestLogs.Clear();
+
+            textBoxApplicationLogs.AppendText(ApplicationAppender.GetLogs());
+            textBoxTestLogs.AppendText(TestAppender.GetLogs());
         }
     }
 }

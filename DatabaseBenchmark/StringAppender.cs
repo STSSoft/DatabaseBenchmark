@@ -12,33 +12,27 @@ namespace DatabaseBenchmark
     {
         private StringBuilder Logs = new StringBuilder();
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="StringAppender" /> class.
-		/// </summary>
         public StringAppender()
 		{
 		}
-
+        
 		/// <summary>
-		/// Get the string logged so far
+		/// Gets the logged strings.
 		/// </summary>
 		/// <returns></returns>
-		public string GetString()
+		public string GetLogs()
 		{
 			return Logs.ToString();
 		}
 
 		/// <summary>
-		/// Reset the string
+		/// Resets the appender.
 		/// </summary>
 		public void Reset()
 		{
-			Logs.Length = 0;
+            Logs.Clear();
 		}
 
-		/// <summary>
-		/// </summary>
-		/// <param name="loggingEvent">the event to log</param>
 		protected override void Append(LoggingEvent loggingEvent)
 		{
 			Logs.Append(RenderLoggingEvent(loggingEvent));
