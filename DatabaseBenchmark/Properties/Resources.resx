@@ -121,9 +121,6 @@
   <data name="ioicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ioicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="load-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\load-icon1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="stop_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stop_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -138,9 +135,6 @@
   </data>
   <data name="JSONicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\JSONicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="r24x24(1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\r24x24(1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="view_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -162,9 +156,6 @@
   </data>
   <data name="sizeview48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sizeview48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="UniWindowIcon_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\UniWindowIcon_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SDCard-512_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SDCard-512_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -222,9 +213,6 @@
   </data>
   <data name="logo_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sr24x24(1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sr24x24(1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tumblr_m5xo9frXtv1rysqvgo1_1280_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tumblr_m5xo9frXtv1rysqvgo1_1280_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
