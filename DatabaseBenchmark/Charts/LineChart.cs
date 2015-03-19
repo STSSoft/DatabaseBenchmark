@@ -11,6 +11,7 @@ namespace DatabaseBenchmark.Charts
     {
         private ChartArea chartArea;
         private Series cache;
+        private ElementPosition lastPossition;
 
         public LineChart()
         {
@@ -27,6 +28,8 @@ namespace DatabaseBenchmark.Charts
 
             chartArea.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
             chartArea.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
+
+            lastPossition = new ElementPosition(0, 0, 100, 90);
         }
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace DatabaseBenchmark.Charts
             cache.ChartType = SeriesChartType.Line;
 
             Legend legend = new Legend(name);
-            legend.Position = new ElementPosition(90, 0, 9, 100);
+            legend.Position = new ElementPosition(0, 90, 100, 9);
             legend.Position.Auto = false;
             legend.DockedToChartArea = "ChartAreaLegend";
             legend.Title = "Legend";
@@ -69,7 +72,7 @@ namespace DatabaseBenchmark.Charts
             chart1.ChartAreas["ChartAreaLegend"].Visible = legendToolStripMenuItem.Checked;
 
             if (legendToolStripMenuItem.Checked)
-                chart1.ChartAreas["ChartAreaChart"].Position = new ElementPosition(0, 0, 90, 100);
+                chart1.ChartAreas["ChartAreaChart"].Position = lastPossition;
             else
                 chart1.ChartAreas["ChartAreaChart"].Position = new ElementPosition(0, 0, 100, 100);
         }
@@ -145,6 +148,57 @@ namespace DatabaseBenchmark.Charts
 
                 return chartImage.GetBuffer();
             }
+        }
+
+        private void MoveLegend(object sender, EventArgs e)
+        {
+           ToolStripMenuItem item = sender as ToolStripMenuItem;
+
+            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+                menuItem.Checked = false;
+
+            item.Checked = true;
+
+            ChartArea legendArea = chart1.ChartAreas["ChartAreaLegend"];
+
+            switch (item.Text)
+            {
+                case "Left":
+                    legendArea.Position = new ElementPosition(0, 0, 9, 100);
+                    chartArea.Position = new ElementPosition(10, 0, 90, 100);
+
+                    break;
+
+                case "Right":
+                    legendArea.Position = new ElementPosition(91, 0, 9, 100);
+                    chartArea.Position = new ElementPosition(0, 0, 90, 100);
+
+                    break;
+
+                case "Top":
+                    legendArea.Position = new ElementPosition(0, 0, 100, 9);
+                    chartArea.Position = new ElementPosition(0, 10, 100, 90);
+
+                    break;
+
+                case "Bottom":
+                    legendArea.Position = new ElementPosition(0, 91, 100, 9);
+                    chartArea.Position = new ElementPosition(0, 0, 100, 90);
+
+                    break;
+            }
+
+            foreach (Legend legend in chart1.Legends)
+                legend.Position = legendArea.Position;
+
+            legendToolStripMenuItem.Visible = true;
+            lastPossition = chartArea.Position;
+        }
+
+        private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IsLogarithmic = !IsLogarithmic;
+            logarithmicToolStripMenuItem.Checked = IsLogarithmic;
         }
     }
 }
