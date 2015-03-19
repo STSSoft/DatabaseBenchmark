@@ -172,6 +172,7 @@
             this.ClientSize = new System.Drawing.Size(631, 278);
             this.Controls.Add(this.tableLayoutPanel);
             this.Name = "AboutBox";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AboutBox";
             this.tableLayoutPanel.ResumeLayout(false);
