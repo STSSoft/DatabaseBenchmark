@@ -170,5 +170,27 @@ namespace DatabaseBenchmark.Frames
 
             return barCharts;
         }
+
+        public List<ChartSettings> GetLineChartSettings()
+        {
+            List<ChartSettings> settings = new List<ChartSettings>();
+
+            settings.Add(lineChartAverageSpeed.Settings);
+            settings.Add(lineChartMomentSpeed.Settings);
+            settings.Add(lineChartAverageCPU.Settings);
+            settings.Add(lineChartAverageMemory.Settings);
+            settings.Add(lineChartAverageIO.Settings);
+
+            return settings;
+        }
+
+        public void SetSettings(List<ChartSettings> settings)
+        {
+            lineChartAverageSpeed.Settings = settings[0];
+            lineChartMomentSpeed.Settings = settings[1];
+            lineChartAverageCPU.Settings = settings[2];
+            lineChartAverageMemory.Settings = settings[3];
+            lineChartAverageIO.Settings = settings[4];
+        }
     }
 }

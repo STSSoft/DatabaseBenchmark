@@ -1,4 +1,5 @@
 ﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Charts;
 using DatabaseBenchmark.Frames;
 using log4net;
 using System;
@@ -63,8 +64,12 @@ namespace DatabaseBenchmark.Serialization
                 {
                     Dictionary<IDatabase, bool> databases = TreeView.GetAllDatabases();
                     Dictionary<string, string> selectedItmes = GetSelectedFromComboBoxes(SettingsContainer.ComboBoxes);
+                    List<KeyValuePair<string, List<ChartSettings>>> chartSettings = new List<KeyValuePair<string, List<ChartSettings>>>();
 
-                    XmlProjectPersist persist = new XmlProjectPersist(databases, selectedItmes, SettingsContainer.TrackBar.Value);
+                    foreach (var frame in SettingsContainer.Frames)
+                        chartSettings.Add(new KeyValuePair<string, List<ChartSettings>>(frame.Value.Text, frame.Value.GetLineChartSettings()));
+
+                    XmlProjectPersist persist = new XmlProjectPersist(databases, selectedItmes, chartSettings, SettingsContainer.TrackBar.Value);
 
                     XmlSerializer serializer = new XmlSerializer(typeof(XmlProjectPersist));
                     serializer.Serialize(stream, persist);
@@ -100,6 +105,9 @@ namespace DatabaseBenchmark.Serialization
 
                     foreach (var comboBox in appPersist.ComboBoxItems)
                         SettingsContainer.ComboBoxes.First(x => x.Name == comboBox.Key).Text = comboBox.Value;
+
+                    foreach (var stepFrame in appPersist.ChartSettings)
+                        SettingsContainer.Frames[stepFrame.Key].SetSettings(stepFrame.Value);
 
                     SettingsContainer.TrackBar.Value = appPersist.TrackBarValue;
                 }
