@@ -697,6 +697,27 @@
   <ItemGroup>
     <None Include="Resources\Very-Basic-Reload-icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tumblr_m5xo9frXtv1rysqvgo1_1280_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r24x24%281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr24x24%281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr_24x242.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set target=x64

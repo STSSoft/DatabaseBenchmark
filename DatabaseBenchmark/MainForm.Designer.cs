@@ -79,7 +79,6 @@
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.resetWindowLayoutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,6 +116,7 @@
             this.writeWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secondaryReadWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetWindowLayoutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.summaryReportToolStripMenuItemCsv = new System.Windows.Forms.ToolStripMenuItem();
             this.detailedReportToolStripMenuItemCsv = new System.Windows.Forms.ToolStripMenuItem();
@@ -395,12 +395,12 @@
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(148, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(157, 6);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(148, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(157, 6);
             // 
             // viewToolStripMenuItem
             // 
@@ -419,15 +419,6 @@
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
             this.toolStripSeparator11.Size = new System.Drawing.Size(210, 6);
-            // 
-            // resetWindowLayoutToolStripMenuItem1
-            // 
-            this.resetWindowLayoutToolStripMenuItem1.Image = global::DatabaseBenchmark.Properties.Resources.Very_Basic_Reload_icon;
-            this.resetWindowLayoutToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.resetWindowLayoutToolStripMenuItem1.Name = "resetWindowLayoutToolStripMenuItem1";
-            this.resetWindowLayoutToolStripMenuItem1.Size = new System.Drawing.Size(213, 30);
-            this.resetWindowLayoutToolStripMenuItem1.Text = "Reset Window Layout";
-            this.resetWindowLayoutToolStripMenuItem1.Click += new System.EventHandler(this.resetWindowLayoutToolStripMenuItem1_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -479,7 +470,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dockPanel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.dockPanel1.DockBackColor = System.Drawing.SystemColors.Control;
-            this.dockPanel1.Location = new System.Drawing.Point(0, 79);
+            this.dockPanel1.Location = new System.Drawing.Point(0, 82);
             this.dockPanel1.Name = "dockPanel1";
             this.dockPanel1.Size = new System.Drawing.Size(1427, 608);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
@@ -773,7 +764,7 @@
             this.newToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.newicon;
             this.newToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(151, 30);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(160, 30);
             this.newToolStripMenuItem.Text = "New project";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -782,7 +773,7 @@
             this.loadConfigurationToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.load_icon1;
             this.loadConfigurationToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.loadConfigurationToolStripMenuItem.Name = "loadConfigurationToolStripMenuItem";
-            this.loadConfigurationToolStripMenuItem.Size = new System.Drawing.Size(151, 30);
+            this.loadConfigurationToolStripMenuItem.Size = new System.Drawing.Size(160, 30);
             this.loadConfigurationToolStripMenuItem.Text = "Open project";
             this.loadConfigurationToolStripMenuItem.Click += new System.EventHandler(this.loadConfigurationToolStripMenuItem_Click);
             // 
@@ -791,7 +782,7 @@
             this.saveConfigurationToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.save_icon1;
             this.saveConfigurationToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveConfigurationToolStripMenuItem.Name = "saveConfigurationToolStripMenuItem";
-            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(151, 30);
+            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(160, 30);
             this.saveConfigurationToolStripMenuItem.Text = "Save project";
             this.saveConfigurationToolStripMenuItem.Click += new System.EventHandler(this.saveConfigurationToolStripMenuItem_Click);
             // 
@@ -800,13 +791,13 @@
             this.exitToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.close_icon;
             this.exitToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(160, 30);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // databasesWindowToolStripMenuItem
             // 
-            this.databasesWindowToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.database_icon;
+            this.databasesWindowToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("databasesWindowToolStripMenuItem.Image")));
             this.databasesWindowToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.databasesWindowToolStripMenuItem.Name = "databasesWindowToolStripMenuItem";
             this.databasesWindowToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
@@ -824,7 +815,7 @@
             // 
             // readWindowToolStripMenuItem
             // 
-            this.readWindowToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.r_24x24;
+            this.readWindowToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("readWindowToolStripMenuItem.Image")));
             this.readWindowToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.readWindowToolStripMenuItem.Name = "readWindowToolStripMenuItem";
             this.readWindowToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
@@ -833,12 +824,21 @@
             // 
             // secondaryReadWindowToolStripMenuItem
             // 
-            this.secondaryReadWindowToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.sr_24x24;
+            this.secondaryReadWindowToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("secondaryReadWindowToolStripMenuItem.Image")));
             this.secondaryReadWindowToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.secondaryReadWindowToolStripMenuItem.Name = "secondaryReadWindowToolStripMenuItem";
             this.secondaryReadWindowToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
             this.secondaryReadWindowToolStripMenuItem.Text = "Secondary Read Window";
             this.secondaryReadWindowToolStripMenuItem.Click += new System.EventHandler(this.secondaryReadWindowToolStripMenuItem_Click);
+            // 
+            // resetWindowLayoutToolStripMenuItem1
+            // 
+            this.resetWindowLayoutToolStripMenuItem1.Image = global::DatabaseBenchmark.Properties.Resources.Very_Basic_Reload_icon;
+            this.resetWindowLayoutToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.resetWindowLayoutToolStripMenuItem1.Name = "resetWindowLayoutToolStripMenuItem1";
+            this.resetWindowLayoutToolStripMenuItem1.Size = new System.Drawing.Size(213, 30);
+            this.resetWindowLayoutToolStripMenuItem1.Text = "Reset Window Layout";
+            this.resetWindowLayoutToolStripMenuItem1.Click += new System.EventHandler(this.resetWindowLayoutToolStripMenuItem1_Click);
             // 
             // exportToCSVToolStripMenuItem
             // 
@@ -917,7 +917,7 @@
             // 
             // onlineReportResultsToolStripMenuItem
             // 
-            this.onlineReportResultsToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.UniWindowIcon_24x24;
+            this.onlineReportResultsToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.tumblr_m5xo9frXtv1rysqvgo1_1280_24x24;
             this.onlineReportResultsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.onlineReportResultsToolStripMenuItem.Name = "onlineReportResultsToolStripMenuItem";
             this.onlineReportResultsToolStripMenuItem.Size = new System.Drawing.Size(197, 30);
@@ -929,7 +929,7 @@
             this.aboutToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.about_24x24_1_;
             this.aboutToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(124, 30);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(160, 30);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 

@@ -273,6 +273,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap r24x24_1_ {
+            get {
+                object obj = ResourceManager.GetObject("r24x24(1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap save_icon {
             get {
                 object obj = ResourceManager.GetObject("save-icon", resourceCulture);
@@ -343,6 +353,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sr24x24_1_ {
+            get {
+                object obj = ResourceManager.GetObject("sr24x24(1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap start_48x48 {
             get {
                 object obj = ResourceManager.GetObject("start_48x48", resourceCulture);
@@ -366,6 +386,16 @@ namespace DatabaseBenchmark.Properties {
         internal static System.Drawing.Bitmap TimeView_48x48 {
             get {
                 object obj = ResourceManager.GetObject("TimeView_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tumblr_m5xo9frXtv1rysqvgo1_1280_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("tumblr_m5xo9frXtv1rysqvgo1_1280_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
