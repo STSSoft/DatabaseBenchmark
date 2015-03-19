@@ -126,7 +126,7 @@ namespace DatabaseBenchmark.Charts
         /// </summary>
         public int GetPointsCount(string series)
         {
-            return chart1.Series[series].Points.Count;
+            return  chart1.Series.Count > 0 ? chart1.Series[series].Points.Count : 0;
         }
 
         /// <summary>
