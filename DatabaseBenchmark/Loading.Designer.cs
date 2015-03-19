@@ -42,13 +42,16 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::DatabaseBenchmark.Properties.Resources.background;
             resources.ApplyResources(this, "$this");
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Loading";
+            this.Opacity = 0.7D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.TransparencyKey = System.Drawing.Color.White;
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Loading_Paint);
             this.ResumeLayout(false);
 

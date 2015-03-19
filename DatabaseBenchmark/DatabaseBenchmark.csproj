@@ -719,6 +719,9 @@
   <ItemGroup>
     <None Include="Resources\sr_24x242.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\background2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set target=x64

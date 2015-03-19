@@ -17,6 +17,7 @@ namespace DatabaseBenchmark
         {
             InitializeComponent();
 
+            Bounds = Screen.PrimaryScreen.Bounds;
             Text = loadingText;
             Angle = 0;
         }
