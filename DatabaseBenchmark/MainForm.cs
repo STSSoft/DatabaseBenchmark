@@ -84,7 +84,7 @@ namespace DatabaseBenchmark
             // Logger.
             Logger = LogManager.GetLogger("ApplicationLogger");
 
-            ProjectSettings containerSettings = new ProjectSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
+            ProjectSettings containerSettings = new ProjectSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1, LogFrame);
             ApplicationManager = new ProjectManager(containerSettings, CONFIGURATION_FOLDER);
 
             TestFrames = ApplicationManager.SettingsContainer.Frames;

@@ -11,15 +11,17 @@ namespace DatabaseBenchmark.Serialization
         public TreeViewFrame TreeView { get; set; }
         public ToolStripComboBox[] ComboBoxes { get; set; }
         public TrackBar TrackBar { get; set; }
+        public LogFrame LogFrame { get; set; }
 
         public Dictionary<string, StepFrame> Frames { get; private set; }
 
-        public ProjectSettings(DockPanel panel, TreeViewFrame treeView, ToolStripComboBox[] comboBoxes, TrackBar trackBar)
+        public ProjectSettings(DockPanel panel, TreeViewFrame treeView, ToolStripComboBox[] comboBoxes, TrackBar trackBar, LogFrame logFrame)
         {
             DockingPanel = panel;
             TreeView = treeView;
             ComboBoxes = comboBoxes;
             TrackBar = trackBar;
+            LogFrame = logFrame;
 
             Frames = new Dictionary<string, StepFrame>();
         }

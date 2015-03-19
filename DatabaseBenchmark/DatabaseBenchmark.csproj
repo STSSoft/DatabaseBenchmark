@@ -323,6 +323,7 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Charts\ChartSettings.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="BenchmarkInstanceProperies.cs">
       <SubType>Form</SubType>
