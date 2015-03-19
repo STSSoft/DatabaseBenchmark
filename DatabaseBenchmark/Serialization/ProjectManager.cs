@@ -32,6 +32,8 @@ namespace DatabaseBenchmark.Serialization
         {
             Logger = LogManager.GetLogger(Properties.Settings.Default.ApplicationLogger);
 
+            SettingsContainer = settings;
+
             TreeView = settings.TreeView;
             Panel = settings.DockingPanel;
             Frames = settings.Frames;
