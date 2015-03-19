@@ -127,17 +127,20 @@
   <data name="stop_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stop_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="sr_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sr_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="r_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\r_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SpeedView_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SpeedView-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="save-icon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\save-icon3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="database-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\database-icon1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="JSONicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\JSONicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="AutoNavigate_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AutoNavigate_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="r24x24(1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\r24x24(1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="view_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -166,8 +169,8 @@
   <data name="SDCard-512_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SDCard-512_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="save-icon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\save-icon3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="about" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\about.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TimeView_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TimeView_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,8 +178,8 @@
   <data name="processor_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\processor_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="load-icon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\load-icon3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Very-Basic-Reload-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Very-Basic-Reload-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="logicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -184,14 +187,14 @@
   <data name="CSVicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CSVicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="load-icon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\load-icon3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="start_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\start_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="w_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\w_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="csvmini_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\csvmini_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SpeedView_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SpeedView-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="log_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\log_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -199,20 +202,20 @@
   <data name="save-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save-icon1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="database-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\database-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="w_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\w_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="pdfmini_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pdfmini_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="about" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\about.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="AutoNavigate_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AutoNavigate_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PDFicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PDFicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="r_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\r_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="csvmini_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\csvmini_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="about_24x24(1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\about_24x24(1)1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -220,7 +223,13 @@
   <data name="logo_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Very-Basic-Reload-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Very-Basic-Reload-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="sr24x24(1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sr24x24(1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tumblr_m5xo9frXtv1rysqvgo1_1280_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tumblr_m5xo9frXtv1rysqvgo1_1280_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sr_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sr_24x242.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

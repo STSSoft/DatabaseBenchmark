@@ -34,6 +34,12 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.legendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.legendPossitionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.leftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.topToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bottonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logarithmicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -48,15 +54,15 @@
             chartArea1.BorderWidth = 0;
             chartArea1.Name = "ChartAreaChart";
             chartArea1.Position.Auto = false;
-            chartArea1.Position.Height = 100F;
-            chartArea1.Position.Width = 90F;
+            chartArea1.Position.Height = 90F;
+            chartArea1.Position.Width = 100F;
             chartArea2.BackColor = System.Drawing.Color.Transparent;
             chartArea2.BorderWidth = 0;
             chartArea2.Name = "ChartAreaLegend";
             chartArea2.Position.Auto = false;
-            chartArea2.Position.Height = 100F;
-            chartArea2.Position.Width = 10F;
-            chartArea2.Position.X = 91F;
+            chartArea2.Position.Height = 9F;
+            chartArea2.Position.Width = 100F;
+            chartArea2.Position.Y = 91F;
             this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.ChartAreas.Add(chartArea2);
             this.chart1.ContextMenuStrip = this.contextMenuStrip1;
@@ -70,9 +76,11 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.legendToolStripMenuItem});
+            this.legendToolStripMenuItem,
+            this.legendPossitionToolStripMenuItem,
+            this.logarithmicToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(146, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(165, 92);
             // 
             // legendToolStripMenuItem
             // 
@@ -80,9 +88,58 @@
             this.legendToolStripMenuItem.CheckOnClick = true;
             this.legendToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.legendToolStripMenuItem.Name = "legendToolStripMenuItem";
-            this.legendToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.legendToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.legendToolStripMenuItem.Text = "Show Legend";
             this.legendToolStripMenuItem.CheckedChanged += new System.EventHandler(this.legendToolStripMenuItem_CheckedChanged);
+            // 
+            // legendPossitionToolStripMenuItem
+            // 
+            this.legendPossitionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.leftToolStripMenuItem,
+            this.rightToolStripMenuItem,
+            this.topToolStripMenuItem,
+            this.bottonToolStripMenuItem});
+            this.legendPossitionToolStripMenuItem.Name = "legendPossitionToolStripMenuItem";
+            this.legendPossitionToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.legendPossitionToolStripMenuItem.Text = "Legend Possition";
+            // 
+            // leftToolStripMenuItem
+            // 
+            this.leftToolStripMenuItem.CheckOnClick = true;
+            this.leftToolStripMenuItem.Name = "leftToolStripMenuItem";
+            this.leftToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.leftToolStripMenuItem.Text = "Left";
+            this.leftToolStripMenuItem.Click += new System.EventHandler(this.MoveLegend);
+            // 
+            // rightToolStripMenuItem
+            // 
+            this.rightToolStripMenuItem.Name = "rightToolStripMenuItem";
+            this.rightToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rightToolStripMenuItem.Text = "Right";
+            this.rightToolStripMenuItem.Click += new System.EventHandler(this.MoveLegend);
+            // 
+            // topToolStripMenuItem
+            // 
+            this.topToolStripMenuItem.Name = "topToolStripMenuItem";
+            this.topToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.topToolStripMenuItem.Text = "Top";
+            this.topToolStripMenuItem.Click += new System.EventHandler(this.MoveLegend);
+            // 
+            // bottonToolStripMenuItem
+            // 
+            this.bottonToolStripMenuItem.Checked = true;
+            this.bottonToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bottonToolStripMenuItem.Name = "bottonToolStripMenuItem";
+            this.bottonToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bottonToolStripMenuItem.Text = "Bottom";
+            this.bottonToolStripMenuItem.Click += new System.EventHandler(this.MoveLegend);
+            // 
+            // logarithmicToolStripMenuItem
+            // 
+            this.logarithmicToolStripMenuItem.Name = "logarithmicToolStripMenuItem";
+            this.logarithmicToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.logarithmicToolStripMenuItem.Text = "Logarithmic";
+            this.logarithmicToolStripMenuItem.Click += new System.EventHandler(this.logarithmicToolStripMenuItem_Click);
             // 
             // LineChart
             // 
@@ -103,6 +160,12 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem legendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem legendPossitionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem leftToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem topToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bottonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logarithmicToolStripMenuItem;
 
 
     }
