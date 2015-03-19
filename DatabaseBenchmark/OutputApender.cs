@@ -52,10 +52,5 @@ namespace DatabaseBenchmark
 		{
 			get { return true; }
 		}
-
-        protected override void Append(log4net.Core.LoggingEvent loggingEvent)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
