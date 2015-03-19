@@ -139,8 +139,6 @@ namespace DatabaseBenchmark.Serialization
         public void StoreDocking()
         {
             Panel.SaveAsXml(DockConfigPath);
-
-            LogFrame.Stop();
         }
 
         public void LoadDocking()
@@ -151,18 +149,16 @@ namespace DatabaseBenchmark.Serialization
                     Panel.LoadFromXml(DockConfigPath, new DeserializeDockContent(GetContentFromPersistString));
                 else
                     InitializeDockingConfiguration();
-
-                LogFrame.Start();
             }
             catch (Exception exc)
             {
                 Logger.Error("Load docking configuration error...", exc);
                 InitializeDockingConfiguration();
-                LogFrame.Start();
             }
             finally
             {
                 TreeView.Text = "Databases";
+                LogFrame.Text = "Logs";
             }
         }
 
@@ -223,7 +219,6 @@ namespace DatabaseBenchmark.Serialization
 
         private void InitializeDockingConfiguration()
         {
-            TreeView.Text = "Databases";
             TreeView.Show(Panel);
             TreeView.DockState = DockState.DockLeft;
 
@@ -233,7 +228,6 @@ namespace DatabaseBenchmark.Serialization
                 item.Value.DockState = DockState.Document;
             }
 
-            LogFrame.Text = "Logs";
             LogFrame.Show(Panel);
             LogFrame.DockState = DockState.DockBottomAutoHide;
         }
