@@ -101,6 +101,7 @@ namespace DatabaseBenchmark
             // Just a temporary solution.
             LogFrame.Show(dockPanel1);
             LogFrame.DockState = DockState.DockBottomAutoHide;
+            LogFrame.Start();
 
             this.ResumeLayout();
         }
