@@ -35,6 +35,9 @@ namespace DatabaseBenchmark.Frames
 
         public void Start()
         {
+            if (Worker != null)
+                return;
+
             Worker = Task.Factory.StartNew(DoWork, Appender, Cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
