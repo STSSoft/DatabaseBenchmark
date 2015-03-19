@@ -11,7 +11,7 @@ namespace DatabaseBenchmark.Report
 
         static SystemUtils()
         {
-            Logger = LogManager.GetLogger("ApplicationLogger");
+            Logger = LogManager.GetLogger(Properties.Settings.Default.ApplicationLogger);
         }
 
         /// <summary>

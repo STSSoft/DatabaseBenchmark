@@ -15,7 +15,7 @@ namespace DatabaseBenchmark.Benchmarking
 
         public BenchmarkSuite()
         {
-            Logger = LogManager.GetLogger("BenchmarkTestLogger");
+            Logger = LogManager.GetLogger(Properties.Settings.Default.TestLogger);
         }
 
         public void ExecuteInit(BenchmarkTest test)

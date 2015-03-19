@@ -16,9 +16,7 @@ namespace DatabaseBenchmark.Serialization
     /// Persists the state of the application (including: application settings, database settings, window layout).
     /// </summary>
     public class ProjectManager
-    {
-        public const string DOCKING_CONFIGURATION = "Docking.config";
-
+    {   
         private ILog Logger;
         private int Count;
 
@@ -32,19 +30,17 @@ namespace DatabaseBenchmark.Serialization
 
         public ProjectManager(ProjectSettings settings, string path)
         {
-            Logger = LogManager.GetLogger("ApplicationLogger");
+            Logger = LogManager.GetLogger(Properties.Settings.Default.ApplicationLogger);
 
-            SettingsContainer = settings;
-
-            TreeView = SettingsContainer.TreeView;
-            Panel = SettingsContainer.DockingPanel;
-            Frames = SettingsContainer.Frames;
-            LogFrame = SettingsContainer.LogFrame;
+            TreeView = settings.TreeView;
+            Panel = settings.DockingPanel;
+            Frames = settings.Frames;
+            LogFrame = settings.LogFrame;
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            DockConfigPath = Path.Combine(path, DOCKING_CONFIGURATION);
+            DockConfigPath = Path.Combine(path, Properties.Settings.Default.DockingConfigurationPath);
 
             foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
                 Frames[method.ToString()] = CreateStepFrame(method);
@@ -170,6 +166,12 @@ namespace DatabaseBenchmark.Serialization
 
         public void ResetDockingConfiguration()
         {
+            TreeView.Dispose();
+
+            TreeView = new TreeViewFrame();
+            TreeView.CreateTreeView();
+            TreeView.Name = "Databases";
+
             TreeView.Show(Panel);
             TreeView.DockState = DockState.DockLeft;
 

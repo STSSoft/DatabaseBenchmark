@@ -22,7 +22,7 @@ namespace DatabaseBenchmark.Validation
         public ReportForm(List<BenchmarkTest> benchmarkTests)
             : this()
         {
-            Logger = LogManager.GetLogger("ApplicationLogger");
+            Logger = LogManager.GetLogger(Properties.Settings.Default.ApplicationLogger);
             BenchmarkTests = benchmarkTests;
 
             PopulateHardwareInfo();
