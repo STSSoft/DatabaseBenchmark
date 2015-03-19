@@ -12,9 +12,17 @@ namespace DatabaseBenchmark
     {
         private StringBuilder Logs = new StringBuilder();
 
+        public event Action OnAppend;
+
         public StringAppender()
 		{
 		}
+
+        protected override void Append(LoggingEvent loggingEvent)
+        {
+            Logs.Append(RenderLoggingEvent(loggingEvent));
+            OnAppend();
+        }
         
 		/// <summary>
 		/// Gets the logged strings.
@@ -26,16 +34,11 @@ namespace DatabaseBenchmark
 		}
 
 		/// <summary>
-		/// Resets the appender.
+		/// Clears all logged data.
 		/// </summary>
-		public void Reset()
+		public void Clear()
 		{
             Logs.Clear();
-		}
-
-		protected override void Append(LoggingEvent loggingEvent)
-		{
-			Logs.Append(RenderLoggingEvent(loggingEvent));
 		}
 
 		/// <summary>

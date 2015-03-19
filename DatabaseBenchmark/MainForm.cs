@@ -96,6 +96,13 @@ namespace DatabaseBenchmark
             openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
             saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
 
+<<<<<<< HEAD
+=======
+            // Just a temporary solution.
+            LogFrame.Show(dockPanel1);
+            LogFrame.DockState = DockState.DockBottomAutoHide;
+
+>>>>>>> origin/master
             this.ResumeLayout();
         }
 
