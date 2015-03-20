@@ -366,7 +366,7 @@ namespace DatabaseBenchmark
             {
                 try
                 {
-                    Loading.Start("Waiting export to CSV...");
+                    Loading.Start("Waiting export to CSV...", Bounds);
 
                     Enabled = false;
                     CsvUtils.ExportResults(History, saveFileDialogCsv.FileName, reportType);
@@ -390,7 +390,7 @@ namespace DatabaseBenchmark
             {
                 try
                 {
-                    Loading.Start("Waiting export to JSON...");
+                    Loading.Start("Waiting export to JSON...", Bounds);
                     Enabled = false;
 
                     ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
@@ -415,7 +415,7 @@ namespace DatabaseBenchmark
             {
                 try
                 {
-                    Loading.Start("Waiting export to PDF...");
+                    Loading.Start("Waiting export to PDF...", Bounds);
 
                     Enabled = false;
                     BenchmarkTest test = History[0];
@@ -457,7 +457,7 @@ namespace DatabaseBenchmark
         {
             if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                Loading.Start("Saving project...");
+                Loading.Start("Saving project...", Bounds);
                 ApplicationManager.Store(saveFileDialogProject.FileName);
                 Loading.Stop();
             }
@@ -467,7 +467,7 @@ namespace DatabaseBenchmark
         {
             if (openFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                Loading.Start("Loading project...");
+                Loading.Start("Loading project...", Bounds);
                 ApplicationManager.Load(openFileDialogProject.FileName);
                 Loading.Stop();
             }
@@ -480,7 +480,7 @@ namespace DatabaseBenchmark
             if (result == DialogResult.Yes)
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
-            Loading.Start("Creating project...");
+            Loading.Start("Creating project...", Bounds);
             ApplicationManager.Reset();
             Loading.Stop();
         }
