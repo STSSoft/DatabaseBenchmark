@@ -143,7 +143,7 @@ namespace DatabaseBenchmark.Charts
         {
             using (var chartImage = new MemoryStream())
             {
-                chart1.SaveImage(chartImage, ChartImageFormat.Tiff);
+                chart1.SaveImage(chartImage, ChartImageFormat.Bmp);
 
                 return chartImage.GetBuffer();
             }
