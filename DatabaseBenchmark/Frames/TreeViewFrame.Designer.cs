@@ -64,7 +64,7 @@
             // 
             this.imageListTreeView.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTreeView.ImageStream")));
             this.imageListTreeView.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListTreeView.Images.SetKeyName(0, "database-icon.png");
+            this.imageListTreeView.Images.SetKeyName(0, "Db-icon.png");
             // 
             // contextMenuDatabase
             // 

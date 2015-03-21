@@ -4,6 +4,16 @@ using DatabaseBenchmark.Report;
 using DatabaseBenchmark.Serialization;
 using DatabaseBenchmark.Validation;
 using log4net;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
+
 /*
  * Copyright (c) 2010-2015 STS Soft SC
  * 
@@ -20,15 +30,6 @@ using log4net;
  * If not, see http://www.gnu.org/licenses/.
  * 
 */
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark
 {
