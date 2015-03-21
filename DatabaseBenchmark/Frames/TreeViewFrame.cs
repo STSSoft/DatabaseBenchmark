@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using DatabaseBenchmark.Properties;
+using log4net;
 using STS.General.GUI.Extensions;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace DatabaseBenchmark.Frames
         {
             InitializeComponent();
 
-            Logger = LogManager.GetLogger("ApplicationLogger");
+            Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
         }
 
         public void CreateTreeView()

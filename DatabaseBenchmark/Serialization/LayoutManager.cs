@@ -38,11 +38,18 @@ namespace DatabaseBenchmark.Serialization
                 Frames[method] = CreateStepFrame(method);
         }
 
+        public void Initialize()
+        {
+            TrackBar.Value = 20;
+            ComboBoxes[0].SelectedIndex = 0;
+            ComboBoxes[1].SelectedIndex = 5;
+        }
+
         public void Reset()
         {
             TreeView.Dispose();
 
-            InitTreeView();
+            CreateTreeView();
 
             foreach (var item in Frames)
             {
@@ -57,16 +64,9 @@ namespace DatabaseBenchmark.Serialization
 
             LogFrame.Show(Panel);
             LogFrame.DockState = DockState.DockBottomAutoHide;
-            LogFrame.Name = "Logs";
+            LogFrame.Text = "Logs";
 
             Initialize();
-        }
-
-        public void Initialize()
-        {
-            TrackBar.Value = 20;
-            ComboBoxes[0].SelectedIndex = 0;
-            ComboBoxes[1].SelectedIndex = 5;
         }
 
         public void StoreDocking(string dockConfigPath)
@@ -78,8 +78,8 @@ namespace DatabaseBenchmark.Serialization
         {
             Panel.LoadFromXml(dockConfigPath, new DeserializeDockContent(GetContentFromPersistString));
 
-            TreeView.Name = "Databases";
-            LogFrame.Name = "Logs";
+            TreeView.Text = "Databases";
+            LogFrame.Text = "Logs";
         }
 
         public void SelectFrame(TestMethod method)
@@ -92,7 +92,7 @@ namespace DatabaseBenchmark.Serialization
         {
             if (TreeView.IsDisposed)
             {
-                InitTreeView();
+                CreateTreeView();
 
                 return;
             }
@@ -134,14 +134,15 @@ namespace DatabaseBenchmark.Serialization
 
         # region Private members
 
-        private void InitTreeView()
+        private void CreateTreeView()
         {
             TreeView = new TreeViewFrame();
             TreeView.CreateTreeView();
-            TreeView.Name = "Databases";
+            TreeView.Text = "Databases";
 
             TreeView.Show(Panel);
             TreeView.DockState = DockState.DockLeft;
+            TreeView.ExpandAll();
         }
 
         private StepFrame CreateStepFrame(TestMethod method)
