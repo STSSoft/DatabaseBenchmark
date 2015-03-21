@@ -272,8 +272,13 @@ namespace DatabaseBenchmark
                 return;
             }
 
+            Loading.Start(" Obtaining computer configuration...", Bounds);
+
             ReportForm form = new ReportForm(History);
-            form.ShowDialog();
+
+            Loading.Stop();
+
+            form.ShowDialog();       
         }
 
         // CSV.
@@ -329,6 +334,7 @@ namespace DatabaseBenchmark
                 {
                     Logger.Error("Export results to CSV failed...", exc);
                     Enabled = true;
+                    Loading.Stop();
                 }
             }
         }
@@ -354,6 +360,7 @@ namespace DatabaseBenchmark
                 {
                     Logger.Error("Export results to JSON failed...", exc);
                     Enabled = true;
+                    Loading.Stop();
                 }
             }
         }
@@ -379,6 +386,7 @@ namespace DatabaseBenchmark
                 {
                     Logger.Error("Export results to PDF failed...", exc);
                     Enabled = true;
+                    Loading.Stop();
                 }
             }
         }
