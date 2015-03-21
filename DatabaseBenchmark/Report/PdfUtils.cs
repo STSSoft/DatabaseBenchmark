@@ -14,7 +14,7 @@ namespace DatabaseBenchmark.Report
 {
     public static class PdfUtils
     {
-        public static void Export(string file, Dictionary<string, StepFrame> frames, int flowCount, long recordCount, float randomness, ComputerConfiguration computerInfo, ReportType type)
+        public static void Export(string file, Dictionary<TestMethod, StepFrame> frames, int flowCount, long recordCount, float randomness, ComputerConfiguration computerInfo, ReportType type)
         {
             var doc = new Document(PageSize.A4);
 
@@ -62,7 +62,7 @@ namespace DatabaseBenchmark.Report
                 PdfPTable table = new PdfPTable(barCharts.Count);
                 table.WidthPercentage = 100;
 
-                string chapterTitle = fr.Key == TestMethod.SecondaryRead.ToString() ? "Secondary read" : fr.Key;
+                string chapterTitle = fr.Key == TestMethod.SecondaryRead ? "Secondary read" : fr.Key.ToString();
                 Chapter chapter = new Chapter(new Paragraph(chapterTitle, chapterFont), chapterCount++);
                 chapter.Add(new Chunk("\n"));
 

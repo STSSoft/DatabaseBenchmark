@@ -48,15 +48,9 @@ namespace DatabaseBenchmark
         private long RecordCount;
 
         private float Randomness = 0.0f;
-
         private string CurrentStatus;
 
-        private volatile StepFrame ActiveStepFrame;
-        private TreeViewFrame TreeViewFrame;
-        private Dictionary<string, StepFrame> TestFrames;
-
         private ILog Logger;
-
         private ProjectManager ApplicationManager;
 
         public MainForm()
@@ -65,34 +59,21 @@ namespace DatabaseBenchmark
 
             History = new List<BenchmarkTest>();
 
-            ActiveStepFrame = new StepFrame();
-            TreeViewFrame = new TreeViewFrame();
-            TestFrames = new Dictionary<string, StepFrame>();
-
-            cbFlowsCount.SelectedIndex = 0;
-            cbRecordCount.SelectedIndex = 5;
-
-            // Trackbar.
-            trackBar1.Value = 20; // Sets the randomness to 100%.
             toolStripMain.Items.Insert(toolStripMain.Items.Count - 2, new ToolStripControlHost(trackBar1));
-
             this.SuspendLayout();
-
-            View_Click(btnSizeView, EventArgs.Empty);
 
             // Logger.
             Logger = LogManager.GetLogger("ApplicationLogger");
 
-            ProjectSettings containerSettings = new ProjectSettings(dockPanel1, TreeViewFrame, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1);
-            ApplicationManager = new ProjectManager(containerSettings, CONFIGURATION_FOLDER);
-
-            TestFrames = ApplicationManager.SettingsContainer.Frames;
+            ApplicationManager = new ProjectManager(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1, CONFIGURATION_FOLDER);
 
             // Load dock and application configuration.
             ApplicationManager.Load(Path.Combine(CONFIGURATION_FOLDER, "Database Benchmark.dbproj"));
             ApplicationManager.LoadDocking();
 
-            TestFrames[TestMethod.Write.ToString()].Select();
+            ApplicationManager.LayoutManager.SelectFrame(TestMethod.Write);
+
+            View_Click(btnSizeView, EventArgs.Empty);
 
             openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
             saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
@@ -115,20 +96,20 @@ namespace DatabaseBenchmark
                     benchmarkExecutor.ExecuteInit(benchmark);
 
                     // Write.
+                    ApplicationManager.SetCurrentMethod(TestMethod.Write);
                     CurrentStatus = TestMethod.Write.ToString();
-                    ActiveStepFrame = TestFrames[CurrentStatus];
 
                     benchmarkExecutor.ExecuteWrite(benchmark);
 
                     // Read.
+                    ApplicationManager.SetCurrentMethod(TestMethod.Read);
                     CurrentStatus = TestMethod.Read.ToString();
-                    ActiveStepFrame = TestFrames[CurrentStatus];
 
                     benchmarkExecutor.ExecuteRead(benchmark);
 
                     // Secondary Read.
+                    ApplicationManager.SetCurrentMethod(TestMethod.SecondaryRead);
                     CurrentStatus = TestMethod.SecondaryRead.ToString();
-                    ActiveStepFrame = TestFrames[CurrentStatus];
 
                     benchmarkExecutor.ExecuteSecondaryRead(benchmark);
 
@@ -153,6 +134,7 @@ namespace DatabaseBenchmark
             {
                 Action<string, object, Color> updateChart = null;
 
+                StepFrame ActiveStepFrame = ApplicationManager.GetActiveStepFrame();
                 string databaseName = benchmark.Database.DatabaseName;
                 Color databaseColor = benchmark.Database.Color;
 
@@ -200,29 +182,11 @@ namespace DatabaseBenchmark
 
         #endregion
 
-        #region Charts
-
-        private void InitializeCharts(Database[] databases)
-        {
-            StepFrame stepFrame = null;
-
-            // Clear and prepare charts.
-            foreach (var item in TestFrames)
-            {
-                stepFrame = item.Value;
-
-                stepFrame.ClearCharts();
-                stepFrame.InitializeCharts(databases.Select(x => new KeyValuePair<string, Color>(x.DatabaseName, x.Color)));
-            }
-        }
-
-        #endregion
-
         #region Buttons & Click Events
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            if (TestFrames.Any(frame => frame.Value.IsDisposed))
+            if (ApplicationManager.IsDisposedStepFrame)
             {
                 MessageBox.Show("Please, restore the test windows from the View menu.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -233,7 +197,7 @@ namespace DatabaseBenchmark
             RecordCount = Int64.Parse(cbRecordCount.Text.Replace(" ", ""));
             Randomness = trackBar1.Value / 20.0f;
 
-            var benchmarks = TreeViewFrame.GetSelectedBenchmarks();
+            var benchmarks = ApplicationManager.SelectedDatabases;
             if (benchmarks.Length == 0)
                 return;
 
@@ -259,7 +223,7 @@ namespace DatabaseBenchmark
                 }
             }
 
-            InitializeCharts(benchmarks);
+            ApplicationManager.InitializeCharts();
 
             // Start the benchmark.
             Logger.Info("Tests started...");
@@ -276,30 +240,16 @@ namespace DatabaseBenchmark
 
         private void View_Click(object sender, EventArgs e)
         {
-            foreach (var item in TestFrames)
-            {
-                StepFrame frame = item.Value;
+            ToolStripButton button = (ToolStripButton)sender;
+            int column = Int32.Parse(button.Tag.ToString());
 
-                ToolStripButton button = (ToolStripButton)sender;
-                int column = Int32.Parse(button.Tag.ToString());
-
-                if (button.Checked)
-                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Percent, 18);
-                else
-                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Absolute, 0);
-            }
+            ApplicationManager.LayoutManager.ShowBarChart(column, button.Checked);
         }
 
         private void axisType_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripButton).Checked;
-            StepFrame step = null;
-
-            foreach (var item in TestFrames)
-            {
-                step = item.Value;
-                step.SetLogarithmic(isChecked);
-            }
+            ApplicationManager.LayoutManager.SetLogarithmic(isChecked);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -420,7 +370,7 @@ namespace DatabaseBenchmark
 
                     Enabled = false;
                     BenchmarkTest test = History[0];
-                    PdfUtils.Export(saveFileDialogPdf.FileName, TestFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
+                    PdfUtils.Export(saveFileDialogPdf.FileName, ApplicationManager.LayoutManager.Frames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
                     Enabled = true;
 
                     Loading.Stop();
@@ -441,13 +391,7 @@ namespace DatabaseBenchmark
 
         private void buttonTreeView_Click(object sender, EventArgs e)
         {
-            if (TreeViewFrame.IsDisposed)
-                databasesWindowToolStripMenuItem_Click(null, EventArgs.Empty);
-
-            if (btnTreeView.Checked)
-                TreeViewFrame.DockState = DockState.DockLeft;
-            else
-                TreeViewFrame.DockState = DockState.DockLeftAutoHide;
+            ApplicationManager.LayoutManager.SelectTreeView();
         }
 
         #endregion
@@ -492,36 +436,29 @@ namespace DatabaseBenchmark
 
         private void databasesWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.SuspendLayout();
-
-            ApplicationManager.SelectTreeView();
-            TreeViewFrame = ApplicationManager.SettingsContainer.TreeView;
-
-            this.ResumeLayout();
+            ApplicationManager.LayoutManager.SelectTreeView();
         }
 
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.SelectFrame(TestMethod.Write);
+            ApplicationManager.LayoutManager.SelectFrame(TestMethod.Write);
         }
 
         private void readWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.SelectFrame(TestMethod.Read);
+            ApplicationManager.LayoutManager.SelectFrame(TestMethod.Read);
         }
 
         private void secondaryReadWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.SelectFrame(TestMethod.SecondaryRead);
+            ApplicationManager.LayoutManager.SelectFrame(TestMethod.SecondaryRead);
         }
 
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
 
-            ApplicationManager.ResetDockingConfiguration();
-            TreeViewFrame = ApplicationManager.SettingsContainer.TreeView;
-            TestFrames = ApplicationManager.SettingsContainer.Frames;
+            ApplicationManager.Reset();
 
             this.ResumeLayout();
         }
@@ -537,7 +474,7 @@ namespace DatabaseBenchmark
 
                 btnStart.Enabled = !btnStop.Enabled;
 
-                TreeViewFrame.TreeViewEnabled = btnStart.Enabled;
+                ApplicationManager.LayoutManager.TreeView.TreeViewEnabled = btnStart.Enabled;
                 cbFlowsCount.Enabled = btnStart.Enabled;
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;
@@ -563,7 +500,7 @@ namespace DatabaseBenchmark
                     exportToJSONToolStripMenuItem.Enabled = true;
                 }
 
-                var activeFrame = ActiveStepFrame;
+                var activeFrame = ApplicationManager.GetActiveStepFrame();
                 var session = Current;
 
                 if (session == null)
@@ -581,7 +518,7 @@ namespace DatabaseBenchmark
                     return;
 
                 if (btnAutoNavigate.Checked)
-                    TestFrames[method.ToString()].Activate();
+                    ApplicationManager.LayoutManager.Frames[method].Activate();
 
                 TimeSpan elapsed = session.GetTime(method);
 

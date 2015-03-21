@@ -1,4 +1,5 @@
-﻿using DatabaseBenchmark.Charts;
+﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Charts;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,16 +17,16 @@ namespace DatabaseBenchmark.Serialization
         // ComboBox name -> Selected value.
         public Dictionary<string, string> ComboBoxItems { get; private set; }
 
-        public List<KeyValuePair<string, List<ChartSettings>>> ChartSettings { get; private set; }
+        public List<KeyValuePair<TestMethod, List<ChartSettings>>> ChartSettings { get; private set; }
 
         public int TrackBarValue { get; private set; }
 
         public XmlProjectPersist()
-            : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(), new List<KeyValuePair<string, List<ChartSettings>>>(), default(int))
+            : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(), new List<KeyValuePair<TestMethod, List<ChartSettings>>>(), default(int))
         {
         }
 
-        public XmlProjectPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, List<KeyValuePair<string, List<ChartSettings>>> chartSettings, int trackBarValue)
+        public XmlProjectPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, List<KeyValuePair<TestMethod, List<ChartSettings>>> chartSettings, int trackBarValue)
         {
             Databases = databases;
             ComboBoxItems = comboBoxItems;
@@ -87,7 +88,7 @@ namespace DatabaseBenchmark.Serialization
             {
                 writer.WriteStartElement("Frame");
 
-                writer.WriteAttributeString("Name", item.Key);
+                writer.WriteAttributeString("Name", item.Key.ToString());
 
                 foreach (ChartSettings settings in item.Value)
                 {
@@ -156,7 +157,7 @@ namespace DatabaseBenchmark.Serialization
 
             while (reader.IsStartElement("Frame"))
             {
-                string frameName = reader.GetAttribute("Name");
+                TestMethod method = (TestMethod)Enum.Parse(typeof(TestMethod), reader.GetAttribute("Name"));
 
                 List<ChartSettings> chartSettings = new List<ChartSettings>();
 
@@ -178,7 +179,7 @@ namespace DatabaseBenchmark.Serialization
 
                 reader.ReadEndElement(); // Frame
 
-                ChartSettings.Add(new KeyValuePair<string, List<ChartSettings>>(frameName, chartSettings));
+                ChartSettings.Add(new KeyValuePair<TestMethod, List<ChartSettings>>(method, chartSettings));
             }
 
             reader.ReadEndElement(); // StepFrameSettings.

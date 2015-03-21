@@ -357,6 +357,7 @@
     <Compile Include="Loading.Designer.cs">
       <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
+    <Compile Include="Serialization\LayoutManager.cs" />
     <Compile Include="StringAppender.cs" />
     <Compile Include="Report\CsvUtils.cs" />
     <Compile Include="Report\PdfUtils.cs" />
@@ -718,9 +719,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sr_24x242.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\background2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
