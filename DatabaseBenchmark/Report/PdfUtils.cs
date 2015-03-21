@@ -59,26 +59,28 @@ namespace DatabaseBenchmark.Report
                 else
                     barCharts = frame.GetSelectedBarCharts();
 
-                PdfPTable table = new PdfPTable(barCharts.Count);
-                table.WidthPercentage = 100;
+                PdfPTable table = new PdfPTable(1);
+                table.WidthPercentage = 47;
 
                 string chapterTitle = fr.Key == TestMethod.SecondaryRead ? "Secondary read" : fr.Key.ToString();
                 Chapter chapter = new Chapter(new Paragraph(chapterTitle, chapterFont), chapterCount++);
                 chapter.Add(new Chunk("\n"));
 
                 for (int i = 0; i < barCharts.Count; i++)
+                {
                     AddCellToTable(table, string.Empty, barCharts[i].ConvertToByteArray);
+                    table.CalculateHeightsFast();
+                }
 
                 chapter.Add(table);
 
                 table = new PdfPTable(1);
                 table.WidthPercentage = 100;
 
-                AddCellToTable(table, "Average Speed:", frame.lineChartAverageSpeed.ConvertToByteArray);
-                AddCellToTable(table, "Moment Speed:", frame.lineChartMomentSpeed.ConvertToByteArray);
-
                 if (type == ReportType.Detailed)
                 {
+                    AddCellToTable(table, "Average Speed:", frame.lineChartAverageSpeed.ConvertToByteArray);
+                    AddCellToTable(table, "Moment Speed:", frame.lineChartMomentSpeed.ConvertToByteArray);
                     AddCellToTable(table, "Average Memory:", frame.lineChartAverageMemory.ConvertToByteArray);
                     AddCellToTable(table, "Average CPU:", frame.lineChartAverageCPU.ConvertToByteArray);
                     AddCellToTable(table, "Average I/O:", frame.lineChartAverageIO.ConvertToByteArray);

@@ -148,7 +148,7 @@
             this.HideOnClose = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TreeViewFrame";
-            this.Text = "TreeViewFrame";
+            this.Text = "Databases";
             this.contextMenuDatabase.ResumeLayout(false);
             this.ResumeLayout(false);
 

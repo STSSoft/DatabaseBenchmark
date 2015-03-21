@@ -186,7 +186,12 @@ namespace DatabaseBenchmark
 
         private void onlineReportResultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Loading.Start(" Obtaining computer configuration...", Bounds);
+
             ReportForm form = new ReportForm(History);
+
+            Loading.Stop();
+
             form.ShowDialog();
         }
 
@@ -246,6 +251,7 @@ namespace DatabaseBenchmark
                     Logger.Error(message, exc);
                     ReportError(message);
                     Enabled = true;
+                    Loading.Stop();
                 }
             }
         }
@@ -274,6 +280,7 @@ namespace DatabaseBenchmark
                     Logger.Error(message, exc);
                     ReportError(message);
                     Enabled = true;
+                    Loading.Stop();
                 }
             }
         }
@@ -302,6 +309,7 @@ namespace DatabaseBenchmark
                     Logger.Error(message, exc);
                     ReportError(message);
                     Enabled = true;
+                    Loading.Stop();
                 }
             }
         }
@@ -312,12 +320,6 @@ namespace DatabaseBenchmark
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            if (ApplicationManager.IsDisposedStepFrame)
-            {
-                MessageBox.Show("Please, restore the test windows from the View menu.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             // Parse test parameters.
             TableCount = Int32.Parse(cbFlowsCount.Text.Replace(" ", ""));
             RecordCount = Int64.Parse(cbRecordCount.Text.Replace(" ", ""));

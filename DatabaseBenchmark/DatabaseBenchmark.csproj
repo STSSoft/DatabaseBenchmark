@@ -402,7 +402,6 @@
       <DependentUpon>TreeViewFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="IDatabase.cs" />
-    <Compile Include="Serialization\ProjectSettings.cs" />
     <Compile Include="Serialization\XmlProjectPersist.cs" />
     <Compile Include="Statistics\IOStatistics.cs" />
     <Compile Include="Benchmarking\KeysType.cs" />
