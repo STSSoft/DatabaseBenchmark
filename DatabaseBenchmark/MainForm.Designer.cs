@@ -128,6 +128,7 @@
             this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogProject = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -150,7 +151,7 @@
             this.estimateTimeStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 682);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1427, 28);
+            this.statusStrip1.Size = new System.Drawing.Size(1284, 28);
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -176,7 +177,7 @@
             // 
             this.fit.AutoSize = false;
             this.fit.Name = "fit";
-            this.fit.Size = new System.Drawing.Size(1149, 23);
+            this.fit.Size = new System.Drawing.Size(1006, 23);
             this.fit.Spring = true;
             // 
             // elapsedTimeStatus
@@ -232,7 +233,7 @@
             this.toolStripMain.Location = new System.Drawing.Point(0, 24);
             this.toolStripMain.Name = "toolStripMain";
             this.toolStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStripMain.Size = new System.Drawing.Size(1427, 55);
+            this.toolStripMain.Size = new System.Drawing.Size(1284, 55);
             this.toolStripMain.TabIndex = 4;
             this.toolStripMain.Text = "toolStrip1";
             // 
@@ -364,9 +365,7 @@
             // 
             // btnAutoNavigate
             // 
-            this.btnAutoNavigate.Checked = true;
             this.btnAutoNavigate.CheckOnClick = true;
-            this.btnAutoNavigate.CheckState = System.Windows.Forms.CheckState.Checked;
             this.btnAutoNavigate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnAutoNavigate.Image = global::DatabaseBenchmark.Properties.Resources.AutoNavigate_48x48;
             this.btnAutoNavigate.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -594,7 +593,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1427, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1284, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -616,8 +615,8 @@
             this.newToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.newicon;
             this.newToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(151, 30);
-            this.newToolStripMenuItem.Text = "New project";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(160, 30);
+            this.newToolStripMenuItem.Text = "New project...";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // loadConfigurationToolStripMenuItem
@@ -625,35 +624,35 @@
             this.loadConfigurationToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.load_icon1;
             this.loadConfigurationToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.loadConfigurationToolStripMenuItem.Name = "loadConfigurationToolStripMenuItem";
-            this.loadConfigurationToolStripMenuItem.Size = new System.Drawing.Size(151, 30);
-            this.loadConfigurationToolStripMenuItem.Text = "Open project";
+            this.loadConfigurationToolStripMenuItem.Size = new System.Drawing.Size(160, 30);
+            this.loadConfigurationToolStripMenuItem.Text = "Open project...";
             this.loadConfigurationToolStripMenuItem.Click += new System.EventHandler(this.loadConfigurationToolStripMenuItem_Click);
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(148, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(157, 6);
             // 
             // saveConfigurationToolStripMenuItem
             // 
             this.saveConfigurationToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.save_icon1;
             this.saveConfigurationToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveConfigurationToolStripMenuItem.Name = "saveConfigurationToolStripMenuItem";
-            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(151, 30);
-            this.saveConfigurationToolStripMenuItem.Text = "Save project";
+            this.saveConfigurationToolStripMenuItem.Size = new System.Drawing.Size(160, 30);
+            this.saveConfigurationToolStripMenuItem.Text = "Save project...";
             this.saveConfigurationToolStripMenuItem.Click += new System.EventHandler(this.saveConfigurationToolStripMenuItem_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(148, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(157, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.close_icon;
             this.exitToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(151, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(160, 30);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -661,6 +660,7 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.databasesWindowToolStripMenuItem,
+            this.toolStripSeparator14,
             this.writeWindowToolStripMenuItem,
             this.readWindowToolStripMenuItem,
             this.secondaryReadWindowToolStripMenuItem,
@@ -740,8 +740,8 @@
             this.exportToCSVToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.csvmini_24x24;
             this.exportToCSVToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exportToCSVToolStripMenuItem.Name = "exportToCSVToolStripMenuItem";
-            this.exportToCSVToolStripMenuItem.Size = new System.Drawing.Size(197, 30);
-            this.exportToCSVToolStripMenuItem.Text = "Export results to CSV";
+            this.exportToCSVToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
+            this.exportToCSVToolStripMenuItem.Text = "Export Results to CSV";
             // 
             // summaryReportToolStripMenuItemCsv
             // 
@@ -765,8 +765,8 @@
             this.exportToJSONToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.jsonmini_24x24;
             this.exportToJSONToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exportToJSONToolStripMenuItem.Name = "exportToJSONToolStripMenuItem";
-            this.exportToJSONToolStripMenuItem.Size = new System.Drawing.Size(197, 30);
-            this.exportToJSONToolStripMenuItem.Text = "Export results to JSON";
+            this.exportToJSONToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
+            this.exportToJSONToolStripMenuItem.Text = "Export Results to JSON";
             // 
             // summaryReportToolStripMenuItemJson
             // 
@@ -790,8 +790,8 @@
             this.exportResultToPDFToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.pdfmini_24x24;
             this.exportResultToPDFToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exportResultToPDFToolStripMenuItem.Name = "exportResultToPDFToolStripMenuItem";
-            this.exportResultToPDFToolStripMenuItem.Size = new System.Drawing.Size(197, 30);
-            this.exportResultToPDFToolStripMenuItem.Text = "Export result to PDF";
+            this.exportResultToPDFToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
+            this.exportResultToPDFToolStripMenuItem.Text = "Export Results to PDF";
             // 
             // summaryReportToolStripMenuItemPdf
             // 
@@ -810,15 +810,15 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(194, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
             // 
             // onlineReportResultsToolStripMenuItem
             // 
             this.onlineReportResultsToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.tumblr_m5xo9frXtv1rysqvgo1_1280_24x24;
             this.onlineReportResultsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.onlineReportResultsToolStripMenuItem.Name = "onlineReportResultsToolStripMenuItem";
-            this.onlineReportResultsToolStripMenuItem.Size = new System.Drawing.Size(197, 30);
-            this.onlineReportResultsToolStripMenuItem.Text = "Online report";
+            this.onlineReportResultsToolStripMenuItem.Size = new System.Drawing.Size(200, 30);
+            this.onlineReportResultsToolStripMenuItem.Text = "Online Report";
             this.onlineReportResultsToolStripMenuItem.Click += new System.EventHandler(this.onlineReportResultsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
@@ -834,8 +834,8 @@
             this.aboutToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.about_24x24_1_;
             this.aboutToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(124, 30);
-            this.aboutToolStripMenuItem.Text = "&About...";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(229, 30);
+            this.aboutToolStripMenuItem.Text = "About Database Benchmark";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // trackBar1
@@ -865,7 +865,7 @@
             this.dockPanel1.DockBackColor = System.Drawing.SystemColors.Control;
             this.dockPanel1.Location = new System.Drawing.Point(0, 82);
             this.dockPanel1.Name = "dockPanel1";
-            this.dockPanel1.Size = new System.Drawing.Size(1427, 597);
+            this.dockPanel1.Size = new System.Drawing.Size(1284, 597);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -933,11 +933,16 @@
             this.saveFileDialogPdf.Filter = "PDF (*.pdf)|*.pdf";
             this.saveFileDialogPdf.Title = "Export Results";
             // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            this.toolStripSeparator14.Size = new System.Drawing.Size(210, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1427, 710);
+            this.ClientSize = new System.Drawing.Size(1284, 710);
             this.Controls.Add(this.toolStripMain);
             this.Controls.Add(this.dockPanel1);
             this.Controls.Add(this.trackBar1);
@@ -1048,6 +1053,7 @@
         private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemPdf2;
         private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemPdf2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
     }
 }
 

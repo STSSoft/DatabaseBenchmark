@@ -22,7 +22,7 @@ namespace DatabaseBenchmark.Validation
         public HttpStatusCode SendData(string jsonData)
         {
             // Remove control characters from string.
-            string output = new String(jsonData.Where(c => !char.IsControl(c)).ToArray());
+            string output = new String(jsonData.Where(character => !char.IsControl(character)).ToArray());
 
             using (var client = new HttpClient())
             {
