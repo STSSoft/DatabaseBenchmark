@@ -1,4 +1,5 @@
 ﻿using Hamster;
+using log4net;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace DatabaseBenchmark.Databases
     {
         private const long CACHE_SIZE = 2000 * 1024 * 1024; // 2GB 
 
+        private ILog Logger;
         private Hamster.Environment enviroment;
         private Hamster.Database database;
 
@@ -30,6 +32,8 @@ namespace DatabaseBenchmark.Databases
                 "hamsterdb-2.1.9.dll", 
                 "HamsterDb-dotnet.dll" 
             };
+
+            Logger = LogManager.GetLogger(Properties.Settings.Default.TestLogger);
         }
 
         public override void Init(int flowCount, long flowRecordCount)

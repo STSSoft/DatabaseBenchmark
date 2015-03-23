@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Access.Dao;
+﻿using log4net;
+using Microsoft.Office.Interop.Access.Dao;
 using STS.General.Extensions;
 using STS.General.Generators;
 using System;
@@ -12,6 +13,7 @@ namespace DatabaseBenchmark.Databases
 {
     public class AccessDatabase : Database
     {
+        private ILog Logger;
         private IDbConnection[] connections;
         private IDbCommand[] commands;
 
@@ -38,6 +40,8 @@ namespace DatabaseBenchmark.Databases
             cb.Provider = "Microsoft.ACE.OLEDB.12.0";
             cb.DataSource = String.Format(@"{0}\{1}.accdb", DataDirectory, Name);
             ConnectionString = cb.ConnectionString;
+
+            Logger = LogManager.GetLogger(Properties.Settings.Default.TestLogger);
         }
 
         public override void Init(int flowCount, long flowRecordCount)
@@ -97,7 +101,10 @@ namespace DatabaseBenchmark.Databases
                         reader.Close();
                         command.ExecuteNonQuery();
                     }
-                    catch (Exception) { }
+                    catch (Exception exc) 
+                    {
+                        Logger.Error("AccessDatabase insert error ...", exc); 
+                    }
                 }
             }
         }
