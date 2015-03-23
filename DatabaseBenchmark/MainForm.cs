@@ -356,7 +356,6 @@ namespace DatabaseBenchmark
             new AboutBox().ShowDialog();
         }
 
-
         #endregion
 
         #region TreeView
@@ -456,28 +455,16 @@ namespace DatabaseBenchmark
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;
 
-                if (History.Count == 0 || MainTask.Status == TaskStatus.Running)
-                {
-                    btnExportCsv.Enabled = false;
-                    btnExportJson.Enabled = false;
-                    toolStripButtonPdfExport.Enabled = false;
+                bool isStoped = !(History.Count == 0 || MainTask.Status == TaskStatus.Running);
 
-                    exportResultToPDFToolStripMenuItem.Enabled = false;
-                    exportToCSVToolStripMenuItem.Enabled = false;
-                    exportToJSONToolStripMenuItem.Enabled = false;
-                    onlineReportResultsToolStripMenuItem.Enabled = false;
-                }
-                else
-                {
-                    btnExportCsv.Enabled = true;
-                    btnExportJson.Enabled = true;
-                    toolStripButtonPdfExport.Enabled = true;
+                btnExportCsv.Enabled = isStoped;
+                btnExportJson.Enabled = isStoped;
+                toolStripButtonPdfExport.Enabled = isStoped;
 
-                    exportResultToPDFToolStripMenuItem.Enabled = true;
-                    exportToCSVToolStripMenuItem.Enabled = true;
-                    exportToJSONToolStripMenuItem.Enabled = true;
-                    onlineReportResultsToolStripMenuItem.Enabled = true;
-                }
+                exportResultToPDFToolStripMenuItem.Enabled = isStoped;
+                exportToCSVToolStripMenuItem.Enabled = isStoped;
+                exportToJSONToolStripMenuItem.Enabled = isStoped;
+                onlineReportResultsToolStripMenuItem.Enabled = isStoped;
 
                 var activeFrame = ApplicationManager.GetActiveStepFrame();
                 var session = Current;
