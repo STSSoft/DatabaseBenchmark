@@ -196,9 +196,9 @@ namespace DatabaseBenchmark
 
                 form.ShowDialog();
             }
-            catch (Exception ex)
+            catch (Exception exc)
             {
-                Console.WriteLine(ex.ToString());
+                Logger.Error("Online report exception occured ...", exc);
             }
         }
 
