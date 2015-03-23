@@ -74,19 +74,20 @@ namespace DatabaseBenchmark.Report
 
                 chapter.Add(table);
 
-                table = new PdfPTable(1);
-                table.WidthPercentage = 100;
-
                 if (type == ReportType.Detailed)
                 {
+                    table = new PdfPTable(1);
+                    table.WidthPercentage = 100;
+
                     AddCellToTable(table, "Average Speed:", frame.lineChartAverageSpeed.ConvertToByteArray);
                     AddCellToTable(table, "Moment Speed:", frame.lineChartMomentSpeed.ConvertToByteArray);
                     AddCellToTable(table, "Average Memory:", frame.lineChartAverageMemory.ConvertToByteArray);
                     AddCellToTable(table, "Average CPU:", frame.lineChartAverageCPU.ConvertToByteArray);
                     AddCellToTable(table, "Average I/O:", frame.lineChartAverageIO.ConvertToByteArray);
+
+                    chapter.Add(table);
                 }
 
-                chapter.Add(table);
                 doc.Add(chapter);
             }
 

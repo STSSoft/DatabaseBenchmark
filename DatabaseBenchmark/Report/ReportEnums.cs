@@ -6,4 +6,11 @@ namespace DatabaseBenchmark.Report
         Summary,
         Detailed
     }
+
+    public enum ReportFormat : byte
+    {
+        Csv,
+        Json,
+        Pdf
+    }
 }

@@ -186,125 +186,91 @@ namespace DatabaseBenchmark
 
         private void onlineReportResultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Loading.Start(" Obtaining computer configuration...", Bounds);
+            try
+            {
+                Loading.Start("Obtaining computer configuration...", Bounds);
 
-            ReportForm form = new ReportForm(History);
+                ReportForm form = new ReportForm(History);
 
-            Loading.Stop();
+                Loading.Stop();
 
-            form.ShowDialog();
+                form.ShowDialog();
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("Online report exception occured ...", exc);
+            }
         }
 
         // CSV.
         private void summaryReportToolStripMenuItemCsv_Click(object sender, EventArgs e)
         {
-            ExportToCsv(ReportType.Summary);
+            Export(ReportFormat.Csv, ReportType.Summary, saveFileDialogCsv);
         }
 
         private void detailedReportToolStripMenuItemCsv_Click(object sender, EventArgs e)
         {
-            ExportToCsv(ReportType.Detailed);
+            Export(ReportFormat.Csv, ReportType.Detailed, saveFileDialogCsv);
         }
 
         // JSON.
         private void summaryReportToolStripMenuItemJson_Click(object sender, EventArgs e)
         {
-            ExportToJson(ReportType.Summary);
+            Export(ReportFormat.Json, ReportType.Summary, saveFileDialogJson);
         }
 
         private void detailedReportToolStripMenuItemJson_Click(object sender, EventArgs e)
         {
-            ExportToJson(ReportType.Detailed);
+            Export(ReportFormat.Json, ReportType.Detailed, saveFileDialogJson);
         }
 
         // PDF.
         private void summaryReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
         {
-            ExportToPdf(ReportType.Summary);
+            Export(ReportFormat.Pdf, ReportType.Summary, saveFileDialogPdf);
         }
 
         private void detailedReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
         {
-            ExportToPdf(ReportType.Detailed);
+            Export(ReportFormat.Pdf, ReportType.Detailed, saveFileDialogPdf);
         }
 
-        private void ExportToCsv(ReportType reportType)
+        private void Export(ReportFormat reportFormat, ReportType reportType, SaveFileDialog dialog)
         {
-            saveFileDialogCsv.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
+            dialog.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
 
-            if (saveFileDialogCsv.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 try
                 {
-                    Loading.Start("Exporting to CSV...", Bounds);
-
-                    Enabled = false;
-                    CsvUtils.ExportResults(History, saveFileDialogCsv.FileName, reportType);
-                    Enabled = true;
-
-                    Loading.Stop();
-                }
-                catch (Exception exc)
-                {
-                    string message = "Export results to CSV failed...";
-
-                    Logger.Error(message, exc);
-                    ReportError(message);
-                    Enabled = true;
-                    Loading.Stop();
-                }
-            }
-        }
-
-        private void ExportToJson(ReportType type)
-        {
-            saveFileDialogJson.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
-
-            if (saveFileDialogJson.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                try
-                {
-                    Loading.Start("Exporting to JSON...", Bounds);
+                    // Start loading and disable MainForm.
+                    Loading.Start(string.Format("Exporting to {0} ....", reportFormat), Bounds);
                     Enabled = false;
 
-                    ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
-                    JsonUtils.ExportToJson(saveFileDialogJson.FileName, configuration, History, type);
+                    switch (reportFormat)
+                    {
+                        case ReportFormat.Csv:
+                            CsvUtils.ExportResults(History, saveFileDialogCsv.FileName, reportType);
+                            break;
 
+                        case ReportFormat.Json:
+                            ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
+                            JsonUtils.ExportToJson(saveFileDialogJson.FileName, configuration, History, reportType);
+                            break;
+
+                        case ReportFormat.Pdf:
+                            BenchmarkTest test = History[0];
+                            PdfUtils.Export(saveFileDialogPdf.FileName, ApplicationManager.LayoutManager.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
+                            break;
+                    }
+
+                    // Stop loading end enable MainForm
                     Enabled = true;
                     Loading.Stop();
                 }
                 catch (Exception exc)
                 {
-                    string message = "Export results to JSON failed...";
-
-                    Logger.Error(message, exc);
-                    ReportError(message);
-                    Enabled = true;
-                    Loading.Stop();
-                }
-            }
-        }
-
-        private void ExportToPdf(ReportType reportType)
-        {
-            saveFileDialogPdf.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
-
-            if (saveFileDialogPdf.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                try
-                {
-                    Loading.Start("Exporting to PDF...", Bounds);
-
-                    Enabled = false;
-                    BenchmarkTest test = History[0];
-                    PdfUtils.Export(saveFileDialogPdf.FileName, ApplicationManager.LayoutManager.Frames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
-                    Enabled = true;
-
-                    Loading.Stop();
-                }
-                catch (Exception exc)
-                {
-                    string message = "Export results to PDF failed...";
+                    string message = string.Format("Export results to {0} failed...", reportFormat);
 
                     Logger.Error(message, exc);
                     ReportError(message);
@@ -351,7 +317,7 @@ namespace DatabaseBenchmark
                 }
             }
 
-            ApplicationManager.InitializeCharts();
+            ApplicationManager.Prepare();
 
             // Start the benchmark.
             Logger.Info("Tests started...");
@@ -377,7 +343,7 @@ namespace DatabaseBenchmark
         private void axisType_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripButton).Checked;
-            ApplicationManager.LayoutManager.SetLogarithmic(isChecked);
+            ApplicationManager.LayoutManager.SetLogarithmicChart(isChecked);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -390,7 +356,6 @@ namespace DatabaseBenchmark
             new AboutBox().ShowDialog();
         }
 
-       
         #endregion
 
         #region TreeView
@@ -490,28 +455,16 @@ namespace DatabaseBenchmark
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;
 
-                if (History.Count == 0 || MainTask.Status == TaskStatus.Running)
-                {
-                    btnExportCsv.Enabled = false;
-                    btnExportJson.Enabled = false;
-                    toolStripButtonPdfExport.Enabled = false;
+                bool isStoped = !(History.Count == 0 || MainTask.Status == TaskStatus.Running);
 
-                    exportResultToPDFToolStripMenuItem.Enabled = false;
-                    exportToCSVToolStripMenuItem.Enabled = false;
-                    exportToJSONToolStripMenuItem.Enabled = false;
-                    onlineReportResultsToolStripMenuItem.Enabled = false;
-                }
-                else
-                {
-                    btnExportCsv.Enabled = true;
-                    btnExportJson.Enabled = true;
-                    toolStripButtonPdfExport.Enabled = true;
+                btnExportCsv.Enabled = isStoped;
+                btnExportJson.Enabled = isStoped;
+                toolStripButtonPdfExport.Enabled = isStoped;
 
-                    exportResultToPDFToolStripMenuItem.Enabled = true;
-                    exportToCSVToolStripMenuItem.Enabled = true;
-                    exportToJSONToolStripMenuItem.Enabled = true;
-                    onlineReportResultsToolStripMenuItem.Enabled = true;
-                }
+                exportResultToPDFToolStripMenuItem.Enabled = isStoped;
+                exportToCSVToolStripMenuItem.Enabled = isStoped;
+                exportToJSONToolStripMenuItem.Enabled = isStoped;
+                onlineReportResultsToolStripMenuItem.Enabled = isStoped;
 
                 var activeFrame = ApplicationManager.GetActiveStepFrame();
                 var session = Current;
@@ -531,7 +484,7 @@ namespace DatabaseBenchmark
                     return;
 
                 if (btnAutoNavigate.Checked)
-                    ApplicationManager.LayoutManager.Frames[method].Activate();
+                    ApplicationManager.LayoutManager.StepFrames[method].Activate();
 
                 TimeSpan elapsed = session.GetTime(method);
 

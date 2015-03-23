@@ -4,7 +4,6 @@ using DatabaseBenchmark.Frames;
 using log4net;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -53,7 +52,7 @@ namespace DatabaseBenchmark.Serialization
                     Dictionary<string, string> selectedItmes = LayoutManager.GetSelectedFromComboBoxes();
                     List<KeyValuePair<TestMethod, List<ChartSettings>>> chartSettings = new List<KeyValuePair<TestMethod, List<ChartSettings>>>();
 
-                    foreach (var frame in LayoutManager.Frames)
+                    foreach (var frame in LayoutManager.StepFrames)
                         chartSettings.Add(new KeyValuePair<TestMethod, List<ChartSettings>>(frame.Key, frame.Value.GetLineChartSettings()));
 
                     XmlProjectPersist persist = new XmlProjectPersist(databases, selectedItmes, chartSettings, LayoutManager.TrackBar.Value);
@@ -96,7 +95,7 @@ namespace DatabaseBenchmark.Serialization
                         LayoutManager.ComboBoxes.First(x => x.Name == comboBox.Key).Text = comboBox.Value;
 
                     foreach (var stepFrame in appPersist.ChartSettings)
-                        LayoutManager.Frames[stepFrame.Key].SetSettings(stepFrame.Value);
+                        LayoutManager.StepFrames[stepFrame.Key].SetSettings(stepFrame.Value);
 
                     LayoutManager.TrackBar.Value = appPersist.TrackBarValue;
                 }
@@ -143,31 +142,17 @@ namespace DatabaseBenchmark.Serialization
 
         public StepFrame GetActiveStepFrame()
         {
-            return LayoutManager.Frames[CurrentMethod];
+            return LayoutManager.StepFrames[CurrentMethod];
+        }
+
+        public void Prepare()
+        {
+            LayoutManager.InitializeCharts();
         }
        
-        public void InitializeCharts()
-        {
-            StepFrame stepFrame;
-
-            // Clear and prepare charts.
-            foreach (var item in LayoutManager.Frames)
-            {
-                stepFrame = item.Value;
-
-                stepFrame.ClearCharts();
-                stepFrame.InitializeCharts(SelectedDatabases.Select(x => new KeyValuePair<string, Color>(x.DatabaseName, x.Color)));
-            }
-        }
-
         public Database[] SelectedDatabases
         {
             get { return LayoutManager.TreeView.GetSelectedBenchmarks(); }
-        }
-
-        public bool IsDisposedStepFrame
-        {
-            get { return LayoutManager.Frames.Any(frame => frame.Value.IsDisposed); }
         }
     }
 }
