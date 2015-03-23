@@ -361,7 +361,7 @@
     <Compile Include="StringAppender.cs" />
     <Compile Include="Report\CsvUtils.cs" />
     <Compile Include="Report\PdfUtils.cs" />
-    <Compile Include="Report\ReportType.cs" />
+    <Compile Include="Report\ReportEnums.cs" />
     <Compile Include="Serialization\ProjectManager.cs" />
     <Compile Include="Databases\AerospikeDatabase.cs" />
     <Compile Include="Databases\OrientDBDatabase.cs" />
