@@ -18,17 +18,6 @@ namespace DatabaseBenchmark
         string DatabaseName { get; set; }
 
         /// <summary>
-        /// Name of the database collection (table, document and etc.).
-        /// </summary>
-        string DatabaseCollection { get; set; }
-
-        /// <summary>
-        /// Each database has it's own data directory. This is the place where the database stores its data. 
-        /// This property is initialized with Application.StartupPath\Databases\IBenchmark.DatabaseName value.
-        /// </summary>
-        string DataDirectory { get; set; }
-
-        /// <summary>
         /// The category of the database (SQL, NoSQL, NoSQL\\Key-Value and etc.)
         /// </summary>
         string Category { get; set; }
@@ -52,6 +41,17 @@ namespace DatabaseBenchmark
         /// Different requirements - for example used libraries, implementation details and etc.
         /// </summary>
         string[] Requirements { get; set; }
+
+        /// <summary>
+        /// Name of the database collection (table, document and etc.).
+        /// </summary>
+        string DatabaseCollection { get; set; }
+
+        /// <summary>
+        /// Each database has it's own data directory. This is the place where the database stores its data. 
+        /// This property is initialized with Application.StartupPath\Databases\IBenchmark.DatabaseName value.
+        /// </summary>
+        string DataDirectory { get; set; }
 
         /// <summary>
         /// A connection string if the database requires a remote connection.
