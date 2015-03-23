@@ -69,7 +69,7 @@ namespace DatabaseBenchmark.Report
 
             long elapsedTime = benchmark.EndTime.Ticks - benchmark.StartTime.Ticks;
             jsonSettings.Add(new JsonNumericValue("ElapsedTime", elapsedTime));
-            jsonSettings.Add(new JsonStringValue("DatabaseName", benchmark.Database.DatabaseName));
+            jsonSettings.Add(new JsonStringValue("DatabaseName", benchmark.Database.Name));
             jsonSettings.Add(new JsonNumericValue("DatabaseSize", benchmark.DatabaseSize / (1024.0 * 1024.0)));
 
             // Write test data.

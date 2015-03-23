@@ -20,8 +20,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "Couchbase";
-            DatabaseCollection = "default";
+            Name = "Couchbase";
+            CollectionName = "default";
             Category = "NoSQL\\Key-Value Store";
             Description = "Couchbase 3.0.2 + Couchbase-Net-Client-2.0.2";
             Website = "http://www.couchbase.com/";
@@ -53,7 +53,7 @@ namespace DatabaseBenchmark.Databases
             cluster = new Cluster(client);
 
             for (int i = 0; i < flowCount; i++)
-                buckets[i] = cluster.OpenBucket(DatabaseCollection);
+                buckets[i] = cluster.OpenBucket(CollectionName);
 
             IBucket bucket = buckets[0];
             IViewQuery query = bucket.CreateQuery(DocDesignName, ViewName, false);

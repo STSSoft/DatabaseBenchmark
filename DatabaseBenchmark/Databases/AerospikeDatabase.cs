@@ -13,8 +13,8 @@ namespace DatabaseBenchmark.Databases
 
         public AerospikeDatabase()
         {
-            DatabaseName = "Aerospike";
-            DatabaseCollection = "table1";
+            Name = "Aerospike";
+            CollectionName = "table1";
             Category = @"NoSQL\Key-Value Store\RAM";
             Description = "Aerospike 3.4.1 .NET Client 3.0.13";
             Website = "http://www.aerospike.com/";
@@ -41,14 +41,14 @@ namespace DatabaseBenchmark.Databases
             client = new AerospikeClient(server, port);
             indexes = new LargeList[flowCount];
 
-            Key listKey = new Key(ns, set, DatabaseCollection);
+            Key listKey = new Key(ns, set, CollectionName);
             client.Delete(null, listKey);
 
             WritePolicy policy = new WritePolicy();
             policy.recordExistsAction = RecordExistsAction.REPLACE;
 
             for (int i = 0; i < flowCount; i++)
-                indexes[i] = client.GetLargeList(policy, listKey, DatabaseCollection, null);
+                indexes[i] = client.GetLargeList(policy, listKey, CollectionName, null);
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, STS.General.Generators.Tick>> flow)

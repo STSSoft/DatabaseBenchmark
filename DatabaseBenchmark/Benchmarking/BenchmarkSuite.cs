@@ -21,7 +21,7 @@ namespace DatabaseBenchmark.Benchmarking
         public void ExecuteInit(BenchmarkTest test)
         {
             Current = test;
-            string databaseName = test.Database.DatabaseName;
+            string databaseName = test.Database.Name;
 
             try
             {
@@ -46,7 +46,7 @@ namespace DatabaseBenchmark.Benchmarking
         public void ExecuteWrite(BenchmarkTest test)
         {
             Current = test;
-            string databaseName = test.Database.DatabaseName;
+            string databaseName = test.Database.Name;
 
             try
             {
@@ -69,7 +69,7 @@ namespace DatabaseBenchmark.Benchmarking
         public void ExecuteRead(BenchmarkTest test)
         {
             Current = test;
-            string databaseName = test.Database.DatabaseName;
+            string databaseName = test.Database.Name;
 
             try
             {
@@ -92,7 +92,7 @@ namespace DatabaseBenchmark.Benchmarking
         public void ExecuteSecondaryRead(BenchmarkTest test)
         {
             Current = test;
-            string databaseName = test.Database.DatabaseName;
+            string databaseName = test.Database.Name;
 
             try
             {
@@ -122,8 +122,8 @@ namespace DatabaseBenchmark.Benchmarking
             }
             catch (Exception exc)
             {
-                Logger.Error(String.Format("{0} Finish()", test.Database.DatabaseName), exc);
-                Logger.Info(String.Format("{0} Finish() failed...", test.Database.DatabaseName));
+                Logger.Error(String.Format("{0} Finish()", test.Database.Name), exc);
+                Logger.Info(String.Format("{0} Finish() failed...", test.Database.Name));
             }
             finally
             {

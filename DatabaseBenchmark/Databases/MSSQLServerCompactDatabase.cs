@@ -22,8 +22,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "MSSQL Server Compact 4.0";
-            DatabaseCollection = "table1";
+            Name = "MSSQL Server Compact 4.0";
+            CollectionName = "table1";
             Category = "SQL";
             Description = "MSSQL Server Compact 4.0 x64";
             Website = "http://www.microsoft.com/en-us/download/details.aspx?id=17876";
@@ -41,7 +41,7 @@ namespace DatabaseBenchmark.Databases
                 "System.Data.SqlServerCe.dll"
             };
 
-            DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, DatabaseName);
+            DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, Name);
             ConnectionString = String.Format("Data Source={0};encryption mode=platform default;Password=123;", DatabaseFile);
         }
 
@@ -85,7 +85,7 @@ namespace DatabaseBenchmark.Databases
                 commands[i] = CreateCommand(connection);
             }
 
-            connections[0].ExecuteNonQuery(CreateTableQuery(DatabaseCollection));
+            connections[0].ExecuteNonQuery(CreateTableQuery(CollectionName));
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
@@ -108,14 +108,14 @@ namespace DatabaseBenchmark.Databases
                     ((IDbDataParameter)command.Parameters[6]).Value = rec.AskSize;
                     ((IDbDataParameter)command.Parameters[7]).Value = rec.Provider;
 
-                    command.CommandText = String.Format("SELECT * FROM {0} WHERE ID = @ID", DatabaseCollection);
+                    command.CommandText = String.Format("SELECT * FROM {0} WHERE ID = @ID", CollectionName);
 
                     if (!command.ExecuteReader().Read())
-                        command.CommandText = string.Format("INSERT INTO {0} VALUES(@ID, @symbol, @time, @bid, @ask, @bidSize, @askSize, @provider)", DatabaseCollection);
+                        command.CommandText = string.Format("INSERT INTO {0} VALUES(@ID, @symbol, @time, @bid, @ask, @bidSize, @askSize, @provider)", CollectionName);
                     else
                         command.CommandText = string.Format(@"UPDATE {0}
                                SET Symbol = @symbol, [Time] = @time, Bid = @bid,Ask = @ask, BidSize = @bidSize, AskSize = @askSize, Provider = @provider
-                               WHERE ID = @ID", DatabaseCollection);
+                               WHERE ID = @ID", CollectionName);
 
                     command.ExecuteNonQuery();
                 }
@@ -124,7 +124,7 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            IDataReader reader = connections[0].ExecuteQuery(String.Format("SELECT * FROM {0} ORDER BY {1};", DatabaseCollection, "ID"));
+            IDataReader reader = connections[0].ExecuteQuery(String.Format("SELECT * FROM {0} ORDER BY {1};", CollectionName, "ID"));
 
             foreach (var row in reader.Forward())
             {

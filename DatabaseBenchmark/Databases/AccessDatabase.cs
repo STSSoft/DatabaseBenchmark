@@ -19,8 +19,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "Access 2013";
-            DatabaseCollection = "table1";
+            Name = "Access 2013";
+            CollectionName = "table1";
             Category = "SQL";
             Description = "Access 2013";
             Website = "http://www.microsoft.com/en-us/download/details.aspx?id=13255";
@@ -32,18 +32,18 @@ namespace DatabaseBenchmark.Databases
                 "Microsoft.Office.Interop.Access.Dao.dll" 
             };
 
-            DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, DatabaseName);
+            DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, Name);
 
             OleDbConnectionStringBuilder cb = new OleDbConnectionStringBuilder();
             cb.Provider = "Microsoft.ACE.OLEDB.12.0";
-            cb.DataSource = String.Format(@"{0}\{1}.accdb", DataDirectory, DatabaseName);
+            cb.DataSource = String.Format(@"{0}\{1}.accdb", DataDirectory, Name);
             ConnectionString = cb.ConnectionString;
         }
 
         public override void Init(int flowCount, long flowRecordCount)
         {
             DBEngine dbEng = new DBEngine();
-            Microsoft.Office.Interop.Access.Dao.Database db = dbEng.CreateDatabase(String.Format(@"{0}\{1}", DataDirectory, DatabaseName), LanguageConstants.dbLangGeneral);
+            Microsoft.Office.Interop.Access.Dao.Database db = dbEng.CreateDatabase(String.Format(@"{0}\{1}", DataDirectory, Name), LanguageConstants.dbLangGeneral);
             db.Close();
 
             connections = new IDbConnection[flowCount];
@@ -85,13 +85,13 @@ namespace DatabaseBenchmark.Databases
 
                     try
                     {
-                        command.CommandText = String.Format(@"SELECT * FROM {0} WHERE ID = @ID", DatabaseCollection);
+                        command.CommandText = String.Format(@"SELECT * FROM {0} WHERE ID = @ID", CollectionName);
                         var reader = command.ExecuteReader();
 
                         if (reader.Read())
-                            command.CommandText = String.Format(@"UPDATE {0} SET Symbol = @symbol, [TickTimestamp] = @time, Bid = @bid, Ask = @ask, BidSize = @bidSize, AskSize = @askSize, Provider = @provider WHERE ID = @ID", DatabaseCollection);
+                            command.CommandText = String.Format(@"UPDATE {0} SET Symbol = @symbol, [TickTimestamp] = @time, Bid = @bid, Ask = @ask, BidSize = @bidSize, AskSize = @askSize, Provider = @provider WHERE ID = @ID", CollectionName);
                         else
-                            command.CommandText = String.Format("INSERT INTO {0} VALUES(@ID, '{1}', '{2}', {3}, {4}, {5}, {6}, '{7}');", DatabaseCollection,
+                            command.CommandText = String.Format("INSERT INTO {0} VALUES(@ID, '{1}', '{2}', {3}, {4}, {5}, {6}, '{7}');", CollectionName,
                                                                 rec.Symbol, rec.Timestamp, rec.Bid, rec.Ask, rec.BidSize, rec.AskSize, rec.Provider);
 
                         reader.Close();
@@ -105,7 +105,7 @@ namespace DatabaseBenchmark.Databases
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
             var command = commands[0];
-            command.CommandText = String.Format("SELECT * FROM {0} ORDER BY {1} ASC", DatabaseCollection, "ID");
+            command.CommandText = String.Format("SELECT * FROM {0} ORDER BY {1} ASC", CollectionName, "ID");
 
             IDataReader reader = command.ExecuteReader();
 
@@ -199,7 +199,7 @@ namespace DatabaseBenchmark.Databases
 
         private string CreateTableQuery()
         {
-            return String.Format("CREATE TABLE [{0}] (", DatabaseCollection) +
+            return String.Format("CREATE TABLE [{0}] (", CollectionName) +
                      "ID BINARY NOT NULL PRIMARY KEY," +
                      "Symbol TEXT NOT NULL," +
                      "TickTimestamp DATETIME NOT NULL," +

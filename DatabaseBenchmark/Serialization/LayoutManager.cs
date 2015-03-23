@@ -53,7 +53,7 @@ namespace DatabaseBenchmark.Serialization
                 stepFrame = item.Value;
 
                 stepFrame.ClearCharts();
-                stepFrame.InitializeCharts(TreeView.GetSelectedBenchmarks().Select(x => new KeyValuePair<string, Color>(x.DatabaseName, x.Color)));
+                stepFrame.InitializeCharts(TreeView.GetSelectedBenchmarks().Select(x => new KeyValuePair<string, Color>(x.Name, x.Color)));
             }
         }
 

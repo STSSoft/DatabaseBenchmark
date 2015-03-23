@@ -18,8 +18,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "ScimoreDB";
-            DatabaseCollection = "table1";
+            Name = "ScimoreDB";
+            CollectionName = "table1";
             Category = "SQL";
             Description = "ScimoreDB 4.0 + ADO.NET Data Provider";
             Website = "http://www.scimore.com/";
@@ -73,8 +73,8 @@ namespace DatabaseBenchmark.Databases
 
             connection.ExecuteNonQuery(String.Format("CREATE DATABASE {0}", dataBaseName));
             connection.ChangeDatabase(dataBaseName);
-            connection.ExecuteNonQuery(String.Format("DROP TABLE IF EXISTS {0};", DatabaseCollection));
-            connection.ExecuteNonQuery(CreateTableQuery(DatabaseCollection));
+            connection.ExecuteNonQuery(String.Format("DROP TABLE IF EXISTS {0};", CollectionName));
+            connection.ExecuteNonQuery(CreateTableQuery(CollectionName));
 
             connections[0] = connection;
             commands[0] = CreateCommand(connection);
@@ -109,14 +109,14 @@ namespace DatabaseBenchmark.Databases
                     ((IDbDataParameter)command.Parameters[6]).Value = rec.AskSize;
                     ((IDbDataParameter)command.Parameters[7]).Value = rec.Provider;
 
-                    command.CommandText = String.Format("SELECT * FROM {0} WHERE ID = @ID", DatabaseCollection);
+                    command.CommandText = String.Format("SELECT * FROM {0} WHERE ID = @ID", CollectionName);
 
                     IDataReader reader = command.ExecuteReader();
 
                     if (reader.Read())
-                        command.CommandText = String.Format(@"UPDATE {0} SET Symbol = @symbol, [Time] = @time, Bid = @bid, Ask = @ask, BidSize = @bidSize, AskSize = @askSize, Provider = @provider WHERE ID = @ID", DatabaseCollection);
+                        command.CommandText = String.Format(@"UPDATE {0} SET Symbol = @symbol, [Time] = @time, Bid = @bid, Ask = @ask, BidSize = @bidSize, AskSize = @askSize, Provider = @provider WHERE ID = @ID", CollectionName);
                     else
-                        command.CommandText = String.Format("INSERT INTO {0} VALUES(@ID, @symbol, @time, @bid, @ask, @bidSize, @askSize, @provider);", DatabaseCollection);
+                        command.CommandText = String.Format("INSERT INTO {0} VALUES(@ID, @symbol, @time, @bid, @ask, @bidSize, @askSize, @provider);", CollectionName);
 
                     reader.Close();
                     command.ExecuteNonQuery();
@@ -126,7 +126,7 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            var cmd = new ScimoreCommand("SELECT  *  FROM " + DatabaseCollection + " [ORDER BY {ID} [ASC]];", (ScimoreConnection)connections[0]);
+            var cmd = new ScimoreCommand("SELECT  *  FROM " + CollectionName + " [ORDER BY {ID} [ASC]];", (ScimoreConnection)connections[0]);
 
             foreach (var row in cmd.ExecuteReader().Forward())
             {

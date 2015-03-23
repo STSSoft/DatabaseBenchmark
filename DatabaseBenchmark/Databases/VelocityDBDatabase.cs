@@ -15,7 +15,7 @@ namespace DatabaseBenchmark.Databases
 
         public VelocityDBDatabase()
         {
-            DatabaseName = "VelocityDB";
+            Name = "VelocityDB";
             Category = "NoSQL\\Object Databases";
             Description = "VelocityDB Standalone Client 3.2 Dec 8, 2013";
             Website = "http://www.velocitydb.com/";

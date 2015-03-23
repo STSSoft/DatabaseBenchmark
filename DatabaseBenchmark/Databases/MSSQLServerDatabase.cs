@@ -14,8 +14,8 @@ namespace DatabaseBenchmark.Databases
 
         public MSSQLServerDatabase()
         {   
-            DatabaseName = "MSSQL Server 2012";
-            DatabaseCollection = "table1";
+            Name = "MSSQL Server 2012";
+            CollectionName = "table1";
             Category = "SQL";
             Description = "Microsoft SQL Server 2012 (SP1) - 11.0.3128.0 (X64) Dec 28 2012";
             Website = "https://www.microsoft.com/en-us/sqlserver/default.aspx";
@@ -68,9 +68,9 @@ namespace DatabaseBenchmark.Databases
                 commands[i] = CreateCommand(connection);
             }
 
-            connections[0].ExecuteNonQuery(String.Format("IF OBJECT_ID('{0}', 'U') IS NOT NULL DROP TABLE {0};", DatabaseCollection));
-            connections[0].ExecuteNonQuery(CreateTableQuery(DatabaseCollection));
-            connections[0].ExecuteNonQuery(String.Format(@"IF OBJECT_ID('{0}', 'P') IS NOT NULL DROP PROC {0}", DatabaseCollection));
+            connections[0].ExecuteNonQuery(String.Format("IF OBJECT_ID('{0}', 'U') IS NOT NULL DROP TABLE {0};", CollectionName));
+            connections[0].ExecuteNonQuery(CreateTableQuery(CollectionName));
+            connections[0].ExecuteNonQuery(String.Format(@"IF OBJECT_ID('{0}', 'P') IS NOT NULL DROP PROC {0}", CollectionName));
             connections[0].ExecuteNonQuery(String.Format(@"CREATE PROCEDURE dbo.InsertOrUdpateTest 
                    @ID bigint, @symbol VARCHAR(255), @time DateTime, @bid real, @ask real, @bidSize int, @askSize int, @provider varchar(255)
                         AS BEGIN
@@ -84,7 +84,7 @@ namespace DatabaseBenchmark.Databases
                                WHERE ID = @ID
                         
                         	COMMIT TRAN
-                        END;", DatabaseCollection));
+                        END;", CollectionName));
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
@@ -110,7 +110,7 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            IDataReader reader = connections[0].ExecuteQuery(string.Format("SELECT * FROM {0} ORDER BY {1}", DatabaseCollection, "ID"));
+            IDataReader reader = connections[0].ExecuteQuery(string.Format("SELECT * FROM {0} ORDER BY {1}", CollectionName, "ID"));
 
             foreach (var row in reader.Forward())
             {
@@ -147,7 +147,7 @@ namespace DatabaseBenchmark.Databases
 
                     for (int i = 0; i < connections.Length; i++)
                     {
-                        IDbCommand comand = conn.CreateCommand(String.Format("sp_spaceused '{0}'", DatabaseCollection));
+                        IDbCommand comand = conn.CreateCommand(String.Format("sp_spaceused '{0}'", CollectionName));
 
                         IDataReader reader = comand.ExecuteReader();
                         while (reader.Read())

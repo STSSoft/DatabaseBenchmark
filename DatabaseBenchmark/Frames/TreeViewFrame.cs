@@ -57,7 +57,7 @@ namespace DatabaseBenchmark.Frames
                 foreach (var database in databases)
                 {
                     AddAfter(null, database);
-                    database.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, database.DatabaseName);
+                    database.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, database.Name);
 
                     if (!Directory.Exists(database.DataDirectory))
                         Directory.CreateDirectory(database.DataDirectory);
@@ -83,10 +83,10 @@ namespace DatabaseBenchmark.Frames
         {
             this.SuspendLayout();
 
-            foreach (var item in treeView.Nodes.Iterate().Where(x => x.Tag != null && !((Database)x.Tag).DatabaseName.Equals(x.Text)))
+            foreach (var item in treeView.Nodes.Iterate().Where(x => x.Tag != null && !((Database)x.Tag).Name.Equals(x.Text)))
             {
                 item.BeginEdit();
-                item.Name = ((Database)item.Tag).DatabaseName;
+                item.Name = ((Database)item.Tag).Name;
                 item.Text = item.Name;
                 item.EndEdit(true);
             }
@@ -124,7 +124,7 @@ namespace DatabaseBenchmark.Frames
         {
             if (database == null)
             {
-                var node1 = treeView.Nodes.BuildNode(newDatabase.Category, newDatabase.DatabaseName);
+                var node1 = treeView.Nodes.BuildNode(newDatabase.Category, newDatabase.Name);
                 node1.ImageIndex = 0;
                 node1.Tag = newDatabase;
                 node1.Checked = state;
@@ -135,7 +135,7 @@ namespace DatabaseBenchmark.Frames
             TreeNode node = treeView.Nodes.Iterate().Where(x => x.Tag == database).FirstOrDefault();
             TreeNodeCollection nodes = node.Parent != null ? node.Parent.Nodes : treeView.Nodes;
 
-            TreeNode newNode = nodes.Insert(node.Index + 1, newDatabase.DatabaseName);
+            TreeNode newNode = nodes.Insert(node.Index + 1, newDatabase.Name);
             newNode.Tag = newDatabase;
             newNode.Checked = state;
             newNode.ImageIndex = 0;
@@ -173,7 +173,7 @@ namespace DatabaseBenchmark.Frames
                 renamedNode.Text = newLabel;
                 renamedNode.Name = newLabel;
 
-                ((Database)renamedNode.Tag).DatabaseName = newLabel;
+                ((Database)renamedNode.Tag).Name = newLabel;
             }
         }
 
@@ -209,8 +209,8 @@ namespace DatabaseBenchmark.Frames
                 Type databaseType = selectedDatabase.GetType();
                 Database tempDatabase = (Database)Activator.CreateInstance(databaseType);
 
-                tempDatabase.DatabaseName = treeView.SelectedNode.Text + " Clone";
-                tempDatabase.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, tempDatabase.DatabaseName);
+                tempDatabase.Name = treeView.SelectedNode.Text + " Clone";
+                tempDatabase.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, tempDatabase.Name);
 
                 if (!Directory.Exists(tempDatabase.DataDirectory))
                     Directory.CreateDirectory(tempDatabase.DataDirectory);

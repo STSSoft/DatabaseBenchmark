@@ -14,8 +14,8 @@ namespace DatabaseBenchmark.Databases
 
         public PostgreSQLDatabase()
         {    
-            DatabaseName = "Postgre";
-            DatabaseCollection = "table1";
+            Name = "Postgre";
+            CollectionName = "table1";
             Category = "SQL";
             Description = "PostgreSQL + Npgsql 2.0.13.91 .NET Data Provider";
             Website = "http://www.postgresql.org/";
@@ -71,8 +71,8 @@ namespace DatabaseBenchmark.Databases
                 connections[i] = connection;
             }
 
-            connections[0].ExecuteNonQuery(String.Format("DROP TABLE IF EXISTS {0};", DatabaseCollection));
-            connections[0].ExecuteNonQuery(CreateTableQuery(DatabaseCollection));
+            connections[0].ExecuteNonQuery(String.Format("DROP TABLE IF EXISTS {0};", CollectionName));
+            connections[0].ExecuteNonQuery(CreateTableQuery(CollectionName));
             connections[0].ExecuteNonQuery(string.Format(@"
             CREATE OR REPLACE FUNCTION InsertToTable1(_id bigint, _symbol text, _time timestamp without time zone, _bid double precision, _ask double precision, _bidsize int, _asksize int, _provider text ) RETURNS int LANGUAGE plpgsql AS $$
             DECLARE
@@ -89,7 +89,7 @@ namespace DatabaseBenchmark.Databases
               
               RETURN 0;
             END
-            $$;", DatabaseCollection));
+            $$;", CollectionName));
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
@@ -122,7 +122,7 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            IDataReader reader = connections[0].ExecuteQuery(String.Format("SELECT * FROM {0} ORDER BY {1};", DatabaseCollection, "ID"));
+            IDataReader reader = connections[0].ExecuteQuery(String.Format("SELECT * FROM {0} ORDER BY {1};", CollectionName, "ID"));
 
             foreach (var row in reader.Forward())
             {
@@ -155,7 +155,7 @@ namespace DatabaseBenchmark.Databases
 
                 try
                 {
-                    string query = String.Format("SELECT pg_total_relation_size('postgres.public.{0}')", DatabaseCollection);
+                    string query = String.Format("SELECT pg_total_relation_size('postgres.public.{0}')", CollectionName);
 
                     IDataReader reader = conn.ExecuteQuery(query);
 

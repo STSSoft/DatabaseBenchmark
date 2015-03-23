@@ -135,7 +135,7 @@ namespace DatabaseBenchmark
                 Action<string, object, Color> updateChart = null;
 
                 StepFrame ActiveStepFrame = ApplicationManager.GetActiveStepFrame();
-                string databaseName = benchmark.Database.DatabaseName;
+                string databaseName = benchmark.Database.Name;
                 Color databaseColor = benchmark.Database.Color;
 
                 // Speed chart.
@@ -497,8 +497,8 @@ namespace DatabaseBenchmark
                 // Draw charts.
                 if (activeFrame.Text != null) // Frame is in write, read or other mode.
                 {
-                    int averagePossition = activeFrame.lineChartAverageSpeed.GetPointsCount(database.DatabaseName);
-                    int momentPossition = activeFrame.lineChartMomentSpeed.GetPointsCount(database.DatabaseName);
+                    int averagePossition = activeFrame.lineChartAverageSpeed.GetPointsCount(database.Name);
+                    int momentPossition = activeFrame.lineChartMomentSpeed.GetPointsCount(database.Name);
 
                     var averageSpeedData = session.GetAverageSpeed(method, averagePossition);
                     var momentSpeedData = session.GetMomentSpeed(method, momentPossition);
@@ -506,11 +506,11 @@ namespace DatabaseBenchmark
                     var memoryData = session.GetAverageWorkingSet(method, averagePossition);
                     var ioData = session.GetAverageDataIO(method, averagePossition);
 
-                    activeFrame.AddAverageSpeed(database.DatabaseName, averageSpeedData);
-                    activeFrame.AddMomentSpeed(database.DatabaseName, momentSpeedData);
-                    activeFrame.AddAverageCpuUsage(database.DatabaseName, cpuData);
-                    activeFrame.AddAverageMemoryUsage(database.DatabaseName, memoryData);
-                    activeFrame.AddAverageIO(database.DatabaseName, ioData);
+                    activeFrame.AddAverageSpeed(database.Name, averageSpeedData);
+                    activeFrame.AddMomentSpeed(database.Name, momentSpeedData);
+                    activeFrame.AddAverageCpuUsage(database.Name, cpuData);
+                    activeFrame.AddAverageMemoryUsage(database.Name, memoryData);
+                    activeFrame.AddAverageIO(database.Name, ioData);
                 }
 
                 if (Math.Abs(progress - 0.0) <= double.Epsilon)
@@ -524,7 +524,7 @@ namespace DatabaseBenchmark
                 elapsedTimeStatus.Text = String.Format("Elapsed: {0:dd\\.hh\\:mm\\:ss} ", elapsed);
                 progressBar.Value = (int)progress;
                 percentStatus.Text = string.Format("{0:f2}%", progress);
-                progressStatus.Text = database.DatabaseName + " " + CurrentStatus;
+                progressStatus.Text = database.Name + " " + CurrentStatus;
             }
             catch (Exception exc)
             {

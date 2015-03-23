@@ -18,8 +18,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "Volante";
-            DatabaseCollection = "table1";
+            Name = "Volante";
+            CollectionName = "table1";
             Category = "NoSQL\\Object Databases";
             Description = "Volante";
             Website = "https://github.com/kjk/volante";

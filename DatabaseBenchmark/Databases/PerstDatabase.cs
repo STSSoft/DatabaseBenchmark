@@ -15,8 +15,8 @@ namespace DatabaseBenchmark.Databases
 
         public PerstDatabase()
         { 
-            DatabaseName = "Perst";
-            DatabaseCollection = "table";
+            Name = "Perst";
+            CollectionName = "table";
             Category = "NoSQL\\Object Databases";
             Description = "Perst 4.42";
             Website = "http://www.mcobject.com/perst";
@@ -30,7 +30,7 @@ namespace DatabaseBenchmark.Databases
 
         public override void Init(int flowCount, long flowRecordCount)
         {
-            fileName = Path.Combine(DataDirectory, string.Format("{0}.perst", DatabaseCollection));
+            fileName = Path.Combine(DataDirectory, string.Format("{0}.perst", CollectionName));
 
             perst = StorageFactory.Instance.CreateStorage();
             perst.SetProperty("perst.multiclient.support", true);

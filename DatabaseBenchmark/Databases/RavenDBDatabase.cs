@@ -20,8 +20,8 @@ namespace DatabaseBenchmark.Databases
 
         public RavenDBDatabase()
         {
-            DatabaseName = "RavenDB";
-            DatabaseCollection = "database";
+            Name = "RavenDB";
+            CollectionName = "database";
             Category = "NoSQL\\Document Store";
             Description = "3.0";
             Website = "http://ravendb.net/";

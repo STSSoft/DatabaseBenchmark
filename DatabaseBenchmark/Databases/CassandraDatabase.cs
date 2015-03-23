@@ -25,8 +25,8 @@ namespace DatabaseBenchmark.Databases
 
         public CassandraDatabase()
         {
-            DatabaseName = "CassandraDB";
-            DatabaseCollection = "table1";
+            Name = "CassandraDB";
+            CollectionName = "table1";
             Category = "NoSQL\\Wide Column Store Column Families";
             Description = "CassandraDB 2.1.2 + CassandraToLinq";
             Website = "http://cassandra.apache.org/";
@@ -64,7 +64,7 @@ namespace DatabaseBenchmark.Databases
                 sessions[i] = session;
             }
 
-            sessions[0].Execute(GetCreateTableQuery(DatabaseCollection));
+            sessions[0].Execute(GetCreateTableQuery(CollectionName));
 
             if (ConnectionString == "localhost")
                 DataDirectory = Path.Combine(GetConfigFilePath(), "data\\data");
@@ -83,7 +83,7 @@ namespace DatabaseBenchmark.Databases
                 var tick = kv.Value;
 
                 builder.Append(" UPDATE ");
-                builder.Append(DatabaseCollection);
+                builder.Append(CollectionName);
                 builder.Append(" SET Symbol = ");
                 builder.Append("'");
                 builder.Append(tick.Symbol);
@@ -148,7 +148,7 @@ namespace DatabaseBenchmark.Databases
             {
                 hasMoreRecords = false;
 
-                var queryStr = string.Format("SELECT * FROM {0} where Key > {2} limit {1} allow filtering;", DatabaseCollection, QUERY_READ_LIMIT, lastKey);
+                var queryStr = string.Format("SELECT * FROM {0} where Key > {2} limit {1} allow filtering;", CollectionName, QUERY_READ_LIMIT, lastKey);
                 var query = sessions[0].Execute(queryStr);
                 foreach (var row in query.GetRows())
                 {

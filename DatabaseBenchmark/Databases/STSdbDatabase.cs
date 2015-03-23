@@ -15,8 +15,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "STSdb";
-            DatabaseCollection = "table1";
+            Name = "STSdb";
+            CollectionName = "table1";
             Category = "NoSQL\\Key-Value Store";
             Description = "STSdb 3.5.13";
             Website = "http://www.stsdb.com/";
@@ -30,7 +30,7 @@ namespace DatabaseBenchmark.Databases
         public override void Init(int flowCount, long flowRecordCount)
         {
             engine = StorageEngine.FromFile(Path.Combine(DataDirectory, "test.stsdb"));
-            table = engine.Scheme.CreateOrOpenXTable<long, Tick>(new Locator(DatabaseCollection));
+            table = engine.Scheme.CreateOrOpenXTable<long, Tick>(new Locator(CollectionName));
 
             engine.Scheme.Commit();
         }

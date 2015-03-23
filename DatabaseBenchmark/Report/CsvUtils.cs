@@ -54,7 +54,7 @@ namespace DatabaseBenchmark.Report
                     BenchmarkTest test = sessions[i];
 
                     // write database info
-                    writer.Write(test.Database.DatabaseName + ";");
+                    writer.Write(test.Database.Name + ";");
                     writer.Write(test.GetSpeed(TestMethod.Write) + ";");
                     writer.Write(test.GetSpeed(TestMethod.Read) + ";");
                     writer.Write(test.GetSpeed(TestMethod.SecondaryRead) + ";");
@@ -82,7 +82,7 @@ namespace DatabaseBenchmark.Report
                 writer.WriteLine();
 
                 // write databases
-                writer.WriteLine(String.Join(";;;;;;;;;;;", sessions.Select(x => x.Database.DatabaseName)));
+                writer.WriteLine(String.Join(";;;;;;;;;;;", sessions.Select(x => x.Database.Name)));
                 writer.WriteLine(String.Join(";", Enumerable.Repeat("Records;Write time;Read time;Secondary read time;Average write;Average read;Average secondary read;Moment write;Moment read;Moment secondary read;", sessions.Count)));
 
                 StringBuilder builder = new StringBuilder();

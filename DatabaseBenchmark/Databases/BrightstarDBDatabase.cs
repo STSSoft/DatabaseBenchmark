@@ -20,8 +20,8 @@ namespace DatabaseBenchmark.Databases
 
         public BrightstarDBDatabase()
         {
-            DatabaseName = "BrightstarDB";
-            DatabaseCollection = "table1";
+            Name = "BrightstarDB";
+            CollectionName = "table1";
             Category = "NoSQL\\Graph Databases";
             Description = "BrightstarDB 1.9.1 Stable - Mon Feb 2, 2015 at 10:00 AM";
             Website = "http://www.brightstardb.com/";
@@ -39,7 +39,7 @@ namespace DatabaseBenchmark.Databases
         {
             contexts = new MyEntityContext[flowCount];
 
-            string connectionString = string.Format(@"Type=embedded;storesDirectory={0};StoreName={1}", DataDirectory, DatabaseCollection);
+            string connectionString = string.Format(@"Type=embedded;storesDirectory={0};StoreName={1}", DataDirectory, CollectionName);
 
             for (int i = 0; i < flowCount; i++)
                 contexts[i] = new MyEntityContext(connectionString, true);

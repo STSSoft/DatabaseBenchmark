@@ -12,8 +12,8 @@ namespace DatabaseBenchmark
     {
         protected object SyncRoot { get; set; }
 
-        public string DatabaseName { get; set; }
-        public string DatabaseCollection { get; set;}
+        public string Name { get; set; }
+        public string CollectionName { get; set;}
         public string DataDirectory { get; set; }
         public string ConnectionString { get; set; }
 

@@ -17,7 +17,7 @@ namespace DatabaseBenchmark
         public void SetProperties(Object obj)
         {
             propertyGrid1.SelectedObject = obj;
-            this.Text = ((Database)obj).DatabaseName;
+            this.Text = ((Database)obj).Name;
 
             Invalidate();
         }

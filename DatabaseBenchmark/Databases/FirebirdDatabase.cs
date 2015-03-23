@@ -38,8 +38,8 @@ namespace DatabaseBenchmark.Databases
 
         public FirebirdDatabase()
         {
-            DatabaseName = "Firebird";
-            DatabaseCollection = "table1";
+            Name = "Firebird";
+            CollectionName = "table1";
             Category = "SQL";
             Description = "Firebird + ADO.NET Data Provider 3.2.0.0";
             Website = "http://www.firebirdsql.org/en/start/";
@@ -65,10 +65,10 @@ namespace DatabaseBenchmark.Databases
                 connections[i] = new FbConnection(GetConnectionString());
                 connections[i].Open();
 
-                helpers[i] = new InsertHelper(insertsPerQuery, connections[i], DatabaseCollection);
+                helpers[i] = new InsertHelper(insertsPerQuery, connections[i], CollectionName);
             }
 
-            CreateTable(connections[0], DatabaseCollection);
+            CreateTable(connections[0], CollectionName);
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
@@ -88,7 +88,7 @@ namespace DatabaseBenchmark.Databases
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
             var connection = connections[0];
-            var cmd = new FbCommand(String.Format("SELECT * FROM {0} ORDER BY ID ASC;", DatabaseCollection), connection);
+            var cmd = new FbCommand(String.Format("SELECT * FROM {0} ORDER BY ID ASC;", CollectionName), connection);
 
             IDataReader reader = cmd.ExecuteReader();
 

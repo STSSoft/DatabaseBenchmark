@@ -25,8 +25,8 @@ namespace DatabaseBenchmark.Databases
 
         public TokuMXDatabase()
         {
-            DatabaseName = "TokuMX";
-            DatabaseCollection = "collection";
+            Name = "TokuMX";
+            CollectionName = "collection";
             Category = "NoSQL\\Document Store";
             Description = "TokuMX v2.0";
             Website = "http://www.tokutek.com/tokumx-for-mongodb/";
@@ -61,10 +61,10 @@ namespace DatabaseBenchmark.Databases
                 server = client.GetServer();
                 database = server.GetDatabase("test");
 
-                if (database.CollectionExists(DatabaseCollection))
-                    database.DropCollection(DatabaseCollection);
+                if (database.CollectionExists(CollectionName))
+                    database.DropCollection(CollectionName);
 
-                var collection = database.GetCollection<Row>(DatabaseCollection);
+                var collection = database.GetCollection<Row>(CollectionName);
                 collection.CreateIndex(new IndexKeysBuilder().Ascending("Key"));
 
                 collections[i] = collection;

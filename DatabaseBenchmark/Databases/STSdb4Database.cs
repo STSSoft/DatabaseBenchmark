@@ -18,8 +18,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "STSdb 4.0";
-            DatabaseCollection = "table1";
+            Name = "STSdb 4.0";
+            CollectionName = "table1";
             Category = @"NoSQL\Key-Value Store";
             Description = "STSdb 4.0";
             Website = "http://www.stsdb.com/";
@@ -38,7 +38,7 @@ namespace DatabaseBenchmark.Databases
             engine = InMemoryDatabase ? STSdb4.Database.STSdb.FromMemory() : STSdb4.Database.STSdb.FromFile(Path.Combine(DataDirectory, "test.stsdb4"));
             ((StorageEngine)engine).CacheSize = CacheSize;
 
-            table = engine.OpenXTable<long, Tick>(DatabaseCollection);
+            table = engine.OpenXTable<long, Tick>(CollectionName);
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
@@ -54,7 +54,7 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            return engine.OpenXTable<long, Tick>(DatabaseCollection).Forward();
+            return engine.OpenXTable<long, Tick>(CollectionName).Forward();
         }
 
         public override void Finish()

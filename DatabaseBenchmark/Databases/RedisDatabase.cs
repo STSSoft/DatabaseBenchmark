@@ -17,8 +17,8 @@ namespace DatabaseBenchmark.Databases
 
         public RedisDatabase()
         {
-            DatabaseName = "Redis";
-            DatabaseCollection = "0";
+            Name = "Redis";
+            CollectionName = "0";
             Category = @"NoSQL\Key-Value Store\RAM";
             Description = "Redis 2.8.19 .Net Client 3.9.71";
             Website = "http://redis.io/";

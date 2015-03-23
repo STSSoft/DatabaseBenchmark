@@ -48,8 +48,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "SQLite";
-            DatabaseCollection = "table1";
+            Name = "SQLite";
+            CollectionName = "table1";
             Category = "SQL";
             Description = "SQLite 3.8.4.1 + ADO.NET Provider for SQLite 1.0.92.0";
             Website = "http://www.sqlite.org/";
@@ -134,11 +134,11 @@ namespace DatabaseBenchmark.Databases
                 var connection = GetConnection();
                 connections[i] = connection;
 
-                helpers[i] = GetInsertHelper(connection, DatabaseCollection);
+                helpers[i] = GetInsertHelper(connection, CollectionName);
             }
 
-            connections[0].ExecuteNonQuery(String.Format("DROP TABLE IF EXISTS `{0}`;", DatabaseCollection));
-            connections[0].ExecuteNonQuery(CreateTableQuery(DatabaseCollection));
+            connections[0].ExecuteNonQuery(String.Format("DROP TABLE IF EXISTS `{0}`;", CollectionName));
+            connections[0].ExecuteNonQuery(CreateTableQuery(CollectionName));
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
@@ -162,7 +162,7 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            IDataReader reader = connections[0].ExecuteQuery(String.Format("SELECT * FROM {0} ORDER BY {1};", DatabaseCollection, "ID"));
+            IDataReader reader = connections[0].ExecuteQuery(String.Format("SELECT * FROM {0} ORDER BY {1};", CollectionName, "ID"));
 
             foreach (var row in reader.Forward())
             {

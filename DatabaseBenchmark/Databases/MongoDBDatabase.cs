@@ -25,8 +25,8 @@ namespace DatabaseBenchmark.Databases
 
         public MongoDBDatabase()
         {
-            DatabaseName = "MongoDB";
-            DatabaseCollection = "collection";
+            Name = "MongoDB";
+            CollectionName = "collection";
             Category = "NoSQL\\Document Store";
             Description = "MongoDB C# Driver 2.0.0beta";
             Website = "http://www.mongodb.org/";
@@ -61,10 +61,10 @@ namespace DatabaseBenchmark.Databases
                 server = client.GetServer();
                 database = server.GetDatabase("test");
 
-                if (database.CollectionExists(DatabaseCollection))
-                    database.DropCollection(DatabaseCollection);
+                if (database.CollectionExists(CollectionName))
+                    database.DropCollection(CollectionName);
 
-                var collection = database.GetCollection<Row>(DatabaseCollection);
+                var collection = database.GetCollection<Row>(CollectionName);
                 collection.CreateIndex(new IndexKeysBuilder().Ascending("_id"));
 
                 collections[i] = collection;

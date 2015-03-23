@@ -15,8 +15,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "Oracle Berkeley DB";
-            DatabaseCollection = "table";
+            Name = "Oracle Berkeley DB";
+            CollectionName = "table";
             Category = "SQL";
             Description = "Berkeley DB 12c Release 1 Library Version 12.1.6.0";
             Website = "http://www.oracle.com/technology/products/berkeley-db";
@@ -40,7 +40,7 @@ namespace DatabaseBenchmark.Databases
             config.BTreeCompare = new EntryComparisonDelegate(CompareFunctionKeyByteArray);
             config.Duplicates = DuplicatesPolicy.NONE;
 
-            string fileName = Path.Combine(DataDirectory, string.Format("{0}.oracle", DatabaseCollection));
+            string fileName = Path.Combine(DataDirectory, string.Format("{0}.oracle", CollectionName));
             database = BTreeDatabase.Open(fileName, config);
         }
 

@@ -32,7 +32,7 @@ namespace DatabaseBenchmark.Databases
 
         public MySQLDatabase()
         {
-            DatabaseName = String.Format("MySQL ({0})", StorageEngine);
+            Name = String.Format("MySQL ({0})", StorageEngine);
             Category = "SQL";
             Description = "MySQL + .NET Connector";
             Website = "http://www.mysql.com/";
@@ -52,7 +52,7 @@ namespace DatabaseBenchmark.Databases
             cb.UserID = "root";
             cb.Password = "";
             cb.Database = "test";
-            DatabaseCollection = "table1";
+            CollectionName = "table1";
             ConnectionString = cb.ConnectionString;
 
             InsertsPerQuery = 1000;
@@ -68,7 +68,7 @@ namespace DatabaseBenchmark.Databases
 
         private string CreateTableQuery()
         {
-            return String.Format("CREATE TABLE `{0}` (", DatabaseCollection) +
+            return String.Format("CREATE TABLE `{0}` (", CollectionName) +
                       "`ID` bigint(20) NOT NULL," +
                       "`Symbol` varchar(255) NOT NULL," +
                       "`Time` datetime NOT NULL," + 
@@ -83,7 +83,7 @@ namespace DatabaseBenchmark.Databases
 
         private SQLMultiInsert GetInsertHelper(IDbConnection conn)
         {
-            SQLMultiInsert helper = new SQLMultiInsert(conn, DatabaseCollection, InsertsPerQuery);
+            SQLMultiInsert helper = new SQLMultiInsert(conn, CollectionName, InsertsPerQuery);
             helper.InsertCommand = "replace"; // the old row is deleted before the new row is inserted
 
             helper.AddField("ID", DbType.Int64, 0);
@@ -114,7 +114,7 @@ namespace DatabaseBenchmark.Databases
                 helpers[i] = GetInsertHelper(connection);
             }
 
-            connections.First().ExecuteNonQuery(String.Format("DROP TABLE IF EXISTS `{0}`;", DatabaseCollection));
+            connections.First().ExecuteNonQuery(String.Format("DROP TABLE IF EXISTS `{0}`;", CollectionName));
             connections.First().ExecuteNonQuery(CreateTableQuery());
         }
 
@@ -135,7 +135,7 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            IDataReader reader = connections.First().ExecuteQuery(String.Format("SELECT * FROM {0} ORDER BY {1};", DatabaseCollection, "ID"));
+            IDataReader reader = connections.First().ExecuteQuery(String.Format("SELECT * FROM {0} ORDER BY {1};", CollectionName, "ID"));
 
             foreach (var row in reader.Forward())
             {
@@ -168,7 +168,7 @@ namespace DatabaseBenchmark.Databases
 
                 try
                 {
-                    string tables = String.Join(" OR ", Enumerable.Range(0, connections.Length).Select(x => String.Format("table_name = '{0}'", DatabaseCollection)));
+                    string tables = String.Join(" OR ", Enumerable.Range(0, connections.Length).Select(x => String.Format("table_name = '{0}'", CollectionName)));
                     string query = "";
 
                     // Special query for TokuDB engine size. 

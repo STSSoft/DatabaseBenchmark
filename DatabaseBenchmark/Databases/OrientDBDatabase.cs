@@ -27,8 +27,8 @@ namespace DatabaseBenchmark.Databases
 
         public OrientDBDatabase()
         {
-            DatabaseName = "OrientDB";
-            DatabaseCollection = "myTestDatabaseAlias";
+            Name = "OrientDB";
+            CollectionName = "myTestDatabaseAlias";
             Category = "SQL";
             Description = "OrientDB 2.0 + OrientDB-NET.binary";
             Website = "http://www.orientechnologies.com/";
@@ -56,11 +56,11 @@ namespace DatabaseBenchmark.Databases
             this.flowRecordCount = flowRecordCount;
 
             databases = new ODatabase[flowCount];
-            var connect = OClient.CreateDatabasePool(Server, Port, DatabaseTest, ODatabaseType.Document, Ussername, Password, flowCount, DatabaseCollection);
+            var connect = OClient.CreateDatabasePool(Server, Port, DatabaseTest, ODatabaseType.Document, Ussername, Password, flowCount, CollectionName);
 
             for (int i = 0; i < flowCount; i++)
             {
-                ODatabase database = new ODatabase(DatabaseCollection);
+                ODatabase database = new ODatabase(CollectionName);
                 databases[i] = database;
             }
 
@@ -159,7 +159,7 @@ namespace DatabaseBenchmark.Databases
 
         public override void Finish()
         {
-            OClient.DropDatabasePool(DatabaseCollection);
+            OClient.DropDatabasePool(CollectionName);
 
             foreach (var database in databases)
                 database.Close();

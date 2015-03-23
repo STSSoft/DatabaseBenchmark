@@ -66,8 +66,8 @@ namespace DatabaseBenchmark.Databases
         {
             SyncRoot = new object();
 
-            DatabaseName = "LevelDB";
-            DatabaseCollection = "table1";
+            Name = "LevelDB";
+            CollectionName = "table1";
             Category = "NoSQL\\Key-Value Store";
             Description = "LevelDB.NET.dll built from http://leveldb.angeloflogic.com/";
             Website = "http://leveldb.org/";
@@ -96,7 +96,7 @@ namespace DatabaseBenchmark.Databases
             options.WriteBufferSize = WriteBufferSize;
             options.MaxOpenFiles = MaxOpenFiles;
 
-            database = new DB(Path.Combine(DataDirectory, DatabaseCollection), options);
+            database = new DB(Path.Combine(DataDirectory, CollectionName), options);
         }
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)

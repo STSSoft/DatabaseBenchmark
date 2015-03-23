@@ -16,8 +16,8 @@ namespace DatabaseBenchmark.Databases
 
         public Db4objectsDatabase()
         {
-            DatabaseName = "Db4objects";
-            DatabaseCollection = "database";
+            Name = "Db4objects";
+            CollectionName = "database";
             Category = "NoSQL\\Object Databases";
             Description = "Db4objects 8.0";
             Website = "http://www.db4o.com/";
@@ -32,7 +32,7 @@ namespace DatabaseBenchmark.Databases
         public override void Init(int flowCount, long flowRecordCount)
         {
             sessions = new IObjectContainer[flowCount];
-            fileName = Path.Combine(DataDirectory, DatabaseCollection + ".db4objects");
+            fileName = Path.Combine(DataDirectory, CollectionName + ".db4objects");
 
             IEmbeddedConfiguration config = Db4oEmbedded.NewConfiguration();
             config.Common.ObjectClass(typeof(long)).ObjectField("Key").Indexed(true);
