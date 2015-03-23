@@ -345,6 +345,7 @@
     <Compile Include="Charts\LineChart.Designer.cs">
       <DependentUpon>LineChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\KeysNotOrderedException.cs" />
     <Compile Include="Frames\LogFrame.cs">
       <SubType>Form</SubType>
     </Compile>
