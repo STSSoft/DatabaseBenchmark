@@ -55,9 +55,9 @@ namespace DatabaseBenchmark.Report
                 List<BarChart> barCharts;
 
                 if (type == ReportType.Summary)
-                    barCharts = frame.GetAllBarCharts().Where(x => x.Title == "Speed (rec/sec)" || x.Title == "Size (MB)").ToList();
+                    barCharts = frame.GetSummaryBarCharts();
                 else
-                    barCharts = frame.GetSelectedBarCharts();
+                    barCharts = frame.GetAllBarCharts();
 
                 PdfPTable table = new PdfPTable(1);
                 table.WidthPercentage = 47;

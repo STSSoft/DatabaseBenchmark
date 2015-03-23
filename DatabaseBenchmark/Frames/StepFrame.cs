@@ -161,12 +161,42 @@ namespace DatabaseBenchmark.Frames
             return allBarCharts;
         }
 
+        public List<BarChart> GetSummaryBarCharts()
+        {
+            List<BarChart> barCharts = new List<BarChart>();
+
+            barChartSpeed.Invalidate();
+            barChartSize.Invalidate();
+
+            barCharts.Add(barChartSpeed);
+            barCharts.Add(barChartSize);
+
+            return barCharts;
+        }
+
         public List<BarChart> GetAllBarCharts()
         {
             List<BarChart> barCharts = new List<BarChart>();
 
-            foreach (Control item in LayoutPanel.Controls)
-                barCharts.Add(item as BarChart);
+            barChartSpeed.Invalidate();
+            barChartSize.Invalidate();
+            barChartCPU.Invalidate();
+            barChartMemory.Invalidate();
+            barChartIO.Invalidate();
+            barChartTime.Invalidate();
+
+            barCharts.Add(barChartSpeed);
+            barCharts.Add(barChartSize);
+            barCharts.Add(barChartCPU);
+            barCharts.Add(barChartSpeed);
+            barCharts.Add(barChartIO);
+            barCharts.Add(barChartTime);
+
+            //foreach (Control item in LayoutPanel.Controls)
+            //{
+            //    item.Invalidate();
+            //    barCharts.Add(item as BarChart);
+            //}
 
             return barCharts;
         }
