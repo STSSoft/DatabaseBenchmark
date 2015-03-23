@@ -63,10 +63,14 @@ namespace DatabaseBenchmark.Serialization
 
             CreateTreeView();
 
+            // TODO: Finding another way to restore the docking. 
             foreach (var item in StepFrames)
+                item.Value.Dispose();
+
+            foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
             {
-                item.Value.Show(Panel);
-                item.Value.DockState = DockState.Document;
+                StepFrames[method] = CreateStepFrame(method);
+                SelectFrame(method);
             }
 
             StepFrames[TestMethod.Write].Activate();
