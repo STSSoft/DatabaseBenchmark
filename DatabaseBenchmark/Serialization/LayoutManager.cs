@@ -1,10 +1,8 @@
 ﻿using DatabaseBenchmark.Benchmarking;
 using DatabaseBenchmark.Frames;
-using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -18,7 +16,7 @@ namespace DatabaseBenchmark.Serialization
         public DockPanel Panel { get; private set; }
         public LogFrame LogFrame { get; private set; }
 
-        public Dictionary<TestMethod, StepFrame> Frames { get; private set; }
+        public Dictionary<TestMethod, StepFrame> StepFrames { get; private set; }
         public ToolStripComboBox[] ComboBoxes { get; private set; }
         public TrackBar TrackBar { get; private set; }
 
@@ -29,13 +27,13 @@ namespace DatabaseBenchmark.Serialization
             TrackBar = trackBar;
 
             TreeView = new TreeViewFrame();
-            Frames = new Dictionary<TestMethod, StepFrame>();
+            StepFrames = new Dictionary<TestMethod, StepFrame>();
             LogFrame = new LogFrame();
 
             Initialize();
 
             foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
-                Frames[method] = CreateStepFrame(method);
+                StepFrames[method] = CreateStepFrame(method);
         }
 
         public void Initialize()
@@ -45,19 +43,33 @@ namespace DatabaseBenchmark.Serialization
             ComboBoxes[1].SelectedIndex = 5;
         }
 
+        public void InitializeCharts()
+        {
+            StepFrame stepFrame;
+
+            // Clear and prepare charts.
+            foreach (var item in StepFrames)
+            {
+                stepFrame = item.Value;
+
+                stepFrame.ClearCharts();
+                stepFrame.InitializeCharts(TreeView.GetSelectedBenchmarks().Select(x => new KeyValuePair<string, Color>(x.DatabaseName, x.Color)));
+            }
+        }
+
         public void Reset()
         {
             TreeView.Dispose();
 
             CreateTreeView();
 
-            foreach (var item in Frames)
+            foreach (var item in StepFrames)
             {
                 item.Value.Show(Panel);
                 item.Value.DockState = DockState.Document;
             }
 
-            Frames[TestMethod.Write].Activate();
+            StepFrames[TestMethod.Write].Activate();
 
             LogFrame.Dispose();
             LogFrame = new LogFrame();
@@ -84,7 +96,7 @@ namespace DatabaseBenchmark.Serialization
 
         public void SelectFrame(TestMethod method)
         {
-            StepFrame frame = Frames[method];
+            StepFrame frame = StepFrames[method];
             frame.Show(Panel);
         }
 
@@ -115,7 +127,7 @@ namespace DatabaseBenchmark.Serialization
 
         public void ShowBarChart(int column, bool visible)
         {
-            foreach (var item in Frames)
+            foreach (var item in StepFrames)
             {
                 StepFrame frame = item.Value;
 
@@ -126,10 +138,10 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
-        public void SetLogarithmic(bool isChecked)
+        public void SetLogarithmicChart(bool isLogarithmic)
         {
-            foreach (var item in Frames)
-                item.Value.SetLogarithmic(isChecked);
+            foreach (var item in StepFrames)
+                item.Value.SetLogarithmic(isLogarithmic);
         }
 
         # region Private members
@@ -172,11 +184,11 @@ namespace DatabaseBenchmark.Serialization
             if (persistString == typeof(StepFrame).ToString())
             {
                 if (Count == 0)
-                    frame = Frames[TestMethod.Write];
+                    frame = StepFrames[TestMethod.Write];
                 else if (Count == 1)
-                    frame = Frames[TestMethod.Read];
+                    frame = StepFrames[TestMethod.Read];
                 else if (Count == 2)
-                    frame = Frames[TestMethod.SecondaryRead];
+                    frame = StepFrames[TestMethod.SecondaryRead];
 
                 Count++;
             }
@@ -184,6 +196,5 @@ namespace DatabaseBenchmark.Serialization
             return frame;
         }
         #endregion
-
     }
 }
