@@ -178,25 +178,8 @@ namespace DatabaseBenchmark.Frames
         {
             List<BarChart> barCharts = new List<BarChart>();
 
-            barChartSpeed.Invalidate();
-            barChartSize.Invalidate();
-            barChartCPU.Invalidate();
-            barChartMemory.Invalidate();
-            barChartIO.Invalidate();
-            barChartTime.Invalidate();
-
-            barCharts.Add(barChartSpeed);
-            barCharts.Add(barChartSize);
-            barCharts.Add(barChartCPU);
-            barCharts.Add(barChartSpeed);
-            barCharts.Add(barChartIO);
-            barCharts.Add(barChartTime);
-
-            //foreach (Control item in LayoutPanel.Controls)
-            //{
-            //    item.Invalidate();
-            //    barCharts.Add(item as BarChart);
-            //}
+            foreach (Control item in LayoutPanel.Controls)
+                barCharts.Add(item as BarChart);
 
             return barCharts;
         }
