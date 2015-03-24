@@ -66,8 +66,8 @@ Database Benchmark can be used as an additional viewpoint when the research engi
 # Additional info
 For the latest news about Database Benchmark you can visit the following resources:
 
-Official website: http://stssoft.com/products/database-benchmark.
-Facebook: https://www.facebook.com/databasebenchmark?fref=ts.
+* Official website: http://stssoft.com/products/database-benchmark.
+* Facebook: https://www.facebook.com/databasebenchmark?fref=ts.
 
  
 
