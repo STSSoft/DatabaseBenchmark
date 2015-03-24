@@ -1,5 +1,6 @@
 ﻿using BrightstarDB.Client;
 using BrightstarDB.EntityFramework;
+using log4net;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace DatabaseBenchmark.Databases
     //Manual commit, very slow and hard for work.
     public class BrightstarDBDatabase : Database
     {
+        private ILog Logger;
         private MyEntityContext[] contexts;
 
         /// <summary>
@@ -33,6 +35,8 @@ namespace DatabaseBenchmark.Databases
             };
 
             InsertsPerQuery = 10000;
+
+            Logger = LogManager.GetLogger(Properties.Settings.Default.TestLogger);
         }
 
         public override void Init(int flowCount, long flowRecordCount)
@@ -69,9 +73,10 @@ namespace DatabaseBenchmark.Databases
                     {
                         contexts[flowID].Save();
                     }
-                    catch (TransactionPreconditionsFailedException)
+                    catch (TransactionPreconditionsFailedException exc)
                     {
                         contexts[flowID].Refresh(RefreshMode.StoreWins, contexts[flowID].Ticks);
+                        Logger.Error("BrightstarDBDatabase insert error ...", exc);
                     }
 
                     count = 0;

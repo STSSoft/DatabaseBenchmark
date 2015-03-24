@@ -73,16 +73,12 @@ namespace DatabaseBenchmark.Databases
 
         public override void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow)
         {
-            try
-            {
-                var helper = helpers[flowID];
+            InsertHelper helper = helpers[flowID];
 
-                foreach (var kv in flow)
-                    helper.Insert(kv.Key, kv.Value.Symbol, kv.Value.Timestamp, kv.Value.Bid, kv.Value.Ask, kv.Value.BidSize, kv.Value.BidSize, kv.Value.Provider);
+            foreach (var kv in flow)
+                helper.Insert(kv.Key, kv.Value.Symbol, kv.Value.Timestamp, kv.Value.Bid, kv.Value.Ask, kv.Value.BidSize, kv.Value.BidSize, kv.Value.Provider);
 
-                helpers[flowID].Flush();
-            }
-            catch (Exception) { }
+            helpers[flowID].Flush();
         }
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
