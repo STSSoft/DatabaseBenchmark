@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DatabaseBenchmark.Exceptions;
 
 namespace DatabaseBenchmark.Benchmarking
 {
@@ -457,7 +458,7 @@ namespace DatabaseBenchmark.Benchmarking
                 }
 
                 if (!ordered)
-                    throw new Exception("Keys are not ordered.");
+                    throw new KeysNotOrderedException("Keys are not ordered.");
 
             }, (int)method, Cancellation.Token, TaskCreationOptions.AttachedToParent | TaskCreationOptions.LongRunning, TaskScheduler.Default);
 

@@ -37,14 +37,15 @@ namespace DatabaseBenchmark.Frames
             }
         }
 
-        private void AddLine(string text)
+        private void AddLine(string line)
         {
             int startIndex = richTextBoxLogs.TextLength;
-            richTextBoxLogs.AppendText(text);
+            richTextBoxLogs.AppendText(line);
 
-            if (text.Contains("ERROR"))
+            // Highlight error lines.
+            if (line.Contains("ERROR"))
             {
-                richTextBoxLogs.Select(startIndex, text.Length);
+                richTextBoxLogs.Select(startIndex, line.Length);
                 richTextBoxLogs.SelectionBackColor = Color.Red;
             }
         }

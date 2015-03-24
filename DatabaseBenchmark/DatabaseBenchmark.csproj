@@ -78,8 +78,7 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>logo_bechn.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AerospikeClient, Version=3.0.0.0, Culture=neutral, processorArchitecture=AMD64">
@@ -719,6 +718,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sr_24x242.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logo_bechn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
