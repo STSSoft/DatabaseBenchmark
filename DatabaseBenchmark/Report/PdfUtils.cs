@@ -59,24 +59,26 @@ namespace DatabaseBenchmark.Report
                 else
                     barCharts = frame.GetAllBarCharts();
 
-                PdfPTable table = new PdfPTable(1);
-                table.WidthPercentage = 47;
-
                 string chapterTitle = fr.Key == TestMethod.SecondaryRead ? "Secondary read" : fr.Key.ToString();
                 Chapter chapter = new Chapter(new Paragraph(chapterTitle, chapterFont), chapterCount++);
                 chapter.Add(new Chunk("\n"));
 
                 for (int i = 0; i < barCharts.Count; i++)
                 {
-                    AddCellToTable(table, string.Empty, barCharts[i].ConvertToByteArray);
-                    table.CalculateHeightsFast();
-                }
+                    Image image = Image.GetInstance(barCharts[i].ConvertToByteArray());
+                    image.Alignment = Element.ALIGN_CENTER;
 
-                chapter.Add(table);
+                    if (type == ReportType.Summary)
+                        image.ScaleToFit(doc.PageSize.Width - 20, 271);
+                    else
+                        image.ScalePercent(100);
+
+                    chapter.Add(image);
+                }
 
                 if (type == ReportType.Detailed)
                 {
-                    table = new PdfPTable(1);
+                    PdfPTable table = new PdfPTable(1);
                     table.WidthPercentage = 100;
 
                     AddCellToTable(table, "Average Speed:", frame.lineChartAverageSpeed.ConvertToByteArray);
@@ -92,6 +94,9 @@ namespace DatabaseBenchmark.Report
             }
 
             doc.Close();
+
+            foreach (var item in frames)
+                item.Value.ResetColumnStyle();
         }
 
         public static void ExportTestSettings(Chapter chapter, Font font, int flowCount, long recordCount, float randomness)
