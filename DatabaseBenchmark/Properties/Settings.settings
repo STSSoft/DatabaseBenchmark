@@ -9,7 +9,7 @@
       <Value Profile="(Default)">ApplicationLogger</Value>
     </Setting>
     <Setting Name="TestLogger" Type="System.String" Scope="User">
-      <Value Profile="(Default)">BenchmarkTestLogger</Value>
+      <Value Profile="(Default)">TestLogger</Value>
     </Setting>
     <Setting Name="LogWindowLogger" Type="System.String" Scope="User">
       <Value Profile="(Default)">StringLoggerTest</Value>

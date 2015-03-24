@@ -13,6 +13,7 @@ namespace DatabaseBenchmark
         private StringBuilder Logs = new StringBuilder();
 
         public event Action OnAppend;
+        public string LastLine { get; private set; }
 
         public StringAppender()
 		{
@@ -20,7 +21,11 @@ namespace DatabaseBenchmark
 
         protected override void Append(LoggingEvent loggingEvent)
         {
-            Logs.Append(RenderLoggingEvent(loggingEvent));
+            string line = RenderLoggingEvent(loggingEvent);
+
+            Logs.AppendLine(line);
+            LastLine = line;
+
             OnAppend();
         }
         

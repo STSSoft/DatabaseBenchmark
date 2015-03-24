@@ -1,5 +1,6 @@
 ﻿using log4net;
 using System;
+using DatabaseBenchmark.Exceptions;
 
 namespace DatabaseBenchmark.Benchmarking
 {
@@ -35,7 +36,7 @@ namespace DatabaseBenchmark.Benchmarking
             catch (Exception exc)
             {
                 Logger.Error(String.Format("{0} Init()", databaseName), exc);
-                Logger.Info(String.Format("{0} Init() failed...", databaseName), exc);
+                Logger.Info(String.Format("{0} Init() failed...", databaseName));
             }
             finally
             {
@@ -77,6 +78,11 @@ namespace DatabaseBenchmark.Benchmarking
                 Current.Read();
                 Logger.Info(String.Format("{0} Read() ended...", databaseName));
             }
+            catch(KeysNotOrderedException exc)
+            {
+                Logger.Error(String.Format("{0} Read()", databaseName), exc);
+                Logger.Info(String.Format("{0} Read() failed...", databaseName));
+            }
             catch (Exception exc)
             {
                 Logger.Error(String.Format("{0} Read()", databaseName), exc);
@@ -99,6 +105,11 @@ namespace DatabaseBenchmark.Benchmarking
                 Logger.Info(String.Format("{0} SecondaryRead() started...", databaseName));
                 Current.SecondaryRead();
                 Logger.Info(String.Format("{0} SecondaryRead() ended...", databaseName));
+            }
+            catch (KeysNotOrderedException exc)
+            {
+                Logger.Error(String.Format("{0} Read()", databaseName), exc);
+                Logger.Info(String.Format("{0} Read() failed...", databaseName));
             }
             catch (Exception exc)
             {

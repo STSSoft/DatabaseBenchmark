@@ -49,7 +49,7 @@ namespace DatabaseBenchmark.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("BenchmarkTestLogger")]
+        [global::System.Configuration.DefaultSettingValueAttribute("TestLogger")]
         public string TestLogger {
             get {
                 return ((string)(this["TestLogger"]));
