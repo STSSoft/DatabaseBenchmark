@@ -424,6 +424,11 @@ namespace DatabaseBenchmark
             ApplicationManager.LayoutManager.SelectFrame(TestMethod.SecondaryRead);
         }
 
+        private void logWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.ShowLogFrame();
+        }
+
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();

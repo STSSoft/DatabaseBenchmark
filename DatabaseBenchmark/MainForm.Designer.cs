@@ -129,6 +129,8 @@
             this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogProject = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
+            this.logWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -665,6 +667,8 @@
             this.readWindowToolStripMenuItem,
             this.secondaryReadWindowToolStripMenuItem,
             this.toolStripSeparator11,
+            this.logWindowToolStripMenuItem,
+            this.toolStripSeparator15,
             this.resetWindowLayoutToolStripMenuItem1});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -938,6 +942,18 @@
             this.saveFileDialogPdf.Filter = "PDF (*.pdf)|*.pdf";
             this.saveFileDialogPdf.Title = "Export Results";
             // 
+            // logWindowToolStripMenuItem
+            // 
+            this.logWindowToolStripMenuItem.Name = "logWindowToolStripMenuItem";
+            this.logWindowToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
+            this.logWindowToolStripMenuItem.Text = "Log Window";
+            this.logWindowToolStripMenuItem.Click += new System.EventHandler(this.logWindowToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(210, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1055,6 +1071,8 @@
         private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemPdf2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripMenuItem logWindowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
     }
 }
 

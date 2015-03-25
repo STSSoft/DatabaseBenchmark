@@ -113,10 +113,7 @@ namespace DatabaseBenchmark.Serialization
                 return;
             }
 
-            if (TreeView.IsHidden)
-                TreeView.Show(Panel);
-            else
-                TreeView.Show(Panel);
+            TreeView.Show(Panel);
         }
 
         public Dictionary<string, string> GetSelectedFromComboBoxes()
@@ -139,6 +136,19 @@ namespace DatabaseBenchmark.Serialization
                     frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Percent, 18);
                 else
                     frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Absolute, 0);
+            }
+        }
+
+        public void ShowLogFrame()
+        {
+            if (!LogFrame.IsDisposed)
+                LogFrame.Show(Panel);
+            else
+            {
+                LogFrame = new Frames.LogFrame();
+                LogFrame.Show(Panel);
+                LogFrame.DockState = DockState.DockBottomAutoHide;
+                LogFrame.Text = "Logs";
             }
         }
 
