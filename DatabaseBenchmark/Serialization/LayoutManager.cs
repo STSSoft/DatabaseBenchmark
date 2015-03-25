@@ -134,15 +134,8 @@ namespace DatabaseBenchmark.Serialization
 
         public void ShowBarChart(int column, bool visible)
         {
-            foreach (var item in StepFrames)
-            {
-                StepFrame frame = item.Value;
-
-                if (visible)
-                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Percent, 18);
-                else
-                    frame.LayoutPanel.ColumnStyles[column] = new ColumnStyle(SizeType.Absolute, 0);
-            }
+            foreach (var kv in StepFrames)
+                kv.Value.ShowBarChart(column, visible);
         }
 
         public void ShowLogFrame()

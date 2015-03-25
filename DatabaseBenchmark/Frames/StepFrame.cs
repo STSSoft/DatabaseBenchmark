@@ -1,4 +1,5 @@
 ﻿using DatabaseBenchmark.Charts;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -225,6 +226,14 @@ namespace DatabaseBenchmark.Frames
             lineChartAverageCPU.Settings = settings[2];
             lineChartAverageMemory.Settings = settings[3];
             lineChartAverageIO.Settings = settings[4];
+        }
+
+        public void ShowBarChart(int columnNumber, bool visible)
+        {
+            if (visible)
+                LayoutPanel.ColumnStyles[columnNumber] = new ColumnStyle(SizeType.Percent, 18);
+            else
+                LayoutPanel.ColumnStyles[columnNumber] = new ColumnStyle(SizeType.Absolute, 0);
         }
 
         public LegendPossition SelectedChartPosition

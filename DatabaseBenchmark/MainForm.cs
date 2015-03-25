@@ -342,6 +342,16 @@ namespace DatabaseBenchmark
             int column = Int32.Parse(button.Tag.ToString());
 
             ApplicationManager.LayoutManager.ShowBarChart(column, button.Checked);
+            ((ToolStripMenuItem)showBarChartsToolStripMenuItem.DropDownItems[column]).Checked = button.Checked;
+        }
+
+        private void EditBartItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem button = (ToolStripMenuItem)sender;
+            int column = Int32.Parse(button.Tag.ToString());
+
+            ApplicationManager.LayoutManager.ShowBarChart(column, button.Checked);
+            ((ToolStripButton)toolStripMain.Items[11 + column]).Checked = button.Checked;
         }
 
         private void axisType_Click(object sender, EventArgs e)

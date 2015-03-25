@@ -301,7 +301,7 @@ namespace DatabaseBenchmark.Frames
                 contextMenuDatabase.Items[0].Enabled = state;
                 contextMenuDatabase.Items[1].Enabled = state;
                 contextMenuDatabase.Items[4].Enabled = state;
-                contextMenuDatabase.Items[7].Enabled = state;
+                contextMenuDatabase.Items[10].Enabled = state;
 
                 contextMenuDatabase.Show(MousePosition);
             }
