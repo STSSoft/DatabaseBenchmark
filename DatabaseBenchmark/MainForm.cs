@@ -265,8 +265,8 @@ namespace DatabaseBenchmark
                     }
 
                     // Stop loading end enable MainForm
-                    Enabled = true;
                     Loading.Stop();
+                    Enabled = true;
                 }
                 catch (Exception exc)
                 {

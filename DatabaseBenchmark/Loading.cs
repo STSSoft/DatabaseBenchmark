@@ -9,6 +9,7 @@ namespace DatabaseBenchmark
 {
     public partial class Loading : Form
     {
+        private static bool Closed;
         private static Thread Worker;
 
         private float Angle;
@@ -34,7 +35,11 @@ namespace DatabaseBenchmark
             if (Worker == null)
                 return;
 
+            Closed = true;
+
+            Worker.Join(200);
             Worker.Abort();
+
             Worker = null;
         }
 
@@ -43,11 +48,19 @@ namespace DatabaseBenchmark
             KeyValuePair<string, Rectangle> kv = (KeyValuePair<string, Rectangle>)settings;
             Loading form = new Loading(kv.Key, kv.Value);
 
+            Closed = false;
             Application.Run(form);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (Closed)
+            {
+                Close();
+
+                return;
+            }
+
             Angle += 30;
 
             Invalidate();
