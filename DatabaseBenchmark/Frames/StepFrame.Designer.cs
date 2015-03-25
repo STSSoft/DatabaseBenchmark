@@ -183,6 +183,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageSpeed.AxisXTitle = "";
             this.lineChartAverageSpeed.AxisYTitle = "";
             this.lineChartAverageSpeed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lineChartAverageSpeed.LegendVisible = true;
             this.lineChartAverageSpeed.Location = new System.Drawing.Point(3, 3);
             this.lineChartAverageSpeed.MinimumSize = new System.Drawing.Size(1, 1);
             this.lineChartAverageSpeed.Name = "lineChartAverageSpeed";
@@ -207,6 +208,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartMomentSpeed.AxisXTitle = "";
             this.lineChartMomentSpeed.AxisYTitle = "";
             this.lineChartMomentSpeed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lineChartMomentSpeed.LegendVisible = true;
             this.lineChartMomentSpeed.Location = new System.Drawing.Point(3, 3);
             this.lineChartMomentSpeed.MinimumSize = new System.Drawing.Size(1, 1);
             this.lineChartMomentSpeed.Name = "lineChartMomentSpeed";
@@ -230,6 +232,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageCPU.AxisXTitle = "";
             this.lineChartAverageCPU.AxisYTitle = "";
             this.lineChartAverageCPU.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lineChartAverageCPU.LegendVisible = true;
             this.lineChartAverageCPU.Location = new System.Drawing.Point(3, 3);
             this.lineChartAverageCPU.MinimumSize = new System.Drawing.Size(1, 1);
             this.lineChartAverageCPU.Name = "lineChartAverageCPU";
@@ -253,6 +256,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageMemory.AxisXTitle = "";
             this.lineChartAverageMemory.AxisYTitle = "";
             this.lineChartAverageMemory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lineChartAverageMemory.LegendVisible = true;
             this.lineChartAverageMemory.Location = new System.Drawing.Point(3, 3);
             this.lineChartAverageMemory.MinimumSize = new System.Drawing.Size(1, 1);
             this.lineChartAverageMemory.Name = "lineChartAverageMemory";
@@ -275,6 +279,7 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageIO.AxisXTitle = "";
             this.lineChartAverageIO.AxisYTitle = "";
             this.lineChartAverageIO.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lineChartAverageIO.LegendVisible = true;
             this.lineChartAverageIO.Location = new System.Drawing.Point(0, 0);
             this.lineChartAverageIO.MinimumSize = new System.Drawing.Size(1, 1);
             this.lineChartAverageIO.Name = "lineChartAverageIO";
