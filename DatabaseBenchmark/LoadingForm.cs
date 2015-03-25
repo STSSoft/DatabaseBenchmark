@@ -7,15 +7,14 @@ using System.Windows.Forms;
 
 namespace DatabaseBenchmark
 {
-    public partial class Loading : Form
+    public partial class LoadingForm : Form
     {
-        private static bool Closed;
+        private static bool Stopped;
         private static Thread Worker;
 
         private float Angle;
-        private string Text;
 
-        public Loading(string loadingText, Rectangle bounds)
+        public LoadingForm(string loadingText, Rectangle bounds)
         {
             InitializeComponent();
 
@@ -35,29 +34,26 @@ namespace DatabaseBenchmark
             if (Worker == null)
                 return;
 
-            Closed = true;
+            Stopped = true;
 
             Worker.Join(200);
-            Worker.Abort();
-
             Worker = null;
         }
 
         private static void Work(object settings)
         {
             KeyValuePair<string, Rectangle> kv = (KeyValuePair<string, Rectangle>)settings;
-            Loading form = new Loading(kv.Key, kv.Value);
+            LoadingForm form = new LoadingForm(kv.Key, kv.Value);
 
-            Closed = false;
+            Stopped = false;
             Application.Run(form);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (Closed)
+            if (Stopped)
             {
                 Close();
-
                 return;
             }
 

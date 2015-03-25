@@ -345,17 +345,18 @@
       <DependentUpon>LineChart.cs</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\KeysNotOrderedException.cs" />
+    <Compile Include="FormLoader.cs" />
     <Compile Include="Frames\LogFrame.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Frames\LogFrame.Designer.cs">
       <DependentUpon>LogFrame.cs</DependentUpon>
     </Compile>
-    <Compile Include="Loading.cs">
+    <Compile Include="LoadingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Loading.Designer.cs">
-      <DependentUpon>Loading.cs</DependentUpon>
+    <Compile Include="LoadingForm.Designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Serialization\LayoutManager.cs" />
     <Compile Include="StringAppender.cs" />
@@ -449,8 +450,8 @@
     <EmbeddedResource Include="Frames\TreeViewFrame.resx">
       <DependentUpon>TreeViewFrame.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Loading.resx">
-      <DependentUpon>Loading.cs</DependentUpon>
+    <EmbeddedResource Include="LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -1,11 +1,12 @@
 ﻿using log4net;
 using System;
 using DatabaseBenchmark.Exceptions;
+using DatabaseBenchmark.Properties;
 
 namespace DatabaseBenchmark.Benchmarking
 {
     /// <summary>
-    /// Represents a benchmark test suite that executes and logs all of the tests.
+    /// Represents a benchmark test suite that executes all of the tests.
     /// </summary>
     public class BenchmarkSuite
     {
@@ -16,7 +17,7 @@ namespace DatabaseBenchmark.Benchmarking
 
         public BenchmarkSuite()
         {
-            Logger = LogManager.GetLogger(Properties.Settings.Default.TestLogger);
+            Logger = LogManager.GetLogger(Settings.Default.TestLogger);
         }
 
         public void ExecuteInit(BenchmarkTest test)

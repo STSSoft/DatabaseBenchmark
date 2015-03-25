@@ -187,11 +187,11 @@ namespace DatabaseBenchmark
         {
             try
             {
-                Loading.Start("Obtaining computer configuration...", Bounds);
+                LoadingForm.Start("Obtaining computer configuration...", Bounds);
 
                 ReportForm form = new ReportForm(History);
 
-                Loading.Stop();
+                LoadingForm.Stop();
 
                 form.ShowDialog();
             }
@@ -243,7 +243,7 @@ namespace DatabaseBenchmark
                 try
                 {
                     // Start loading and disable MainForm.
-                    Loading.Start(string.Format("Exporting to {0} ....", reportFormat), Bounds);
+                    LoadingForm.Start(string.Format("Exporting to {0} ....", reportFormat), Bounds);
                     Enabled = false;
 
                     switch (reportFormat)
@@ -264,7 +264,7 @@ namespace DatabaseBenchmark
                     }
 
                     // Stop loading end enable MainForm
-                    Loading.Stop();
+                    LoadingForm.Stop();
                     Enabled = true;
                 }
                 catch (Exception exc)
@@ -274,7 +274,7 @@ namespace DatabaseBenchmark
                     Logger.Error(message, exc);
                     ReportError(message);
                     Enabled = true;
-                    Loading.Stop();
+                    LoadingForm.Stop();
                 }
             }
         }
@@ -372,9 +372,9 @@ namespace DatabaseBenchmark
         {
             if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                Loading.Start("Saving project...", Bounds);
+                LoadingForm.Start("Saving project...", Bounds);
                 ApplicationManager.Store(saveFileDialogProject.FileName);
-                Loading.Stop();
+                LoadingForm.Stop();
             }
         }
 
@@ -382,9 +382,9 @@ namespace DatabaseBenchmark
         {
             if (openFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                Loading.Start("Loading project...", Bounds);
+                LoadingForm.Start("Loading project...", Bounds);
                 ApplicationManager.Load(openFileDialogProject.FileName);
-                Loading.Stop();
+                LoadingForm.Stop();
             }
         }
 
@@ -395,9 +395,9 @@ namespace DatabaseBenchmark
             if (result == DialogResult.Yes)
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
-            Loading.Start("Creating project...", Bounds);
+            LoadingForm.Start("Creating project...", Bounds);
             ApplicationManager.Reset();
-            Loading.Stop();
+            LoadingForm.Stop();
         }
 
         #endregion
