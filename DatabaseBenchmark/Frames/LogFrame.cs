@@ -23,6 +23,11 @@ namespace DatabaseBenchmark.Frames
             TestAppender.OnAppend += UpdateTextBox;
         }
 
+        public void Clear()
+        {
+            richTextBoxLogs.Clear();
+        }
+
         private void UpdateTextBox()
         {
             Action<string> addLine = AddLine;
