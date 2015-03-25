@@ -159,12 +159,6 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
-        public void SetLogarithmicChart(bool isLogarithmic)
-        {
-            foreach (var item in StepFrames)
-                item.Value.SetLogarithmic(isLogarithmic);
-        }
-
         public void ClearLog()
         {
             LogFrame.Clear();

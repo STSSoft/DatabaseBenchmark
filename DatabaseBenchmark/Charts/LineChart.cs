@@ -72,16 +72,6 @@ namespace DatabaseBenchmark.Charts
             cache.Points.AddXY(x, y);
         }
 
-        private void legendToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
-        {
-            chart1.ChartAreas["ChartAreaLegend"].Visible = legendToolStripMenuItem.Checked;
-
-            if (legendToolStripMenuItem.Checked)
-                chart1.ChartAreas["ChartAreaChart"].Position = lastPossition;
-            else
-                chart1.ChartAreas["ChartAreaChart"].Position = new ElementPosition(0, 0, 100, 100);
-        }
-
         /// <summary>
         /// Gets or sets a flag that indicates if the Y axis is logarithmic.
         /// </summary>
@@ -155,6 +145,11 @@ namespace DatabaseBenchmark.Charts
             }
         }
 
+        public LegendPossition GetLegendPosition()
+        {
+            return (LegendPossition)chart1.ChartAreas["ChartAreaLegend"].Tag;
+        }
+
         public void SetLegenedPosition(LegendPossition position)
         {
             foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
@@ -200,6 +195,11 @@ namespace DatabaseBenchmark.Charts
             lastPossition = chartArea.Position;
         }
 
+        private void legendToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            LegendVisible = legendToolStripMenuItem.Checked;
+        }
+
         private void MoveLegend(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
@@ -210,6 +210,21 @@ namespace DatabaseBenchmark.Charts
         {
             IsLogarithmic = !IsLogarithmic;
             logarithmicToolStripMenuItem.Checked = IsLogarithmic;
+        }
+
+        public bool LegendVisible
+        {
+            get { return chart1.ChartAreas["ChartAreaLegend"].Visible; }
+
+            set
+            {
+                chart1.ChartAreas["ChartAreaLegend"].Visible = value;
+
+                if (value)
+                    chart1.ChartAreas["ChartAreaChart"].Position = lastPossition;
+                else
+                    chart1.ChartAreas["ChartAreaChart"].Position = new ElementPosition(0, 0, 100, 100);
+            }
         }
 
         public ChartSettings Settings
