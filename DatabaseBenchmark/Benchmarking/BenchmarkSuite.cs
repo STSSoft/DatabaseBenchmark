@@ -81,7 +81,7 @@ namespace DatabaseBenchmark.Benchmarking
             catch(KeysNotOrderedException exc)
             {
                 Logger.Error(String.Format("{0} Read()", databaseName), exc);
-                Logger.Info(String.Format("{0} Read() failed...", databaseName));
+                Logger.Info(String.Format("{0} The database does not return the records ordered by key. The test is invalid!...", databaseName));
             }
             catch (Exception exc)
             {
@@ -109,7 +109,7 @@ namespace DatabaseBenchmark.Benchmarking
             catch (KeysNotOrderedException exc)
             {
                 Logger.Error(String.Format("{0} Read()", databaseName), exc);
-                Logger.Info(String.Format("{0} Read() failed...", databaseName));
+                Logger.Info(String.Format("{0} The database does not return the records ordered by key. The test is invalid!...", databaseName));
             }
             catch (Exception exc)
             {

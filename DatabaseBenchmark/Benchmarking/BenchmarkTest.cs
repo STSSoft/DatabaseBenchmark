@@ -373,7 +373,8 @@ namespace DatabaseBenchmark.Benchmarking
 
         private IEnumerable<KeyValuePair<long, Tick>> GetFlow()
         {
-            Thread.Sleep(10); // TODO: Remove this workaround at some point.
+            // TODO: Remove this workaround at some point.
+            Thread.Sleep(10); // Ensures different seed for the generators.
             SemiRandomGenerator generator = new SemiRandomGenerator(Randomness);
             
             return TicksGenerator.GetFlow(RecordCount, generator);
