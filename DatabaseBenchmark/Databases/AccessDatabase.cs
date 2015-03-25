@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using DatabaseBenchmark.Properties;
+using log4net;
 using Microsoft.Office.Interop.Access.Dao;
 using STS.General.Extensions;
 using STS.General.Generators;
@@ -41,7 +42,7 @@ namespace DatabaseBenchmark.Databases
             cb.DataSource = String.Format(@"{0}\{1}.accdb", DataDirectory, Name);
             ConnectionString = cb.ConnectionString;
 
-            Logger = LogManager.GetLogger(Properties.Settings.Default.TestLogger);
+            Logger = LogManager.GetLogger(Settings.Default.TestLogger);
         }
 
         public override void Init(int flowCount, long flowRecordCount)
