@@ -112,7 +112,7 @@ namespace DatabaseBenchmark.Serialization
 
         public void Reset()
         {
-            LayoutManager.Reset();
+            LayoutManager.ResetDocking();
         }
 
         public void StoreDocking()

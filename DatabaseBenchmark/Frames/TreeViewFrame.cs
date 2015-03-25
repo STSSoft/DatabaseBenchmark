@@ -107,6 +107,11 @@ namespace DatabaseBenchmark.Frames
             treeView.ExpandAll();
         }
 
+        public void CollapseAll()
+        {
+            treeView.CollapseAll();
+        }
+
         public Database[] GetSelectedBenchmarks()
         {
             return treeView.Nodes.Iterate().Where(x => x.Checked && x.Tag as Database != null).Select(y => y.Tag as Database).ToArray();
@@ -342,6 +347,16 @@ namespace DatabaseBenchmark.Frames
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowProperties();
+        }
+
+        private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExpandAll();
+        }
+
+        private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            treeView.CollapseAll();
         }
 
         #endregion

@@ -57,21 +57,20 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
+        public void ResetDocking()
+        {
+            TreeView.DockState = DockState.DockLeft;
+            ResetStepFrames();
+
+            LogFrame.DockState = DockState.DockBottomAutoHide;
+        }
+
         public void Reset()
         {
             TreeView.Dispose();
 
             CreateTreeView();
-
-            // TODO: Finding another way to restore the docking. 
-            foreach (var item in StepFrames)
-                item.Value.Dispose();
-
-            foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
-            {
-                StepFrames[method] = CreateStepFrame(method);
-                SelectFrame(method);
-            }
+            ResetStepFrames();
 
             StepFrames[TestMethod.Write].Activate();
 
@@ -219,6 +218,19 @@ namespace DatabaseBenchmark.Serialization
             }
 
             return frame;
+        }
+
+        private void ResetStepFrames()
+        {
+            // TODO: Finding another way to restore the docking. 
+            foreach (var item in StepFrames)
+                item.Value.Dispose();
+
+            foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
+            {
+                StepFrames[method] = CreateStepFrame(method);
+                SelectFrame(method);
+            }
         }
         #endregion
     }

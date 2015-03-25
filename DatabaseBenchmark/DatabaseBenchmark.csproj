@@ -722,6 +722,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo_bechn.ico" />
+    <None Include="Resources\propertiesToolStripMenuItem.Image.png" />
+    <None Include="Resources\Options-icon.png" />
+    <None Include="Resources\Pencil-icon.png" />
+    <None Include="Resources\restoreDefaultToolStripMenuItem.Image.png" />
+    <None Include="Resources\deleteToolStripMenuItem.Image.png" />
+    <None Include="Resources\renameToolStripMenuItem.Image.png" />
+    <None Include="Resources\cloneToolStripMenuItem.Image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

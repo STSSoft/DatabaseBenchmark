@@ -411,11 +411,21 @@ namespace DatabaseBenchmark
 
             editToolStripMenuItem.DropDownItems[0].Visible = state; // Clone.
             editToolStripMenuItem.DropDownItems[1].Visible = state; // Rename.
-            editToolStripMenuItem.DropDownItems[4].Visible = state; // Restore Default.
+            editToolStripMenuItem.DropDownItems[4].Visible = state; // Restore default.
             editToolStripMenuItem.DropDownItems[6].Visible = state; // Separator.
             editToolStripMenuItem.DropDownItems[7].Visible = state; // Properties.
 
             StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
+            state = selectedFrame != null;
+
+            editToolStripMenuItem.DropDownItems[11].Visible = state;  // Separator.
+            editToolStripMenuItem.DropDownItems[12].Visible = state;  // Show legend.
+            editToolStripMenuItem.DropDownItems[13].Visible = state; // Legend position.
+            editToolStripMenuItem.DropDownItems[14].Visible = state; // Logarithmic.
+
+            if (!state)
+                return;
+
             LegendPossition position = selectedFrame.SelectedChartPosition;
 
             foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
@@ -453,6 +463,16 @@ namespace DatabaseBenchmark
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApplicationManager.LayoutManager.TreeView.ShowProperties();
+        }
+
+        private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.ExpandAll();
+        }
+
+        private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.CollapseAll();
         }
 
         private void MoveLegend(object sender, EventArgs e)
@@ -537,6 +557,15 @@ namespace DatabaseBenchmark
                 cbFlowsCount.Enabled = btnStart.Enabled;
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;
+
+                cloneToolStripMenuItem.Enabled = btnStart.Enabled;
+                renameToolStripMenuItem.Enabled = btnStart.Enabled;
+                deleteToolStripMenuItem.Enabled = btnStart.Enabled;
+                restoreDefaultToolStripMenuItem.Enabled = btnStart.Enabled;
+                restoreDefaultAllToolStripMenuItem.Enabled = btnStart.Enabled;
+                propertiesToolStripMenuItem.Enabled = btnStart.Enabled;
+                expandAllToolStripMenuItem.Enabled = btnStart.Enabled;
+                collapseAllToolStripMenuItem.Enabled = btnStart.Enabled;
 
                 bool isStoped = !(History.Count == 0 || MainTask.Status == TaskStatus.Running);
 
