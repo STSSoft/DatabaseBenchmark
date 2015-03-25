@@ -36,8 +36,14 @@ namespace DatabaseBenchmark
 
             Stopped = true;
 
-            Worker.Join(200);
-            Worker = null;
+            try
+            {
+                Worker.Abort();
+            }
+            finally
+            {
+                Worker = null;
+            }
         }
 
         private static void Work(object settings)

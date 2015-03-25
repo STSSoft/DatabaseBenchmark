@@ -12,23 +12,18 @@ namespace DatabaseBenchmark
 {
     public class FormLoader
     {
-        private ILog Logger;
         private Thread Worker;
 
-        public Form UserForm { get; private set; }
-
-        public FormLoader(Form form)
+        public FormLoader()
         {
-            Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
-            UserForm = form;
         }
 
-        public void Run()
+        public void Run(Form form)
         {
             if (Worker != null)
                 return;
 
-            Worker = new Thread(new ThreadStart(() => { Application.Run(UserForm); }));
+            Worker = new Thread(new ThreadStart(() => { Application.Run(form); }));
             Worker.Start();
         }
 
@@ -41,10 +36,7 @@ namespace DatabaseBenchmark
             {
                 Worker.Abort();
             }
-            catch (Exception exc)
-            {
-                Logger.Error("FormLoader Stop()...", exc);
-            }
+            catch { }
             finally
             {
                 Worker = null;

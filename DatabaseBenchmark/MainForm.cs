@@ -188,14 +188,10 @@ namespace DatabaseBenchmark
         {
             try
             {
-                //LoadingForm.Start("Obtaining computer configuration...", Bounds);
+                FormLoader loader = new FormLoader();
 
-                FormLoader loader = new FormLoader(new LoadingForm("Hi", Bounds));
-
-                loader.Run();
+                loader.Run(new LoadingForm("Obtaining computer configuration...", Bounds));
                 ReportForm form = new ReportForm(History);
-
-                //LoadingForm.Stop();
                 loader.Stop();
 
                 form.ShowDialog();
