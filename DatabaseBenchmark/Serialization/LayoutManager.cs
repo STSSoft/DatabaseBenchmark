@@ -57,21 +57,20 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
+        public void ResetDocking()
+        {
+            TreeView.DockState = DockState.DockLeft;
+            ResetStepFrames();
+
+            LogFrame.DockState = DockState.DockBottomAutoHide;
+        }
+
         public void Reset()
         {
             TreeView.Dispose();
 
             CreateTreeView();
-
-            // TODO: Finding another way to restore the docking. 
-            foreach (var item in StepFrames)
-                item.Value.Dispose();
-
-            foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
-            {
-                StepFrames[method] = CreateStepFrame(method);
-                SelectFrame(method);
-            }
+            ResetStepFrames();
 
             StepFrames[TestMethod.Write].Activate();
 
@@ -126,6 +125,13 @@ namespace DatabaseBenchmark.Serialization
             return result;
         }
 
+        public StepFrame GetActiveStepFrame()
+        {
+            StepFrame activeFrame = StepFrames.FirstOrDefault(x => x.Value.IsActivated).Value;
+
+            return activeFrame;
+        }
+
         public void ShowBarChart(int column, bool visible)
         {
             foreach (var item in StepFrames)
@@ -152,10 +158,14 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
-        public void SetLogarithmicChart(bool isLogarithmic)
+        public void ClearLog()
         {
-            foreach (var item in StepFrames)
-                item.Value.SetLogarithmic(isLogarithmic);
+            LogFrame.Clear();
+        }
+
+        public bool IsSelectedTreeViewNode
+        {
+            get { return TreeView.IsSelectedBenchamrkNode; }
         }
 
         # region Private members
@@ -208,6 +218,19 @@ namespace DatabaseBenchmark.Serialization
             }
 
             return frame;
+        }
+
+        private void ResetStepFrames()
+        {
+            // TODO: Finding another way to restore the docking. 
+            foreach (var item in StepFrames)
+                item.Value.Dispose();
+
+            foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
+            {
+                StepFrames[method] = CreateStepFrame(method);
+                SelectFrame(method);
+            }
         }
         #endregion
     }

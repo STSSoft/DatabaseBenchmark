@@ -73,15 +73,6 @@ namespace DatabaseBenchmark.Frames
             barChartIO.Clear();
         }
 
-        public void SetLogarithmic(bool isLogarithmic)
-        {
-            lineChartAverageSpeed.IsLogarithmic = isLogarithmic;
-            lineChartMomentSpeed.IsLogarithmic = isLogarithmic;
-            lineChartAverageCPU.IsLogarithmic = isLogarithmic;
-            lineChartAverageMemory.IsLogarithmic = isLogarithmic;
-            lineChartAverageIO.IsLogarithmic = isLogarithmic;
-        }
-
         #region Add points to LineChart
 
         public void AddAverageSpeed(string series, IEnumerable<KeyValuePair<long, double>> data)
@@ -234,6 +225,24 @@ namespace DatabaseBenchmark.Frames
             lineChartAverageCPU.Settings = settings[2];
             lineChartAverageMemory.Settings = settings[3];
             lineChartAverageIO.Settings = settings[4];
+        }
+
+        public LegendPossition SelectedChartPosition
+        {
+            get { return ((LineChart)tabControlCharts.SelectedTab.Controls[0]).GetLegendPosition(); }
+            set { ((LineChart)tabControlCharts.SelectedTab.Controls[0]).SetLegenedPosition(value); }
+        }
+
+        public bool SelectedChartIsLogarithmic
+        {
+            get { return ((LineChart)tabControlCharts.SelectedTab.Controls[0]).IsLogarithmic; }
+            set { ((LineChart)tabControlCharts.SelectedTab.Controls[0]).IsLogarithmic = value; }
+        }
+
+        public bool SelectedChartLegendIsVisible
+        {
+            get { return ((LineChart)tabControlCharts.SelectedTab.Controls[0]).LegendVisible; }
+            set { ((LineChart)tabControlCharts.SelectedTab.Controls[0]).LegendVisible = value; }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Charts;
 using DatabaseBenchmark.Frames;
 using DatabaseBenchmark.Report;
 using DatabaseBenchmark.Serialization;
@@ -346,7 +347,7 @@ namespace DatabaseBenchmark
         private void axisType_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripButton).Checked;
-            ApplicationManager.LayoutManager.SetLogarithmicChart(isChecked);
+            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartIsLogarithmic = isChecked;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -402,6 +403,104 @@ namespace DatabaseBenchmark
             LoadingForm.Start("Creating project...", Bounds);
             ApplicationManager.Reset();
             LoadingForm.Stop();
+        }
+
+        #endregion
+
+        #region Edit Toolstrip Menu
+
+        private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            bool state = ApplicationManager.LayoutManager.IsSelectedTreeViewNode;
+
+            editToolStripMenuItem.DropDownItems[0].Visible = state; // Clone.
+            editToolStripMenuItem.DropDownItems[1].Visible = state; // Rename.
+            editToolStripMenuItem.DropDownItems[4].Visible = state; // Restore default.
+            editToolStripMenuItem.DropDownItems[6].Visible = state; // Separator.
+            editToolStripMenuItem.DropDownItems[7].Visible = state; // Properties.
+
+            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
+            state = selectedFrame != null;
+
+            editToolStripMenuItem.DropDownItems[11].Visible = state;  // Separator.
+            editToolStripMenuItem.DropDownItems[12].Visible = state;  // Show legend.
+            editToolStripMenuItem.DropDownItems[13].Visible = state; // Legend position.
+            editToolStripMenuItem.DropDownItems[14].Visible = state; // Logarithmic.
+
+            if (!state)
+                return;
+
+            LegendPossition position = selectedFrame.SelectedChartPosition;
+
+            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+                menuItem.Checked = menuItem.Text == position.ToString();
+
+            showLegendToolStripMenuItem.Checked = selectedFrame.SelectedChartLegendIsVisible;
+            logarithmicToolStripMenuItem.Checked = selectedFrame.SelectedChartIsLogarithmic;
+        }
+
+        private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.CloneNode();
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.RenameNade();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.DeleteNode();
+        }
+
+        private void restoreDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.RestoreDefault();
+        }
+
+        private void restoreDefaultAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.CreateTreeView();
+        }
+
+        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.ShowProperties();
+        }
+
+        private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.ExpandAll();
+        }
+
+        private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.CollapseAll();
+        }
+
+        private void MoveLegend(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            LegendPossition position = (LegendPossition)Enum.Parse(typeof(LegendPossition), item.Text);
+            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
+
+            selectedFrame.SelectedChartPosition = position;
+
+            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+                menuItem.Checked = menuItem.Text == item.Text;
+        }
+
+        private void showLegendToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool isChecked = (sender as ToolStripMenuItem).Checked;
+            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartLegendIsVisible = isChecked;
+        }
+
+        private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool isChecked = (sender as ToolStripMenuItem).Checked;
+            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartIsLogarithmic = isChecked;
         }
 
         #endregion
@@ -463,6 +562,15 @@ namespace DatabaseBenchmark
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;
 
+                cloneToolStripMenuItem.Enabled = btnStart.Enabled;
+                renameToolStripMenuItem.Enabled = btnStart.Enabled;
+                deleteToolStripMenuItem.Enabled = btnStart.Enabled;
+                restoreDefaultToolStripMenuItem.Enabled = btnStart.Enabled;
+                restoreDefaultAllToolStripMenuItem.Enabled = btnStart.Enabled;
+                propertiesToolStripMenuItem.Enabled = btnStart.Enabled;
+                expandAllToolStripMenuItem.Enabled = btnStart.Enabled;
+                collapseAllToolStripMenuItem.Enabled = btnStart.Enabled;
+
                 bool isStoped = !(History.Count == 0 || MainTask.Status == TaskStatus.Running);
 
                 btnExportCsv.Enabled = isStoped;
@@ -473,6 +581,8 @@ namespace DatabaseBenchmark
                 exportToCSVToolStripMenuItem.Enabled = isStoped;
                 exportToJSONToolStripMenuItem.Enabled = isStoped;
                 onlineReportResultsToolStripMenuItem.Enabled = isStoped;
+
+                legendPossitionToolStripMenuItem.Enabled = showLegendToolStripMenuItem.Checked;
 
                 var activeFrame = ApplicationManager.GetActiveStepFrame();
                 var session = Current;

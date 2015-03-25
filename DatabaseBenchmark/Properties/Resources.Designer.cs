@@ -103,6 +103,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cloneToolStripMenuItem_Image {
+            get {
+                object obj = ResourceManager.GetObject("cloneToolStripMenuItem.Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap close_icon {
             get {
                 object obj = ResourceManager.GetObject("close-icon", resourceCulture);
@@ -136,6 +146,16 @@ namespace DatabaseBenchmark.Properties {
         internal static System.Drawing.Bitmap database_icon {
             get {
                 object obj = ResourceManager.GetObject("database-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap deleteToolStripMenuItem_Image {
+            get {
+                object obj = ResourceManager.GetObject("deleteToolStripMenuItem.Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,6 +253,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Options_icon {
+            get {
+                object obj = ResourceManager.GetObject("Options-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PDFicon_48x48 {
             get {
                 object obj = ResourceManager.GetObject("PDFicon_48x48", resourceCulture);
@@ -253,6 +283,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Pencil_icon {
+            get {
+                object obj = ResourceManager.GetObject("Pencil-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap processor_48x48 {
             get {
                 object obj = ResourceManager.GetObject("processor_48x48", resourceCulture);
@@ -263,9 +303,39 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap propertiesToolStripMenuItem_Image {
+            get {
+                object obj = ResourceManager.GetObject("propertiesToolStripMenuItem.Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap r_24x24 {
             get {
                 object obj = ResourceManager.GetObject("r_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap renameToolStripMenuItem_Image {
+            get {
+                object obj = ResourceManager.GetObject("renameToolStripMenuItem.Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap restoreDefaultToolStripMenuItem_Image {
+            get {
+                object obj = ResourceManager.GetObject("restoreDefaultToolStripMenuItem.Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,6 +1,7 @@
 ﻿using DatabaseBenchmark.Benchmarking;
 using DatabaseBenchmark.Charts;
 using DatabaseBenchmark.Frames;
+using DatabaseBenchmark.Properties;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,13 @@ namespace DatabaseBenchmark.Serialization
 
         public ProjectManager(DockPanel panel, ToolStripComboBox[] comboBoxes, TrackBar trackBar, string path)
         {
-            Logger = LogManager.GetLogger(Properties.Settings.Default.ApplicationLogger);
+            Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
             LayoutManager = new LayoutManager(panel, comboBoxes, trackBar);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            DockConfigPath = Path.Combine(path, Properties.Settings.Default.DockingConfigurationPath);
+            DockConfigPath = Path.Combine(path, Settings.Default.DockingConfigurationPath);
         }
 
         public void Store(string path)
@@ -111,7 +112,7 @@ namespace DatabaseBenchmark.Serialization
 
         public void Reset()
         {
-            LayoutManager.Reset();
+            LayoutManager.ResetDocking();
         }
 
         public void StoreDocking()
@@ -145,11 +146,17 @@ namespace DatabaseBenchmark.Serialization
             return LayoutManager.StepFrames[CurrentMethod];
         }
 
+        public StepFrame GetSelectedStepFrame()
+        {
+            return LayoutManager.GetActiveStepFrame();
+        }
+
         public void Prepare()
         {
             LayoutManager.InitializeCharts();
+            LayoutManager.ClearLog();
         }
-       
+
         public Database[] SelectedDatabases
         {
             get { return LayoutManager.TreeView.GetSelectedBenchmarks(); }

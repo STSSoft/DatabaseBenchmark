@@ -1,5 +1,6 @@
 ﻿using BrightstarDB.Client;
 using BrightstarDB.EntityFramework;
+using DatabaseBenchmark.Properties;
 using log4net;
 using STS.General.Generators;
 using System;
@@ -36,7 +37,7 @@ namespace DatabaseBenchmark.Databases
 
             InsertsPerQuery = 10000;
 
-            Logger = LogManager.GetLogger(Properties.Settings.Default.TestLogger);
+            Logger = LogManager.GetLogger(Settings.Default.TestLogger);
         }
 
         public override void Init(int flowCount, long flowRecordCount)

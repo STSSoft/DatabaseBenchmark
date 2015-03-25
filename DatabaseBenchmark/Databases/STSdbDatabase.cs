@@ -21,6 +21,7 @@ namespace DatabaseBenchmark.Databases
             Description = "STSdb 3.5.13";
             Website = "http://www.stsdb.com/";
             Color = Color.DeepSkyBlue;
+
             Requirements = new string[]
             {
                 "STSdb.dll"
