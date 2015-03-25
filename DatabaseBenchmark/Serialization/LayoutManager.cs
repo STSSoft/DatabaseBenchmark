@@ -126,6 +126,13 @@ namespace DatabaseBenchmark.Serialization
             return result;
         }
 
+        public StepFrame GetActiveStepFrame()
+        {
+            StepFrame activeFrame = StepFrames.FirstOrDefault(x => x.Value.IsActivated).Value;
+
+            return activeFrame;
+        }
+
         public void ShowBarChart(int column, bool visible)
         {
             foreach (var item in StepFrames)
@@ -156,6 +163,16 @@ namespace DatabaseBenchmark.Serialization
         {
             foreach (var item in StepFrames)
                 item.Value.SetLogarithmic(isLogarithmic);
+        }
+
+        public void ClearLog()
+        {
+            LogFrame.Clear();
+        }
+
+        public bool IsSelectedTreeViewNode
+        {
+            get { return TreeView.IsSelectedBenchamrkNode; }
         }
 
         # region Private members

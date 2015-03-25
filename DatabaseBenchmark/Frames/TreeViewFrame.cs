@@ -139,6 +139,95 @@ namespace DatabaseBenchmark.Frames
             newNode.Tag = newDatabase;
             newNode.Checked = state;
             newNode.ImageIndex = 0;
+
+            treeView.SelectedNode = newNode;
+        }
+
+        public bool IsSelectedBenchamrkNode
+        {
+            get
+            {
+                if (treeView.SelectedNode == null)
+                    return false;
+
+                return treeView.SelectedNode.Tag != null;
+            }
+        }
+
+        public void CloneNode()
+        {
+            if (treeView.SelectedNode == null)
+                return;
+
+            Database selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
+
+            if (selectedDatabase != null)
+            {
+                Type databaseType = selectedDatabase.GetType();
+                Database tempDatabase = (Database)Activator.CreateInstance(databaseType);
+
+                tempDatabase.Name = treeView.SelectedNode.Text + " Clone";
+                tempDatabase.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, tempDatabase.Name);
+
+                if (!Directory.Exists(tempDatabase.DataDirectory))
+                    Directory.CreateDirectory(tempDatabase.DataDirectory);
+
+                AddAfter(selectedDatabase, tempDatabase);
+            }
+
+            treeView.Update();
+        }
+
+        public void RenameNade()
+        {
+            if (treeView.SelectedNode == null)
+                return;
+
+            if (treeView.SelectedNode.Tag != null)
+                treeView.SelectedNode.BeginEdit();
+        }
+
+        public void DeleteNode()
+        {
+            if (treeView.SelectedNode == null)
+                return;
+
+            treeView.Nodes.Remove(treeView.SelectedNode);
+            treeView.Update();
+        }
+
+        public void RestoreDefault()
+        {
+            if (treeView.SelectedNode == null)
+                return;
+
+            TreeNode selectedNode = treeView.SelectedNode;
+            TreeNode prevNode = selectedNode.PrevNode;
+            IDatabase instance = Activator.CreateInstance(selectedNode.Tag.GetType()) as IDatabase;
+
+            DeleteNode();
+            AddAfter(prevNode.Tag as IDatabase, instance, selectedNode.Checked);
+            treeView.SelectedNode = treeView.Nodes.Iterate().First(x => x.Tag == instance);
+        }
+
+        public void ShowProperties()
+        {
+            if (treeView.SelectedNode == null)
+                return;
+
+            var selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
+
+            if (selectedDatabase != null)
+            {
+                if (Properties != null)
+                    Properties.Dispose();
+
+                Properties = new BenchmarkInstanceProperies();
+
+                Properties.Caller = this;
+                Properties.Visible = true;
+                Properties.SetProperties(selectedDatabase);
+            }
         }
 
         #region TreeView events
@@ -201,41 +290,19 @@ namespace DatabaseBenchmark.Frames
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
-
-            Database selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
-
-            if (selectedDatabase != null)
-            {
-                Type databaseType = selectedDatabase.GetType();
-                Database tempDatabase = (Database)Activator.CreateInstance(databaseType);
-
-                tempDatabase.Name = treeView.SelectedNode.Text + " Clone";
-                tempDatabase.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, tempDatabase.Name);
-
-                if (!Directory.Exists(tempDatabase.DataDirectory))
-                    Directory.CreateDirectory(tempDatabase.DataDirectory);
-
-                AddAfter(selectedDatabase, tempDatabase);
-            }
-
-            treeView.Update();
-
+            CloneNode();
             this.ResumeLayout();
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (treeView.SelectedNode.Tag != null)
-                treeView.SelectedNode.BeginEdit();
+            RenameNade();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
-
-            treeView.Nodes.Remove(treeView.SelectedNode);
-            treeView.Update();
-
+            DeleteNode();
             this.ResumeLayout();
         }
 
@@ -249,33 +316,13 @@ namespace DatabaseBenchmark.Frames
         private void restoreDefaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
-
-            TreeNode selectedNode = treeView.SelectedNode;
-            TreeNode prevNode = selectedNode.PrevNode;
-            IDatabase instance = Activator.CreateInstance(selectedNode.Tag.GetType()) as IDatabase;
-
-            deleteToolStripMenuItem_Click(sender, e);
-            AddAfter(prevNode.Tag as IDatabase, instance, selectedNode.Checked);
-            treeView.SelectedNode = treeView.Nodes.Iterate().First(x => x.Tag == instance);
-
+            RestoreDefault();
             this.ResumeLayout();
         }
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
-
-            if (selectedDatabase != null)
-            {
-                if (Properties != null)
-                    Properties.Dispose();
-
-                Properties = new BenchmarkInstanceProperies();
-
-                Properties.Caller = this;
-                Properties.Visible = true;
-                Properties.SetProperties(selectedDatabase);
-            }
+            ShowProperties();
         }
 
         #endregion

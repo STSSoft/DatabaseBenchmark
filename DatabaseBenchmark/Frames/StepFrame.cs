@@ -235,5 +235,10 @@ namespace DatabaseBenchmark.Frames
             lineChartAverageMemory.Settings = settings[3];
             lineChartAverageIO.Settings = settings[4];
         }
+
+        public void SetLegendPosition(LegendPossition position)
+        {
+            ((LineChart)tabControlCharts.SelectedTab.Controls[0]).SetLegenedPosition(position);
+        }
     }
 }

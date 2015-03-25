@@ -145,9 +145,15 @@ namespace DatabaseBenchmark.Serialization
             return LayoutManager.StepFrames[CurrentMethod];
         }
 
+        public StepFrame GetSelectedStepFrame()
+        {
+            return LayoutManager.GetActiveStepFrame();
+        }
+
         public void Prepare()
         {
             LayoutManager.InitializeCharts();
+            LayoutManager.ClearLog();
         }
        
         public Database[] SelectedDatabases

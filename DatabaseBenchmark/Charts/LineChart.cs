@@ -29,6 +29,12 @@ namespace DatabaseBenchmark.Charts
             chartArea.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
             chartArea.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
 
+
+            leftToolStripMenuItem.Tag = LegendPossition.Left;
+            rightToolStripMenuItem.Tag = LegendPossition.Right;
+            topToolStripMenuItem.Tag = LegendPossition.Top;
+            bottomToolStripMenuItem.Tag = LegendPossition.Bottom;
+
             MoveLegend(topToolStripMenuItem, EventArgs.Empty);
         }
 
@@ -149,41 +155,37 @@ namespace DatabaseBenchmark.Charts
             }
         }
 
-        private void MoveLegend(object sender, EventArgs e)
+        public void SetLegenedPosition(LegendPossition position)
         {
-            ToolStripMenuItem item = sender as ToolStripMenuItem;
-
             foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
-                menuItem.Checked = false;
-
-            item.Checked = true;
+                menuItem.Checked = (LegendPossition)menuItem.Tag == position;
 
             ChartArea legendArea = chart1.ChartAreas["ChartAreaLegend"];
 
-            switch (item.Text)
+            switch (position)
             {
-                case "Left":
+                case LegendPossition.Left:
                     legendArea.Position = new ElementPosition(0, 0, 9, 100);
                     legendArea.Tag = LegendPossition.Left;
                     chartArea.Position = new ElementPosition(10, 0, 90, 100);
 
                     break;
 
-                case "Right":
+                case LegendPossition.Right:
                     legendArea.Position = new ElementPosition(91, 0, 9, 100);
                     legendArea.Tag = LegendPossition.Right;
                     chartArea.Position = new ElementPosition(0, 0, 90, 100);
 
                     break;
 
-                case "Top":
+                case LegendPossition.Top:
                     legendArea.Position = new ElementPosition(0, 0, 100, 9);
                     legendArea.Tag = LegendPossition.Top;
                     chartArea.Position = new ElementPosition(0, 10, 100, 90);
 
                     break;
 
-                case "Bottom":
+                case LegendPossition.Bottom:
                     legendArea.Position = new ElementPosition(0, 91, 100, 9);
                     legendArea.Tag = LegendPossition.Bottom;
                     chartArea.Position = new ElementPosition(0, 0, 100, 90);
@@ -196,6 +198,12 @@ namespace DatabaseBenchmark.Charts
 
             legendToolStripMenuItem.Visible = true;
             lastPossition = chartArea.Position;
+        }
+
+        private void MoveLegend(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            SetLegenedPosition((LegendPossition)item.Tag);
         }
 
         private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
@@ -235,7 +243,7 @@ namespace DatabaseBenchmark.Charts
                         break;
 
                     case LegendPossition.Bottom:
-                        MoveLegend(bottonToolStripMenuItem, EventArgs.Empty);
+                        MoveLegend(bottomToolStripMenuItem, EventArgs.Empty);
                         break;
                 }
 

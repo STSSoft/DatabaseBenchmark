@@ -38,7 +38,7 @@
             this.leftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bottonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bottomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logarithmicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -80,7 +80,7 @@
             this.legendPossitionToolStripMenuItem,
             this.logarithmicToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(165, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(165, 70);
             // 
             // legendToolStripMenuItem
             // 
@@ -98,7 +98,7 @@
             this.leftToolStripMenuItem,
             this.rightToolStripMenuItem,
             this.topToolStripMenuItem,
-            this.bottonToolStripMenuItem});
+            this.bottomToolStripMenuItem});
             this.legendPossitionToolStripMenuItem.Name = "legendPossitionToolStripMenuItem";
             this.legendPossitionToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.legendPossitionToolStripMenuItem.Text = "Legend Possition";
@@ -125,14 +125,14 @@
             this.topToolStripMenuItem.Text = "Top";
             this.topToolStripMenuItem.Click += new System.EventHandler(this.MoveLegend);
             // 
-            // bottonToolStripMenuItem
+            // bottomToolStripMenuItem
             // 
-            this.bottonToolStripMenuItem.Checked = true;
-            this.bottonToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.bottonToolStripMenuItem.Name = "bottonToolStripMenuItem";
-            this.bottonToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.bottonToolStripMenuItem.Text = "Bottom";
-            this.bottonToolStripMenuItem.Click += new System.EventHandler(this.MoveLegend);
+            this.bottomToolStripMenuItem.Checked = true;
+            this.bottomToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.bottomToolStripMenuItem.Name = "bottomToolStripMenuItem";
+            this.bottomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bottomToolStripMenuItem.Text = "Bottom";
+            this.bottomToolStripMenuItem.Click += new System.EventHandler(this.MoveLegend);
             // 
             // logarithmicToolStripMenuItem
             // 
@@ -164,7 +164,7 @@
         private System.Windows.Forms.ToolStripMenuItem leftToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rightToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem topToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bottonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bottomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem logarithmicToolStripMenuItem;
 
 

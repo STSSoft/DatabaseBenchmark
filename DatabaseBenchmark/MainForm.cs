@@ -1,4 +1,5 @@
 ﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Charts;
 using DatabaseBenchmark.Frames;
 using DatabaseBenchmark.Report;
 using DatabaseBenchmark.Serialization;
@@ -398,6 +399,67 @@ namespace DatabaseBenchmark
             LoadingForm.Start("Creating project...", Bounds);
             ApplicationManager.Reset();
             LoadingForm.Stop();
+        }
+
+        #endregion
+
+        #region Edit Toolstrip Menu
+
+        private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            bool state = ApplicationManager.LayoutManager.IsSelectedTreeViewNode;
+
+            editToolStripMenuItem.DropDownItems[0].Visible = state;
+            editToolStripMenuItem.DropDownItems[1].Visible = state;
+            editToolStripMenuItem.DropDownItems[4].Visible = state;
+            editToolStripMenuItem.DropDownItems[7].Visible = state;
+        }
+
+
+        private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.CloneNode();
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.RenameNade();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.DeleteNode();
+        }
+
+        private void restoreDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.RestoreDefault();
+        }
+
+        private void restoreDefaultAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.CreateTreeView();
+        }
+
+        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ApplicationManager.LayoutManager.TreeView.ShowProperties();
+        }
+
+        private void MoveLegend(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            LegendPossition position = (LegendPossition)Enum.Parse(typeof(LegendPossition), item.Text);
+
+            ApplicationManager.LayoutManager.GetActiveStepFrame().SetLegendPosition(position);
+
+            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+                menuItem.Checked = menuItem.Text == item.Text;
+        }
+
+        private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
         #endregion
