@@ -139,8 +139,6 @@ namespace DatabaseBenchmark.Frames
             newNode.Tag = newDatabase;
             newNode.Checked = state;
             newNode.ImageIndex = 0;
-
-            treeView.SelectedNode = newNode;
         }
 
         public bool IsSelectedBenchamrkNode
@@ -159,23 +157,30 @@ namespace DatabaseBenchmark.Frames
             if (treeView.SelectedNode == null)
                 return;
 
-            Database selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
-
-            if (selectedDatabase != null)
+            try
             {
-                Type databaseType = selectedDatabase.GetType();
-                Database tempDatabase = (Database)Activator.CreateInstance(databaseType);
+                Database selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
 
-                tempDatabase.Name = treeView.SelectedNode.Text + " Clone";
-                tempDatabase.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, tempDatabase.Name);
+                if (selectedDatabase != null)
+                {
+                    Type databaseType = selectedDatabase.GetType();
+                    Database tempDatabase = (Database)Activator.CreateInstance(databaseType);
 
-                if (!Directory.Exists(tempDatabase.DataDirectory))
-                    Directory.CreateDirectory(tempDatabase.DataDirectory);
+                    tempDatabase.Name = treeView.SelectedNode.Text + " Clone";
+                    tempDatabase.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, tempDatabase.Name);
 
-                AddAfter(selectedDatabase, tempDatabase);
+                    if (!Directory.Exists(tempDatabase.DataDirectory))
+                        Directory.CreateDirectory(tempDatabase.DataDirectory);
+
+                    AddAfter(selectedDatabase, tempDatabase);
+                }
+
+                treeView.Update();
             }
-
-            treeView.Update();
+            catch (Exception exc)
+            {
+                Logger.Error("TreeView clone ...", exc);
+            }
         }
 
         public void RenameNade()
@@ -201,13 +206,20 @@ namespace DatabaseBenchmark.Frames
             if (treeView.SelectedNode == null)
                 return;
 
-            TreeNode selectedNode = treeView.SelectedNode;
-            TreeNode prevNode = selectedNode.PrevNode;
-            IDatabase instance = Activator.CreateInstance(selectedNode.Tag.GetType()) as IDatabase;
+            try
+            {
+                TreeNode selectedNode = treeView.SelectedNode;
+                TreeNode prevNode = selectedNode.PrevNode;
+                IDatabase instance = Activator.CreateInstance(selectedNode.Tag.GetType()) as IDatabase;
 
-            DeleteNode();
-            AddAfter(prevNode.Tag as IDatabase, instance, selectedNode.Checked);
-            treeView.SelectedNode = treeView.Nodes.Iterate().First(x => x.Tag == instance);
+                DeleteNode();
+                AddAfter(prevNode.Tag as IDatabase, instance, selectedNode.Checked);
+                treeView.SelectedNode = treeView.Nodes.Iterate().First(x => x.Tag == instance);
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("TreeView restore ...", exc);
+            }
         }
 
         public void ShowProperties()
@@ -215,18 +227,25 @@ namespace DatabaseBenchmark.Frames
             if (treeView.SelectedNode == null)
                 return;
 
-            var selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
-
-            if (selectedDatabase != null)
+            try
             {
-                if (Properties != null)
-                    Properties.Dispose();
+                var selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
 
-                Properties = new BenchmarkInstanceProperies();
+                if (selectedDatabase != null)
+                {
+                    if (Properties != null)
+                        Properties.Dispose();
 
-                Properties.Caller = this;
-                Properties.Visible = true;
-                Properties.SetProperties(selectedDatabase);
+                    Properties = new BenchmarkInstanceProperies();
+
+                    Properties.Caller = this;
+                    Properties.Visible = true;
+                    Properties.SetProperties(selectedDatabase);
+                }
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("TreeView show properties ...", exc);
             }
         }
 
