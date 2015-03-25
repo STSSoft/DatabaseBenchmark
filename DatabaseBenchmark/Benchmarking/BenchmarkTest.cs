@@ -423,38 +423,25 @@ namespace DatabaseBenchmark.Benchmarking
 
         private Task DoRead(TestMethod method)
         {
-            Comparer<long> comparer = Comparer<long>.Default;
-
             Task task = Task.Factory.StartNew((state) =>
             {
-                bool ordered = true;
-
                 int methodIndex = (int)state;
                 var flow = Wrap(Database.Read(), Cancellation.Token, SpeedStatistics[methodIndex], ProcessorStatistics[methodIndex], MemoryStatistics[methodIndex], IOStatistics[methodIndex]);
 
-                long oldKey = 0;
-                int counter = 0;
+                bool ordered = true;
+                long previous = flow.First().Key;
 
                 foreach (var kv in flow)
                 {
                     var key = kv.Key;
-                    if (counter == 0)
-                    {
-                        oldKey = key;
-                        counter++;
 
-                        continue;
-                    }
-
-                    int cmp = comparer.Compare(oldKey, key);
-                    if (cmp > 0)
+                    if (previous > key)
                     {
                         ordered = false;
                         break;
                     }
 
-                    oldKey = key;
-                    counter++;
+                    previous = key;
                 }
 
                 if (!ordered)
