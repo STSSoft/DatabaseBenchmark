@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 
-namespace DatabaseBenchmark.Validation
+namespace DatabaseBenchmark.Report
 {
     /// <summary>
     /// Sends the test data and computer configuration to the dedicated servers of DatabaseBenchmark.

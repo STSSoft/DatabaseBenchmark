@@ -1,4 +1,4 @@
-﻿namespace DatabaseBenchmark.Validation
+﻿namespace DatabaseBenchmark.Report
 {
     partial class ReportForm
     {

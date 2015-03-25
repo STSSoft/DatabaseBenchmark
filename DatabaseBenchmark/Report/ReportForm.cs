@@ -9,7 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 
-namespace DatabaseBenchmark.Validation
+namespace DatabaseBenchmark.Report
 {
     public partial class ReportForm : Form
     {

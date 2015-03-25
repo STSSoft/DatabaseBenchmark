@@ -2,7 +2,6 @@
 using DatabaseBenchmark.Frames;
 using DatabaseBenchmark.Report;
 using DatabaseBenchmark.Serialization;
-using DatabaseBenchmark.Validation;
 using log4net;
 using System;
 using System.Collections.Generic;
