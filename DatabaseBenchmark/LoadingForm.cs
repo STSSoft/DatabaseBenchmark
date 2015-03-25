@@ -51,11 +51,11 @@ namespace DatabaseBenchmark
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (Stopped)
-            {
-                Close();
-                return;
-            }
+            //if (Stopped)
+            //{
+            //    Close();
+            //    return;
+            //}
 
             Angle += 30;
 

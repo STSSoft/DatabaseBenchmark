@@ -187,11 +187,15 @@ namespace DatabaseBenchmark
         {
             try
             {
-                LoadingForm.Start("Obtaining computer configuration...", Bounds);
+                //LoadingForm.Start("Obtaining computer configuration...", Bounds);
 
+                FormLoader loader = new FormLoader(new LoadingForm("Hi", Bounds));
+
+                loader.Run();
                 ReportForm form = new ReportForm(History);
 
-                LoadingForm.Stop();
+                //LoadingForm.Stop();
+                loader.Stop();
 
                 form.ShowDialog();
             }
