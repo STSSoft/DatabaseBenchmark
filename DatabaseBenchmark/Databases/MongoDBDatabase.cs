@@ -90,8 +90,6 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            int counter = 0;
-
             IAsyncCursor<Row> enumerator = collections[0].Aggregate().Sort(new SortDefinitionBuilder<Row>().Ascending("_id")).ToCursorAsync().Result;
             IEnumerable<Row> current;
 
@@ -105,8 +103,6 @@ namespace DatabaseBenchmark.Databases
                     yield return new KeyValuePair<long, Tick>(item._id, item.Record);
                 }
             }
-
-            Console.WriteLine(counter);
         }
 
         public override void Finish()
@@ -122,6 +118,7 @@ namespace DatabaseBenchmark.Databases
                 // TODO: Finding another way to take the size.
                 MongoClient clinet = new MongoClient(ConnectionString);
                 var stat = clinet.GetServer().GetDatabase("test").GetCollection<Row>(CollectionName).GetStats();
+
                 sum += stat.DataSize + stat.TotalIndexSize;
 
                 return sum;
