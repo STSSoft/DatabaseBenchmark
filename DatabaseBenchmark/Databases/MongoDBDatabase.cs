@@ -58,7 +58,7 @@ namespace DatabaseBenchmark.Databases
                 database.DropCollectionAsync(CollectionName).GetAwaiter().GetResult();
 
                 var collection = database.GetCollection<Row>(CollectionName);
-                collection.Indexes.CreateOneAsync(new IndexKeysDefinitionBuilder<Row>().Ascending("ID"));
+                collection.Indexes.CreateOneAsync(new IndexKeysDefinitionBuilder<Row>().Ascending("_id"));
 
                 collections[i] = collection;
             }
@@ -90,15 +90,12 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            IAsyncCursor<Row> enumerator = collections[0].Aggregate().Sort(new SortDefinitionBuilder<Row>().Ascending("ID")).ToCursorAsync().Result;
-            IEnumerable<Row> current;
+            IAsyncCursor<Row> enumerator = collections[0].Aggregate().Sort(new SortDefinitionBuilder<Row>().Ascending("_id")).ToCursorAsync().Result;
 
             while (enumerator.MoveNextAsync().Result)
             {
-                current = enumerator.Current;
-
-                foreach (var item in current)
-                    yield return new KeyValuePair<long, Tick>(item.ID, item.Record);
+                foreach (var item in enumerator.Current)
+                    yield return new KeyValuePair<long, Tick>(item._id, item.Record);
             }
         }
 
@@ -124,7 +121,7 @@ namespace DatabaseBenchmark.Databases
 
         private class Row
         {
-            public long ID { get; set; }
+            public long _id { get; set; }
             public Tick Record { get; set; }
 
             public Row()
@@ -133,7 +130,7 @@ namespace DatabaseBenchmark.Databases
 
             public Row(long key, Tick record)
             {
-                ID = key;
+                _id = key;
                 Record = record;
             }
         }
