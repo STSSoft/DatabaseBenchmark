@@ -104,15 +104,15 @@ namespace DatabaseBenchmark.Report
             Section settings = chapter.AddSection(new Paragraph("Test settings.", font));
 
             string version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
-            settings.Add(new Paragraph(string.Format("\t \t Benchmark - {0}", version)));
-            settings.Add(new Paragraph(string.Format("\t \t Export date - {0}", DateTime.Now)));
+            settings.Add(new Paragraph(String.Format("\t \t Benchmark - {0}", version)));
+            settings.Add(new Paragraph(String.Format("\t \t Export date - {0}", DateTime.Now)));
             settings.Add(new Chunk("\n"));
 
             Section testSettings = chapter.AddSection(new Paragraph("Settings.", font));
-            testSettings.Add(new Paragraph(string.Format("\t \t Flow count - {0}", flowCount)));
-            testSettings.Add(new Paragraph(string.Format("\t \t Record count - {0}", recordCount)));
-            testSettings.Add(new Paragraph(string.Format("\t \t Randomness - {0}%", randomness * 100)));
-            testSettings.Add(new Paragraph(string.Format("\t \t Key type - {0}", randomness == 0f ? KeysType.Sequential : KeysType.Random)));
+            testSettings.Add(new Paragraph(String.Format("\t \t Flow count - {0}", flowCount)));
+            testSettings.Add(new Paragraph(String.Format("\t \t Record count - {0}", recordCount)));
+            testSettings.Add(new Paragraph(String.Format("\t \t Randomness - {0}%", randomness * 100)));
+            testSettings.Add(new Paragraph(String.Format("\t \t Key type - {0}", randomness == 0f ? KeysType.Sequential : KeysType.Random)));
             testSettings.Add(new Chunk("\n"));
         }
 
@@ -123,16 +123,16 @@ namespace DatabaseBenchmark.Report
 
             Section osSection = sectionPC.AddSection(new Paragraph("Operating System.", font));
             string bits = computerInfo.OperatingSystem.Is64bit ? " 64bit" : "32bit";
-            osSection.Add(new Paragraph(string.Format("\t \t {0} {1}", computerInfo.OperatingSystem.Name, bits)));
+            osSection.Add(new Paragraph(String.Format("\t \t {0} {1}", computerInfo.OperatingSystem.Name, bits)));
 
             sectionPC.Add(new Chunk("\n"));
 
             Section processor = sectionPC.AddSection(new Paragraph("Processors.", font));
             foreach (var pr in computerInfo.Processors)
             {
-                processor.Add(new Paragraph(string.Format("\t \t Name: {0}", pr.Name)));
-                processor.Add(new Paragraph(string.Format("\t \t Threads: {0}", pr.Threads)));
-                processor.Add(new Paragraph(string.Format("\t \t Max clock speed: {0} MHz", pr.MaxClockSpeed)));
+                processor.Add(new Paragraph(String.Format("\t \t Name: {0}", pr.Name)));
+                processor.Add(new Paragraph(String.Format("\t \t Threads: {0}", pr.Threads)));
+                processor.Add(new Paragraph(String.Format("\t \t Max clock speed: {0} MHz", pr.MaxClockSpeed)));
             }
 
             sectionPC.Add(new Chunk("\n"));
