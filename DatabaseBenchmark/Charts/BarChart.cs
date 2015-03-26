@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using System.Globalization;
-using System.IO;
 
 namespace DatabaseBenchmark.Charts
 {
@@ -24,10 +18,6 @@ namespace DatabaseBenchmark.Charts
             chartArea = chart1.ChartAreas[0];
 
             // Chart area.
-            chartArea.AxisX.MajorGrid.LineWidth = 0;
-            chartArea.AxisY.MajorGrid.LineWidth = 0;
-            chartArea.AxisX.MajorGrid.LineWidth = 0;
-            chartArea.AxisY.MajorGrid.LineWidth = 0;
             chartArea.AxisX.MajorGrid.LineWidth = 0;
             chartArea.AxisY.MajorGrid.LineWidth = 0;
 
@@ -48,7 +38,7 @@ namespace DatabaseBenchmark.Charts
             series.BorderWidth = 1;
             series.IsValueShownAsLabel = true;
             
-            series.LabelFormat = labelFormat;    
+            series.LabelFormat = labelFormat;
         }
 
         public void AddPoint(string label, object y, Color color)

@@ -1,9 +1,8 @@
-﻿using System;
+﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Charts;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -18,18 +17,21 @@ namespace DatabaseBenchmark.Serialization
         // ComboBox name -> Selected value.
         public Dictionary<string, string> ComboBoxItems { get; private set; }
 
+        public List<KeyValuePair<TestMethod, List<ChartSettings>>> ChartSettings { get; private set; }
+
         public int TrackBarValue { get; private set; }
 
         public XmlProjectPersist()
-            : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(), default(int))
+            : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(), new List<KeyValuePair<TestMethod, List<ChartSettings>>>(), default(int))
         {
         }
 
-        public XmlProjectPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, int trackBarValue)
+        public XmlProjectPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, List<KeyValuePair<TestMethod, List<ChartSettings>>> chartSettings, int trackBarValue)
         {
             Databases = databases;
             ComboBoxItems = comboBoxItems;
             TrackBarValue = trackBarValue;
+            ChartSettings = chartSettings;
         }
 
         public void WriteXml(XmlWriter writer)
@@ -79,6 +81,31 @@ namespace DatabaseBenchmark.Serialization
             writer.WriteValue(TrackBarValue);
 
             writer.WriteEndElement(); // TrackBar.
+
+            writer.WriteStartElement("StepFrameSettings");
+
+            foreach (var item in ChartSettings)
+            {
+                writer.WriteStartElement("Frame");
+
+                writer.WriteAttributeString("Name", item.Key.ToString());
+
+                foreach (ChartSettings settings in item.Value)
+                {
+                    writer.WriteStartElement("Chart");
+
+                    writer.WriteAttributeString("Name", settings.Name);
+                    writer.WriteAttributeString("ShowLegend", settings.ShowLegend.ToString());
+                    writer.WriteAttributeString("IsLogarithmic", settings.IsLogarithmic.ToString());
+                    writer.WriteValue(settings.Possition.ToString());
+
+                    writer.WriteEndElement(); // Chart.
+                }
+
+                writer.WriteEndElement(); // Frame.
+            }
+
+            writer.WriteEndElement(); // StepFrameSettings
         }
 
         public void ReadXml(XmlReader reader)
@@ -125,6 +152,37 @@ namespace DatabaseBenchmark.Serialization
             TrackBarValue = reader.ReadContentAsInt();
 
             reader.ReadEndElement(); // TrackBar;
+
+            reader.ReadStartElement("StepFrameSettings");
+
+            while (reader.IsStartElement("Frame"))
+            {
+                TestMethod method = (TestMethod)Enum.Parse(typeof(TestMethod), reader.GetAttribute("Name"));
+
+                List<ChartSettings> chartSettings = new List<ChartSettings>();
+
+                reader.ReadStartElement("Frame");
+
+                while (reader.IsStartElement("Chart"))
+                {
+                    string chartName = reader.GetAttribute("Name");
+                    bool showLegend = bool.Parse(reader.GetAttribute("ShowLegend"));
+                    bool isLogarithmic = bool.Parse(reader.GetAttribute("IsLogarithmic"));
+
+                    reader.ReadStartElement();
+                    LegendPossition possition = (LegendPossition)Enum.Parse(typeof(LegendPossition), reader.ReadContentAsString());
+
+                    chartSettings.Add(new Charts.ChartSettings(chartName, showLegend, possition, isLogarithmic));
+
+                    reader.ReadEndElement(); // Chart.
+                }
+
+                reader.ReadEndElement(); // Frame
+
+                ChartSettings.Add(new KeyValuePair<TestMethod, List<ChartSettings>>(method, chartSettings));
+            }
+
+            reader.ReadEndElement(); // StepFrameSettings.
             reader.ReadEndElement(); // DatabaseXmlPersist.
         }
 

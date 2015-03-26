@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DatabaseBenchmark.Report;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 
-namespace DatabaseBenchmark.Validation
+namespace DatabaseBenchmark.Report
 {
     /// <summary>
     /// Sends the test data and computer configuration to the dedicated servers of DatabaseBenchmark.
@@ -15,28 +16,20 @@ namespace DatabaseBenchmark.Validation
 
         public ServerConnection()
         {
-            Host = "http://benchmarks.dev/api/v1/benchmarks";
+            Host = "http://presence.bg/bm/public/api/v1/benchmarks";
         }
 
         public HttpStatusCode SendData(string jsonData)
         {
-            return ExecutePostQuery(jsonData);
-        }
-
-        private HttpStatusCode ExecutePostQuery(string jsonData)
-        {
             // Remove control characters from string.
-            string output = new String(jsonData.Where(c => !char.IsControl(c)).ToArray());
+            string output = new String(jsonData.Where(character => !char.IsControl(character)).ToArray());
 
             using (var client = new HttpClient())
             {
-                var values = new List<KeyValuePair<string, string>>();
-                values.Add(new KeyValuePair<string, string>("Data", output));
+                string json = JsonUtils.ConvertJsonToPostQuery(jsonData).ToString();
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var content = new FormUrlEncodedContent(values);
-
-                var response = client.PostAsync(Host, content).Result;
-                Uri uri = response.Content.Headers.ContentLocation;
+                HttpResponseMessage response = client.PostAsync(Host, content).Result;
 
                 return response.StatusCode;
             }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using DatabaseBenchmark.Frames;
+using System;
 using System.Windows.Forms;
-using DatabaseBenchmark.Frames;
 
 namespace DatabaseBenchmark
 {
@@ -23,7 +17,7 @@ namespace DatabaseBenchmark
         public void SetProperties(Object obj)
         {
             propertyGrid1.SelectedObject = obj;
-            this.Text = ((Database)obj).DatabaseName;
+            this.Text = ((Database)obj).Name;
 
             Invalidate();
         }

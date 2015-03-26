@@ -1,33 +1,28 @@
-﻿using System;
+﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Report;
+using log4net;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DatabaseBenchmark.Benchmarking;
-using DatabaseBenchmark.Report;
-using log4net;
 
-namespace DatabaseBenchmark.Validation
+namespace DatabaseBenchmark.Report
 {
     public partial class ReportForm : Form
     {
         private ILog Logger;
         private ComputerConfiguration Configuration;
-
         private ServerConnection ServerConnector;
+
         public List<BenchmarkTest> BenchmarkTests { get; private set; }
 
         public ReportForm(List<BenchmarkTest> benchmarkTests)
             : this()
         {
-            Logger = LogManager.GetLogger("ApplicationLogger");
+            Logger = LogManager.GetLogger(Properties.Settings.Default.ApplicationLogger);
             BenchmarkTests = benchmarkTests;
 
             PopulateHardwareInfo();
@@ -52,14 +47,14 @@ namespace DatabaseBenchmark.Validation
             txtBoxOsType.Text = operatingSystem.Is64bit ? "64 bit" : "32 bit";
 
             // CPU
-            var cpu = processors.First();
+            CpuInfo cpu = processors.First();
             txtBoxCpuName.Text = cpu.Name;
             txtBoxCpuFrequency.Text = String.Format("{0} MHz", cpu.MaxClockSpeed);
             txtBoxCpuThreads.Text = cpu.Threads.ToString();
             txtBoxCpuCount.Text = processors.Count.ToString();
 
             // RAM
-            var ram = memory.First();
+            RamInfo ram = memory.First();
 
             int capacity = 0;
             foreach (var bank in memory)
@@ -71,8 +66,8 @@ namespace DatabaseBenchmark.Validation
             txtBoxMemoryBanks.Text = memory.Count.ToString();
 
             // STORAGE
-            var benchmarkDataDirectoryRoot = Path.GetPathRoot(BenchmarkTests.First().Database.DataDirectory);
-            var dataDrive = storage.Find(drive => drive.DriveLetters.Contains(benchmarkDataDirectoryRoot.Trim('\\')));
+            string benchmarkDataDirectoryRoot = Path.GetPathRoot(BenchmarkTests.First().Database.DataDirectory);
+            StorageDeviceInfo dataDrive = storage.Find(drive => drive.DriveLetters.Contains(benchmarkDataDirectoryRoot.Trim('\\')));
 
             comboBoxStorageModel.Items.AddRange(storage.Select(device => device.Model).ToArray());
             int selectedIndex = comboBoxStorageModel.Items.IndexOf(dataDrive.Model);
@@ -87,7 +82,7 @@ namespace DatabaseBenchmark.Validation
             
             try
             {
-                Configuration.StorageDevices.RemoveAll(device => device.Model == comboBoxStorageModel.Text);
+                Configuration.StorageDevices.RemoveAll(device => device.Model != comboBoxStorageModel.Text);
 
                 string jsonData = JsonUtils.ConvertToJson(user, Configuration, BenchmarkTests).ToString();
                 ServerConnector = new ServerConnection();
@@ -102,7 +97,7 @@ namespace DatabaseBenchmark.Validation
                     MessageBox.Show("Data sent successfully to server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // TODO: Add the real link.
-                    Process.Start("http://stssoft.com/products/database-benchmark/");
+                    Process.Start("http://presence.bg/bm/public/benchmark/13/view");
 
                     this.Close();
                 }
@@ -152,7 +147,7 @@ namespace DatabaseBenchmark.Validation
 
         private void comboBoxStorageModel_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            var newSize = Configuration.StorageDevices.Find(device => device.Model.Equals((string)comboBoxStorageModel.SelectedItem)).Size.ToString();
+            string newSize = Configuration.StorageDevices.Find(device => device.Model.Equals((string)comboBoxStorageModel.SelectedItem)).Size.ToString();
             txtBoxHddSize.Text = String.Format("{0} GB", newSize);
         }
     }

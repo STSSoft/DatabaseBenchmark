@@ -1,12 +1,8 @@
-﻿using System;
+﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Statistics;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Json;
-using System.Text;
-using System.Threading.Tasks;
-using DatabaseBenchmark.Benchmarking;
-using DatabaseBenchmark.Statistics;
 
 namespace DatabaseBenchmark.Report
 {
@@ -69,11 +65,11 @@ namespace DatabaseBenchmark.Report
             JsonObjectCollection jsonSettings = new JsonObjectCollection("TestInfo");
             jsonSettings.Add(new JsonNumericValue("FlowCount", benchmark.FlowCount));
             jsonSettings.Add(new JsonNumericValue("RecordCount", benchmark.FlowCount));
-            jsonSettings.Add(new JsonNumericValue("Randomness", benchmark.Randomness));
+            jsonSettings.Add(new JsonNumericValue("Randomness", benchmark.Randomness * 100));
 
             long elapsedTime = benchmark.EndTime.Ticks - benchmark.StartTime.Ticks;
             jsonSettings.Add(new JsonNumericValue("ElapsedTime", elapsedTime));
-            jsonSettings.Add(new JsonStringValue("DatabaseName", benchmark.Database.DatabaseName));
+            jsonSettings.Add(new JsonStringValue("DatabaseName", benchmark.Database.Name));
             jsonSettings.Add(new JsonNumericValue("DatabaseSize", benchmark.DatabaseSize / (1024.0 * 1024.0)));
 
             // Write test data.
@@ -109,6 +105,14 @@ namespace DatabaseBenchmark.Report
             jsonBenchmark.Add(jsonTestData);
 
             return jsonBenchmark;
+        }
+
+        public static JsonObjectCollection ConvertJsonToPostQuery(string json)
+        {
+            JsonObjectCollection jsonData = new JsonObjectCollection("Data");
+            jsonData.Add(new JsonStringValue(json));
+
+            return jsonData;
         }
 
         #region Statistics to JSON

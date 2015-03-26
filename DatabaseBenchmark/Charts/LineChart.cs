@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using System.IO;
 
 namespace DatabaseBenchmark.Charts
 {
@@ -15,6 +11,7 @@ namespace DatabaseBenchmark.Charts
     {
         private ChartArea chartArea;
         private Series cache;
+        private ElementPosition lastPossition;
 
         public LineChart()
         {
@@ -31,6 +28,14 @@ namespace DatabaseBenchmark.Charts
 
             chartArea.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
             chartArea.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
+
+
+            leftToolStripMenuItem.Tag = LegendPossition.Left;
+            rightToolStripMenuItem.Tag = LegendPossition.Right;
+            topToolStripMenuItem.Tag = LegendPossition.Top;
+            bottomToolStripMenuItem.Tag = LegendPossition.Bottom;
+
+            MoveLegend(topToolStripMenuItem, EventArgs.Empty);
         }
 
         /// <summary>
@@ -45,6 +50,14 @@ namespace DatabaseBenchmark.Charts
             cache.Color = color;
             cache.BorderWidth = 2;
             cache.ChartType = SeriesChartType.Line;
+
+            Legend legend = new Legend(name);
+            legend.Position = chart1.ChartAreas["ChartAreaLegend"].Position;
+            legend.Position.Auto = false;
+            legend.DockedToChartArea = "ChartAreaLegend";
+            legend.Name = name;
+
+            chart1.Legends.Add(legend);
         }
 
         public void AddPoint(string series, long x, double y)
@@ -109,7 +122,7 @@ namespace DatabaseBenchmark.Charts
         /// </summary>
         public int GetPointsCount(string series)
         {
-            return chart1.Series[series].Points.Count;
+            return chart1.Series.Count > 0 ? chart1.Series[series].Points.Count : 0;
         }
 
         /// <summary>
@@ -118,16 +131,139 @@ namespace DatabaseBenchmark.Charts
         public void Clear()
         {
             chart1.Series.Clear();
+            chart1.Legends.Clear();
             cache = null;
         }
 
         public byte[] ConvertToByteArray()
         {
-            using (var chartimage = new MemoryStream())
+            using (var chartImage = new MemoryStream())
             {
-                chart1.SaveImage(chartimage, ChartImageFormat.Png);
+                chart1.SaveImage(chartImage, ChartImageFormat.Bmp);
 
-                return chartimage.GetBuffer();
+                return chartImage.GetBuffer();
+            }
+        }
+
+        public LegendPossition GetLegendPosition()
+        {
+            return (LegendPossition)chart1.ChartAreas["ChartAreaLegend"].Tag;
+        }
+
+        public void SetLegenedPosition(LegendPossition position)
+        {
+            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+                menuItem.Checked = (LegendPossition)menuItem.Tag == position;
+
+            ChartArea legendArea = chart1.ChartAreas["ChartAreaLegend"];
+
+            switch (position)
+            {
+                case LegendPossition.Left:
+                    legendArea.Position = new ElementPosition(0, 0, 9, 100);
+                    legendArea.Tag = LegendPossition.Left;
+                    chartArea.Position = new ElementPosition(10, 0, 90, 100);
+
+                    break;
+
+                case LegendPossition.Right:
+                    legendArea.Position = new ElementPosition(91, 0, 9, 100);
+                    legendArea.Tag = LegendPossition.Right;
+                    chartArea.Position = new ElementPosition(0, 0, 90, 100);
+
+                    break;
+
+                case LegendPossition.Top:
+                    legendArea.Position = new ElementPosition(0, 0, 100, 9);
+                    legendArea.Tag = LegendPossition.Top;
+                    chartArea.Position = new ElementPosition(0, 10, 100, 90);
+
+                    break;
+
+                case LegendPossition.Bottom:
+                    legendArea.Position = new ElementPosition(0, 91, 100, 9);
+                    legendArea.Tag = LegendPossition.Bottom;
+                    chartArea.Position = new ElementPosition(0, 0, 100, 90);
+
+                    break;
+            }
+
+            foreach (Legend legend in chart1.Legends)
+                legend.Position = legendArea.Position;
+
+            legendToolStripMenuItem.Visible = true;
+            lastPossition = chartArea.Position;
+        }
+
+        private void legendToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            LegendVisible = legendToolStripMenuItem.Checked;
+        }
+
+        private void MoveLegend(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            SetLegenedPosition((LegendPossition)item.Tag);
+        }
+
+        private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IsLogarithmic = !IsLogarithmic;
+            logarithmicToolStripMenuItem.Checked = IsLogarithmic;
+        }
+
+        public bool LegendVisible
+        {
+            get { return chart1.ChartAreas["ChartAreaLegend"].Visible; }
+
+            set
+            {
+                chart1.ChartAreas["ChartAreaLegend"].Visible = value;
+
+                if (value)
+                    chart1.ChartAreas["ChartAreaChart"].Position = lastPossition;
+                else
+                    chart1.ChartAreas["ChartAreaChart"].Position = new ElementPosition(0, 0, 100, 100);
+            }
+        }
+
+        public ChartSettings Settings
+        {
+            get
+            {
+                LegendPossition possition = (LegendPossition)chart1.ChartAreas["ChartAreaLegend"].Tag;
+
+                return new ChartSettings(Title, legendToolStripMenuItem.Checked, possition, IsLogarithmic);
+            }
+
+            set
+            {
+                if (value == null)
+                    return;
+
+                Title = value.Name;
+
+                switch (value.Possition)
+                {
+                    case LegendPossition.Left:
+                        MoveLegend(leftToolStripMenuItem, EventArgs.Empty);
+                        break;
+
+                    case LegendPossition.Right:
+                        MoveLegend(rightToolStripMenuItem, EventArgs.Empty);
+                        break;
+
+                    case LegendPossition.Top:
+                        MoveLegend(topToolStripMenuItem, EventArgs.Empty);
+                        break;
+
+                    case LegendPossition.Bottom:
+                        MoveLegend(bottomToolStripMenuItem, EventArgs.Empty);
+                        break;
+                }
+
+                legendToolStripMenuItem.Checked = value.ShowLegend;
+                IsLogarithmic = value.IsLogarithmic;
             }
         }
     }

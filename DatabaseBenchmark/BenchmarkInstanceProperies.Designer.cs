@@ -61,6 +61,7 @@
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.propertyGrid1);
             this.Name = "BenchmarkInstanceProperies";
+            this.ShowIcon = false;
             this.Text = "BenchmarkInstanceProperies";
             this.ResumeLayout(false);
 

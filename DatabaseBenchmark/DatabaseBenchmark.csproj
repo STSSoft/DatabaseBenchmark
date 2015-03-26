@@ -78,8 +78,7 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>logo_bechn.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AerospikeClient, Version=3.0.0.0, Culture=neutral, processorArchitecture=AMD64">
@@ -323,6 +322,7 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Charts\ChartSettings.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="BenchmarkInstanceProperies.cs">
       <SubType>Form</SubType>
@@ -344,49 +344,58 @@
     <Compile Include="Charts\LineChart.Designer.cs">
       <DependentUpon>LineChart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Loading.cs">
+    <Compile Include="Exceptions\KeysNotOrderedException.cs" />
+    <Compile Include="FormLoader.cs" />
+    <Compile Include="Frames\LogFrame.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Loading.Designer.cs">
-      <DependentUpon>Loading.cs</DependentUpon>
+    <Compile Include="Frames\LogFrame.Designer.cs">
+      <DependentUpon>LogFrame.cs</DependentUpon>
     </Compile>
+    <Compile Include="LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadingForm.Designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Serialization\LayoutManager.cs" />
+    <Compile Include="StringAppender.cs" />
     <Compile Include="Report\CsvUtils.cs" />
     <Compile Include="Report\PdfUtils.cs" />
-    <Compile Include="Report\ReportType.cs" />
-    <Compile Include="Serialization\ProjectPersist.cs" />
-    <Compile Include="Databases\AerospikeBenchmark.cs" />
-    <Compile Include="Databases\GridGainBenchmark.cs" />
-    <Compile Include="Databases\OrientDBBenchmark.cs" />
-    <Compile Include="Databases\RedisBenchmark.cs" />
+    <Compile Include="Report\ReportEnums.cs" />
+    <Compile Include="Serialization\ProjectManager.cs" />
+    <Compile Include="Databases\AerospikeDatabase.cs" />
+    <Compile Include="Databases\OrientDBDatabase.cs" />
+    <Compile Include="Databases\RedisDatabase.cs" />
     <Compile Include="Frames\StepFrame.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Frames\StepFrame.Designer.cs">
       <DependentUpon>StepFrame.cs</DependentUpon>
     </Compile>
-    <Compile Include="Databases\AccessBenchmark.cs" />
-    <Compile Include="Databases\BrightstarDBBenchmark.cs" />
-    <Compile Include="Databases\CassandraBenchmark.cs" />
-    <Compile Include="Databases\CouchbaseBenchmark.cs" />
-    <Compile Include="Databases\Db4objectsBenchmark.cs" />
-    <Compile Include="Databases\FirebirdBenchmark.cs" />
-    <Compile Include="Databases\HamsterDBBenchmark.cs" />
-    <Compile Include="Databases\LevelDBBenchmark.cs" />
-    <Compile Include="Databases\MongoDBBenchmark.cs" />
-    <Compile Include="Databases\MSSQLServerBenchmark.cs" />
-    <Compile Include="Databases\MSSQLServerCompactBenchmark.cs" />
-    <Compile Include="Databases\MySQLBenchmark.cs" />
-    <Compile Include="Databases\OracleBerkeleyDBBenchmark.cs" />
-    <Compile Include="Databases\PerstBenchmark.cs" />
-    <Compile Include="Databases\PostgreSQLBenchmark.cs" />
-    <Compile Include="Databases\RavenDBBenchmark.cs" />
-    <Compile Include="Databases\ScimoreDBBenchmark.cs" />
-    <Compile Include="Databases\SQLiteBenchmark.cs" />
-    <Compile Include="Databases\STSdb4Benchmark.cs" />
-    <Compile Include="Databases\STSdbBenchmark.cs" />
-    <Compile Include="Databases\TokuMXBenchmark.cs" />
-    <Compile Include="Databases\VelocityDBBenchmark.cs" />
-    <Compile Include="Databases\VolanteBenchmark.cs" />
+    <Compile Include="Databases\AccessDatabase.cs" />
+    <Compile Include="Databases\BrightstarDBDatabase.cs" />
+    <Compile Include="Databases\CassandraDatabase.cs" />
+    <Compile Include="Databases\CouchbaseDatabase.cs" />
+    <Compile Include="Databases\Db4objectsDatabase.cs" />
+    <Compile Include="Databases\FirebirdDatabase.cs" />
+    <Compile Include="Databases\HamsterDBDatabase.cs" />
+    <Compile Include="Databases\LevelDBDatabase.cs" />
+    <Compile Include="Databases\MongoDBDatabase.cs" />
+    <Compile Include="Databases\MSSQLServerDatabase.cs" />
+    <Compile Include="Databases\MSSQLServerCompactDatabase.cs" />
+    <Compile Include="Databases\MySQLDatabase.cs" />
+    <Compile Include="Databases\OracleBerkeleyDBDatabase.cs" />
+    <Compile Include="Databases\PerstDatabase.cs" />
+    <Compile Include="Databases\PostgreSQLDatabase.cs" />
+    <Compile Include="Databases\RavenDBDatabase.cs" />
+    <Compile Include="Databases\ScimoreDBDatabase.cs" />
+    <Compile Include="Databases\SQLiteDatabase.cs" />
+    <Compile Include="Databases\STSdb4Database.cs" />
+    <Compile Include="Databases\STSdbDatabase.cs" />
+    <Compile Include="Databases\TokuMXDatabase.cs" />
+    <Compile Include="Databases\VelocityDBDatabase.cs" />
+    <Compile Include="Databases\VolanteDatabase.cs" />
     <Compile Include="Frames\TreeViewFrame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -394,7 +403,6 @@
       <DependentUpon>TreeViewFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="IDatabase.cs" />
-    <Compile Include="Serialization\ProjectSettings.cs" />
     <Compile Include="Serialization\XmlProjectPersist.cs" />
     <Compile Include="Statistics\IOStatistics.cs" />
     <Compile Include="Benchmarking\KeysType.cs" />
@@ -433,14 +441,17 @@
     <EmbeddedResource Include="Charts\LineChart.resx">
       <DependentUpon>LineChart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Frames\LogFrame.resx">
+      <DependentUpon>LogFrame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frames\StepFrame.resx">
       <DependentUpon>StepFrame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frames\TreeViewFrame.resx">
       <DependentUpon>TreeViewFrame.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Loading.resx">
-      <DependentUpon>Loading.cs</DependentUpon>
+    <EmbeddedResource Include="LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -467,7 +478,7 @@
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
@@ -636,6 +647,88 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\newicon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\csvmini_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load-icon3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save-icon3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jsonmini_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pdfmini_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UniWindowIcon_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about_24x24%281%291.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\w_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Very-Basic-Reload-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tumblr_m5xo9frXtv1rysqvgo1_1280_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r24x24%281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr24x24%281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr_24x242.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logo_bechn.ico" />
+    <None Include="Resources\propertiesToolStripMenuItem.Image.png" />
+    <None Include="Resources\Options-icon.png" />
+    <None Include="Resources\Pencil-icon.png" />
+    <None Include="Resources\restoreDefaultToolStripMenuItem.Image.png" />
+    <None Include="Resources\deleteToolStripMenuItem.Image.png" />
+    <None Include="Resources\renameToolStripMenuItem.Image.png" />
+    <None Include="Resources\cloneToolStripMenuItem.Image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

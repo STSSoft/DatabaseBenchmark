@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using DatabaseBenchmark.Charts;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using DatabaseBenchmark.Charts;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark.Frames
 {
     public partial class StepFrame : DockContent
     {
-        private string text;
+        private Dictionary<int, ColumnStyle> CurrentStyles;
 
         public StepFrame()
         {
@@ -71,15 +72,6 @@ namespace DatabaseBenchmark.Frames
             barChartCPU.Clear();
             barChartMemory.Clear();
             barChartIO.Clear();
-        }
-
-        public void SetLogarithmic(bool isLogarithmic)
-        {
-            lineChartAverageSpeed.IsLogarithmic = isLogarithmic;
-            lineChartMomentSpeed.IsLogarithmic = isLogarithmic;
-            lineChartAverageCPU.IsLogarithmic = isLogarithmic;
-            lineChartAverageMemory.IsLogarithmic = isLogarithmic;
-            lineChartAverageIO.IsLogarithmic = isLogarithmic;
         }
 
         #region Add points to LineChart
@@ -163,8 +155,43 @@ namespace DatabaseBenchmark.Frames
             return allBarCharts;
         }
 
+        public List<BarChart> GetSummaryBarCharts()
+        {
+            List<BarChart> barCharts = new List<BarChart>();
+
+            CurrentStyles = new Dictionary<int, ColumnStyle>();
+            CurrentStyles[0] = LayoutPanel.ColumnStyles[0];
+            CurrentStyles[2] = LayoutPanel.ColumnStyles[2];
+
+            LayoutPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 18);
+            LayoutPanel.ColumnStyles[2] = new ColumnStyle(SizeType.Percent, 18);
+
+            barChartSpeed.Invalidate();
+            barChartSize.Invalidate();
+
+            barCharts.Add(barChartSpeed);
+            barCharts.Add(barChartSize);
+
+            return barCharts;
+        }
+
         public List<BarChart> GetAllBarCharts()
         {
+            CurrentStyles = new Dictionary<int, ColumnStyle>();
+            CurrentStyles[0] = LayoutPanel.ColumnStyles[0];
+            CurrentStyles[1] = LayoutPanel.ColumnStyles[1];
+            CurrentStyles[2] = LayoutPanel.ColumnStyles[2];
+            CurrentStyles[3] = LayoutPanel.ColumnStyles[3];
+            CurrentStyles[4] = LayoutPanel.ColumnStyles[4];
+            CurrentStyles[5] = LayoutPanel.ColumnStyles[5];
+
+            LayoutPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 18);
+            LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 18);
+            LayoutPanel.ColumnStyles[2] = new ColumnStyle(SizeType.Percent, 18);
+            LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Percent, 18);
+            LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Percent, 18);
+            LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Percent, 18);
+
             List<BarChart> barCharts = new List<BarChart>();
 
             foreach (Control item in LayoutPanel.Controls)
@@ -173,10 +200,58 @@ namespace DatabaseBenchmark.Frames
             return barCharts;
         }
 
-        public override string Text
+        public void ResetColumnStyle()
         {
-            get { return text; }
-            set { text = value; }
+            foreach (var item in CurrentStyles)
+                LayoutPanel.ColumnStyles[item.Key] = new ColumnStyle(item.Value.SizeType, item.Value.Width);
+        }
+
+        public List<ChartSettings> GetLineChartSettings()
+        {
+            List<ChartSettings> settings = new List<ChartSettings>();
+
+            settings.Add(lineChartAverageSpeed.Settings);
+            settings.Add(lineChartMomentSpeed.Settings);
+            settings.Add(lineChartAverageCPU.Settings);
+            settings.Add(lineChartAverageMemory.Settings);
+            settings.Add(lineChartAverageIO.Settings);
+
+            return settings;
+        }
+
+        public void SetSettings(List<ChartSettings> settings)
+        {
+            lineChartAverageSpeed.Settings = settings[0];
+            lineChartMomentSpeed.Settings = settings[1];
+            lineChartAverageCPU.Settings = settings[2];
+            lineChartAverageMemory.Settings = settings[3];
+            lineChartAverageIO.Settings = settings[4];
+        }
+
+        public void ShowBarChart(int columnNumber, bool visible)
+        {
+            if (visible)
+                LayoutPanel.ColumnStyles[columnNumber] = new ColumnStyle(SizeType.Percent, 18);
+            else
+                LayoutPanel.ColumnStyles[columnNumber] = new ColumnStyle(SizeType.Absolute, 0);
+        }
+
+        public LegendPossition SelectedChartPosition
+        {
+            get { return ((LineChart)tabControlCharts.SelectedTab.Controls[0]).GetLegendPosition(); }
+            set { ((LineChart)tabControlCharts.SelectedTab.Controls[0]).SetLegenedPosition(value); }
+        }
+
+        public bool SelectedChartIsLogarithmic
+        {
+            get { return ((LineChart)tabControlCharts.SelectedTab.Controls[0]).IsLogarithmic; }
+            set { ((LineChart)tabControlCharts.SelectedTab.Controls[0]).IsLogarithmic = value; }
+        }
+
+        public bool SelectedChartLegendIsVisible
+        {
+            get { return ((LineChart)tabControlCharts.SelectedTab.Controls[0]).LegendVisible; }
+            set { ((LineChart)tabControlCharts.SelectedTab.Controls[0]).LegendVisible = value; }
         }
     }
 }

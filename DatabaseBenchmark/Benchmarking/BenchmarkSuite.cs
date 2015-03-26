@@ -1,10 +1,12 @@
-﻿using System;
-using log4net;
+﻿using log4net;
+using System;
+using DatabaseBenchmark.Exceptions;
+using DatabaseBenchmark.Properties;
 
 namespace DatabaseBenchmark.Benchmarking
 {
     /// <summary>
-    /// Represents a benchmark test suite that executes and logs all of the tests.
+    /// Represents a benchmark test suite that executes all of the tests.
     /// </summary>
     public class BenchmarkSuite
     {
@@ -15,13 +17,13 @@ namespace DatabaseBenchmark.Benchmarking
 
         public BenchmarkSuite()
         {
-            Logger = LogManager.GetLogger("BenchmarkTestLogger");
+            Logger = LogManager.GetLogger(Settings.Default.TestLogger);
         }
 
         public void ExecuteInit(BenchmarkTest test)
         {
             Current = test;
-            string databaseName = test.Database.DatabaseName;
+            string databaseName = test.Database.Name;
 
             try
             {
@@ -35,7 +37,7 @@ namespace DatabaseBenchmark.Benchmarking
             catch (Exception exc)
             {
                 Logger.Error(String.Format("{0} Init()", databaseName), exc);
-                Logger.Info(String.Format("{0} Init() failed...", databaseName), exc);
+                Logger.Info(String.Format("{0} Init() failed...", databaseName));
             }
             finally
             {
@@ -46,7 +48,7 @@ namespace DatabaseBenchmark.Benchmarking
         public void ExecuteWrite(BenchmarkTest test)
         {
             Current = test;
-            string databaseName = test.Database.DatabaseName;
+            string databaseName = test.Database.Name;
 
             try
             {
@@ -69,13 +71,18 @@ namespace DatabaseBenchmark.Benchmarking
         public void ExecuteRead(BenchmarkTest test)
         {
             Current = test;
-            string databaseName = test.Database.DatabaseName;
+            string databaseName = test.Database.Name;
 
             try
             {
                 Logger.Info(String.Format("{0} Read() started...", databaseName));
                 Current.Read();
                 Logger.Info(String.Format("{0} Read() ended...", databaseName));
+            }
+            catch(KeysNotOrderedException exc)
+            {
+                Logger.Error(String.Format("{0} Read()", databaseName), exc);
+                Logger.Info(String.Format("{0} The database does not return the records ordered by key. The test is invalid!...", databaseName));
             }
             catch (Exception exc)
             {
@@ -92,13 +99,18 @@ namespace DatabaseBenchmark.Benchmarking
         public void ExecuteSecondaryRead(BenchmarkTest test)
         {
             Current = test;
-            string databaseName = test.Database.DatabaseName;
+            string databaseName = test.Database.Name;
 
             try
             {
                 Logger.Info(String.Format("{0} SecondaryRead() started...", databaseName));
                 Current.SecondaryRead();
                 Logger.Info(String.Format("{0} SecondaryRead() ended...", databaseName));
+            }
+            catch (KeysNotOrderedException exc)
+            {
+                Logger.Error(String.Format("{0} Read()", databaseName), exc);
+                Logger.Info(String.Format("{0} The database does not return the records ordered by key. The test is invalid!...", databaseName));
             }
             catch (Exception exc)
             {
@@ -122,8 +134,8 @@ namespace DatabaseBenchmark.Benchmarking
             }
             catch (Exception exc)
             {
-                Logger.Error(String.Format("{0} Finish()", test.Database.DatabaseName), exc);
-                Logger.Info(String.Format("{0} Finish() failed...", test.Database.DatabaseName));
+                Logger.Error(String.Format("{0} Finish()", test.Database.Name), exc);
+                Logger.Info(String.Format("{0} Finish() failed...", test.Database.Name));
             }
             finally
             {

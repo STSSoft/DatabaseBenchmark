@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Management;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using DatabaseBenchmark.Properties;
 using log4net;
+using System;
+using System.Collections.Generic;
+using System.Management;
 
 namespace DatabaseBenchmark.Report
 {
@@ -16,7 +12,7 @@ namespace DatabaseBenchmark.Report
 
         static SystemUtils()
         {
-            Logger = LogManager.GetLogger("ApplicationLogger");
+            Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
         }
 
         /// <summary>

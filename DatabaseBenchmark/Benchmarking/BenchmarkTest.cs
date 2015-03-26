@@ -1,10 +1,11 @@
-﻿using System;
+﻿using DatabaseBenchmark.Statistics;
+using STS.General.Generators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DatabaseBenchmark.Statistics;
-using STS.General.Generators;
+using DatabaseBenchmark.Exceptions;
 
 namespace DatabaseBenchmark.Benchmarking
 {
@@ -372,7 +373,8 @@ namespace DatabaseBenchmark.Benchmarking
 
         private IEnumerable<KeyValuePair<long, Tick>> GetFlow()
         {
-            Thread.Sleep(10); // TODO: Remove this workaround at some point.
+            // TODO: Remove this workaround at some point.
+            Thread.Sleep(10); // Ensures different seed for the generators.
             SemiRandomGenerator generator = new SemiRandomGenerator(Randomness);
             
             return TicksGenerator.GetFlow(RecordCount, generator);
@@ -422,42 +424,29 @@ namespace DatabaseBenchmark.Benchmarking
 
         private Task DoRead(TestMethod method)
         {
-            Comparer<long> comparer = Comparer<long>.Default;
-
             Task task = Task.Factory.StartNew((state) =>
             {
-                bool ordered = true;
-
                 int methodIndex = (int)state;
                 var flow = Wrap(Database.Read(), Cancellation.Token, SpeedStatistics[methodIndex], ProcessorStatistics[methodIndex], MemoryStatistics[methodIndex], IOStatistics[methodIndex]);
 
-                long oldKey = 0;
-                int counter = 0;
+                bool ordered = true;
+                long previous = flow.First().Key;
 
                 foreach (var kv in flow)
                 {
                     var key = kv.Key;
-                    if (counter == 0)
-                    {
-                        oldKey = key;
-                        counter++;
 
-                        continue;
-                    }
-
-                    int cmp = comparer.Compare(oldKey, key);
-                    if (cmp > 0)
+                    if (previous > key)
                     {
                         ordered = false;
                         break;
                     }
 
-                    oldKey = key;
-                    counter++;
+                    previous = key;
                 }
 
                 if (!ordered)
-                    throw new Exception("Keys are not ordered.");
+                    throw new KeysNotOrderedException("Keys are not ordered.");
 
             }, (int)method, Cancellation.Token, TaskCreationOptions.AttachedToParent | TaskCreationOptions.LongRunning, TaskScheduler.Default);
 

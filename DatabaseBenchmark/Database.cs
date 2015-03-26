@@ -1,12 +1,9 @@
 ﻿using STS.General.Generators;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using DatabaseBenchmark.Benchmarking;
 using System.Xml.Serialization;
 
 namespace DatabaseBenchmark
@@ -15,8 +12,8 @@ namespace DatabaseBenchmark
     {
         protected object SyncRoot { get; set; }
 
-        public string DatabaseName { get; set; }
-        public string DatabaseCollection { get; set;}
+        public string Name { get; set; }
+        public string CollectionName { get; set;}
         public string DataDirectory { get; set; }
         public string ConnectionString { get; set; }
 

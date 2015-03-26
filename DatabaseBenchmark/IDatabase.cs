@@ -1,16 +1,6 @@
-﻿using System;
+﻿using STS.General.Generators;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
-using System.ComponentModel;
-using STS.General.Collections;
-using STS.General.Comparers;
-using STS.General.Extensions;
-using STS.General.Generators;
-using DatabaseBenchmark.Benchmarking;
 
 namespace DatabaseBenchmark
 {
@@ -23,20 +13,9 @@ namespace DatabaseBenchmark
         #region Database Description
 
         /// <summary>
-        /// Name of the database. DatabaseName must be a valid directory Name (see DataDirectory for details).
+        /// Name of the database. It must be a valid directory Name (see DataDirectory for details).
         /// </summary>
-        string DatabaseName { get; set; }
-
-        /// <summary>
-        /// Name of the database collection (table, document and etc.).
-        /// </summary>
-        string DatabaseCollection { get; set; }
-
-        /// <summary>
-        /// Each database has it's own data directory. This is the place where the database stores its data. 
-        /// This property is initialized with Application.StartupPath\Databases\IBenchmark.DatabaseName value.
-        /// </summary>
-        string DataDirectory { get; set; }
+        string Name { get; set; }
 
         /// <summary>
         /// The category of the database (SQL, NoSQL, NoSQL\\Key-Value and etc.)
@@ -44,7 +23,7 @@ namespace DatabaseBenchmark
         string Category { get; set; }
 
         /// <summary>
-        /// A description of the database. Usually the name and specific version.
+        /// A description of the database. Usually the name and version.
         /// </summary>
         string Description { get; set; }
 
@@ -64,13 +43,24 @@ namespace DatabaseBenchmark
         string[] Requirements { get; set; }
 
         /// <summary>
+        /// Name of the database collection (table, document and etc.).
+        /// </summary>
+        string CollectionName { get; set; }
+
+        /// <summary>
+        /// Each database has it's own data directory. This is the place where the database stores its data. 
+        /// This property is initialized with Application.StartupPath\Databases\IDatabase.Name value.
+        /// </summary>
+        string DataDirectory { get; set; }
+
+        /// <summary>
         /// A connection string if the database requires a remote connection.
         /// </summary>
         string ConnectionString { get; set; }
 
         #endregion
 
-        #region Benchmark Methods
+        #region Database Methods
 
         /// <summary>
         /// Initialize and create the database - create configuration files, engines and etc.
@@ -83,7 +73,7 @@ namespace DatabaseBenchmark
         void Write(int flowID, IEnumerable<KeyValuePair<long, Tick>> flow);
 
         /// <summary>
-        /// Begin reading the records from the database in a separate thread. The tick flow must be returned in ascending by key order.
+        /// Begin reading the records from the database in a single thread. The tick flow must be returned in ascending by key order.
         /// </summary>
         IEnumerable<KeyValuePair<long, Tick>> Read();
 
