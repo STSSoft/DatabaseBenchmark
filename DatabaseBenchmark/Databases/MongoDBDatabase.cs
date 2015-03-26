@@ -12,6 +12,7 @@ namespace DatabaseBenchmark.Databases
 {
     public class MongoDBDatabase : Database
     {
+        private MongoClient[] clients;
         private IMongoCollection<Row>[] collections;
 
         /// <summary>
@@ -48,19 +49,21 @@ namespace DatabaseBenchmark.Databases
 
         public override void Init(int flowCount, long flowRecordCount)
         {
+            clients = new MongoClient[flowCount];
             collections = new IMongoCollection<Row>[flowCount];
 
             for (int i = 0; i < flowCount; i++)
             {
-                var client = new MongoClient(ConnectionString);
+                MongoClient client = new MongoClient(ConnectionString);
                 IMongoDatabase database = client.GetDatabase("test");
 
                 database.DropCollectionAsync(CollectionName).GetAwaiter().GetResult();
 
-                var collection = database.GetCollection<Row>(CollectionName);
+                IMongoCollection<Row> collection = database.GetCollection<Row>(CollectionName);
                 collection.Indexes.CreateOneAsync(new IndexKeysDefinitionBuilder<Row>().Ascending("_id"));
 
                 collections[i] = collection;
+                clients[i] = client;
             }
         }
 
@@ -110,9 +113,7 @@ namespace DatabaseBenchmark.Databases
                 long sum = 0;
 
                 // TODO: Finding another way to take the size.
-                MongoClient clinet = new MongoClient(ConnectionString);
-                var stat = clinet.GetServer().GetDatabase("test").GetCollection<Row>(CollectionName).GetStats();
-
+                var stat = clients[0].GetServer().GetDatabase("test").GetCollection<Row>(CollectionName).GetStats();
                 sum += stat.DataSize + stat.TotalIndexSize;
 
                 return sum;
