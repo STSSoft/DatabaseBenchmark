@@ -74,21 +74,39 @@ namespace DatabaseBenchmark.Benchmarking
             Cancellation = cancellation;
         }
 
+		private void StartStatistics(int method)
+		{
+			SpeedStatistics[method].Start();
+			ProcessorStatistics[method].Start();
+			MemoryStatistics[method].Start();
+			IOStatistics[method].Start();
+		}
+
+		private void StopStatistics(int method)
+		{
+			SpeedStatistics[method].Stop();
+			ProcessorStatistics[method].Stop();
+			MemoryStatistics[method].Stop();
+			IOStatistics[method].Stop();
+		}
+
         #region Test Methods
 
         public void Init()
         {
             StartTime = DateTime.Now;
 
-            try
-            {
-                SpeedStatistics[(int)TestMethod.Write].Start();
+			int method = (int)TestMethod.Write;
 
-                Database.Init(FlowCount, RecordCount);
+			try
+            {
+				StartStatistics(method);
+
+				Database.Init(FlowCount, RecordCount);
             }
             finally
             {
-                SpeedStatistics[(int)TestMethod.Write].Stop();
+				StopStatistics(method);
             }
         }
 
@@ -106,22 +124,16 @@ namespace DatabaseBenchmark.Benchmarking
 
             try
             {
-                SpeedStatistics[method].Start();
-                ProcessorStatistics[method].Start();
-                MemoryStatistics[method].Start();
-                IOStatistics[method].Start();
+				StartStatistics(method);
 
-                Task[] tasks = DoWrite(flows);
+				Task[] tasks = DoWrite(flows);
                 Task.WaitAll(tasks, Cancellation.Token);
             }
             finally
             {
                 CurrentMethod = TestMethod.None;
 
-                SpeedStatistics[method].Stop();
-                ProcessorStatistics[method].Stop();
-                MemoryStatistics[method].Stop();
-                IOStatistics[method].Stop();
+				StopStatistics(method);
             }
         }
 
@@ -135,23 +147,17 @@ namespace DatabaseBenchmark.Benchmarking
 
             try
             {
-                SpeedStatistics[method].Start();
-                ProcessorStatistics[method].Start();
-                MemoryStatistics[method].Start();
-                IOStatistics[method].Start();
+				StartStatistics(method);
 
-                Task task = DoRead(TestMethod.Read);
+				Task task = DoRead(TestMethod.Read);
                 Task.WaitAll(new Task[] { task }, Cancellation.Token);
             }
             finally
             {
                 CurrentMethod = TestMethod.None;
 
-                SpeedStatistics[method].Stop();
-                ProcessorStatistics[method].Stop();
-                MemoryStatistics[method].Stop();
-                IOStatistics[method].Stop();
-            }
+				StopStatistics(method);
+			}
         }
 
         /// <summary>
@@ -164,30 +170,26 @@ namespace DatabaseBenchmark.Benchmarking
 
             try
             {
-                SpeedStatistics[method].Start();
-                ProcessorStatistics[method].Start();
-                MemoryStatistics[method].Start();
-                IOStatistics[method].Start();
+				StartStatistics(method);
 
-                Task task = DoRead(TestMethod.SecondaryRead);
+				Task task = DoRead(TestMethod.SecondaryRead);
                 Task.WaitAll(new Task[] { task }, Cancellation.Token);
             }
             finally
             {
                 CurrentMethod = TestMethod.None;
 
-                SpeedStatistics[method].Stop();
-                ProcessorStatistics[method].Stop();
-                MemoryStatistics[method].Stop();
-                IOStatistics[method].Stop();
-            }
+				StopStatistics(method);
+			}
         }
 
         public void Finish()
         {
             DatabaseSize = Database.Size;
 
-            SpeedStatistics[(int)TestMethod.SecondaryRead].Start();
+			int method = (int)TestMethod.SecondaryRead;
+
+			StartStatistics(method);
 
             try
             {
@@ -196,7 +198,7 @@ namespace DatabaseBenchmark.Benchmarking
             }
             finally
             {
-                SpeedStatistics[(int)TestMethod.SecondaryRead].Stop();
+				StopStatistics(method);
             }
         }
 
