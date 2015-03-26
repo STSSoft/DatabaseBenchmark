@@ -188,11 +188,9 @@ namespace DatabaseBenchmark
         {
             try
             {
-                FormLoader loader = new FormLoader();
-
-                loader.Run(new LoadingForm("Obtaining computer configuration...", Bounds));
+                LoadingForm.Start("Obtaining computer configuration...", Bounds);
                 ReportForm form = new ReportForm(History);
-                loader.Stop();
+                LoadingForm.Stop();
 
                 form.ShowDialog();
             }
@@ -205,34 +203,34 @@ namespace DatabaseBenchmark
         // CSV.
         private void summaryReportToolStripMenuItemCsv_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.Csv, ReportType.Summary, saveFileDialogCsv);
+            Export(ReportFormat.CSV, ReportType.Summary, saveFileDialogCsv);
         }
 
         private void detailedReportToolStripMenuItemCsv_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.Csv, ReportType.Detailed, saveFileDialogCsv);
+            Export(ReportFormat.CSV, ReportType.Detailed, saveFileDialogCsv);
         }
 
         // JSON.
         private void summaryReportToolStripMenuItemJson_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.Json, ReportType.Summary, saveFileDialogJson);
+            Export(ReportFormat.JSON, ReportType.Summary, saveFileDialogJson);
         }
 
         private void detailedReportToolStripMenuItemJson_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.Json, ReportType.Detailed, saveFileDialogJson);
+            Export(ReportFormat.JSON, ReportType.Detailed, saveFileDialogJson);
         }
 
         // PDF.
         private void summaryReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.Pdf, ReportType.Summary, saveFileDialogPdf);
+            Export(ReportFormat.PDF, ReportType.Summary, saveFileDialogPdf);
         }
 
         private void detailedReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.Pdf, ReportType.Detailed, saveFileDialogPdf);
+            Export(ReportFormat.PDF, ReportType.Detailed, saveFileDialogPdf);
         }
 
         private void Export(ReportFormat reportFormat, ReportType reportType, SaveFileDialog dialog)
@@ -249,16 +247,16 @@ namespace DatabaseBenchmark
 
                     switch (reportFormat)
                     {
-                        case ReportFormat.Csv:
+                        case ReportFormat.CSV:
                             CsvUtils.ExportResults(History, saveFileDialogCsv.FileName, reportType);
                             break;
 
-                        case ReportFormat.Json:
+                        case ReportFormat.JSON:
                             ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
                             JsonUtils.ExportToJson(saveFileDialogJson.FileName, configuration, History, reportType);
                             break;
 
-                        case ReportFormat.Pdf:
+                        case ReportFormat.PDF:
                             BenchmarkTest test = History[0];
                             PdfUtils.Export(saveFileDialogPdf.FileName, ApplicationManager.LayoutManager.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
                             break;

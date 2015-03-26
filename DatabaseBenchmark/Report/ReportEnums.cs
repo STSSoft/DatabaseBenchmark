@@ -9,8 +9,8 @@ namespace DatabaseBenchmark.Report
 
     public enum ReportFormat : byte
     {
-        Csv,
-        Json,
-        Pdf
+        CSV,
+        JSON,
+        PDF
     }
 }
