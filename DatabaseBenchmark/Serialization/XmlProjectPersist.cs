@@ -117,7 +117,7 @@ namespace DatabaseBenchmark.Serialization
             while (reader.IsStartElement("IDatabase"))
             {
                 Type dbType = Type.GetType(reader.GetAttribute("AssemblyQualifiedName"));
-                bool state = bool.Parse(reader.GetAttribute("CheckedState"));
+                bool state = Boolean.Parse(reader.GetAttribute("CheckedState"));
 
                 reader.ReadStartElement("IDatabase");
 
@@ -166,8 +166,8 @@ namespace DatabaseBenchmark.Serialization
                 while (reader.IsStartElement("Chart"))
                 {
                     string chartName = reader.GetAttribute("Name");
-                    bool showLegend = bool.Parse(reader.GetAttribute("ShowLegend"));
-                    bool isLogarithmic = bool.Parse(reader.GetAttribute("IsLogarithmic"));
+                    bool showLegend = Boolean.Parse(reader.GetAttribute("ShowLegend"));
+                    bool isLogarithmic = Boolean.Parse(reader.GetAttribute("IsLogarithmic"));
 
                     reader.ReadStartElement();
                     LegendPossition possition = (LegendPossition)Enum.Parse(typeof(LegendPossition), reader.ReadContentAsString());

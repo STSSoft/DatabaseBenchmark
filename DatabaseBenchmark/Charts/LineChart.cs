@@ -29,7 +29,6 @@ namespace DatabaseBenchmark.Charts
             chartArea.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
             chartArea.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.Dot;
 
-
             leftToolStripMenuItem.Tag = LegendPossition.Left;
             rightToolStripMenuItem.Tag = LegendPossition.Right;
             topToolStripMenuItem.Tag = LegendPossition.Top;
@@ -67,7 +66,7 @@ namespace DatabaseBenchmark.Charts
 
             // If you switch to logarithmic scale and the chart contains 0's, it will throw an exception.
             if (y == 0)
-                y = double.NaN;
+                y = Double.NaN;
 
             cache.Points.AddXY(x, y);
         }
