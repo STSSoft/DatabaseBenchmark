@@ -480,33 +480,31 @@ namespace DatabaseBenchmark
             ApplicationManager.LayoutManager.TreeView.CollapseAll();
         }
 
-        private void MoveLegend(object sender, EventArgs e)
-        {
-            ToolStripMenuItem item = sender as ToolStripMenuItem;
-            LegendPossition position = (LegendPossition)Enum.Parse(typeof(LegendPossition), item.Text);
-            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
-
-            selectedFrame.SelectedChartPosition = position;
-
-            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
-                menuItem.Checked = menuItem.Text == item.Text;
-        }
-
-        private void showLegendToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool isChecked = (sender as ToolStripMenuItem).Checked;
-            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartLegendIsVisible = isChecked;
-        }
-
-        private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool isChecked = (sender as ToolStripMenuItem).Checked;
-            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartIsLogarithmic = isChecked;
-        }
-
         #endregion
 
         #region View Toolstrip Menu
+
+        private void viewToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
+            bool state = selectedFrame != null;
+
+            viewToolStripMenuItem.DropDownItems[6].Visible = state;  // Separator.
+            viewToolStripMenuItem.DropDownItems[7].Visible = state;  // Show legend.
+            viewToolStripMenuItem.DropDownItems[8].Visible = state;  // Legend position.
+            viewToolStripMenuItem.DropDownItems[9].Visible = state;  // Logarithmic.
+
+            if (!state)
+                return;
+
+            LegendPossition position = selectedFrame.SelectedChartPosition;
+
+            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+                menuItem.Checked = menuItem.Text == position.ToString();
+
+            showLegendToolStripMenuItem.Checked = selectedFrame.SelectedChartLegendIsVisible;
+            logarithmicToolStripMenuItem.Checked = selectedFrame.SelectedChartIsLogarithmic;
+        }
 
         private void databasesWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -532,6 +530,30 @@ namespace DatabaseBenchmark
         private void logWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ApplicationManager.LayoutManager.ShowLogFrame();
+        }
+
+        private void MoveLegend(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            LegendPossition position = (LegendPossition)Enum.Parse(typeof(LegendPossition), item.Text);
+            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
+
+            selectedFrame.SelectedChartPosition = position;
+
+            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+                menuItem.Checked = menuItem.Text == item.Text;
+        }
+
+        private void showLegendToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool isChecked = (sender as ToolStripMenuItem).Checked;
+            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartLegendIsVisible = isChecked;
+        }
+
+        private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool isChecked = (sender as ToolStripMenuItem).Checked;
+            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartIsLogarithmic = isChecked;
         }
 
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -661,28 +683,6 @@ namespace DatabaseBenchmark
         {
             stopButton_Click(sender, e);
             ApplicationManager.StoreDocking();
-        }
-
-        private void viewToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-        {
-            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
-            bool state = selectedFrame != null;
-
-            viewToolStripMenuItem.DropDownItems[6].Visible = state;  // Separator.
-            viewToolStripMenuItem.DropDownItems[7].Visible = state;  // Show legend.
-            viewToolStripMenuItem.DropDownItems[8].Visible = state;  // Legend position.
-            viewToolStripMenuItem.DropDownItems[9].Visible = state;  // Logarithmic.
-
-            if (!state)
-                return;
-
-            LegendPossition position = selectedFrame.SelectedChartPosition;
-
-            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
-                menuItem.Checked = menuItem.Text == position.ToString();
-
-            showLegendToolStripMenuItem.Checked = selectedFrame.SelectedChartLegendIsVisible;
-            logarithmicToolStripMenuItem.Checked = selectedFrame.SelectedChartIsLogarithmic;
         }
     }
 }
