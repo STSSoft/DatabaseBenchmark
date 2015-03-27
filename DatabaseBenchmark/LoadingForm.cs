@@ -25,6 +25,8 @@ namespace DatabaseBenchmark
 
         public static void Start(string loadingText, Rectangle formBounds)
         {
+            Stopped = false;
+
             Worker = new Thread(new ParameterizedThreadStart(Work));
             Worker.Start(new KeyValuePair<string, Rectangle>(loadingText, formBounds));
         }
@@ -38,7 +40,7 @@ namespace DatabaseBenchmark
 
             try
             {
-                Worker.Abort();
+                Worker.Join(300);
             }
             finally
             {
@@ -51,7 +53,6 @@ namespace DatabaseBenchmark
             KeyValuePair<string, Rectangle> kv = (KeyValuePair<string, Rectangle>)settings;
             LoadingForm form = new LoadingForm(kv.Key, kv.Value);
 
-            Stopped = false;
             Application.Run(form);
         }
 

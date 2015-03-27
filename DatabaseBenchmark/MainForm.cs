@@ -68,8 +68,10 @@ namespace DatabaseBenchmark
             ApplicationManager = new ProjectManager(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1, CONFIGURATION_FOLDER);
 
             // Load dock and application configuration.
-            ApplicationManager.Load(Path.Combine(CONFIGURATION_FOLDER, "Database Benchmark.dbproj"));
+            bool isLoad = ApplicationManager.Load(Path.Combine(CONFIGURATION_FOLDER, "Database Benchmark.dbproj"));
             ApplicationManager.LoadDocking();
+
+            saveConfigurationToolStripMenuItem.Enabled = isLoad;
 
             ApplicationManager.LayoutManager.SelectFrame(TestMethod.Write);
 
@@ -370,7 +372,7 @@ namespace DatabaseBenchmark
 
         private void buttonTreeView_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.SelectTreeView();
+            ApplicationManager.LayoutManager.SelectTreeView(btnTreeView.Checked);
         }
 
         #endregion
@@ -379,12 +381,9 @@ namespace DatabaseBenchmark
 
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
-            {
-                LoadingForm.Start("Saving project...", Bounds);
-                ApplicationManager.Store(saveFileDialogProject.FileName);
-                LoadingForm.Stop();
-            }
+            LoadingForm.Start("Saving project...", Bounds);
+            ApplicationManager.Store(saveFileDialogProject.FileName);
+            LoadingForm.Stop();
         }
 
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -394,6 +393,9 @@ namespace DatabaseBenchmark
                 LoadingForm.Start("Loading project...", Bounds);
                 ApplicationManager.Load(openFileDialogProject.FileName);
                 LoadingForm.Stop();
+
+                saveFileDialogProject.FileName = openFileDialogProject.FileName;
+                saveConfigurationToolStripMenuItem.Checked = true;
             }
         }
 
@@ -407,6 +409,18 @@ namespace DatabaseBenchmark
             LoadingForm.Start("Creating project...", Bounds);
             ApplicationManager.Reset();
             LoadingForm.Stop();
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
+            {
+                LoadingForm.Start("Saving project...", Bounds);
+                ApplicationManager.Store(saveFileDialogProject.FileName);
+                LoadingForm.Stop();
+
+                saveConfigurationToolStripMenuItem.Enabled = true;
+            }
         }
 
         #endregion
@@ -494,7 +508,8 @@ namespace DatabaseBenchmark
 
         private void databasesWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.SelectTreeView();
+            ApplicationManager.LayoutManager.SelectTreeView(true);
+            btnTreeView.Checked = true;
         }
 
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -642,22 +657,8 @@ namespace DatabaseBenchmark
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show("Save current project?", "Save project", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Cancel)
-                e.Cancel = true;
-            else if (result == DialogResult.No)
-            {
-                stopButton_Click(sender, e);
-                ApplicationManager.StoreDocking();
-            }
-            else if (result == DialogResult.Yes)
-            {
-                stopButton_Click(sender, e);
-                saveConfigurationToolStripMenuItem_Click(sender, e);
-
-                ApplicationManager.StoreDocking();
-            }
+            stopButton_Click(sender, e);
+            ApplicationManager.StoreDocking();
         }
 
         private void viewToolStripMenuItem_DropDownOpening(object sender, EventArgs e)

@@ -68,7 +68,7 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
-        public void Load(string path)
+        public bool Load(string path)
         {
             TreeViewFrame treeView = LayoutManager.TreeView;
 
@@ -77,7 +77,7 @@ namespace DatabaseBenchmark.Serialization
                 if (!File.Exists(path))
                 {
                     treeView.CreateTreeView();
-                    return;
+                    return false;
                 }
 
                 // Clear TreeView.
@@ -102,11 +102,15 @@ namespace DatabaseBenchmark.Serialization
                 }
 
                 treeView.ExpandAll();
+
+                return true;
             }
             catch (Exception exc)
             {
                 Logger.Error("Persist load error ...", exc);
                 treeView.CreateTreeView();
+
+                return false;
             }
         }
 

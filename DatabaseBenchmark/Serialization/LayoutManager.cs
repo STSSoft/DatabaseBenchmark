@@ -103,8 +103,16 @@ namespace DatabaseBenchmark.Serialization
             frame.Show(Panel);
         }
 
-        public void SelectTreeView()
+        public void SelectTreeView(bool visible)
         {
+            if (!visible)
+            {
+                if (!TreeView.IsDisposed)
+                    TreeView.Hide();
+
+                return;
+            }
+
             if (TreeView.IsDisposed)
             {
                 CreateTreeView();
@@ -112,6 +120,7 @@ namespace DatabaseBenchmark.Serialization
                 return;
             }
 
+            TreeView.Activate();
             TreeView.Show(Panel);
         }
 
