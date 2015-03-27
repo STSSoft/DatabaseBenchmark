@@ -404,11 +404,13 @@ namespace DatabaseBenchmark
             DialogResult result = MessageBox.Show("Save current project ?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
+            {
                 saveConfigurationToolStripMenuItem_Click(sender, e);
 
-            LoadingForm.Start("Creating project...", Bounds);
-            ApplicationManager.Reset();
-            LoadingForm.Stop();
+                LoadingForm.Start("Creating project...", Bounds);
+                ApplicationManager.Reset();
+                LoadingForm.Stop();
+            }
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
