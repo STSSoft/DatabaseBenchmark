@@ -422,25 +422,6 @@ namespace DatabaseBenchmark
             editToolStripMenuItem.DropDownItems[4].Visible = state; // Restore default.
             editToolStripMenuItem.DropDownItems[6].Visible = state; // Separator.
             editToolStripMenuItem.DropDownItems[7].Visible = state; // Properties.
-
-            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
-            state = selectedFrame != null;
-
-            editToolStripMenuItem.DropDownItems[11].Visible = state;  // Separator.
-            editToolStripMenuItem.DropDownItems[12].Visible = state;  // Show legend.
-            editToolStripMenuItem.DropDownItems[13].Visible = state; // Legend position.
-            editToolStripMenuItem.DropDownItems[14].Visible = state; // Logarithmic.
-
-            if (!state)
-                return;
-
-            LegendPossition position = selectedFrame.SelectedChartPosition;
-
-            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
-                menuItem.Checked = menuItem.Text == position.ToString();
-
-            showLegendToolStripMenuItem.Checked = selectedFrame.SelectedChartLegendIsVisible;
-            logarithmicToolStripMenuItem.Checked = selectedFrame.SelectedChartIsLogarithmic;
         }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
@@ -605,7 +586,7 @@ namespace DatabaseBenchmark
                 if (method == TestMethod.None)
                     return;
 
-                if (btnAutoNavigate.Checked)
+                if (autoNavigatetoolStripMenuItem.Checked)
                     ApplicationManager.LayoutManager.StepFrames[method].Activate();
 
                 TimeSpan elapsed = session.GetTime(method);
@@ -677,6 +658,28 @@ namespace DatabaseBenchmark
 
                 ApplicationManager.StoreDocking();
             }
+        }
+
+        private void viewToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
+            bool state = selectedFrame != null;
+
+            viewToolStripMenuItem.DropDownItems[6].Visible = state;  // Separator.
+            viewToolStripMenuItem.DropDownItems[7].Visible = state;  // Show legend.
+            viewToolStripMenuItem.DropDownItems[8].Visible = state;  // Legend position.
+            viewToolStripMenuItem.DropDownItems[9].Visible = state;  // Logarithmic.
+
+            if (!state)
+                return;
+
+            LegendPossition position = selectedFrame.SelectedChartPosition;
+
+            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+                menuItem.Checked = menuItem.Text == position.ToString();
+
+            showLegendToolStripMenuItem.Checked = selectedFrame.SelectedChartLegendIsVisible;
+            logarithmicToolStripMenuItem.Checked = selectedFrame.SelectedChartIsLogarithmic;
         }
     }
 }

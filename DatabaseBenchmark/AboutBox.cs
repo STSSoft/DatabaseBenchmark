@@ -14,7 +14,8 @@ namespace DatabaseBenchmark
             this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
             this.labelCopyright.Text = AssemblyCopyright;
             this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.linkLabelWebsite.Text = " http://stssoft.com/products/database-benchmark/";
+            this.linkLabelRepository.Text = " https://github.com/STSSoft/DatabaseBenchmark";
         }
 
         #region Assembly Attribute Accessors

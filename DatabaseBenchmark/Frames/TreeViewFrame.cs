@@ -44,7 +44,7 @@ namespace DatabaseBenchmark.Frames
 
                 foreach (var directory in Directory.GetDirectories(MainForm.DATABASES_DIRECTORY))
                 {
-                    try // Some databases hold rights to directory
+                    try // Some databases hold the rights to their data directory.
                     {
                         Directory.Delete(directory, true);
                     }
@@ -54,7 +54,7 @@ namespace DatabaseBenchmark.Frames
                     }
                 }
 
-                foreach (var database in databases)
+                foreach (var database in databases.OrderBy(db => db.Name))
                 {
                     AddAfter(null, database);
                     database.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, database.Name);
