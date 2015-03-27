@@ -69,6 +69,7 @@ namespace DatabaseBenchmark.Frames
             }
 
             treeView.ExpandAll();
+            treeView.SelectedNode = treeView.Nodes[0];
         }
 
         public void CreateTreeViewNode(IDatabase database, bool state)
@@ -144,6 +145,8 @@ namespace DatabaseBenchmark.Frames
             newNode.Tag = newDatabase;
             newNode.Checked = state;
             newNode.ImageIndex = 0;
+
+            treeView.SelectedNode = newNode;
         }
 
         public bool IsSelectedBenchamrkNode
