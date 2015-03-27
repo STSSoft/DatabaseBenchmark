@@ -361,6 +361,12 @@ namespace DatabaseBenchmark.Frames
         {
             treeView.CollapseAll();
         }
+        
+        private void treeView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Delete)
+                DeleteNode();
+        }
 
         #endregion
     }
