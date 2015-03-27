@@ -689,14 +689,6 @@ namespace DatabaseBenchmark
         {
             switch (keyData)
             {
-                case Keys.Control | Keys.N:
-                    newToolStripMenuItem_Click(this, EventArgs.Empty);
-                    return true;
-
-                case Keys.Control | Keys.O:
-                    loadConfigurationToolStripMenuItem_Click(this, EventArgs.Empty);
-                    return true;
-
                 case Keys.Control | Keys.S:
 
                     if (saveConfigurationToolStripMenuItem.Enabled)
