@@ -684,5 +684,31 @@ namespace DatabaseBenchmark
             stopButton_Click(sender, e);
             ApplicationManager.StoreDocking();
         }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Control | Keys.N:
+                    newToolStripMenuItem_Click(this, EventArgs.Empty);
+                    return true;
+
+                case Keys.Control | Keys.O:
+                    loadConfigurationToolStripMenuItem_Click(this, EventArgs.Empty);
+                    return true;
+
+                case Keys.Control | Keys.S:
+
+                    if (saveConfigurationToolStripMenuItem.Enabled)
+                        saveConfigurationToolStripMenuItem_Click(this, EventArgs.Empty);
+                    else
+                        saveAsToolStripMenuItem_Click(this, EventArgs.Empty);
+
+                    return true;
+
+                default:
+                    return base.ProcessCmdKey(ref msg, keyData);
+            }
+        }
     }
 }
