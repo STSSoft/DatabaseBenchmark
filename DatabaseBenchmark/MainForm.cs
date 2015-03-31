@@ -68,13 +68,8 @@ namespace DatabaseBenchmark
             ApplicationManager = new ProjectManager(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1, CONFIGURATION_FOLDER);
 
             // Load dock and application configuration.
-            bool isLoad = ApplicationManager.Load(Path.Combine(CONFIGURATION_FOLDER, "Database Benchmark.dbproj"));
+            ApplicationManager.Load(string.Empty);
             ApplicationManager.LoadDocking();
-
-            saveConfigurationToolStripMenuItem.Enabled = isLoad;
-
-            if (isLoad)
-                Text = "Database Benchmark.dbproj - Database Benchmark";
 
             ApplicationManager.LayoutManager.SelectFrame(TestMethod.Write);
 
