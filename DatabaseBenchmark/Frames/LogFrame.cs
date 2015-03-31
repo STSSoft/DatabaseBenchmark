@@ -51,8 +51,11 @@ namespace DatabaseBenchmark.Frames
             if (line.Contains("ERROR"))
             {
                 richTextBoxLogs.Select(startIndex, line.Length);
-                richTextBoxLogs.SelectionBackColor = Color.Red;
+                richTextBoxLogs.SelectionBackColor = Color.FromArgb(64, Color.Red);
             }
+
+            richTextBoxLogs.SelectionStart = richTextBoxLogs.TextLength;
+            richTextBoxLogs.ScrollToCaret();
         }
     }
 }
