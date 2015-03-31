@@ -9,7 +9,7 @@ namespace DatabaseBenchmark.Statistics
     public class ProcessorStatistics : IStatistic
     {
         private readonly object SyncRoot = new object();
-        private readonly ProcessorMonitor cpuMonitor = new ProcessorMonitor();
+        private readonly CpuMonitor cpuMonitor = new CpuMonitor();
 
         private long count;
 
@@ -55,9 +55,9 @@ namespace DatabaseBenchmark.Statistics
 
                 if (count % Step == 0)
                 {
-                    privilegedTime.Add(new KeyValuePair<long, float>(count, cpuMonitor.AveragePrivilegedTimePercent));
-                    processorTime.Add(new KeyValuePair<long, float>(count, cpuMonitor.AverageProcessorTimePercent));
-                    userTime.Add(new KeyValuePair<long, float>(count, cpuMonitor.AverageUserTimePercent));
+                    privilegedTime.Add(new KeyValuePair<long, float>(count, cpuMonitor.PrivilegedTime));
+                    processorTime.Add(new KeyValuePair<long, float>(count, cpuMonitor.ProcessorTime));
+                    userTime.Add(new KeyValuePair<long, float>(count, cpuMonitor.UserTime));
                 }
             }
         }
@@ -70,37 +70,37 @@ namespace DatabaseBenchmark.Statistics
             cpuMonitor.Stop();
         }
 
-        public float AveragePrivilegedTime
+        public float MomentPrivilegedTime
         {
             get
             {
                 lock (SyncRoot)
-                    return cpuMonitor.AveragePrivilegedTimePercent;
+                    return cpuMonitor.PrivilegedTime;
             }
         }
 
-        public float AverageProcessorTime
+        public float MomentProcessorTime
         {
             get
             {
                 lock (SyncRoot)
-                    return cpuMonitor.AverageProcessorTimePercent;
+                    return cpuMonitor.ProcessorTime;
             }
         }
 
-        public float AverageUserTime
+        public float MomentUserTime
         {
             get
             {
                 lock (SyncRoot)
-                    return cpuMonitor.AverageUserTimePercent;
+                    return cpuMonitor.UserTime;
             }
         }
 
         /// <summary>
         /// Gets the statistic entries for the average privileged time.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> AveragePrivilegedTimeStats
+        public IEnumerable<KeyValuePair<long, float>> MomentPrivilegedTimeStats
         {
             get
             {
@@ -115,7 +115,7 @@ namespace DatabaseBenchmark.Statistics
         /// <summary>
         /// Gets the statistic entries for the average processor time.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> AverageProcessorTimeStats
+        public IEnumerable<KeyValuePair<long, float>> MomentProcessorTimeStats
         {
             get
             {
@@ -130,7 +130,7 @@ namespace DatabaseBenchmark.Statistics
         /// <summary>
         /// Gets the statistic entries for the user time.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> AverageUserTimeStats
+        public IEnumerable<KeyValuePair<long, float>> MomentUserTimeStats
         {
             get
             {

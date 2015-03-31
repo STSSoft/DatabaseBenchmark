@@ -52,9 +52,9 @@ namespace DatabaseBenchmark.Statistics
 
             if (count % Step == 0)
             {
-                writeIO.Add(new KeyValuePair<long, float>(count, ioMonitor.AverageIOWriteBytes));
-                readIO.Add(new KeyValuePair<long, float>(count, ioMonitor.AverageIOReadBytes));
-                dataIO.Add(new KeyValuePair<long, float>(count, ioMonitor.AverageIODataBytes));
+                writeIO.Add(new KeyValuePair<long, float>(count, ioMonitor.IOWriteBytes));
+                readIO.Add(new KeyValuePair<long, float>(count, ioMonitor.IOReadBytes));
+                dataIO.Add(new KeyValuePair<long, float>(count, ioMonitor.IODataBytes));
             }
         }
 
@@ -66,25 +66,25 @@ namespace DatabaseBenchmark.Statistics
             ioMonitor.Stop();
         }
 
-        public float AverageIOWrite
+        public float MomentIOWrite
         {
-            get { return ioMonitor.AverageIOWriteBytes; }
+            get { return ioMonitor.IOWriteBytes; }
         }
 
-        public float AverageIORead
+        public float MomentIORead
         {
-            get { return ioMonitor.AverageIOReadBytes; }
+            get { return ioMonitor.IOReadBytes; }
         }
 
-        public float AverageIOData
+        public float MomentIOData
         {
-            get { return ioMonitor.AverageIODataBytes; }
+            get { return ioMonitor.IODataBytes; }
         }
 
         /// <summary>
         /// Gets the statistic entries for the write I/O.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> AverageWriteIOStats
+        public IEnumerable<KeyValuePair<long, float>> MomentWriteIOStats
         {
             get
             {
@@ -96,7 +96,7 @@ namespace DatabaseBenchmark.Statistics
         /// <summary>
         /// Gets the statistic entries for the read I/O.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> AverageReadIOStats
+        public IEnumerable<KeyValuePair<long, float>> MomentReadIOStats
         {
             get
             {
@@ -108,7 +108,7 @@ namespace DatabaseBenchmark.Statistics
         /// <summary>
         /// Gets the statistic entries for data I/O.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> AverageDataIOStats
+        public IEnumerable<KeyValuePair<long, float>> MomentDataIOStats
         {
             get
             {
