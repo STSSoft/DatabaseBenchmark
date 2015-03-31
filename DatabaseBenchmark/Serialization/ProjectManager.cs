@@ -102,6 +102,7 @@ namespace DatabaseBenchmark.Serialization
                 }
 
                 treeView.ExpandAll();
+                treeView.SelectFirstNode();
 
                 return true;
             }

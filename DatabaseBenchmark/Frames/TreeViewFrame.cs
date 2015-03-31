@@ -113,6 +113,11 @@ namespace DatabaseBenchmark.Frames
             treeView.CollapseAll();
         }
 
+        public void SelectFirstNode()
+        {
+            treeView.SelectedNode = treeView.Nodes[0];
+        }
+
         public Database[] GetSelectedBenchmarks()
         {
             return treeView.Nodes.Iterate().Where(x => x.Checked && x.Tag as Database != null).Select(y => y.Tag as Database).ToArray();
@@ -361,7 +366,7 @@ namespace DatabaseBenchmark.Frames
         {
             treeView.CollapseAll();
         }
-        
+
         private void treeView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Delete)

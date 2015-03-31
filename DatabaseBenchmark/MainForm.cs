@@ -396,13 +396,13 @@ namespace DatabaseBenchmark
             if (openFileDialogProject.ShowDialog() == DialogResult.OK)
             {
                 LoadingForm.Start("Loading project...", Bounds);
+
                 ApplicationManager.Load(openFileDialogProject.FileName);
-                LoadingForm.Stop();
-
                 saveFileDialogProject.FileName = openFileDialogProject.FileName;
-                saveConfigurationToolStripMenuItem.Checked = true;
-
+                saveConfigurationToolStripMenuItem.Enabled = true;
                 Text = String.Format("{0} - Database Benchmark", Path.GetFileName(saveFileDialogProject.FileName));
+
+                LoadingForm.Stop();
             }
         }
 
