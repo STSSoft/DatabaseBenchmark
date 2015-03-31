@@ -16,8 +16,8 @@ namespace DatabaseBenchmark
         public string LastLine { get; private set; }
 
         public StringAppender()
-		{
-		}
+        {
+        }
 
         protected override void Append(LoggingEvent loggingEvent)
         {
@@ -26,33 +26,34 @@ namespace DatabaseBenchmark
             Logs.AppendLine(line);
             LastLine = line;
 
-            OnAppend();
+            if (OnAppend != null)
+                OnAppend();
         }
-        
-		/// <summary>
-		/// Gets the logged strings.
-		/// </summary>
-		/// <returns></returns>
-		public string GetLogs()
-		{
-			return Logs.ToString();
-		}
 
-		/// <summary>
-		/// Clears all logged data.
-		/// </summary>
-		public void Clear()
-		{
+        /// <summary>
+        /// Gets the logged strings.
+        /// </summary>
+        /// <returns></returns>
+        public string GetLogs()
+        {
+            return Logs.ToString();
+        }
+
+        /// <summary>
+        /// Clears all logged data.
+        /// </summary>
+        public void Clear()
+        {
             Logs.Clear();
-		}
+        }
 
-		/// <summary>
-		/// This appender requires a <see cref="Layout"/> to be set.
-		/// </summary>
-		/// <value><c>true</c></value>
-		protected override bool RequiresLayout
-		{
-			get { return true; }
-		}
+        /// <summary>
+        /// This appender requires a <see cref="Layout"/> to be set.
+        /// </summary>
+        /// <value><c>true</c></value>
+        protected override bool RequiresLayout
+        {
+            get { return true; }
+        }
     }
 }
