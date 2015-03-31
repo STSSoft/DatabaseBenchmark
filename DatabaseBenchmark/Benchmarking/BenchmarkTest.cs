@@ -328,11 +328,11 @@ namespace DatabaseBenchmark.Benchmarking
         /// <summary>
         /// Gets the average memory working set in bytes.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, double>> GetAverageWorkingSet(TestMethod method, int position)
+        public IEnumerable<KeyValuePair<long, double>> GetMomentWorkingSet(TestMethod method, int position)
         {
             lock (MemoryStatistics)
             {
-                var array = MemoryStatistics[(int)method].AverageWorkingSetStats.ToArray();
+                var array = MemoryStatistics[(int)method].MomentWorkingSetStats.ToArray();
                 var length = array.Length;
 
                 if (position == 0)

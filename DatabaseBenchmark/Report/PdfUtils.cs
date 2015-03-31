@@ -83,7 +83,7 @@ namespace DatabaseBenchmark.Report
 
                     AddCellToTable(table, "Average Speed:", frame.lineChartAverageSpeed.ConvertToByteArray);
                     AddCellToTable(table, "Moment Speed:", frame.lineChartMomentSpeed.ConvertToByteArray);
-                    AddCellToTable(table, "Average Memory:", frame.lineChartAverageMemory.ConvertToByteArray);
+                    AddCellToTable(table, "Average Memory:", frame.lineChartMomentMemory.ConvertToByteArray);
                     //AddCellToTable(table, "Average CPU:", frame.lineChartAverageCPU.ConvertToByteArray);
                     //AddCellToTable(table, "Average I/O:", frame.lineChartAverageIO.ConvertToByteArray);
 

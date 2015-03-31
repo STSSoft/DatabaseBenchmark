@@ -45,7 +45,7 @@ namespace DatabaseBenchmark.Frames
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.lineChartMomentSpeed = new DatabaseBenchmark.Charts.LineChart();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.lineChartAverageMemory = new DatabaseBenchmark.Charts.LineChart();
+            this.lineChartMomentMemory = new DatabaseBenchmark.Charts.LineChart();
             this.LayoutPanel.SuspendLayout();
             this.tabControlCharts.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -212,7 +212,7 @@ namespace DatabaseBenchmark.Frames
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.lineChartAverageMemory);
+            this.tabPage4.Controls.Add(this.lineChartMomentMemory);
             this.tabPage4.Location = new System.Drawing.Point(4, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -223,16 +223,16 @@ namespace DatabaseBenchmark.Frames
             // 
             // lineChartAverageMemory
             // 
-            this.lineChartAverageMemory.AxisXTitle = "";
-            this.lineChartAverageMemory.AxisYTitle = "";
-            this.lineChartAverageMemory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lineChartAverageMemory.LegendVisible = true;
-            this.lineChartAverageMemory.Location = new System.Drawing.Point(3, 3);
-            this.lineChartAverageMemory.MinimumSize = new System.Drawing.Size(1, 1);
-            this.lineChartAverageMemory.Name = "lineChartAverageMemory";
-            this.lineChartAverageMemory.Size = new System.Drawing.Size(1026, 236);
-            this.lineChartAverageMemory.TabIndex = 0;
-            this.lineChartAverageMemory.Title = "";
+            this.lineChartMomentMemory.AxisXTitle = "";
+            this.lineChartMomentMemory.AxisYTitle = "";
+            this.lineChartMomentMemory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lineChartMomentMemory.LegendVisible = true;
+            this.lineChartMomentMemory.Location = new System.Drawing.Point(3, 3);
+            this.lineChartMomentMemory.MinimumSize = new System.Drawing.Size(1, 1);
+            this.lineChartMomentMemory.Name = "lineChartAverageMemory";
+            this.lineChartMomentMemory.Size = new System.Drawing.Size(1026, 236);
+            this.lineChartMomentMemory.TabIndex = 0;
+            this.lineChartMomentMemory.Title = "";
             // 
             // StepFrame
             // 
@@ -270,7 +270,7 @@ namespace DatabaseBenchmark.Frames
         public LineChart lineChartAverageSpeed;
         public LineChart lineChartMomentSpeed;
         private System.Windows.Forms.TabPage tabPage4;
-        public LineChart lineChartAverageMemory;
+        public LineChart lineChartMomentMemory;
         private BarChart barChartSpeed;
         private BarChart barChartTime;
         private BarChart barChartSize;

@@ -33,7 +33,7 @@ namespace DatabaseBenchmark.Frames
             barChartSize.Title = "Size (MB)";
             barChartTime.Title = "Time (hh:mm:ss)";
             barChartCPU.Title = "CPU usage (%)";
-            barChartMemory.Title = "Memory usage (MB)";
+            barChartMemory.Title = "Peak Memory usage (MB)";
             barChartIO.Title = "IO Data (MB/sec)";
 
             // Line charts.
@@ -43,8 +43,8 @@ namespace DatabaseBenchmark.Frames
             lineChartMomentSpeed.AxisYTitle = "Records/Sec";
             //lineChartAverageCPU.AxisXTitle = "Records";
             //lineChartAverageCPU.AxisYTitle = "Percent (%)";
-            lineChartAverageMemory.AxisXTitle = "Records";
-            lineChartAverageMemory.AxisYTitle = "MB";
+            lineChartMomentMemory.AxisXTitle = "Records";
+            lineChartMomentMemory.AxisYTitle = "MB";
             //lineChartAverageIO.AxisXTitle = "Records";
             //lineChartAverageIO.AxisYTitle = "MB/Sec";
 
@@ -53,7 +53,7 @@ namespace DatabaseBenchmark.Frames
                 lineChartAverageSpeed.CreateSeries(item.Key, item.Value);
                 lineChartMomentSpeed.CreateSeries(item.Key, item.Value);
                 //lineChartAverageCPU.CreateSeries(item.Key, item.Value);
-                lineChartAverageMemory.CreateSeries(item.Key, item.Value);
+                lineChartMomentMemory.CreateSeries(item.Key, item.Value);
                 //lineChartAverageIO.CreateSeries(item.Key, item.Value);
             }
         }
@@ -63,7 +63,7 @@ namespace DatabaseBenchmark.Frames
             lineChartAverageSpeed.Clear();
             lineChartMomentSpeed.Clear();
             //lineChartAverageCPU.Clear();
-            lineChartAverageMemory.Clear();
+            lineChartMomentMemory.Clear();
             //lineChartAverageIO.Clear();
 
             barChartSpeed.Clear();
@@ -97,7 +97,7 @@ namespace DatabaseBenchmark.Frames
         public void AddAverageMemoryUsage(string series, IEnumerable<KeyValuePair<long, double>> data)
         {
             foreach (var item in data)
-                lineChartAverageMemory.AddPoint(series, item.Key, item.Value / (1024.0 * 1024.0));
+                lineChartMomentMemory.AddPoint(series, item.Key, item.Value / (1024.0 * 1024.0));
         }
 
         public void AddAverageIO(string series, IEnumerable<KeyValuePair<long, double>> data)
@@ -213,7 +213,7 @@ namespace DatabaseBenchmark.Frames
             settings.Add(lineChartAverageSpeed.Settings);
             settings.Add(lineChartMomentSpeed.Settings);
             //settings.Add(lineChartAverageCPU.Settings);
-            settings.Add(lineChartAverageMemory.Settings);
+            settings.Add(lineChartMomentMemory.Settings);
             //settings.Add(lineChartAverageIO.Settings);
 
             return settings;
@@ -224,7 +224,7 @@ namespace DatabaseBenchmark.Frames
             lineChartAverageSpeed.Settings = settings[0];
             lineChartMomentSpeed.Settings = settings[1];
             //lineChartAverageCPU.Settings = settings[2];
-            lineChartAverageMemory.Settings = settings[3];
+            lineChartMomentMemory.Settings = settings[3];
             //lineChartAverageIO.Settings = settings[4];
         }
 

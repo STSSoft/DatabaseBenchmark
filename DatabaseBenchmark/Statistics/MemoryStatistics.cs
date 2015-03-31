@@ -52,9 +52,9 @@ namespace DatabaseBenchmark.Statistics
 
             if (count % Step == 0)
             {
-                pagedMemory.Add(new KeyValuePair<long, float>(count, monitor.AveragePagedMemory));
-                virtualMemory.Add(new KeyValuePair<long, float>(count, monitor.AverageVirtualMemory));
-                workingSet.Add(new KeyValuePair<long, float>(count, monitor.AverageWorkingSet));
+                pagedMemory.Add(new KeyValuePair<long, float>(count, monitor.CurrentPagedMemory));
+                virtualMemory.Add(new KeyValuePair<long, float>(count, monitor.CurrentVirtualMemory));
+                workingSet.Add(new KeyValuePair<long, float>(count, monitor.CurrentWorkingSet));
             }
         }
 
@@ -84,7 +84,7 @@ namespace DatabaseBenchmark.Statistics
         /// <summary>
         /// Gets the statistic entries for the average paged memory.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> AveragePagedMemoryStats
+        public IEnumerable<KeyValuePair<long, float>> MomentPagedMemoryStats
         {
             get
             {
@@ -96,7 +96,7 @@ namespace DatabaseBenchmark.Statistics
         /// <summary>
         /// Gets the statistic entries for the average virtual memory.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> AverageVirtualMemoryStats
+        public IEnumerable<KeyValuePair<long, float>> MomentVirtualMemoryStats
         {
             get
             {
@@ -108,7 +108,7 @@ namespace DatabaseBenchmark.Statistics
         /// <summary>
         /// Gets the statistic entries for the average working set.
         /// </summary>
-        public IEnumerable<KeyValuePair<long, float>> AverageWorkingSetStats
+        public IEnumerable<KeyValuePair<long, float>> MomentWorkingSetStats
         {
             get
             {

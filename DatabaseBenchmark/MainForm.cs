@@ -651,7 +651,7 @@ namespace DatabaseBenchmark
                     var averageSpeedData = session.GetAverageSpeed(method, averagePossition);
                     var momentSpeedData = session.GetMomentSpeed(method, momentPossition);
                     //var cpuData = session.GetAverageUserTimeProcessor(method, averagePossition);
-                    var memoryData = session.GetAverageWorkingSet(method, averagePossition);
+                    var memoryData = session.GetMomentWorkingSet(method, averagePossition);
                     //var ioData = session.GetAverageDataIO(method, averagePossition);
 
                     activeFrame.AddAverageSpeed(database.Name, averageSpeedData);
