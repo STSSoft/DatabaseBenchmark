@@ -73,6 +73,9 @@ namespace DatabaseBenchmark
 
             saveConfigurationToolStripMenuItem.Enabled = isLoad;
 
+            if (isLoad)
+                Text = "Database Benchmark.dbproj - Database Benchmark";
+
             ApplicationManager.LayoutManager.SelectFrame(TestMethod.Write);
 
             View_Click(btnSizeView, EventArgs.Empty);
@@ -396,6 +399,8 @@ namespace DatabaseBenchmark
 
                 saveFileDialogProject.FileName = openFileDialogProject.FileName;
                 saveConfigurationToolStripMenuItem.Checked = true;
+
+                Text = String.Format("{0} - Database Benchmark", Path.GetFileName(saveFileDialogProject.FileName));
             }
         }
 
@@ -422,6 +427,7 @@ namespace DatabaseBenchmark
                 LoadingForm.Stop();
 
                 saveConfigurationToolStripMenuItem.Enabled = true;
+                Text = String.Format("{0} - Database Benchmark", Path.GetFileName(saveFileDialogProject.FileName));
             }
         }
 
