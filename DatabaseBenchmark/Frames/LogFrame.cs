@@ -26,6 +26,7 @@ namespace DatabaseBenchmark.Frames
         public void Clear()
         {
             richTextBoxLogs.Clear();
+            TestAppender.Clear();
         }
 
         private void UpdateTextBox()
