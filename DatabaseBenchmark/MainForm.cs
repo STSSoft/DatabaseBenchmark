@@ -356,7 +356,9 @@ namespace DatabaseBenchmark
         private void axisType_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripButton).Checked;
-            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartIsLogarithmic = isChecked;
+
+            foreach (var frame in ApplicationManager.LayoutManager.StepFrames)
+                frame.Value.SelectedChartIsLogarithmic = isChecked;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
