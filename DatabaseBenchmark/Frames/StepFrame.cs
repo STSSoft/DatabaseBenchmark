@@ -181,21 +181,22 @@ namespace DatabaseBenchmark.Frames
             CurrentStyles[0] = LayoutPanel.ColumnStyles[0];
             CurrentStyles[1] = LayoutPanel.ColumnStyles[1];
             CurrentStyles[2] = LayoutPanel.ColumnStyles[2];
-            CurrentStyles[3] = LayoutPanel.ColumnStyles[3];
+           //CurrentStyles[3] = LayoutPanel.ColumnStyles[3];
             CurrentStyles[4] = LayoutPanel.ColumnStyles[4];
-            CurrentStyles[5] = LayoutPanel.ColumnStyles[5];
+           // CurrentStyles[5] = LayoutPanel.ColumnStyles[5];
 
             LayoutPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 18);
             LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 18);
             LayoutPanel.ColumnStyles[2] = new ColumnStyle(SizeType.Percent, 18);
-            LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Percent, 18);
+            //LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Percent, 18);
             LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Percent, 18);
-            LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Percent, 18);
+            //LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Percent, 18);
 
             List<BarChart> barCharts = new List<BarChart>();
-
-            foreach (Control item in LayoutPanel.Controls)
-                barCharts.Add(item as BarChart);
+            barCharts.Add(barChartSpeed);
+            barCharts.Add(barChartSize);
+            barCharts.Add(barChartTime);
+            barCharts.Add(barChartMemory);
 
             return barCharts;
         }

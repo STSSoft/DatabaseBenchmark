@@ -34,9 +34,7 @@ namespace DatabaseBenchmark.Frames
             this.LayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.barChartSpeed = new DatabaseBenchmark.Charts.BarChart();
             this.barChartTime = new DatabaseBenchmark.Charts.BarChart();
-            this.barChartSize = new DatabaseBenchmark.Charts.BarChart();
             this.barChartCPU = new DatabaseBenchmark.Charts.BarChart();
-            this.barChartMemory = new DatabaseBenchmark.Charts.BarChart();
             this.barChartIO = new DatabaseBenchmark.Charts.BarChart();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.tabControlCharts = new System.Windows.Forms.TabControl();
@@ -46,6 +44,8 @@ namespace DatabaseBenchmark.Frames
             this.lineChartMomentSpeed = new DatabaseBenchmark.Charts.LineChart();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.lineChartMomentMemory = new DatabaseBenchmark.Charts.LineChart();
+            this.barChartMemory = new DatabaseBenchmark.Charts.BarChart();
+            this.barChartSize = new DatabaseBenchmark.Charts.BarChart();
             this.LayoutPanel.SuspendLayout();
             this.tabControlCharts.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -104,14 +104,6 @@ namespace DatabaseBenchmark.Frames
             this.barChartTime.Size = new System.Drawing.Size(164, 271);
             this.barChartTime.TabIndex = 1;
             // 
-            // barChartSize
-            // 
-            this.barChartSize.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.barChartSize.Location = new System.Drawing.Point(349, 5);
-            this.barChartSize.Name = "barChartSize";
-            this.barChartSize.Size = new System.Drawing.Size(164, 271);
-            this.barChartSize.TabIndex = 2;
-            // 
             // barChartCPU
             // 
             this.barChartCPU.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -120,14 +112,6 @@ namespace DatabaseBenchmark.Frames
             this.barChartCPU.Size = new System.Drawing.Size(164, 271);
             this.barChartCPU.TabIndex = 3;
             this.barChartCPU.Visible = false;
-            // 
-            // barChartMemory
-            // 
-            this.barChartMemory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.barChartMemory.Location = new System.Drawing.Point(693, 5);
-            this.barChartMemory.Name = "barChartMemory";
-            this.barChartMemory.Size = new System.Drawing.Size(167, 271);
-            this.barChartMemory.TabIndex = 4;
             // 
             // barChartIO
             // 
@@ -221,7 +205,7 @@ namespace DatabaseBenchmark.Frames
             this.tabPage4.Text = "Memory (Moment)";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // lineChartAverageMemory
+            // lineChartMomentMemory
             // 
             this.lineChartMomentMemory.AxisXTitle = "";
             this.lineChartMomentMemory.AxisYTitle = "";
@@ -229,10 +213,26 @@ namespace DatabaseBenchmark.Frames
             this.lineChartMomentMemory.LegendVisible = true;
             this.lineChartMomentMemory.Location = new System.Drawing.Point(3, 3);
             this.lineChartMomentMemory.MinimumSize = new System.Drawing.Size(1, 1);
-            this.lineChartMomentMemory.Name = "lineChartAverageMemory";
+            this.lineChartMomentMemory.Name = "lineChartMomentMemory";
             this.lineChartMomentMemory.Size = new System.Drawing.Size(1026, 236);
             this.lineChartMomentMemory.TabIndex = 0;
             this.lineChartMomentMemory.Title = "";
+            // 
+            // barChartMemory
+            // 
+            this.barChartMemory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.barChartMemory.Location = new System.Drawing.Point(693, 5);
+            this.barChartMemory.Name = "barChartMemory";
+            this.barChartMemory.Size = new System.Drawing.Size(167, 271);
+            this.barChartMemory.TabIndex = 4;
+            // 
+            // barChartSize
+            // 
+            this.barChartSize.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.barChartSize.Location = new System.Drawing.Point(349, 5);
+            this.barChartSize.Name = "barChartSize";
+            this.barChartSize.Size = new System.Drawing.Size(164, 271);
+            this.barChartSize.TabIndex = 2;
             // 
             // StepFrame
             // 
@@ -273,9 +273,9 @@ namespace DatabaseBenchmark.Frames
         public LineChart lineChartMomentMemory;
         private BarChart barChartSpeed;
         private BarChart barChartTime;
-        private BarChart barChartSize;
         private BarChart barChartCPU;
-        private BarChart barChartMemory;
         private BarChart barChartIO;
+        private BarChart barChartSize;
+        private BarChart barChartMemory;
     }
 }
