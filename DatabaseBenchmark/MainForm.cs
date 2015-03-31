@@ -412,12 +412,19 @@ namespace DatabaseBenchmark
 
             if (result == DialogResult.Yes)
             {
-                saveConfigurationToolStripMenuItem_Click(sender, e);
-
-                LoadingForm.Start("Creating project...", Bounds);
-                ApplicationManager.Reset();
-                LoadingForm.Stop();
+                if (saveConfigurationToolStripMenuItem.Enabled)
+                    saveConfigurationToolStripMenuItem_Click(sender, e);
+                else
+                    saveAsToolStripMenuItem_Click(sender, e);
             }
+
+            LoadingForm.Start("Creating project...", Bounds);
+
+            ApplicationManager.Reset();
+            saveConfigurationToolStripMenuItem.Enabled = false;
+            Text = "Database Benchmark.dbproj - Database Benchmark";
+
+            LoadingForm.Stop();
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -568,7 +575,7 @@ namespace DatabaseBenchmark
         {
             this.SuspendLayout();
 
-            ApplicationManager.Reset();
+            ApplicationManager.LayoutManager.ResetDocking();
 
             this.ResumeLayout();
         }

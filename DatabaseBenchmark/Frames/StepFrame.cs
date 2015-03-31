@@ -225,7 +225,7 @@ namespace DatabaseBenchmark.Frames
             lineChartAverageSpeed.Settings = settings[0];
             lineChartMomentSpeed.Settings = settings[1];
             //lineChartAverageCPU.Settings = settings[2];
-            lineChartMomentMemory.Settings = settings[3];
+            lineChartMomentMemory.Settings = settings[2];
             //lineChartAverageIO.Settings = settings[4];
         }
 

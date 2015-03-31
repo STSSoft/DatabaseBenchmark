@@ -105,7 +105,7 @@ namespace DatabaseBenchmark.Serialization
                 writer.WriteEndElement(); // Frame.
             }
 
-            writer.WriteEndElement(); // StepFrameSettings
+            writer.WriteEndElement(); // StepFrameSettings.
         }
 
         public void ReadXml(XmlReader reader)
@@ -151,7 +151,7 @@ namespace DatabaseBenchmark.Serialization
             reader.ReadStartElement("TrackBar");
             TrackBarValue = reader.ReadContentAsInt();
 
-            reader.ReadEndElement(); // TrackBar;
+            reader.ReadEndElement(); // TrackBar.
 
             reader.ReadStartElement("StepFrameSettings");
 
@@ -177,7 +177,7 @@ namespace DatabaseBenchmark.Serialization
                     reader.ReadEndElement(); // Chart.
                 }
 
-                reader.ReadEndElement(); // Frame
+                reader.ReadEndElement(); // Frame.
 
                 ChartSettings.Add(new KeyValuePair<TestMethod, List<ChartSettings>>(method, chartSettings));
             }
