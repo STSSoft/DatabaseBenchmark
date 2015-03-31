@@ -52,9 +52,9 @@ namespace DatabaseBenchmark.Statistics
 
             if (count % Step == 0)
             {
-                pagedMemory.Add(new KeyValuePair<long, float>(count, monitor.CurrentPagedMemory));
-                virtualMemory.Add(new KeyValuePair<long, float>(count, monitor.CurrentVirtualMemory));
-                workingSet.Add(new KeyValuePair<long, float>(count, monitor.CurrentWorkingSet));
+                pagedMemory.Add(new KeyValuePair<long, float>(count, monitor.PagedMemory));
+                virtualMemory.Add(new KeyValuePair<long, float>(count, monitor.VirtualMemory));
+                workingSet.Add(new KeyValuePair<long, float>(count, monitor.WorkingSet));
             }
         }
 

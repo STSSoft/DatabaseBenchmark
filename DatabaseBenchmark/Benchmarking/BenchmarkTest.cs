@@ -234,7 +234,7 @@ namespace DatabaseBenchmark.Benchmarking
         {
             lock (ProcessorStatistics)
             {
-                return ProcessorStatistics[(int)method].AverageProcessorTime;
+                return ProcessorStatistics[(int)method].MomentProcessorTime;
             }
         }
 
@@ -250,7 +250,7 @@ namespace DatabaseBenchmark.Benchmarking
         {
             lock (IOStatistics)
             {
-                return IOStatistics[(int)method].AverageIOData;
+                return IOStatistics[(int)method].MomentIOData;
             }
         }
 
@@ -308,7 +308,7 @@ namespace DatabaseBenchmark.Benchmarking
         {
             lock (ProcessorStatistics)
             {
-                var array = ProcessorStatistics[(int)method].AverageUserTimeStats.ToArray();
+                var array = ProcessorStatistics[(int)method].MomentUserTimeStats.ToArray();
                 var length = array.Length;
 
                 if (position == 0)
@@ -355,7 +355,7 @@ namespace DatabaseBenchmark.Benchmarking
         {
             lock (IOStatistics)
             {
-                var array = IOStatistics[(int)method].AverageDataIOStats.ToArray();
+                var array = IOStatistics[(int)method].MomentDataIOStats.ToArray();
                 var length = array.Length;
 
                 if (position == 0)
