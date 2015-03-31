@@ -9,7 +9,7 @@ namespace DatabaseBenchmark.Statistics
     public class ProcessorStatistics : IStatistic
     {
         private readonly object SyncRoot = new object();
-        private readonly CpuMonitor cpuMonitor = new CpuMonitor();
+        private readonly CPUMonitor cpuMonitor = new CPUMonitor();
 
         private long count;
 
