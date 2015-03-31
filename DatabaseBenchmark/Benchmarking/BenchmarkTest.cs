@@ -61,14 +61,14 @@ namespace DatabaseBenchmark.Benchmarking
                 SpeedStatistics[i] = new SpeedStatistics(INTERVAL_COUNT);
                 SpeedStatistics[i].Step = step;
 
-                ProcessorStatistics[i] = new ProcessorStatistics(INTERVAL_COUNT);
-                ProcessorStatistics[i].Step = step;
+                //ProcessorStatistics[i] = new ProcessorStatistics(INTERVAL_COUNT);
+                //ProcessorStatistics[i].Step = step;
 
                 MemoryStatistics[i] = new MemoryStatistics(INTERVAL_COUNT);
                 MemoryStatistics[i].Step = step;
 
-                IOStatistics[i] = new IOStatistics(INTERVAL_COUNT);
-                IOStatistics[i].Step = step;
+                //IOStatistics[i] = new IOStatistics(INTERVAL_COUNT);
+                //IOStatistics[i].Step = step;
             }
 
             Cancellation = cancellation;
@@ -77,17 +77,17 @@ namespace DatabaseBenchmark.Benchmarking
 		private void StartStatistics(int method)
 		{
 			SpeedStatistics[method].Start();
-			ProcessorStatistics[method].Start();
+			//ProcessorStatistics[method].Start();
 			MemoryStatistics[method].Start();
-			IOStatistics[method].Start();
+			//IOStatistics[method].Start();
 		}
 
 		private void StopStatistics(int method)
 		{
 			SpeedStatistics[method].Stop();
-			ProcessorStatistics[method].Stop();
+			//ProcessorStatistics[method].Stop();
 			MemoryStatistics[method].Stop();
-			IOStatistics[method].Stop();
+			//IOStatistics[method].Stop();
 		}
 
         #region Test Methods
@@ -414,7 +414,7 @@ namespace DatabaseBenchmark.Benchmarking
                 {
                     int index = (int)state;
                     int method = (int)TestMethod.Write;
-                    var flow = Wrap(flows[index], Cancellation.Token, SpeedStatistics[method], ProcessorStatistics[method], MemoryStatistics[method], IOStatistics[method]);
+                    var flow = Wrap(flows[index], Cancellation.Token, SpeedStatistics[method], MemoryStatistics[method]);
                     
                     Database.Write(index, flow);
 
@@ -429,7 +429,7 @@ namespace DatabaseBenchmark.Benchmarking
             Task task = Task.Factory.StartNew((state) =>
             {
                 int methodIndex = (int)state;
-                var flow = Wrap(Database.Read(), Cancellation.Token, SpeedStatistics[methodIndex], ProcessorStatistics[methodIndex], MemoryStatistics[methodIndex], IOStatistics[methodIndex]);
+                var flow = Wrap(Database.Read(), Cancellation.Token, SpeedStatistics[methodIndex], MemoryStatistics[methodIndex]);
 
                 bool ordered = true;
                 long previous = flow.First().Key;

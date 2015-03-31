@@ -44,19 +44,13 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageSpeed = new DatabaseBenchmark.Charts.LineChart();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.lineChartMomentSpeed = new DatabaseBenchmark.Charts.LineChart();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.lineChartAverageCPU = new DatabaseBenchmark.Charts.LineChart();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.lineChartAverageMemory = new DatabaseBenchmark.Charts.LineChart();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.lineChartAverageIO = new DatabaseBenchmark.Charts.LineChart();
             this.LayoutPanel.SuspendLayout();
             this.tabControlCharts.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.tabPage5.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
@@ -125,6 +119,7 @@ namespace DatabaseBenchmark.Frames
             this.barChartCPU.Name = "barChartCPU";
             this.barChartCPU.Size = new System.Drawing.Size(164, 271);
             this.barChartCPU.TabIndex = 3;
+            this.barChartCPU.Visible = false;
             // 
             // barChartMemory
             // 
@@ -141,6 +136,7 @@ namespace DatabaseBenchmark.Frames
             this.barChartIO.Name = "barChartIO";
             this.barChartIO.Size = new System.Drawing.Size(167, 271);
             this.barChartIO.TabIndex = 5;
+            this.barChartIO.Visible = false;
             // 
             // splitter1
             // 
@@ -156,9 +152,7 @@ namespace DatabaseBenchmark.Frames
             this.tabControlCharts.Alignment = System.Windows.Forms.TabAlignment.Bottom;
             this.tabControlCharts.Controls.Add(this.tabPage1);
             this.tabControlCharts.Controls.Add(this.tabPage2);
-            this.tabControlCharts.Controls.Add(this.tabPage5);
             this.tabControlCharts.Controls.Add(this.tabPage4);
-            this.tabControlCharts.Controls.Add(this.tabPage3);
             this.tabControlCharts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlCharts.Location = new System.Drawing.Point(0, 284);
             this.tabControlCharts.Name = "tabControlCharts";
@@ -216,30 +210,6 @@ namespace DatabaseBenchmark.Frames
             this.lineChartMomentSpeed.TabIndex = 0;
             this.lineChartMomentSpeed.Title = "";
             // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.lineChartAverageCPU);
-            this.tabPage5.Location = new System.Drawing.Point(4, 4);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1032, 242);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "CPU (Average)";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // lineChartAverageCPU
-            // 
-            this.lineChartAverageCPU.AxisXTitle = "";
-            this.lineChartAverageCPU.AxisYTitle = "";
-            this.lineChartAverageCPU.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lineChartAverageCPU.LegendVisible = true;
-            this.lineChartAverageCPU.Location = new System.Drawing.Point(3, 3);
-            this.lineChartAverageCPU.MinimumSize = new System.Drawing.Size(1, 1);
-            this.lineChartAverageCPU.Name = "lineChartAverageCPU";
-            this.lineChartAverageCPU.Size = new System.Drawing.Size(1026, 236);
-            this.lineChartAverageCPU.TabIndex = 0;
-            this.lineChartAverageCPU.Title = "";
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.lineChartAverageMemory);
@@ -248,7 +218,7 @@ namespace DatabaseBenchmark.Frames
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(1032, 242);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Memory (Average)";
+            this.tabPage4.Text = "Memory (Moment)";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // lineChartAverageMemory
@@ -263,29 +233,6 @@ namespace DatabaseBenchmark.Frames
             this.lineChartAverageMemory.Size = new System.Drawing.Size(1026, 236);
             this.lineChartAverageMemory.TabIndex = 0;
             this.lineChartAverageMemory.Title = "";
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.lineChartAverageIO);
-            this.tabPage3.Location = new System.Drawing.Point(4, 4);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1032, 242);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "I/O (Average)";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // lineChartAverageIO
-            // 
-            this.lineChartAverageIO.AxisXTitle = "";
-            this.lineChartAverageIO.AxisYTitle = "";
-            this.lineChartAverageIO.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lineChartAverageIO.LegendVisible = true;
-            this.lineChartAverageIO.Location = new System.Drawing.Point(0, 0);
-            this.lineChartAverageIO.MinimumSize = new System.Drawing.Size(1, 1);
-            this.lineChartAverageIO.Name = "lineChartAverageIO";
-            this.lineChartAverageIO.Size = new System.Drawing.Size(1032, 242);
-            this.lineChartAverageIO.TabIndex = 0;
-            this.lineChartAverageIO.Title = "";
             // 
             // StepFrame
             // 
@@ -306,9 +253,7 @@ namespace DatabaseBenchmark.Frames
             this.tabControlCharts.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -324,12 +269,8 @@ namespace DatabaseBenchmark.Frames
         private System.Windows.Forms.TabPage tabPage2;
         public LineChart lineChartAverageSpeed;
         public LineChart lineChartMomentSpeed;
-        private System.Windows.Forms.TabPage tabPage3;
-        public LineChart lineChartAverageIO;
         private System.Windows.Forms.TabPage tabPage4;
         public LineChart lineChartAverageMemory;
-        private System.Windows.Forms.TabPage tabPage5;
-        public LineChart lineChartAverageCPU;
         private BarChart barChartSpeed;
         private BarChart barChartTime;
         private BarChart barChartSize;

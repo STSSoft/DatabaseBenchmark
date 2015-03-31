@@ -156,16 +156,16 @@ namespace DatabaseBenchmark
                 Report(databaseName, databaseColor, updateChart, new DateTime(benchmark.GetTime(method).Ticks));
 
                 // CPU chart.
-                updateChart = ActiveStepFrame.AddCpuUsageToBar;
-                Report(databaseName, databaseColor, updateChart, benchmark.GetAverageProcessorTime(method));
+                //updateChart = ActiveStepFrame.AddCpuUsageToBar;
+                //Report(databaseName, databaseColor, updateChart, benchmark.GetAverageProcessorTime(method));
 
                 // Memory chart.
                 updateChart = ActiveStepFrame.AddMemoryUsageToBar;
                 Report(databaseName, databaseColor, updateChart, benchmark.GetPeakWorkingSet(method) / (1024.0 * 1024.0));
 
                 // I/O chart.
-                updateChart = ActiveStepFrame.AddIoUsageToBar;
-                Report(databaseName, databaseColor, updateChart, benchmark.GetAverageIOData(method) / (1024.0 * 1024.0));
+                //updateChart = ActiveStepFrame.AddIoUsageToBar;
+                //Report(databaseName, databaseColor, updateChart, benchmark.GetAverageIOData(method) / (1024.0 * 1024.0));
             }
             catch (Exception exc)
             {
@@ -650,15 +650,15 @@ namespace DatabaseBenchmark
 
                     var averageSpeedData = session.GetAverageSpeed(method, averagePossition);
                     var momentSpeedData = session.GetMomentSpeed(method, momentPossition);
-                    var cpuData = session.GetAverageUserTimeProcessor(method, averagePossition);
+                    //var cpuData = session.GetAverageUserTimeProcessor(method, averagePossition);
                     var memoryData = session.GetAverageWorkingSet(method, averagePossition);
-                    var ioData = session.GetAverageDataIO(method, averagePossition);
+                    //var ioData = session.GetAverageDataIO(method, averagePossition);
 
                     activeFrame.AddAverageSpeed(database.Name, averageSpeedData);
                     activeFrame.AddMomentSpeed(database.Name, momentSpeedData);
-                    activeFrame.AddAverageCpuUsage(database.Name, cpuData);
+                    //activeFrame.AddAverageCpuUsage(database.Name, cpuData);
                     activeFrame.AddAverageMemoryUsage(database.Name, memoryData);
-                    activeFrame.AddAverageIO(database.Name, ioData);
+                    //activeFrame.AddAverageIO(database.Name, ioData);
                 }
 
                 if (Math.Abs(progress - 0.0) <= double.Epsilon)
