@@ -712,5 +712,26 @@ namespace DatabaseBenchmark
                     return base.ProcessCmdKey(ref msg, keyData);
             }
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            string[] args = System.Environment.GetCommandLineArgs();
+
+            for (int i = 0; i <= args.Length - 1; i++)
+            {
+                if (args[i].EndsWith(".dbproj"))
+                {
+                    string filePath = args[i];
+                    LoadingForm.Start("Loading project...", Bounds);
+
+                    ApplicationManager.Load(filePath);
+                    Text = String.Format("{0} - Database Benchmark", Path.GetFileName(filePath));
+                    saveConfigurationToolStripMenuItem.Enabled = true;
+
+                    LoadingForm.Stop();
+                    break;
+                }
+            }
+        }
     }
 }

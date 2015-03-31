@@ -30,15 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.linkLabelRepository = new System.Windows.Forms.LinkLabel();
             this.logoPictureBox = new System.Windows.Forms.PictureBox();
             this.labelProductName = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.labelCopyright = new System.Windows.Forms.Label();
-            this.labelCompanyName = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.labelCompanyName = new System.Windows.Forms.Label();
             this.linkLabelWebsite = new System.Windows.Forms.LinkLabel();
-            this.linkLabelRepository = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -71,6 +71,17 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(896, 261);
             this.tableLayoutPanel.TabIndex = 1;
+            // 
+            // linkLabelRepository
+            // 
+            this.linkLabelRepository.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.linkLabelRepository.Location = new System.Drawing.Point(239, 100);
+            this.linkLabelRepository.Name = "linkLabelRepository";
+            this.linkLabelRepository.Size = new System.Drawing.Size(654, 20);
+            this.linkLabelRepository.TabIndex = 27;
+            this.linkLabelRepository.TabStop = true;
+            this.linkLabelRepository.Text = "Code repository";
+            this.linkLabelRepository.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // logoPictureBox
             // 
@@ -120,18 +131,6 @@
             this.labelCopyright.Text = "Copyright";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelCompanyName
-            // 
-            this.labelCompanyName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelCompanyName.Location = new System.Drawing.Point(242, 60);
-            this.labelCompanyName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
-            this.labelCompanyName.MaximumSize = new System.Drawing.Size(0, 17);
-            this.labelCompanyName.Name = "labelCompanyName";
-            this.labelCompanyName.Size = new System.Drawing.Size(651, 17);
-            this.labelCompanyName.TabIndex = 22;
-            this.labelCompanyName.Text = "Company Name";
-            this.labelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -154,6 +153,18 @@
             this.textBox1.TabIndex = 25;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
+            // labelCompanyName
+            // 
+            this.labelCompanyName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelCompanyName.Location = new System.Drawing.Point(242, 60);
+            this.labelCompanyName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.labelCompanyName.MaximumSize = new System.Drawing.Size(0, 17);
+            this.labelCompanyName.Name = "labelCompanyName";
+            this.labelCompanyName.Size = new System.Drawing.Size(651, 17);
+            this.labelCompanyName.TabIndex = 22;
+            this.labelCompanyName.Text = "Company Name";
+            this.labelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // linkLabelWebsite
             // 
             this.linkLabelWebsite.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -164,17 +175,6 @@
             this.linkLabelWebsite.TabStop = true;
             this.linkLabelWebsite.Text = "Website";
             this.linkLabelWebsite.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // linkLabelRepository
-            // 
-            this.linkLabelRepository.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.linkLabelRepository.Location = new System.Drawing.Point(239, 100);
-            this.linkLabelRepository.Name = "linkLabelRepository";
-            this.linkLabelRepository.Size = new System.Drawing.Size(654, 20);
-            this.linkLabelRepository.TabIndex = 27;
-            this.linkLabelRepository.TabStop = true;
-            this.linkLabelRepository.Text = "Code repository";
-            this.linkLabelRepository.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // AboutBox
             // 
