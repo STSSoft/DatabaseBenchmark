@@ -773,14 +773,13 @@ namespace DatabaseBenchmark
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            string[] args = System.Environment.GetCommandLineArgs();
+            string[] args = Environment.GetCommandLineArgs();
 
-            for (int i = 0; i <= args.Length - 1; i++)
+            foreach(var arg in args)
             {
-                if (args[i].EndsWith(".dbproj"))
+                if (arg.EndsWith(".dbproj"))
                 {
-                    LoadFromFile(args[i]);
-                   
+                    LoadFromFile(arg);
                     break;
                 }
             }
