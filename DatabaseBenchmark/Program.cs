@@ -24,8 +24,12 @@ namespace DatabaseBenchmark
         {
             string extension = ".dbproj";
 
-            if (!FileAssociations.Exists(extension) && IsAdministrator())
-                FileAssociations.Create(extension, "DatabaseBenchmark");
+            try
+            {
+                if (!FileAssociations.Exists(extension) && IsAdministrator())
+                    FileAssociations.Create(extension, "DatabaseBenchmark");
+            }
+            catch { }
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
