@@ -78,6 +78,7 @@ namespace DatabaseBenchmark
             openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
             saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
 
+            WireDragDrop(Controls);
             this.ResumeLayout();
         }
 
@@ -577,6 +578,55 @@ namespace DatabaseBenchmark
 
         #endregion
 
+        #region Drag Drop Events
+
+        private void WireDragDrop(Control.ControlCollection ctls)
+        {
+            foreach (Control ctl in ctls)
+            {
+                ctl.AllowDrop = true;
+                ctl.DragEnter += MainForm_DragEnter;
+                ctl.DragDrop += MainForm_DragDrop;
+                WireDragDrop(ctl.Controls);
+            }
+        }
+
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+
+                foreach (string item in (string[])e.Data.GetData(DataFormats.FileDrop))
+                {
+                    if (!item.Contains(".dbproj"))
+                    {
+                        e.Effect = DragDropEffects.None;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            LoadFromFile(files[0]);
+        }
+
+        private void LoadFromFile(string path)
+        {
+            LoadingForm.Start("Loading project...", Bounds);
+
+            ApplicationManager.Load(path);
+            Text = String.Format("{0} - Database Benchmark", Path.GetFileName(path));
+            saveConfigurationToolStripMenuItem.Enabled = true;
+
+            LoadingForm.Stop();
+        }
+
+        #endregion
+
         private void ReportError(string error)
         {
             MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -721,14 +771,8 @@ namespace DatabaseBenchmark
             {
                 if (args[i].EndsWith(".dbproj"))
                 {
-                    string filePath = args[i];
-                    LoadingForm.Start("Loading project...", Bounds);
-
-                    ApplicationManager.Load(filePath);
-                    Text = String.Format("{0} - Database Benchmark", Path.GetFileName(filePath));
-                    saveConfigurationToolStripMenuItem.Enabled = true;
-
-                    LoadingForm.Stop();
+                    LoadFromFile(args[i]);
+                   
                     break;
                 }
             }
