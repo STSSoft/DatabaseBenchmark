@@ -226,13 +226,7 @@ namespace DatabaseBenchmark.Serialization
         {
             // TODO: Finding another way to restore the docking. 
             foreach (var item in StepFrames)
-                item.Value.Dispose();
-
-            foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
-            {
-                StepFrames[method] = CreateStepFrame(method);
-                SelectFrame(method);
-            }
+                item.Value.DockState = DockState.Document;
         }
         #endregion
     }
