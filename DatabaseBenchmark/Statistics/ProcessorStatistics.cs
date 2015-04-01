@@ -45,6 +45,14 @@ namespace DatabaseBenchmark.Statistics
         }
 
         /// <summary>
+        /// Stops monitoring the processor activity.
+        /// </summary>
+        public void Stop()
+        {
+            cpuMonitor.Stop();
+        }
+
+        /// <summary>
         /// Adds a statistic entry.
         /// </summary>
         public void Add()
@@ -63,13 +71,19 @@ namespace DatabaseBenchmark.Statistics
         }
 
         /// <summary>
-        /// Stops monitoring the processor activity.
+        /// Resets the statistics.
         /// </summary>
-        public void Stop()
+        public void Reset()
         {
-            cpuMonitor.Stop();
-        }
+            count = 0;
 
+            privilegedTime.Clear();
+            processorTime.Clear();
+            userTime.Clear();
+
+            cpuMonitor.Reset();
+        }
+     
         public float MomentPrivilegedTime
         {
             get

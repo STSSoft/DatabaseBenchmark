@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Diagnostics;
+using DatabaseBenchmark.Properties;
 
 /*
  * Copyright (c) 2010-2015 STS Soft SC
@@ -60,16 +61,18 @@ namespace DatabaseBenchmark
 
             History = new List<BenchmarkTest>();
 
+            // Logger.
+            Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
+            Logger.Info(Environment.NewLine);
+            Logger.Info("Application started...");
+
             this.SuspendLayout();
 
             toolStripMain.Items.Insert(toolStripMain.Items.Count - 2, new ToolStripControlHost(trackBar1));
 
-            // Logger.
-            Logger = LogManager.GetLogger(Properties.Settings.Default.ApplicationLogger);
-
-            ApplicationManager = new ProjectManager(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1, CONFIGURATION_FOLDER);
-
             // Load dock and application configuration.
+            ApplicationManager = new ProjectManager(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1, CONFIGURATION_FOLDER);
+            
             ApplicationManager.Load(string.Empty);
             ApplicationManager.LoadDocking();
 
@@ -81,6 +84,7 @@ namespace DatabaseBenchmark
             saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
 
             WireDragDrop(Controls);
+
             this.ResumeLayout();
         }
 
@@ -324,7 +328,6 @@ namespace DatabaseBenchmark
             ApplicationManager.Prepare();
 
             // Start the benchmark.
-            Logger.Info("Tests started...");
             MainTask = Task.Factory.StartNew(DoBenchmark, Cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
@@ -334,7 +337,7 @@ namespace DatabaseBenchmark
                 return;
 
             Cancellation.Cancel();
-            ApplicationManager.Prepare();
+            ApplicationManager.ClearCharts();
         }
 
         private void View_Click(object sender, EventArgs e)
@@ -717,7 +720,7 @@ namespace DatabaseBenchmark
                     activeFrame.AddAverageSpeed(database.Name, averageSpeedData);
                     activeFrame.AddMomentSpeed(database.Name, momentSpeedData);
                     //activeFrame.AddAverageCpuUsage(database.Name, cpuData);
-                    activeFrame.AddAverageMemoryUsage(database.Name, memoryData);
+                    activeFrame.AddPeakMemoryUsage(database.Name, memoryData);
                     //activeFrame.AddAverageIO(database.Name, ioData);
                 }
 
@@ -750,7 +753,7 @@ namespace DatabaseBenchmark
             stopButton_Click(sender, e);
             ApplicationManager.StoreDocking();
 
-            Application.Exit();
+            Environment.Exit(0);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

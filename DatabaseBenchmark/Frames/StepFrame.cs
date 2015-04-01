@@ -33,7 +33,7 @@ namespace DatabaseBenchmark.Frames
             barChartSize.Title = "Size (MB)";
             barChartTime.Title = "Time (hh:mm:ss)";
             barChartCPU.Title = "CPU usage (%)";
-            barChartMemory.Title = "Peak Memory usage (MB)";
+            barChartMemory.Title = "Peak Memory (MB)";
             barChartIO.Title = "IO Data (MB/sec)";
 
             // Line charts.
@@ -69,9 +69,9 @@ namespace DatabaseBenchmark.Frames
             barChartSpeed.Clear();
             barChartTime.Clear();
             barChartSize.Clear();
-            barChartCPU.Clear();
+            //barChartCPU.Clear();
             barChartMemory.Clear();
-            barChartIO.Clear();
+            //barChartIO.Clear();
         }
 
         #region Add points to LineChart
@@ -94,7 +94,7 @@ namespace DatabaseBenchmark.Frames
             //    lineChartAverageCPU.AddPoint(series, item.Key, item.Value);
         }
 
-        public void AddAverageMemoryUsage(string series, IEnumerable<KeyValuePair<long, double>> data)
+        public void AddPeakMemoryUsage(string series, IEnumerable<KeyValuePair<long, double>> data)
         {
             foreach (var item in data)
                 lineChartMomentMemory.AddPoint(series, item.Key, item.Value / (1024.0 * 1024.0));

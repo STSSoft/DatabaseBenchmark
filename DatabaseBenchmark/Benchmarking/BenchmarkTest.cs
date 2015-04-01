@@ -80,6 +80,17 @@ namespace DatabaseBenchmark.Benchmarking
 			MemoryStatistics[method].Stop();
 		}
 
+        private void ResetStatistics()
+        {
+            int length = Enum.GetValues(typeof(TestMethod)).Length - 1;
+
+            for (int i = 0; i < length; i++)
+            {
+                SpeedStatistics[i].Reset();
+                MemoryStatistics[i].Reset();
+            }
+        }
+
         #region Test Methods
 
         public void Init()
@@ -105,7 +116,7 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public void Write()
         {
-            if (Cancellation.Token.IsCancellationRequested)
+            if (Cancellation.IsCancellationRequested)
                 return;
 
             CurrentMethod = TestMethod.Write;
@@ -117,12 +128,16 @@ namespace DatabaseBenchmark.Benchmarking
 
             try
             {
-				StartStatistics(method);
+                StartStatistics(method);
 
-				Task[] tasks = DoWrite(flows);
+                Task[] tasks = DoWrite(flows);
                 Task.WaitAll(tasks, Cancellation.Token);
 
                 DatabaseSize = Database.Size;
+            }
+            catch (OperationCanceledException)
+            {
+                ResetStatistics();
             }
             finally
             {
@@ -137,7 +152,7 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public void Read()
         {
-            if (Cancellation.Token.IsCancellationRequested)
+            if (Cancellation.IsCancellationRequested)
                 return;
 
             CurrentMethod = TestMethod.Read;
@@ -145,12 +160,16 @@ namespace DatabaseBenchmark.Benchmarking
 
             try
             {
-				StartStatistics(method);
+                StartStatistics(method);
 
-				Task task = DoRead(TestMethod.Read);
+                Task task = DoRead(TestMethod.Read);
                 Task.WaitAll(new Task[] { task }, Cancellation.Token);
 
                 DatabaseSize = Database.Size;
+            }
+            catch (OperationCanceledException)
+            {
+                ResetStatistics();
             }
             finally
             {
@@ -165,7 +184,7 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public void SecondaryRead()
         {
-            if (Cancellation.Token.IsCancellationRequested)
+            if (Cancellation.IsCancellationRequested)
                 return;
 
             CurrentMethod = TestMethod.SecondaryRead;
@@ -173,12 +192,16 @@ namespace DatabaseBenchmark.Benchmarking
 
             try
             {
-				StartStatistics(method);
+                StartStatistics(method);
 
-				Task task = DoRead(TestMethod.SecondaryRead);
+                Task task = DoRead(TestMethod.SecondaryRead);
                 Task.WaitAll(new Task[] { task }, Cancellation.Token);
 
                 DatabaseSize = Database.Size;
+            }
+            catch (OperationCanceledException)
+            {
+                ResetStatistics();
             }
             finally
             {
@@ -216,9 +239,6 @@ namespace DatabaseBenchmark.Benchmarking
 
         public TimeSpan GetTime(TestMethod method)
         {
-            if (SpeedStatistics == null)
-                return TimeSpan.Zero;
-
             lock (SpeedStatistics)
             {
                 return SpeedStatistics[(int)method].Time;
@@ -227,9 +247,6 @@ namespace DatabaseBenchmark.Benchmarking
 
         public double GetSpeed(TestMethod method)
         {
-            if (SpeedStatistics == null)
-                return 0;
-
             lock (SpeedStatistics)
             {
                 return SpeedStatistics[(int)method].Speed;
@@ -238,9 +255,6 @@ namespace DatabaseBenchmark.Benchmarking
 
         public long GetRecords(TestMethod method)
         {
-            if (SpeedStatistics == null)
-                return 0;
-
             lock (SpeedStatistics)
             {
                 return SpeedStatistics[(int)method].Count;
@@ -249,9 +263,6 @@ namespace DatabaseBenchmark.Benchmarking
 
         public float GetAverageProcessorTime(TestMethod method)
         {
-            if (ProcessorStatistics == null)
-                return 0;
-
             lock (ProcessorStatistics)
             {
                 return ProcessorStatistics[(int)method].MomentProcessorTime;
@@ -260,9 +271,6 @@ namespace DatabaseBenchmark.Benchmarking
 
         public float GetPeakWorkingSet(TestMethod method)
         {
-            if (MemoryStatistics == null)
-                return 0;
-
             lock (MemoryStatistics)
             {
                 return MemoryStatistics[(int)method].PeakWorkingSet;
@@ -271,9 +279,6 @@ namespace DatabaseBenchmark.Benchmarking
 
         public float GetAverageIOData(TestMethod method)
         {
-            if (IOStatistics == null)
-                return 0;
-
             lock (IOStatistics)
             {
                 return IOStatistics[(int)method].MomentIOData;
@@ -285,9 +290,6 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public IEnumerable<KeyValuePair<long, double>> GetAverageSpeed(TestMethod method, int position)
         {
-            if (SpeedStatistics == null)
-                yield return new KeyValuePair<long, double>(0,0);
-
             lock (SpeedStatistics)
             {
                 var array = SpeedStatistics[(int)method].RecordTime;
@@ -311,9 +313,6 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public IEnumerable<KeyValuePair<long, double>> GetMomentSpeed(TestMethod method, int position)
         {
-            if (SpeedStatistics == null)
-                yield return new KeyValuePair<long, double>(0, 0);
-
             lock (SpeedStatistics)
             {
                 var array = SpeedStatistics[(int)method].RecordTime;
@@ -338,9 +337,6 @@ namespace DatabaseBenchmark.Benchmarking
 
         public IEnumerable<KeyValuePair<long, double>> GetAverageUserTimeProcessor(TestMethod method, int position)
         {
-            if (ProcessorStatistics == null)
-                yield return new KeyValuePair<long, double>(0, 0);
-
             lock (ProcessorStatistics)
             {
                 var array = ProcessorStatistics[(int)method].MomentUserTimeStats.ToArray();

@@ -8,7 +8,7 @@ namespace DatabaseBenchmark.Statistics
     /// </summary>
     public class MemoryStatistics : IStatistic
     {
-        private readonly MemoryMonitor monitor = new MemoryMonitor();
+        private readonly MemoryMonitor memoryMonitor = new MemoryMonitor();
 
         private long count;
 
@@ -40,7 +40,15 @@ namespace DatabaseBenchmark.Statistics
         /// </summary>
         public void Start()
         {
-            monitor.Start();
+            memoryMonitor.Start();
+        }
+
+        /// <summary>
+        /// Stops monitoring the memory activity.
+        /// </summary>
+        public void Stop()
+        {
+            memoryMonitor.Stop();
         }
 
         /// <summary>
@@ -52,33 +60,39 @@ namespace DatabaseBenchmark.Statistics
 
             if (count % Step == 0)
             {
-                pagedMemory.Add(new KeyValuePair<long, float>(count, monitor.PagedMemory));
-                virtualMemory.Add(new KeyValuePair<long, float>(count, monitor.VirtualMemory));
-                workingSet.Add(new KeyValuePair<long, float>(count, monitor.WorkingSet));
+                pagedMemory.Add(new KeyValuePair<long, float>(count, memoryMonitor.PagedMemory));
+                virtualMemory.Add(new KeyValuePair<long, float>(count, memoryMonitor.VirtualMemory));
+                workingSet.Add(new KeyValuePair<long, float>(count, memoryMonitor.WorkingSet));
             }
         }
 
         /// <summary>
-        /// Stops monitoring the memory activity.
+        /// Resets the statistics.
         /// </summary>
-        public void Stop()
+        public void Reset()
         {
-            monitor.Stop();
+            count = 0;
+
+            pagedMemory.Clear();
+            virtualMemory.Clear();
+            workingSet.Clear();
+
+            memoryMonitor.Reset();
         }
 
         public float PeakPagedMemory
         {
-            get { return monitor.PeakPagedMemory; }
+            get { return memoryMonitor.PeakPagedMemory; }
         }
 
         public float PeakVirtualMemory
         {
-            get { return monitor.PeakVirtualMemory; }
+            get { return memoryMonitor.PeakVirtualMemory; }
         }
 
         public float PeakWorkingSet
         {
-            get { return monitor.PeakWorkingSet; }
+            get { return memoryMonitor.PeakWorkingSet; }
         }
 
         /// <summary>

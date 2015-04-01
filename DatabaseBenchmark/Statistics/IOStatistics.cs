@@ -44,6 +44,14 @@ namespace DatabaseBenchmark.Statistics
         }
 
         /// <summary>
+        /// Stops monitoring the I/O activity.
+        /// </summary>
+        public void Stop()
+        {
+            ioMonitor.Stop();
+        }
+
+        /// <summary>
         /// Adds a statistic entry.
         /// </summary>
         public void Add()
@@ -59,11 +67,17 @@ namespace DatabaseBenchmark.Statistics
         }
 
         /// <summary>
-        /// Stops monitoring the I/O activity.
+        /// Resets the statistics.
         /// </summary>
-        public void Stop()
+        public void Reset()
         {
-            ioMonitor.Stop();
+            count = 0;
+
+            writeIO.Clear();
+            readIO.Clear();
+            dataIO.Clear();
+
+            ioMonitor.Reset();
         }
 
         public float MomentIOWrite
@@ -115,6 +129,6 @@ namespace DatabaseBenchmark.Statistics
                 foreach (var item in dataIO)
                     yield return item;
             }
-        } 
+        }
     }
 }

@@ -7,6 +7,8 @@ namespace DatabaseBenchmark.Statistics
 
         void Start();
         void Stop();
+
         void Add();
+        void Reset();
     }
 }
