@@ -165,11 +165,6 @@ namespace DatabaseBenchmark.Serialization
             LogFrame.Clear();
         }
 
-        public bool IsSelectedTreeViewNode
-        {
-            get { return TreeView.IsSelectedBenchamrkNode; }
-        }
-
         # region Private members
 
         private void CreateTreeView()
