@@ -64,7 +64,9 @@ namespace DatabaseBenchmark.Benchmarking
             finally
             {
                 Current = null;
-                OnTestFinish(test, TestMethod.Write);
+
+                if(OnTestFinish != null)
+                    OnTestFinish(test, TestMethod.Write);
             }
         }
 
@@ -92,7 +94,9 @@ namespace DatabaseBenchmark.Benchmarking
             finally
             {
                 Current = null;
-                OnTestFinish(test, TestMethod.Read);
+
+                if(OnTestFinish != null)
+                    OnTestFinish(test, TestMethod.Read);
             }
         }
 
@@ -120,7 +124,9 @@ namespace DatabaseBenchmark.Benchmarking
             finally
             {
                 Current = null;
-                OnTestFinish(test, TestMethod.SecondaryRead);
+
+                if(OnTestFinish != null)
+                    OnTestFinish(test, TestMethod.SecondaryRead);
             }
         }
 

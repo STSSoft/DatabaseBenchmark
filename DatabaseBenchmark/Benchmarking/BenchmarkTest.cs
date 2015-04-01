@@ -115,6 +115,9 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public void Write()
         {
+            if (Cancellation.Token.IsCancellationRequested)
+                return;
+
             CurrentMethod = TestMethod.Write;
             int method = (int)CurrentMethod;
 
@@ -142,6 +145,9 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public void Read()
         {
+            if (Cancellation.Token.IsCancellationRequested)
+                return;
+
             CurrentMethod = TestMethod.Read;
             int method = (int)CurrentMethod;
 
@@ -165,6 +171,9 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public void SecondaryRead()
         {
+            if (Cancellation.Token.IsCancellationRequested)
+                return;
+
             CurrentMethod = TestMethod.SecondaryRead;
             int method = (int)CurrentMethod;
 
@@ -185,6 +194,9 @@ namespace DatabaseBenchmark.Benchmarking
 
         public void Finish()
         {
+            if (Cancellation.Token.IsCancellationRequested)
+                return;
+
             DatabaseSize = Database.Size;
 
 			int method = (int)TestMethod.SecondaryRead;
@@ -208,6 +220,9 @@ namespace DatabaseBenchmark.Benchmarking
 
         public TimeSpan GetTime(TestMethod method)
         {
+            if (SpeedStatistics == null)
+                return TimeSpan.Zero;
+
             lock (SpeedStatistics)
             {
                 return SpeedStatistics[(int)method].Time;
@@ -216,6 +231,9 @@ namespace DatabaseBenchmark.Benchmarking
 
         public double GetSpeed(TestMethod method)
         {
+            if (SpeedStatistics == null)
+                return 0;
+
             lock (SpeedStatistics)
             {
                 return SpeedStatistics[(int)method].Speed;
@@ -224,6 +242,9 @@ namespace DatabaseBenchmark.Benchmarking
 
         public long GetRecords(TestMethod method)
         {
+            if (SpeedStatistics == null)
+                return 0;
+
             lock (SpeedStatistics)
             {
                 return SpeedStatistics[(int)method].Count;
@@ -232,6 +253,9 @@ namespace DatabaseBenchmark.Benchmarking
 
         public float GetAverageProcessorTime(TestMethod method)
         {
+            if (ProcessorStatistics == null)
+                return 0;
+
             lock (ProcessorStatistics)
             {
                 return ProcessorStatistics[(int)method].MomentProcessorTime;
@@ -240,6 +264,9 @@ namespace DatabaseBenchmark.Benchmarking
 
         public float GetPeakWorkingSet(TestMethod method)
         {
+            if (MemoryStatistics == null)
+                return 0;
+
             lock (MemoryStatistics)
             {
                 return MemoryStatistics[(int)method].PeakWorkingSet;
@@ -248,6 +275,9 @@ namespace DatabaseBenchmark.Benchmarking
 
         public float GetAverageIOData(TestMethod method)
         {
+            if (IOStatistics == null)
+                return 0;
+
             lock (IOStatistics)
             {
                 return IOStatistics[(int)method].MomentIOData;
@@ -259,6 +289,9 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public IEnumerable<KeyValuePair<long, double>> GetAverageSpeed(TestMethod method, int position)
         {
+            if (SpeedStatistics == null)
+                yield return new KeyValuePair<long, double>(0,0);
+
             lock (SpeedStatistics)
             {
                 var array = SpeedStatistics[(int)method].RecordTime;
@@ -282,6 +315,9 @@ namespace DatabaseBenchmark.Benchmarking
         /// </summary>
         public IEnumerable<KeyValuePair<long, double>> GetMomentSpeed(TestMethod method, int position)
         {
+            if (SpeedStatistics == null)
+                yield return new KeyValuePair<long, double>(0, 0);
+
             lock (SpeedStatistics)
             {
                 var array = SpeedStatistics[(int)method].RecordTime;
@@ -306,6 +342,9 @@ namespace DatabaseBenchmark.Benchmarking
 
         public IEnumerable<KeyValuePair<long, double>> GetAverageUserTimeProcessor(TestMethod method, int position)
         {
+            if (ProcessorStatistics == null)
+                yield return new KeyValuePair<long, double>(0, 0);
+
             lock (ProcessorStatistics)
             {
                 var array = ProcessorStatistics[(int)method].MomentUserTimeStats.ToArray();
@@ -375,9 +414,10 @@ namespace DatabaseBenchmark.Benchmarking
 
         private IEnumerable<KeyValuePair<long, Tick>> GetFlow()
         {
-            // TODO: Remove this workaround at some point.
-            Thread.Sleep(10); // Ensures different seed for the generators.
-            SemiRandomGenerator generator = new SemiRandomGenerator(Randomness);
+            Random random1 = new Random();
+            Random random2 = new Random();
+
+            SemiRandomGenerator generator = new SemiRandomGenerator(random1.Next(), random2.Next(), Randomness);
             
             return TicksGenerator.GetFlow(RecordCount, generator);
         }

@@ -59,8 +59,9 @@ namespace DatabaseBenchmark
 
             History = new List<BenchmarkTest>();
 
-            toolStripMain.Items.Insert(toolStripMain.Items.Count - 2, new ToolStripControlHost(trackBar1));
             this.SuspendLayout();
+
+            toolStripMain.Items.Insert(toolStripMain.Items.Count - 2, new ToolStripControlHost(trackBar1));
 
             // Logger.
             Logger = LogManager.GetLogger(Properties.Settings.Default.ApplicationLogger);
@@ -144,7 +145,7 @@ namespace DatabaseBenchmark
 
                 // Size chart.
                 updateChart = ActiveStepFrame.AddSizeToBar;
-                Report(databaseName, databaseColor, updateChart, benchmark.Database.Size / (1024.0 * 1024.0));
+                Report(databaseName, databaseColor, updateChart, benchmark.DatabaseSize / (1024.0 * 1024.0));
 
                 // Time chart.
                 updateChart = ActiveStepFrame.AddTimeToBar;
@@ -328,6 +329,7 @@ namespace DatabaseBenchmark
                 return;
 
             Cancellation.Cancel();
+            ApplicationManager.Prepare();
         }
 
         private void View_Click(object sender, EventArgs e)
