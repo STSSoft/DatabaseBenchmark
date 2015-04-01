@@ -11,7 +11,7 @@ namespace DatabaseBenchmark
 {
     static class Program
     {
-        public static bool IsAdministrator()
+        static bool IsAdministrator()
         {
             return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
         }
@@ -22,9 +22,10 @@ namespace DatabaseBenchmark
         [STAThread]
         static void Main()
         {
-            if (!FileAssociations.Exists(".dbproj") && IsAdministrator())
-                FileAssociations.Create(".dbproj", "DatabaseBenchmark", "Database Benchmark is a powerfull open source tool designed to stress test databases with large data flows.",
-                   Path.Combine(Application.StartupPath, "Resources\\logo_01.png"), Path.Combine(Application.StartupPath, "DatabaseBenchmark.exe"), "DatabaseBenchmark");
+            string extension = ".dbproj";
+
+            if (!FileAssociations.Exists(extension) && IsAdministrator())
+                FileAssociations.Create(extension, "DatabaseBenchmark");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

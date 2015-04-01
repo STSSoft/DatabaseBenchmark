@@ -1,31 +1,27 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DatabaseBenchmark
 {
     public static class FileAssociations
     {
-        public static void Create(string extension, string progID, string description, string iconPath, string applicationPath, params string[] openWith)
+        public static void Create(string extension, params string[] openWith)
         {
-            if (progID == null)
-                throw new ArgumentException("progID = null");
-
-            if (description == null)
-                throw new ArgumentException("description = null");
-
-            if (iconPath == null)
-                throw new ArgumentException("iconPath = null");
-
-            if (applicationPath == null)
-                throw new ArgumentException("applicationPath = null");
+            string progID = "DatabaseBenchmark";
+            string description = "Database Benchmark is a powerfull open source tool designed to stress test databases with large data flows.";
+            string iconPath = Path.Combine(Application.StartupPath, "Resources\\logo_01.png");
+            string applicationPath = Path.Combine(Application.StartupPath, "DatabaseBenchmark.exe");
 
             Registry.ClassesRoot.CreateSubKey(extension).SetValue("", progID);
             RegistryKey key = Registry.ClassesRoot.CreateSubKey(progID, RegistryKeyPermissionCheck.ReadWriteSubTree);
+
             key.SetValue("", description, RegistryValueKind.String);
             key.CreateSubKey("DefaultIcon").SetValue("", iconPath, RegistryValueKind.String);
             key.CreateSubKey(@"Shell\Open\Command").SetValue("", applicationPath + " %1", RegistryValueKind.String);
