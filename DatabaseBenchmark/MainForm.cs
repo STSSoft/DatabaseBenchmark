@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using System.Diagnostics;
 
 /*
  * Copyright (c) 2010-2015 STS Soft SC
@@ -94,6 +95,9 @@ namespace DatabaseBenchmark
             {
                 foreach (var benchmark in History)
                 {
+                    if (Cancellation.IsCancellationRequested)
+                        break;
+
                     Current = benchmark;
                     testSuite.ExecuteInit(benchmark);
 
@@ -745,6 +749,8 @@ namespace DatabaseBenchmark
         {
             stopButton_Click(sender, e);
             ApplicationManager.StoreDocking();
+
+            Application.Exit();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

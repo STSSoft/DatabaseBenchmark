@@ -61,14 +61,8 @@ namespace DatabaseBenchmark.Benchmarking
                 SpeedStatistics[i] = new SpeedStatistics(INTERVAL_COUNT);
                 SpeedStatistics[i].Step = step;
 
-                //ProcessorStatistics[i] = new ProcessorStatistics(INTERVAL_COUNT);
-                //ProcessorStatistics[i].Step = step;
-
                 MemoryStatistics[i] = new MemoryStatistics(INTERVAL_COUNT);
                 MemoryStatistics[i].Step = step;
-
-                //IOStatistics[i] = new IOStatistics(INTERVAL_COUNT);
-                //IOStatistics[i].Step = step;
             }
 
             Cancellation = cancellation;
@@ -77,17 +71,13 @@ namespace DatabaseBenchmark.Benchmarking
 		private void StartStatistics(int method)
 		{
 			SpeedStatistics[method].Start();
-			//ProcessorStatistics[method].Start();
 			MemoryStatistics[method].Start();
-			//IOStatistics[method].Start();
 		}
 
 		private void StopStatistics(int method)
 		{
 			SpeedStatistics[method].Stop();
-			//ProcessorStatistics[method].Stop();
 			MemoryStatistics[method].Stop();
-			//IOStatistics[method].Stop();
 		}
 
         #region Test Methods
@@ -131,6 +121,8 @@ namespace DatabaseBenchmark.Benchmarking
 
 				Task[] tasks = DoWrite(flows);
                 Task.WaitAll(tasks, Cancellation.Token);
+
+                DatabaseSize = Database.Size;
             }
             finally
             {
@@ -157,6 +149,8 @@ namespace DatabaseBenchmark.Benchmarking
 
 				Task task = DoRead(TestMethod.Read);
                 Task.WaitAll(new Task[] { task }, Cancellation.Token);
+
+                DatabaseSize = Database.Size;
             }
             finally
             {
@@ -183,6 +177,8 @@ namespace DatabaseBenchmark.Benchmarking
 
 				Task task = DoRead(TestMethod.SecondaryRead);
                 Task.WaitAll(new Task[] { task }, Cancellation.Token);
+
+                DatabaseSize = Database.Size;
             }
             finally
             {
@@ -194,10 +190,10 @@ namespace DatabaseBenchmark.Benchmarking
 
         public void Finish()
         {
-            if (Cancellation.Token.IsCancellationRequested)
-                return;
-
-            DatabaseSize = Database.Size;
+            if (Cancellation.IsCancellationRequested)
+                DatabaseSize = 0;
+            else
+                DatabaseSize = Database.Size;
 
 			int method = (int)TestMethod.SecondaryRead;
 
