@@ -19,9 +19,9 @@ namespace DatabaseBenchmark.Serialization
     public class ProjectManager
     {
         private ILog Logger;
+        private LayoutManager LayoutManager;
         private volatile TestMethod CurrentMethod;
 
-        public LayoutManager LayoutManager { get; private set; }
         public string DockConfigPath { get; private set; }
 
         public ProjectManager(DockPanel panel, ToolStripComboBox[] comboBoxes, TrackBar trackBar, string path)
@@ -135,12 +135,17 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
+        public void ResetDocking()
+        {
+            LayoutManager.ResetDocking();
+        }
+
         public void SetCurrentMethod(TestMethod method)
         {
             CurrentMethod = method;
         }
 
-        public StepFrame GetActiveStepFrame()
+        public StepFrame GetCurrentStepFrame()
         {
             return LayoutManager.StepFrames[CurrentMethod];
         }
@@ -148,6 +153,26 @@ namespace DatabaseBenchmark.Serialization
         public StepFrame GetSelectedStepFrame()
         {
             return LayoutManager.GetActiveStepFrame();
+        }
+
+        public void ShowStepFrame(TestMethod method)
+        {
+            LayoutManager.SelectFrame(method);
+        }
+
+        public void ShowBarChart(int column, bool visible)
+        {
+            LayoutManager.ShowBarChart(column, visible);
+        }
+
+        public void SelectTreeView(bool visible)
+        {
+            LayoutManager.SelectTreeView(visible);
+        }
+
+        public void ShowLogFrame()
+        {
+            LayoutManager.ShowLogFrame();
         }
 
         public void Prepare()
@@ -159,6 +184,16 @@ namespace DatabaseBenchmark.Serialization
         public Database[] SelectedDatabases
         {
             get { return LayoutManager.TreeView.GetSelectedBenchmarks(); }
+        }
+
+        public TreeViewFrame TreeView
+        {
+            get { return LayoutManager.TreeView; }
+        }
+
+        public Dictionary<TestMethod, StepFrame> StepFrames
+        {
+            get { return LayoutManager.StepFrames; }
         }
     }
 }

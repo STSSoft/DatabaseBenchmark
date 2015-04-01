@@ -1,16 +1,32 @@
 ﻿using System;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Resources;
+using System.Security.Permissions;
+using System.Security.Principal;
 using System.Windows.Forms;
 
 namespace DatabaseBenchmark
 {
     static class Program
     {
+        static bool IsAdministrator()
+        {
+            return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
-        {           
+        {
+            string extension = ".dbproj";
+
+            if (!FileAssociations.Exists(extension) && IsAdministrator())
+                FileAssociations.Create(extension, "DatabaseBenchmark");
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

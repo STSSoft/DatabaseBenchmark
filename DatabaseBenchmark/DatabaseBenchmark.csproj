@@ -80,6 +80,9 @@
   <PropertyGroup>
     <ApplicationIcon>logo_bechn.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="AerospikeClient, Version=3.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
@@ -345,6 +348,7 @@
       <DependentUpon>LineChart.cs</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\KeysNotOrderedException.cs" />
+    <Compile Include="FileAssociations.cs" />
     <Compile Include="Frames\LogFrame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -457,7 +461,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -645,7 +649,9 @@
     <None Include="Resources\loading_200.gif" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\logo-01.png" />
+    <None Include="Resources\logo-01.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\load-icon1.png" />

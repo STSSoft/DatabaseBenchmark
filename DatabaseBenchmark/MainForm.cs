@@ -72,13 +72,14 @@ namespace DatabaseBenchmark
             ApplicationManager.Load(string.Empty);
             ApplicationManager.LoadDocking();
 
-            ApplicationManager.LayoutManager.SelectFrame(TestMethod.Write);
+            ApplicationManager.ShowStepFrame(TestMethod.Write);
 
             View_Click(btnSizeView, EventArgs.Empty);
 
             openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
             saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
 
+            WireDragDrop(Controls);
             this.ResumeLayout();
         }
 
@@ -135,7 +136,7 @@ namespace DatabaseBenchmark
             {
                 Action<string, object, Color> updateChart = null;
 
-                StepFrame ActiveStepFrame = ApplicationManager.GetActiveStepFrame();
+                StepFrame ActiveStepFrame = ApplicationManager.GetCurrentStepFrame();
                 string databaseName = benchmark.Database.Name;
                 Color databaseColor = benchmark.Database.Color;
 
@@ -259,7 +260,7 @@ namespace DatabaseBenchmark
 
                         case ReportFormat.PDF:
                             BenchmarkTest test = History[0];
-                            PdfUtils.Export(saveFileDialogPdf.FileName, ApplicationManager.LayoutManager.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
+                            PdfUtils.Export(saveFileDialogPdf.FileName, ApplicationManager.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
                             break;
                     }
 
@@ -337,7 +338,7 @@ namespace DatabaseBenchmark
             ToolStripButton button = (ToolStripButton)sender;
             int column = Int32.Parse(button.Tag.ToString());
 
-            ApplicationManager.LayoutManager.ShowBarChart(column, button.Checked);
+            ApplicationManager.ShowBarChart(column, button.Checked);
             ((ToolStripMenuItem)showBarChartsToolStripMenuItem.DropDownItems[column]).Checked = button.Checked;
         }
 
@@ -346,15 +347,15 @@ namespace DatabaseBenchmark
             ToolStripMenuItem button = (ToolStripMenuItem)sender;
             int column = Int32.Parse(button.Tag.ToString());
 
-            ApplicationManager.LayoutManager.ShowBarChart(column, button.Checked);
-            ((ToolStripButton)toolStripMain.Items[11 + column]).Checked = button.Checked;
+            ApplicationManager.ShowBarChart(column, button.Checked);
+            ((ToolStripButton)toolStripMain.Items[9 + column]).Checked = button.Checked;
         }
 
         private void axisType_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripButton).Checked;
 
-            foreach (var frame in ApplicationManager.LayoutManager.StepFrames)
+            foreach (var frame in ApplicationManager.StepFrames)
                 frame.Value.SelectedChartIsLogarithmic = isChecked;
         }
 
@@ -374,7 +375,7 @@ namespace DatabaseBenchmark
 
         private void buttonTreeView_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.SelectTreeView(btnTreeView.Checked);
+            ApplicationManager.SelectTreeView(btnTreeView.Checked);
         }
 
         #endregion
@@ -443,7 +444,7 @@ namespace DatabaseBenchmark
 
         private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            bool state = ApplicationManager.LayoutManager.IsSelectedTreeViewNode;
+            bool state = ApplicationManager.TreeView.IsSelectedBenchamrkNode;
 
             editToolStripMenuItem.DropDownItems[0].Visible = state; // Clone.
             editToolStripMenuItem.DropDownItems[1].Visible = state; // Rename.
@@ -454,42 +455,42 @@ namespace DatabaseBenchmark
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.TreeView.CloneNode();
+            ApplicationManager.TreeView.CloneNode();
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.TreeView.RenameNade();
+            ApplicationManager.TreeView.RenameNade();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.TreeView.DeleteNode();
+            ApplicationManager.TreeView.DeleteNode();
         }
 
         private void restoreDefaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.TreeView.RestoreDefault();
+            ApplicationManager.TreeView.RestoreDefault();
         }
 
         private void restoreDefaultAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.TreeView.CreateTreeView();
+            ApplicationManager.TreeView.CreateTreeView();
         }
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.TreeView.ShowProperties();
+            ApplicationManager.TreeView.ShowProperties();
         }
 
         private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.TreeView.ExpandAll();
+            ApplicationManager.TreeView.ExpandAll();
         }
 
         private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.TreeView.CollapseAll();
+            ApplicationManager.TreeView.CollapseAll();
         }
 
         #endregion
@@ -498,7 +499,7 @@ namespace DatabaseBenchmark
 
         private void viewToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
+            StepFrame selectedFrame = ApplicationManager.GetSelectedStepFrame();
             bool state = selectedFrame != null;
 
             viewToolStripMenuItem.DropDownItems[6].Visible = state;  // Separator.
@@ -520,35 +521,35 @@ namespace DatabaseBenchmark
 
         private void databasesWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.SelectTreeView(true);
+            ApplicationManager.SelectTreeView(true);
             btnTreeView.Checked = true;
         }
 
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.SelectFrame(TestMethod.Write);
+            ApplicationManager.ShowStepFrame(TestMethod.Write);
         }
 
         private void readWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.SelectFrame(TestMethod.Read);
+            ApplicationManager.ShowStepFrame(TestMethod.Read);
         }
 
         private void secondaryReadWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.SelectFrame(TestMethod.SecondaryRead);
+            ApplicationManager.ShowStepFrame(TestMethod.SecondaryRead);
         }
 
         private void logWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.LayoutManager.ShowLogFrame();
+            ApplicationManager.ShowLogFrame();
         }
 
         private void MoveLegend(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             LegendPossition position = (LegendPossition)Enum.Parse(typeof(LegendPossition), item.Text);
-            StepFrame selectedFrame = ApplicationManager.LayoutManager.GetActiveStepFrame();
+            StepFrame selectedFrame = ApplicationManager.GetSelectedStepFrame();
 
             selectedFrame.SelectedChartPosition = position;
 
@@ -559,22 +560,71 @@ namespace DatabaseBenchmark
         private void showLegendToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripMenuItem).Checked;
-            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartLegendIsVisible = isChecked;
+            ApplicationManager.GetSelectedStepFrame().SelectedChartLegendIsVisible = isChecked;
         }
 
         private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripMenuItem).Checked;
-            ApplicationManager.LayoutManager.GetActiveStepFrame().SelectedChartIsLogarithmic = isChecked;
+            ApplicationManager.GetSelectedStepFrame().SelectedChartIsLogarithmic = isChecked;
         }
 
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
 
-            ApplicationManager.LayoutManager.ResetDocking();
+            ApplicationManager.ResetDocking();
 
             this.ResumeLayout();
+        }
+
+        #endregion
+
+        #region Drag Drop Events
+
+        private void WireDragDrop(Control.ControlCollection ctls)
+        {
+            foreach (Control ctl in ctls)
+            {
+                ctl.AllowDrop = true;
+                ctl.DragEnter += MainForm_DragEnter;
+                ctl.DragDrop += MainForm_DragDrop;
+                WireDragDrop(ctl.Controls);
+            }
+        }
+
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+
+                foreach (string item in (string[])e.Data.GetData(DataFormats.FileDrop))
+                {
+                    if (!item.Contains(".dbproj"))
+                    {
+                        e.Effect = DragDropEffects.None;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            LoadFromFile(files[0]);
+        }
+
+        private void LoadFromFile(string path)
+        {
+            LoadingForm.Start("Loading project...", Bounds);
+
+            ApplicationManager.Load(path);
+            Text = String.Format("{0} - Database Benchmark", Path.GetFileName(path));
+            saveConfigurationToolStripMenuItem.Enabled = true;
+
+            LoadingForm.Stop();
         }
 
         #endregion
@@ -593,7 +643,7 @@ namespace DatabaseBenchmark
 
                 btnStart.Enabled = !btnStop.Enabled;
 
-                ApplicationManager.LayoutManager.TreeView.TreeViewEnabled = btnStart.Enabled;
+                ApplicationManager.TreeView.TreeViewEnabled = btnStart.Enabled;
                 cbFlowsCount.Enabled = btnStart.Enabled;
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;
@@ -620,7 +670,7 @@ namespace DatabaseBenchmark
 
                 legendPossitionToolStripMenuItem.Enabled = showLegendToolStripMenuItem.Checked;
 
-                var activeFrame = ApplicationManager.GetActiveStepFrame();
+                var activeFrame = ApplicationManager.GetCurrentStepFrame();
                 var session = Current;
 
                 if (session == null)
@@ -638,7 +688,7 @@ namespace DatabaseBenchmark
                     return;
 
                 if (autoNavigatetoolStripMenuItem.Checked)
-                    ApplicationManager.LayoutManager.StepFrames[method].Activate();
+                    ApplicationManager.StepFrames[method].Activate();
 
                 TimeSpan elapsed = session.GetTime(method);
 
@@ -712,6 +762,21 @@ namespace DatabaseBenchmark
 
                 default:
                     return base.ProcessCmdKey(ref msg, keyData);
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            string[] args = System.Environment.GetCommandLineArgs();
+
+            for (int i = 0; i <= args.Length - 1; i++)
+            {
+                if (args[i].EndsWith(".dbproj"))
+                {
+                    LoadFromFile(args[i]);
+                   
+                    break;
+                }
             }
         }
     }
