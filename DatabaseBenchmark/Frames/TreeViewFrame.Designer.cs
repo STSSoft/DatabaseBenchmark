@@ -33,16 +33,16 @@
             this.treeView = new System.Windows.Forms.TreeView();
             this.imageListTreeView = new System.Windows.Forms.ImageList(this.components);
             this.contextMenuDatabase = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.restoreDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreDefaultAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.expandAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.cloneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuDatabase.SuspendLayout();
             this.SuspendLayout();
@@ -87,81 +87,86 @@
             this.toolStripSeparator2,
             this.propertiesToolStripMenuItem});
             this.contextMenuDatabase.Name = "contextMenuDatabase";
-            this.contextMenuDatabase.Size = new System.Drawing.Size(172, 198);
-            // 
-            // cloneToolStripMenuItem
-            // 
-            this.cloneToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.cloneToolStripMenuItem_Image;
-            this.cloneToolStripMenuItem.Name = "cloneToolStripMenuItem";
-            this.cloneToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.cloneToolStripMenuItem.Text = "Clone";
-            this.cloneToolStripMenuItem.Click += new System.EventHandler(this.cloneToolStripMenuItem_Click);
-            // 
-            // renameToolStripMenuItem
-            // 
-            this.renameToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.renameToolStripMenuItem_Image;
-            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.renameToolStripMenuItem.Text = "Rename";
-            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.deleteToolStripMenuItem_Image;
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            this.contextMenuDatabase.Size = new System.Drawing.Size(180, 284);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(168, 6);
-            // 
-            // restoreDefaultToolStripMenuItem
-            // 
-            this.restoreDefaultToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.restoreDefaultToolStripMenuItem_Image;
-            this.restoreDefaultToolStripMenuItem.Name = "restoreDefaultToolStripMenuItem";
-            this.restoreDefaultToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.restoreDefaultToolStripMenuItem.Text = "Restore Default";
-            this.restoreDefaultToolStripMenuItem.Click += new System.EventHandler(this.restoreDefaultToolStripMenuItem_Click);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
             // 
             // restoreDefaultAllToolStripMenuItem
             // 
             this.restoreDefaultAllToolStripMenuItem.Name = "restoreDefaultAllToolStripMenuItem";
-            this.restoreDefaultAllToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.restoreDefaultAllToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
             this.restoreDefaultAllToolStripMenuItem.Text = "Restore Default All";
             this.restoreDefaultAllToolStripMenuItem.Click += new System.EventHandler(this.restoreDefaultAllToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(168, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(176, 6);
             // 
             // expandAllToolStripMenuItem
             // 
             this.expandAllToolStripMenuItem.Name = "expandAllToolStripMenuItem";
-            this.expandAllToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.expandAllToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
             this.expandAllToolStripMenuItem.Text = "Expand All";
             this.expandAllToolStripMenuItem.Click += new System.EventHandler(this.expandAllToolStripMenuItem_Click);
             // 
             // collapseAllToolStripMenuItem
             // 
             this.collapseAllToolStripMenuItem.Name = "collapseAllToolStripMenuItem";
-            this.collapseAllToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.collapseAllToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
             this.collapseAllToolStripMenuItem.Text = "Collapse All";
             this.collapseAllToolStripMenuItem.Click += new System.EventHandler(this.collapseAllToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(168, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(176, 6);
+            // 
+            // cloneToolStripMenuItem
+            // 
+            this.cloneToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.Healthcare_Clone_icon;
+            this.cloneToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.cloneToolStripMenuItem.Name = "cloneToolStripMenuItem";
+            this.cloneToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
+            this.cloneToolStripMenuItem.Text = "Clone";
+            this.cloneToolStripMenuItem.Click += new System.EventHandler(this.cloneToolStripMenuItem_Click);
+            // 
+            // renameToolStripMenuItem
+            // 
+            this.renameToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.Editing_Rename_icon;
+            this.renameToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
+            this.renameToolStripMenuItem.Text = "Rename";
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.close_icon;
+            this.deleteToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // restoreDefaultToolStripMenuItem
+            // 
+            this.restoreDefaultToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.Actions_home_icon_24x24;
+            this.restoreDefaultToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.restoreDefaultToolStripMenuItem.Name = "restoreDefaultToolStripMenuItem";
+            this.restoreDefaultToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
+            this.restoreDefaultToolStripMenuItem.Text = "Restore Default";
+            this.restoreDefaultToolStripMenuItem.Click += new System.EventHandler(this.restoreDefaultToolStripMenuItem_Click);
             // 
             // propertiesToolStripMenuItem
             // 
-            this.propertiesToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.propertiesToolStripMenuItem_Image;
+            this.propertiesToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.options_2_icon_24x24;
+            this.propertiesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
             this.propertiesToolStripMenuItem.Text = "Properties";
             this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
             // 
@@ -176,6 +181,7 @@
             this.HideOnClose = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TreeViewFrame";
+            this.ShowIcon = false;
             this.Text = "Databases";
             this.contextMenuDatabase.ResumeLayout(false);
             this.ResumeLayout(false);

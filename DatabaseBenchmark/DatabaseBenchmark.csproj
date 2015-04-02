@@ -727,6 +727,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo_bechn.ico" />
+    <None Include="Resources\Users-Exit-icon_24x241.png" />
+    <None Include="Resources\pdf_24x241.png" />
+    <None Include="Resources\jsoni_24x241.png" />
+    <None Include="Resources\csv_24x241.png" />
+    <None Include="Resources\Messaging1.png" />
+    <None Include="Resources\sr1.png" />
+    <None Include="Resources\w1.png" />
+    <None Include="Resources\r1.png" />
+    <None Include="Resources\database1.png" />
+    <None Include="Resources\options-2-icon_24x241.png" />
+    <None Include="Resources\Actions-home-icon_24x241.png" />
+    <None Include="Resources\close-icon_24x24.png" />
+    <None Include="Resources\Editing-Rename-icon2.png" />
+    <None Include="Resources\Healthcare-Clone-icon1.png" />
     <None Include="Resources\propertiesToolStripMenuItem.Image.png" />
     <None Include="Resources\Options-icon.png" />
     <None Include="Resources\Pencil-icon.png" />
