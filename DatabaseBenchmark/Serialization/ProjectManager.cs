@@ -181,6 +181,11 @@ namespace DatabaseBenchmark.Serialization
             LayoutManager.ClearLog();
         }
 
+        public void ClearCharts()
+        {
+            LayoutManager.ClearCharts();
+        }
+
         public Database[] SelectedDatabases
         {
             get { return LayoutManager.TreeView.GetSelectedBenchmarks(); }

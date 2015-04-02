@@ -37,6 +37,14 @@ namespace DatabaseBenchmark.Statistics
             sw.Start();
         }
 
+        /// <summary>
+        /// Stops the stopwatch.
+        /// </summary>
+        public void Stop()
+        {
+            sw.Stop();
+        }
+
         public void Add()
         {
             count++;
@@ -49,11 +57,14 @@ namespace DatabaseBenchmark.Statistics
         }
 
         /// <summary>
-        /// Stops the stopwatch.
+        /// Resets the statistics.
         /// </summary>
-        public void Stop()
+        public void Reset()
         {
-            sw.Stop();
+            count = 0;
+
+            recordTimeStat.Clear();
+            sw.Reset();
         }
 
         public KeyValuePair<long, TimeSpan>[] RecordTime

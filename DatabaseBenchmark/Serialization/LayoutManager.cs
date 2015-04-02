@@ -167,6 +167,17 @@ namespace DatabaseBenchmark.Serialization
             LogFrame.Clear();
         }
 
+        public void ClearCharts()
+        {
+            foreach (var frame in StepFrames)
+                frame.Value.ClearCharts();
+        }
+
+        public bool IsSelectedTreeViewNode
+        {
+            get { return TreeView.IsSelectedBenchamrkNode; }
+        }
+
         # region Private members
 
         private void CreateTreeView()
