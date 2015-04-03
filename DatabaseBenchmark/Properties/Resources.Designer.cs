@@ -93,6 +93,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap arrow_refresh {
+            get {
+                object obj = ResourceManager.GetObject("arrow-refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap AutoNavigate_48x48 {
             get {
                 object obj = ResourceManager.GetObject("AutoNavigate_48x48", resourceCulture);
@@ -183,16 +193,6 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap deleteToolStripMenuItem_Image {
-            get {
-                object obj = ResourceManager.GetObject("deleteToolStripMenuItem.Image", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap Editing_Rename_icon {
             get {
                 object obj = ResourceManager.GetObject("Editing-Rename-icon", resourceCulture);
@@ -216,6 +216,16 @@ namespace DatabaseBenchmark.Properties {
         public static System.Drawing.Bitmap ioicon_48x48 {
             get {
                 object obj = ResourceManager.GetObject("ioicon_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap ioicon_48x48_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("ioicon_48x48_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,6 +273,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap log_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("log_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap log_48x48 {
             get {
                 object obj = ResourceManager.GetObject("log_48x48", resourceCulture);
@@ -276,6 +296,16 @@ namespace DatabaseBenchmark.Properties {
         public static System.Drawing.Bitmap logicon_48x48 {
             get {
                 object obj = ResourceManager.GetObject("logicon_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap logicon_48x48_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("logicon_48x48_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -323,16 +353,6 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Options_icon {
-            get {
-                object obj = ResourceManager.GetObject("Options-icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap pdf_24x24 {
             get {
                 object obj = ResourceManager.GetObject("pdf_24x24", resourceCulture);
@@ -353,16 +373,6 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap Pencil_icon {
-            get {
-                object obj = ResourceManager.GetObject("Pencil-icon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap processor_48x48 {
             get {
                 object obj = ResourceManager.GetObject("processor_48x48", resourceCulture);
@@ -373,9 +383,9 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap propertiesToolStripMenuItem_Image {
+        public static System.Drawing.Bitmap processor_48x48_24x24 {
             get {
-                object obj = ResourceManager.GetObject("propertiesToolStripMenuItem.Image", resourceCulture);
+                object obj = ResourceManager.GetObject("processor_48x48_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -386,16 +396,6 @@ namespace DatabaseBenchmark.Properties {
         public static System.Drawing.Bitmap r {
             get {
                 object obj = ResourceManager.GetObject("r", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap renameToolStripMenuItem_Image {
-            get {
-                object obj = ResourceManager.GetObject("renameToolStripMenuItem.Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -443,6 +443,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap SDCard_512_48x48_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("SDCard-512_48x48_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap sizeview48x48 {
             get {
                 object obj = ResourceManager.GetObject("sizeview48x48", resourceCulture);
@@ -453,9 +463,29 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap sizeview48x48_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("sizeview48x48_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap SpeedView_48x48 {
             get {
                 object obj = ResourceManager.GetObject("SpeedView_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap SpeedView_48x48_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("SpeedView_48x48_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -513,6 +543,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap TimeView_48x48_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("TimeView_48x48_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap tumblr_m5xo9frXtv1rysqvgo1_1280_24x24 {
             get {
                 object obj = ResourceManager.GetObject("tumblr_m5xo9frXtv1rysqvgo1_1280_24x24", resourceCulture);
@@ -526,16 +566,6 @@ namespace DatabaseBenchmark.Properties {
         public static System.Drawing.Bitmap Users_Exit_icon_24x24 {
             get {
                 object obj = ResourceManager.GetObject("Users-Exit-icon_24x24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap Very_Basic_Reload_icon {
-            get {
-                object obj = ResourceManager.GetObject("Very-Basic-Reload-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
