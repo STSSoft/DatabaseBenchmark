@@ -131,6 +131,9 @@ namespace DatabaseBenchmark
             finally
             {
                 Current = null;
+
+                if (Cancellation.IsCancellationRequested)
+                    History.Clear();
             }
         }
 

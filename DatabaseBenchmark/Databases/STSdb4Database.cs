@@ -3,6 +3,7 @@ using STSdb4.Database;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -54,7 +55,15 @@ namespace DatabaseBenchmark.Databases
 
         public override IEnumerable<KeyValuePair<long, Tick>> Read()
         {
-            return engine.OpenXTable<long, Tick>(CollectionName).Forward();
+            SemiRandomGenerator gen = new SemiRandomGenerator(0.5);
+            List<KeyValuePair<long, Tick>> list = new List<KeyValuePair<long, Tick>>();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                list.Add(new KeyValuePair<long, Tick>(gen.NextInt64(), null));
+            }
+
+            return list;
         }
 
         public override void Finish()
