@@ -121,8 +121,11 @@
   <data name="ioicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ioicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="close-icon_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\close-icon_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TimeView_48x48_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TimeView_48x48_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="processor_48x48_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\processor_48x48_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="stop_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\stop_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,9 +139,6 @@
   <data name="Messaging" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Messaging1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="database-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\database-icon1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="JSONicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\JSONicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -148,20 +148,17 @@
   <data name="loading_throbber_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\loading_throbber_icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="database" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\database1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="SpeedView_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SpeedView_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Very-Basic-Reload-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Very-Basic-Reload-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\background2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="close-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\close-icon1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Options-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Options-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="restoreDefaultToolStripMenuItem.Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\restoreDefaultToolStripMenuItem.Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,23 +172,23 @@
   <data name="Actions-home-icon_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Actions-home-icon_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Pencil-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Pencil-icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SDCard-512_48x48_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SDCard-512_48x48_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SDCard-512_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SDCard-512_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="sizeview48x48_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sizeview48x48_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="TimeView_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TimeView_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="processor_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\processor_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Users-Exit-icon_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Users-Exit-icon_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="load-icon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\load-icon3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="deleteToolStripMenuItem.Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\deleteToolStripMenuItem.Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="logicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -205,17 +202,20 @@
   <data name="about" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\about.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="options-2-icon_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\options-2-icon_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Editing-Rename-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Editing-Rename-icon2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SpeedView_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SpeedView-blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="renameToolStripMenuItem.Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\renameToolStripMenuItem.Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="logicon_48x48_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logicon_48x48_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Editing-Rename-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Editing-Rename-icon2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="close-icon_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close-icon_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="start_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\start_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="csv_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\csv_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -223,26 +223,29 @@
   <data name="log_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\log_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="propertiesToolStripMenuItem.Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\propertiesToolStripMenuItem.Image.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="save-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save-icon1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="jsoni_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\jsoni_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="database-icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\database-icon1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="start_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\start_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tumblr_m5xo9frXtv1rysqvgo1_1280_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tumblr_m5xo9frXtv1rysqvgo1_1280_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="database" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\database1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SpeedView_48x48_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SpeedView_48x48_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="log_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\log_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AutoNavigate_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AutoNavigate_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PDFicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PDFicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="jsoni_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\jsoni_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ioicon_48x48_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ioicon_48x48_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="w" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\w1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -259,13 +262,19 @@
   <data name="logo_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tumblr_m5xo9frXtv1rysqvgo1_1280_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tumblr_m5xo9frXtv1rysqvgo1_1280_24x24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="options-2-icon_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\options-2-icon_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="processor_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\processor_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PDFicon_48x48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PDFicon_48x48.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="sr" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sr1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Users-Exit-icon_24x24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Users-Exit-icon_24x241.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="arrow-refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrow-refresh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
