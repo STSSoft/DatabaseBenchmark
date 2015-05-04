@@ -1023,7 +1023,7 @@
             // 
             // resetWindowLayoutToolStripMenuItem1
             // 
-            this.resetWindowLayoutToolStripMenuItem1.Image = global::DatabaseBenchmark.Properties.Resources.Very_Basic_Reload_icon;
+            this.resetWindowLayoutToolStripMenuItem1.Image = global::DatabaseBenchmark.Properties.Resources.arrow_refresh;
             this.resetWindowLayoutToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.resetWindowLayoutToolStripMenuItem1.Name = "resetWindowLayoutToolStripMenuItem1";
             this.resetWindowLayoutToolStripMenuItem1.Size = new System.Drawing.Size(213, 30);
@@ -1141,7 +1141,7 @@
             // 
             // aboutToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.about_24x24_1_;
+            this.aboutToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.about_24x24;
             this.aboutToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(229, 30);

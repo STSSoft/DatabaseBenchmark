@@ -357,6 +357,11 @@
     <Compile Include="LoadingForm.Designer.cs">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Serialization\LayoutManager.cs" />
     <Compile Include="StringAppender.cs" />
     <Compile Include="Report\CsvUtils.cs" />
@@ -458,14 +463,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Report\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -583,9 +583,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\io-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\start_48x48.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\stop_48x48.png" />
@@ -723,6 +720,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo_bechn.ico" />
+    <None Include="Resources\start_48x48.png" />
+    <None Include="Resources\arrow-refresh.png" />
     <None Include="Resources\Users-Exit-icon_24x241.png" />
     <None Include="Resources\pdf_24x241.png" />
     <None Include="Resources\jsoni_24x241.png" />
