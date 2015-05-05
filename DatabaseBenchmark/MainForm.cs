@@ -756,7 +756,8 @@ namespace DatabaseBenchmark
             stopButton_Click(sender, e);
             ApplicationManager.StoreDocking();
 
-            Environment.Exit(0);
+            //TODO: Find new way
+            //Environment.Exit(0);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

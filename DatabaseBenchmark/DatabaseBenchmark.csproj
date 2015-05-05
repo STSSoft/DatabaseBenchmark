@@ -487,19 +487,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AxisType-new.ico" />
-    <None Include="Resources\CSV_new.ico" />
-    <None Include="Resources\SizeView.ico" />
-    <None Include="Resources\TimeView.ico" />
-    <None Include="Resources\SpeedView.ico" />
-    <None Include="Resources\AxisType.ico" />
-    <None Include="Resources\AutoNavigate.ico" />
-    <None Include="Resources\TreeView.ico" />
-    <None Include="Resources\CSV.ico" />
-    <None Include="Resources\Stop.ico" />
-    <None Include="Resources\Play.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
@@ -543,207 +530,48 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\play-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\stop-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Auto Navigate-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\view-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\cpu-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\json-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\log new-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\memory-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\size-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SpeedView-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TimeView-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\csv-blue .png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\csvfile-blue .png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\io-blue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\stop_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CSVicon_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\JSONicon_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PDFicon_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\view_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\AutoNavigate_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\log_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SpeedView_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TimeView_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\sizeview48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\processor_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\SDCard-512_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\io_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ioicon_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ioicon_48x481.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\logicon_48x48.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\loading_throbber_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\loading.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\loading_200.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\logo-01.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\load-icon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\save-icon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\close-icon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\newicon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\csvmini_24x241.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\load-icon3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\save-icon3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\jsonmini_24x241.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\pdfmini_24x241.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\UniWindowIcon_24x241.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\about.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\about_24x24%281%291.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\database-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\w_24x24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\r_24x24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\sr_24x24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Very-Basic-Reload-icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\tumblr_m5xo9frXtv1rysqvgo1_1280_24x24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\database-icon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\sr_24x241.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\r24x24%281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\sr24x24%281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\r_24x241.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\sr_24x242.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="logo_bechn.ico" />
-    <None Include="Resources\start_48x48.png" />
-    <None Include="Resources\arrow-refresh.png" />
-    <None Include="Resources\Users-Exit-icon_24x241.png" />
+    <None Include="Resources\refresh_24x24.png" />
+    <None Include="Resources\log_24x24.png" />
+    <None Include="Resources\sr_24x24.png" />
+    <None Include="Resources\r_24x24.png" />
+    <None Include="Resources\w_24x24.png" />
+    <None Include="Resources\database_24x24.png" />
+    <None Include="Resources\about_24x241.png" />
+    <None Include="Resources\online_24x24.png" />
     <None Include="Resources\pdf_24x241.png" />
     <None Include="Resources\jsoni_24x241.png" />
     <None Include="Resources\csv_24x241.png" />
-    <None Include="Resources\Messaging1.png" />
-    <None Include="Resources\sr1.png" />
-    <None Include="Resources\w1.png" />
-    <None Include="Resources\r1.png" />
-    <None Include="Resources\database1.png" />
-    <None Include="Resources\options-2-icon_24x241.png" />
-    <None Include="Resources\Actions-home-icon_24x241.png" />
-    <None Include="Resources\close-icon_24x24.png" />
-    <None Include="Resources\Editing-Rename-icon2.png" />
-    <None Include="Resources\Healthcare-Clone-icon1.png" />
-    <None Include="Resources\propertiesToolStripMenuItem.Image.png" />
-    <None Include="Resources\Options-icon.png" />
-    <None Include="Resources\Pencil-icon.png" />
-    <None Include="Resources\restoreDefaultToolStripMenuItem.Image.png" />
-    <None Include="Resources\deleteToolStripMenuItem.Image.png" />
-    <None Include="Resources\renameToolStripMenuItem.Image.png" />
-    <None Include="Resources\cloneToolStripMenuItem.Image.png" />
+    <None Include="Resources\options_24x24.png" />
+    <None Include="Resources\default_24x24.png" />
+    <None Include="Resources\delete_24x24.png" />
+    <None Include="Resources\rename_24x24.png" />
+    <None Include="Resources\clone_24x24.png" />
+    <None Include="Resources\exit_24x24.png" />
+    <None Include="Resources\save_24x24.png" />
+    <None Include="Resources\open_24x24.png" />
+    <None Include="Resources\new_24x24.png" />
+    <None Include="Resources\io_24x24.png" />
+    <None Include="Resources\ram_24x24.png" />
+    <None Include="Resources\processor_24x24.png" />
+    <None Include="Resources\sizeview_24x24.png" />
+    <None Include="Resources\TimeView_24x24.png" />
+    <None Include="Resources\SpeedView_24x24.png" />
+    <None Include="Resources\log_48x48.png" />
+    <None Include="Resources\sizeview_48x48.png" />
+    <None Include="Resources\io_48x48.png" />
+    <None Include="Resources\ram_48x48.png" />
+    <None Include="Resources\processor_48x48.png" />
+    <None Include="Resources\TimeView_48x48.png" />
+    <None Include="Resources\SpeedView_48x48.png" />
+    <None Include="Resources\view_48x48.png" />
+    <None Include="Resources\pdf_48x48.png" />
+    <None Include="Resources\json_48x48.png" />
+    <None Include="Resources\csv_48x48.png" />
+    <None Include="Resources\stop_48x48.png" />
+    <None Include="Resources\start_48x48.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>set target=x64

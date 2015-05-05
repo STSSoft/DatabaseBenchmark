@@ -33,7 +33,6 @@ namespace DatabaseBenchmark.Report
             title.VerticalAlignment = Element.ALIGN_MIDDLE;
             title.HorizontalAlignment = Element.ALIGN_CENTER;
             title.MinimumHeight = doc.PageSize.Height - (doc.BottomMargin + doc.TopMargin);
-            title.AddElement(Image.GetInstance((System.Drawing.Image)DatabaseBenchmark.Properties.Resources.logo_01, Color.WHITE));
 
             firstPageTable.AddCell(title);
             doc.Add(firstPageTable);
