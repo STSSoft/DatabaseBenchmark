@@ -63,9 +63,9 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap about_24x24 {
+        public static System.Drawing.Bitmap background {
             get {
-                object obj = ResourceManager.GetObject("about_24x24", resourceCulture);
+                object obj = ResourceManager.GetObject("background", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -76,16 +76,6 @@ namespace DatabaseBenchmark.Properties {
         public static System.Drawing.Bitmap clone_24x24 {
             get {
                 object obj = ResourceManager.GetObject("clone_24x24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap csv_24x24 {
-            get {
-                object obj = ResourceManager.GetObject("csv_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +163,19 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap jsoni_24x24 {
+        public static System.Drawing.Bitmap loading {
             get {
-                object obj = ResourceManager.GetObject("jsoni_24x24", resourceCulture);
+                object obj = ResourceManager.GetObject("loading", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap loading_throbber_icon {
+            get {
+                object obj = ResourceManager.GetObject("loading_throbber_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -236,16 +236,6 @@ namespace DatabaseBenchmark.Properties {
         public static System.Drawing.Bitmap options_24x24 {
             get {
                 object obj = ResourceManager.GetObject("options_24x24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap pdf_24x24 {
-            get {
-                object obj = ResourceManager.GetObject("pdf_24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

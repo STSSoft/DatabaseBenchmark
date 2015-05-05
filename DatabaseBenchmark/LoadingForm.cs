@@ -77,18 +77,19 @@ namespace DatabaseBenchmark
             GraphicsState state = graphics.Save();
 
             graphics.SmoothingMode = SmoothingMode.HighQuality;
-            //TODO: add img
-            // Draw and rotate image.
-            //graphics.TranslateTransform(Width / 2 - img.Width / 2, Height / 2 - img.Height / 2);
-            //graphics.TranslateTransform(img.Width / 2, img.Height / 2);
-            //graphics.RotateTransform(Angle);
-            //graphics.TranslateTransform(-img.Width / 2, -img.Height / 2);
-            //graphics.DrawImage(img, Point.Empty);
+            var img = Properties.Resources.loading_throbber_icon;
+
+            //Draw and rotate image.
+            graphics.TranslateTransform(Width / 2 - img.Width / 2, Height / 2 - img.Height / 2);
+            graphics.TranslateTransform(img.Width / 2, img.Height / 2);
+            graphics.RotateTransform(Angle);
+            graphics.TranslateTransform(-img.Width / 2, -img.Height / 2);
+            graphics.DrawImage(img, Point.Empty);
 
             graphics.Restore(state);
 
             Font font = new Font("Times New Roman", 12.0f, FontStyle.Bold);
-           // graphics.DrawString(Text, font, Brushes.Black, new PointF(Width / 2 - textSize.Width / 2, Height / 2 + img.Height / 2 + 10));
+           graphics.DrawString(Text, font, Brushes.Black, new PointF(Width / 2 - textSize.Width / 2, Height / 2 + img.Height / 2 + 10));
         }
     }
 }

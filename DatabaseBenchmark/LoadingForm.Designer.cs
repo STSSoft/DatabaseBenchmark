@@ -38,14 +38,14 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // Loading
+            // LoadingForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Window;
             resources.ApplyResources(this, "$this");
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Loading";
+            this.Name = "LoadingForm";
             this.Opacity = 0.7D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
