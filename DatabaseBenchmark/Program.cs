@@ -26,6 +26,9 @@ namespace DatabaseBenchmark
 
             try
             {
+                if (FileAssociations.Exists(extension) && IsAdministrator())
+                    FileAssociations.Delete(extension);
+
                 if (!FileAssociations.Exists(extension) && IsAdministrator())
                     FileAssociations.Create(extension, "DatabaseBenchmark");
             }

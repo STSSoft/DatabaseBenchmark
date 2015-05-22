@@ -16,15 +16,17 @@ namespace DatabaseBenchmark
         {
             string progID = "DatabaseBenchmark";
             string description = "Database Benchmark is a powerfull open source tool designed to stress test databases with large data flows.";
-            string iconPath = Path.Combine(Application.StartupPath, "Resources\\logo_01.png");
+            string iconPath = Path.Combine(Application.StartupPath, "Resources", "Benchmark48x48.ico");
             string applicationPath = Path.Combine(Application.StartupPath, "DatabaseBenchmark.exe");
 
-            Registry.ClassesRoot.CreateSubKey(extension).SetValue("", progID);
+            RegistryKey progKey = Registry.ClassesRoot.CreateSubKey(extension);
+            progKey.SetValue("", progID);
+            progKey.CreateSubKey("DefaultIcon").SetValue("", iconPath, RegistryValueKind.String);
             RegistryKey key = Registry.ClassesRoot.CreateSubKey(progID, RegistryKeyPermissionCheck.ReadWriteSubTree);
 
             key.SetValue("", description, RegistryValueKind.String);
             key.CreateSubKey("DefaultIcon").SetValue("", iconPath, RegistryValueKind.String);
-            key.CreateSubKey(@"Shell\Open\Command").SetValue("", applicationPath + " %1", RegistryValueKind.String);
+            key.CreateSubKey(@"Shell\Open\Command").SetValue("", applicationPath + " \"%1\"", RegistryValueKind.String);
 
             if (openWith != null)
             {

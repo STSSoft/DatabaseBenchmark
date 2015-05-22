@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DatabaseBenchmark.Exceptions;
+using log4net;
+using DatabaseBenchmark.Properties;
 
 namespace DatabaseBenchmark.Benchmarking
 {
@@ -16,6 +18,7 @@ namespace DatabaseBenchmark.Benchmarking
     {
         public const int INTERVAL_COUNT = 100; // Gives the maximum number of intervals measured by the statistic.
 
+        private ILog Logger;
         public SpeedStatistics[] SpeedStatistics { get; private set; }
         public ProcessorStatistics[] ProcessorStatistics { get; private set; }
         public MemoryStatistics[] MemoryStatistics { get; private set; }
@@ -39,6 +42,7 @@ namespace DatabaseBenchmark.Benchmarking
 
         public BenchmarkTest(Database database, int flowCount, long recordCount, float randomness, CancellationTokenSource cancellation)
         {
+            Logger = LogManager.GetLogger(Settings.Default.TestLogger);
             Database = database;
 
             FlowCount = flowCount;
@@ -126,11 +130,13 @@ namespace DatabaseBenchmark.Benchmarking
             for (int k = 0; k < flows.Length; k++)
                 flows[k] = GetFlow();
 
+            Task[] tasks = null;
+
             try
             {
                 StartStatistics(method);
 
-                Task[] tasks = DoWrite(flows);
+                tasks = DoWrite(flows);
                 Task.WaitAll(tasks, Cancellation.Token);
 
                 DatabaseSize = Database.Size;
@@ -138,6 +144,8 @@ namespace DatabaseBenchmark.Benchmarking
             catch (OperationCanceledException)
             {
                 ResetStatistics();
+
+                tasks = null;
             }
             finally
             {
@@ -158,11 +166,13 @@ namespace DatabaseBenchmark.Benchmarking
             CurrentMethod = TestMethod.Read;
             int method = (int)CurrentMethod;
 
+            Task task = null;
+
             try
             {
                 StartStatistics(method);
 
-                Task task = DoRead(TestMethod.Read);
+                task = DoRead(TestMethod.Read);
                 Task.WaitAll(new Task[] { task }, Cancellation.Token);
 
                 DatabaseSize = Database.Size;
@@ -170,6 +180,8 @@ namespace DatabaseBenchmark.Benchmarking
             catch (OperationCanceledException)
             {
                 ResetStatistics();
+
+                task = null;
             }
             finally
             {
@@ -190,11 +202,13 @@ namespace DatabaseBenchmark.Benchmarking
             CurrentMethod = TestMethod.SecondaryRead;
             int method = (int)CurrentMethod;
 
+            Task task = null;
+
             try
             {
                 StartStatistics(method);
 
-                Task task = DoRead(TestMethod.SecondaryRead);
+                task = DoRead(TestMethod.SecondaryRead);
                 Task.WaitAll(new Task[] { task }, Cancellation.Token);
 
                 DatabaseSize = Database.Size;
@@ -202,6 +216,8 @@ namespace DatabaseBenchmark.Benchmarking
             catch (OperationCanceledException)
             {
                 ResetStatistics();
+
+                task = null;
             }
             finally
             {
@@ -464,6 +480,7 @@ namespace DatabaseBenchmark.Benchmarking
                 var flow = Wrap(Database.Read(), Cancellation.Token, SpeedStatistics[methodIndex], MemoryStatistics[methodIndex]);
 
                 bool ordered = true;
+                long count = 0;
                 long previous = flow.First().Key;
 
                 foreach (var kv in flow)
@@ -477,7 +494,11 @@ namespace DatabaseBenchmark.Benchmarking
                     }
 
                     previous = key;
+                    count++;
                 }
+
+                // TODO: find a better place for that.
+                Logger.Info(String.Format("Records read: {0}", count.ToString("N0")));
 
                 if (!ordered)
                     throw new KeysNotOrderedException("Keys are not ordered.");

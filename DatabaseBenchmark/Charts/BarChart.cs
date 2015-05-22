@@ -43,6 +43,9 @@ namespace DatabaseBenchmark.Charts
 
         public void AddPoint(string label, object y, Color color)
         {
+            if (chart1.Series.Count == 0)
+                return;
+
             if (y.GetType() == typeof(double))
             {
                 if (maxValue < (double)y)

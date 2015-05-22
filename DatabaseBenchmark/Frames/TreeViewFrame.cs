@@ -1,4 +1,5 @@
 ﻿using DatabaseBenchmark.Properties;
+using DatabaseBenchmark.Serialization;
 using log4net;
 using STS.General.GUI.Extensions;
 using System;
@@ -13,22 +14,20 @@ namespace DatabaseBenchmark.Frames
 {
     public partial class TreeViewFrame : DockContent
     {
-        private BenchmarkInstanceProperies Properties;
         private ILog Logger;
 
+        public event Action<Object> SelectedDatabaseChanged; // object = database
         public bool TreeViewEnabled
         {
             get { return treeView.Enabled; }
             set { treeView.Enabled = value; }
         }
-
         public TreeViewFrame()
         {
             InitializeComponent();
 
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
         }
-
         public void CreateTreeView()
         {
             Type[] benchmarksTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(Database)) && t.GetConstructor(new Type[] { }) != null).ToArray();
@@ -36,8 +35,15 @@ namespace DatabaseBenchmark.Frames
 
             try
             {
-                for (int i = 0; i < benchmarksTypes.Length; i++)
-                    databases[i] = (Database)Activator.CreateInstance(benchmarksTypes[i]);
+                try
+                {
+                    for (int i = 0; i < benchmarksTypes.Length; i++)
+                        databases[i] = (Database)Activator.CreateInstance(benchmarksTypes[i]);
+                }
+                catch (Exception exc)
+                {
+                    Logger.Error("Database create instance error...", exc);
+                }
 
                 if (!Directory.Exists(MainForm.DATABASES_DIRECTORY))
                     Directory.CreateDirectory(MainForm.DATABASES_DIRECTORY);
@@ -48,9 +54,9 @@ namespace DatabaseBenchmark.Frames
                     {
                         Directory.Delete(directory, true);
                     }
-                    catch (Exception e)
+                    catch (Exception exc)
                     {
-                        Logger.Error("Database delete directory error...", e);
+                        Logger.Error("Database delete directory error...", exc);
                     }
                 }
 
@@ -65,7 +71,7 @@ namespace DatabaseBenchmark.Frames
             }
             catch (Exception exc)
             {
-                Logger.Error("Database initialization error...", exc);
+                Logger.Error("Databases initialization error...", exc);
             }
 
             treeView.ExpandAll();
@@ -195,7 +201,6 @@ namespace DatabaseBenchmark.Frames
                 Logger.Error("TreeView clone ...", exc);
             }
         }
-
         public void RenameNade()
         {
             if (treeView.SelectedNode == null)
@@ -222,12 +227,14 @@ namespace DatabaseBenchmark.Frames
             try
             {
                 TreeNode selectedNode = treeView.SelectedNode;
-                TreeNode prevNode = selectedNode.PrevNode;
-                IDatabase instance = Activator.CreateInstance(selectedNode.Tag.GetType()) as IDatabase;
+                Database instance = Activator.CreateInstance(selectedNode.Tag.GetType()) as Database;
+                instance.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, instance.Name);
 
-                DeleteNode();
-                AddAfter(prevNode.Tag as IDatabase, instance, selectedNode.Checked);
-                treeView.SelectedNode = treeView.Nodes.Iterate().First(x => x.Tag == instance);
+                selectedNode.Tag = instance;
+                selectedNode.Text = instance.Name;     
+
+                if (SelectedDatabaseChanged != null)
+                    SelectedDatabaseChanged.Invoke(instance);
             }
             catch (Exception exc)
             {
@@ -235,31 +242,9 @@ namespace DatabaseBenchmark.Frames
             }
         }
 
-        public void ShowProperties()
+        public Database GetSelectedDatabase()
         {
-            if (treeView.SelectedNode == null)
-                return;
-
-            try
-            {
-                var selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
-
-                if (selectedDatabase != null)
-                {
-                    if (Properties != null)
-                        Properties.Dispose();
-
-                    Properties = new BenchmarkInstanceProperies();
-
-                    Properties.Caller = this;
-                    Properties.Visible = true;
-                    Properties.SetProperties(selectedDatabase);
-                }
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("TreeView show properties ...", exc);
-            }
+            return treeView.SelectedNode.Tag as Database;
         }
 
         #region TreeView events
@@ -306,13 +291,16 @@ namespace DatabaseBenchmark.Frames
             {
                 bool state = e.Node.Tag != null;
 
-                contextMenuDatabase.Items[0].Enabled = state;
-                contextMenuDatabase.Items[1].Enabled = state;
-                contextMenuDatabase.Items[4].Enabled = state;
-                contextMenuDatabase.Items[10].Enabled = state;
+                contextMenuDatabase.Items[0].Visible = state;
+                contextMenuDatabase.Items[1].Visible = state;
+                contextMenuDatabase.Items[8].Visible = state;
+                contextMenuDatabase.Items[9].Visible = state;
 
                 contextMenuDatabase.Show(MousePosition);
             }
+
+            if (SelectedDatabaseChanged != null)
+                SelectedDatabaseChanged.Invoke(e.Node.Tag);
         }
 
         #endregion
@@ -341,20 +329,13 @@ namespace DatabaseBenchmark.Frames
         private void restoreDefaultAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
+            ClearTreeViewNodes();
             CreateTreeView();
             this.ResumeLayout();
         }
-
-        private void restoreDefaultToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.SuspendLayout();
-            RestoreDefault();
-            this.ResumeLayout();
-        }
-
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowProperties();
+
         }
 
         private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -371,8 +352,24 @@ namespace DatabaseBenchmark.Frames
         {
             if (e.KeyData == Keys.Delete)
                 DeleteNode();
+            if (e.KeyData == Keys.Enter)
+                SelectedDatabaseChanged.Invoke(treeView.SelectedNode.Tag);
+
         }
 
         #endregion
+
+        public event EventHandler PropertiesClick
+        {
+            add
+            {
+                propertiesToolStripMenuItem.Click += value;
+            }
+
+            remove
+            {
+                propertiesToolStripMenuItem.Click -= value;
+            }
+        }
     }
 }

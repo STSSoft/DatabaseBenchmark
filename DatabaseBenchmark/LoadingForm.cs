@@ -72,14 +72,14 @@ namespace DatabaseBenchmark
         private void Loading_Paint(object sender, PaintEventArgs e)
         {
             Graphics graphics = e.Graphics;
+            Image img = DatabaseBenchmark.Properties.Resources.loading_throbber_icon;
             SizeF textSize = graphics.MeasureString(Text, Font);
 
             GraphicsState state = graphics.Save();
 
             graphics.SmoothingMode = SmoothingMode.HighQuality;
-            var img = Properties.Resources.loading_throbber_icon;
 
-            //Draw and rotate image.
+            // Draw and rotate image.
             graphics.TranslateTransform(Width / 2 - img.Width / 2, Height / 2 - img.Height / 2);
             graphics.TranslateTransform(img.Width / 2, img.Height / 2);
             graphics.RotateTransform(Angle);
@@ -89,7 +89,7 @@ namespace DatabaseBenchmark
             graphics.Restore(state);
 
             Font font = new Font("Times New Roman", 12.0f, FontStyle.Bold);
-           graphics.DrawString(Text, font, Brushes.Black, new PointF(Width / 2 - textSize.Width / 2, Height / 2 + img.Height / 2 + 10));
+            graphics.DrawString(Text, font, Brushes.Black, new PointF(Width / 2 - textSize.Width / 2, Height / 2 + img.Height / 2 + 10));
         }
     }
 }

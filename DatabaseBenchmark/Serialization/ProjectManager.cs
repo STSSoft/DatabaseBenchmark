@@ -24,10 +24,10 @@ namespace DatabaseBenchmark.Serialization
 
         public string DockConfigPath { get; private set; }
 
-        public ProjectManager(DockPanel panel, ToolStripComboBox[] comboBoxes, TrackBar trackBar, string path)
+        public ProjectManager(DockPanel panel, ToolStripComboBox[] comboBoxes, List<ToolStripButton> buttons,  TrackBar trackBar, string path)
         {
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
-            LayoutManager = new LayoutManager(panel, comboBoxes, trackBar);
+            LayoutManager = new LayoutManager(panel, comboBoxes, buttons, trackBar);
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -51,12 +51,14 @@ namespace DatabaseBenchmark.Serialization
                 {
                     Dictionary<IDatabase, bool> databases = LayoutManager.TreeView.GetAllDatabases();
                     Dictionary<string, string> selectedItmes = LayoutManager.GetSelectedFromComboBoxes();
+                    Dictionary<string, bool> toolStripButtons = LayoutManager.GetToolStripCheckedButtons();
+
                     List<KeyValuePair<TestMethod, List<ChartSettings>>> chartSettings = new List<KeyValuePair<TestMethod, List<ChartSettings>>>();
 
                     foreach (var frame in LayoutManager.StepFrames)
                         chartSettings.Add(new KeyValuePair<TestMethod, List<ChartSettings>>(frame.Key, frame.Value.GetLineChartSettings()));
 
-                    XmlProjectPersist persist = new XmlProjectPersist(databases, selectedItmes, chartSettings, LayoutManager.TrackBar.Value);
+                    XmlProjectPersist persist = new XmlProjectPersist(databases, selectedItmes, toolStripButtons, chartSettings, LayoutManager.TrackBar.Value);
 
                     XmlSerializer serializer = new XmlSerializer(typeof(XmlProjectPersist));
                     serializer.Serialize(stream, persist);
@@ -91,6 +93,13 @@ namespace DatabaseBenchmark.Serialization
 
                     foreach (var comboBox in appPersist.ComboBoxItems)
                         LayoutManager.ComboBoxes.First(x => x.Name == comboBox.Key).Text = comboBox.Value;
+
+                    foreach (var btn in appPersist.Buttons)
+                    {
+                        var currentBtn = LayoutManager.Buttons.First(x => x.Name == btn.Key);
+                        currentBtn.Checked = !btn.Value;
+                        currentBtn.PerformClick();
+                    }
 
                     foreach (var stepFrame in appPersist.ChartSettings)
                         LayoutManager.StepFrames[stepFrame.Key].SetSettings(stepFrame.Value);
@@ -173,6 +182,15 @@ namespace DatabaseBenchmark.Serialization
         public void ShowLogFrame()
         {
             LayoutManager.ShowLogFrame();
+        }
+        public void ShowProperties()
+        {
+            LayoutManager.ShowProperties();
+        }
+
+        public void EnablePropertyFrame(bool state)
+        {
+            LayoutManager.EnablePropertyFrame(state);
         }
 
         public void Prepare()

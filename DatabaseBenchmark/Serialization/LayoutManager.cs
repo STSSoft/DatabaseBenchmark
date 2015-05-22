@@ -1,5 +1,6 @@
 ﻿using DatabaseBenchmark.Benchmarking;
 using DatabaseBenchmark.Frames;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -15,25 +16,36 @@ namespace DatabaseBenchmark.Serialization
         public TreeViewFrame TreeView { get; private set; }
         public DockPanel Panel { get; private set; }
         public LogFrame LogFrame { get; private set; }
-
+        public BenchmarkInstanceProperies InstanceProperites { get; private set; }
         public Dictionary<TestMethod, StepFrame> StepFrames { get; private set; }
         public ToolStripComboBox[] ComboBoxes { get; private set; }
+        public List<ToolStripButton> Buttons { get; private set; }
         public TrackBar TrackBar { get; private set; }
 
-        public LayoutManager(DockPanel panel, ToolStripComboBox[] comboBoxes, TrackBar trackBar)
+        public LayoutManager(DockPanel panel, ToolStripComboBox[] comboBoxes, List<ToolStripButton> buttons, TrackBar trackBar)
         {
             Panel = panel;
             ComboBoxes = comboBoxes;
+            Buttons = buttons;
             TrackBar = trackBar;
 
             TreeView = new TreeViewFrame();
+            TreeView.SelectedDatabaseChanged += TreeView_SlectedDatabaseChanged;
+            TreeView.PropertiesClick += TreeView_PropertiesClick;
             StepFrames = new Dictionary<TestMethod, StepFrame>();
             LogFrame = new LogFrame();
+            InstanceProperites = new BenchmarkInstanceProperies();
+            InstanceProperites.Caller = TreeView;
 
             Initialize();
 
             foreach (var method in new TestMethod[] { TestMethod.Write, TestMethod.Read, TestMethod.SecondaryRead })
                 StepFrames[method] = CreateStepFrame(method);
+        }
+
+        private void TreeView_PropertiesClick(object sender, EventArgs e)
+        {
+            ShowProperties();
         }
 
         public void Initialize()
@@ -60,6 +72,7 @@ namespace DatabaseBenchmark.Serialization
         public void ResetDocking()
         {
             TreeView.DockState = DockState.DockLeft;
+            InstanceProperites.DockState = DockState.DockRightAutoHide;
 
             foreach (var item in StepFrames)
                 item.Value.DockState = DockState.Document;
@@ -83,6 +96,14 @@ namespace DatabaseBenchmark.Serialization
             LogFrame.DockState = DockState.DockBottomAutoHide;
             LogFrame.Text = "Logs";
 
+            InstanceProperites.Dispose();
+            InstanceProperites = new BenchmarkInstanceProperies();
+
+            InstanceProperites.Show(Panel);
+            InstanceProperites.DockState = DockState.DockRightAutoHide;
+            InstanceProperites.Text = "Properties";
+            InstanceProperites.Caller = TreeView;
+
             Initialize();
         }
 
@@ -97,6 +118,7 @@ namespace DatabaseBenchmark.Serialization
 
             TreeView.Text = "Databases";
             LogFrame.Text = "Logs";
+            InstanceProperites.Text = "Properties";
         }
 
         public void SelectFrame(TestMethod method)
@@ -126,6 +148,16 @@ namespace DatabaseBenchmark.Serialization
             TreeView.Show(Panel);
         }
 
+        public Dictionary<string, bool> GetToolStripCheckedButtons()
+        {
+            Dictionary<string, bool> result = new Dictionary<string, bool>();
+
+            foreach (var btn in Buttons)
+                result.Add(btn.Name, btn.Checked);
+
+            return result;
+        }
+
         public Dictionary<string, string> GetSelectedFromComboBoxes()
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
@@ -141,6 +173,35 @@ namespace DatabaseBenchmark.Serialization
             StepFrame activeFrame = StepFrames.FirstOrDefault(x => x.Value.IsActivated).Value;
 
             return activeFrame;
+        }
+
+        public void EnablePropertyFrame(bool state)
+        {
+            InstanceProperites.Enabled = state;
+        }
+
+        public void ShowProperties()
+        {
+            if (!InstanceProperites.IsDisposed)
+            {
+                InstanceProperites.Show(Panel);
+                InstanceProperites.DockState = DockState.DockRight;
+            }
+            else
+            {
+                var database = TreeView.GetSelectedDatabase();
+                if (database != null)
+                {
+                    InstanceProperites = new BenchmarkInstanceProperies();
+                    InstanceProperites.Text = "Properties";
+
+                    InstanceProperites.Show(Panel);
+                    InstanceProperites.DockState = DockState.DockRight;
+
+                    InstanceProperites.Caller = TreeView;
+                    InstanceProperites.SetProperties(database);
+                }
+            }
         }
 
         public void ShowBarChart(int column, bool visible)
@@ -186,9 +247,17 @@ namespace DatabaseBenchmark.Serialization
             TreeView.CreateTreeView();
             TreeView.Text = "Databases";
 
+            TreeView.SelectedDatabaseChanged += TreeView_SlectedDatabaseChanged;
+            TreeView.PropertiesClick +=TreeView_PropertiesClick;
             TreeView.Show(Panel);
             TreeView.DockState = DockState.DockLeft;
             TreeView.ExpandAll();
+        }
+
+        private void TreeView_SlectedDatabaseChanged(Object obj)
+        {
+            if (!InstanceProperites.IsDisposed)
+                InstanceProperites.SetProperties(obj);
         }
 
         private StepFrame CreateStepFrame(TestMethod method)
@@ -196,6 +265,24 @@ namespace DatabaseBenchmark.Serialization
             StepFrame stepFrame = new StepFrame();
             stepFrame.Text = method.ToString();
             stepFrame.Dock = DockStyle.Fill;
+
+            switch (method)
+            {
+                case TestMethod.Write:
+                    stepFrame.Icon = Properties.Resources.w_24x24;
+                    break;
+
+                case TestMethod.Read:
+                    stepFrame.Icon = Properties.Resources.r_24x24;
+                    break;
+
+                case TestMethod.SecondaryRead:
+                    stepFrame.Icon = Properties.Resources.sr_24x24;
+                    break;
+
+                default:
+                    break;
+            }
 
             // Hide time, CPU, memory and I/O view from the layout.
             stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
@@ -213,6 +300,9 @@ namespace DatabaseBenchmark.Serialization
 
             if (persistString == typeof(LogFrame).ToString())
                 return LogFrame;
+
+            if (persistString == typeof(BenchmarkInstanceProperies).ToString())
+                return InstanceProperites;
 
             StepFrame frame = null;
             if (persistString == typeof(StepFrame).ToString())

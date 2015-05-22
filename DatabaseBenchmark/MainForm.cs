@@ -55,13 +55,19 @@ namespace DatabaseBenchmark
         private ILog Logger;
         private ProjectManager ApplicationManager;
 
+        private List<ToolStripButton> ViewButtons;
+
         public MainForm()
         {
             InitializeComponent();
 
             History = new List<BenchmarkTest>();
+            ViewButtons= new List<ToolStripButton>();
 
-            // Logger.
+            ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x=>x.CheckOnClick).ToList();
+            
+            // Loggers and tracers.
+            Trace.Listeners.Add(new Log4NetTraceListener());
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
             Logger.Info(Environment.NewLine);
             Logger.Info("Application started...");
@@ -71,9 +77,9 @@ namespace DatabaseBenchmark
             toolStripMain.Items.Insert(toolStripMain.Items.Count - 2, new ToolStripControlHost(trackBar1));
 
             // Load dock and application configuration.
-            ApplicationManager = new ProjectManager(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, trackBar1, CONFIGURATION_FOLDER);
-            
-            ApplicationManager.Load(string.Empty);
+            ApplicationManager = new ProjectManager(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, ViewButtons, trackBar1, CONFIGURATION_FOLDER);
+
+            ApplicationManager.TreeView.CreateTreeView();
             ApplicationManager.LoadDocking();
 
             ApplicationManager.ShowStepFrame(TestMethod.Write);
@@ -458,9 +464,6 @@ namespace DatabaseBenchmark
 
             editToolStripMenuItem.DropDownItems[0].Visible = state; // Clone.
             editToolStripMenuItem.DropDownItems[1].Visible = state; // Rename.
-            editToolStripMenuItem.DropDownItems[4].Visible = state; // Restore default.
-            editToolStripMenuItem.DropDownItems[6].Visible = state; // Separator.
-            editToolStripMenuItem.DropDownItems[7].Visible = state; // Properties.
         }
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
@@ -485,12 +488,13 @@ namespace DatabaseBenchmark
 
         private void restoreDefaultAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            ApplicationManager.TreeView.ClearTreeViewNodes();
             ApplicationManager.TreeView.CreateTreeView();
         }
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.TreeView.ShowProperties();
+            ApplicationManager.ShowProperties();
         }
 
         private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -651,9 +655,13 @@ namespace DatabaseBenchmark
                 if (MainTask != null)
                     btnStop.Enabled = MainTask.Status == TaskStatus.Running ? true : false;
 
+                btnTreeView.Checked = ApplicationManager.TreeView.Visible;
+
                 btnStart.Enabled = !btnStop.Enabled;
 
                 ApplicationManager.TreeView.TreeViewEnabled = btnStart.Enabled;
+                ApplicationManager.EnablePropertyFrame(btnStart.Enabled);
+
                 cbFlowsCount.Enabled = btnStart.Enabled;
                 cbRecordCount.Enabled = btnStart.Enabled;
                 trackBar1.Enabled = btnStart.Enabled;
@@ -661,9 +669,7 @@ namespace DatabaseBenchmark
                 cloneToolStripMenuItem.Enabled = btnStart.Enabled;
                 renameToolStripMenuItem.Enabled = btnStart.Enabled;
                 deleteToolStripMenuItem.Enabled = btnStart.Enabled;
-                restoreDefaultToolStripMenuItem.Enabled = btnStart.Enabled;
                 restoreDefaultAllToolStripMenuItem.Enabled = btnStart.Enabled;
-                propertiesToolStripMenuItem.Enabled = btnStart.Enabled;
                 expandAllToolStripMenuItem.Enabled = btnStart.Enabled;
                 collapseAllToolStripMenuItem.Enabled = btnStart.Enabled;
 
@@ -671,7 +677,7 @@ namespace DatabaseBenchmark
 
                 btnExportCsv.Enabled = isStoped;
                 btnExportJson.Enabled = isStoped;
-                toolStripButtonPdfExport.Enabled = isStoped;
+                btnExportPdf.Enabled = isStoped;
 
                 exportResultToPDFToolStripMenuItem.Enabled = isStoped;
                 exportToCSVToolStripMenuItem.Enabled = isStoped;
@@ -756,7 +762,6 @@ namespace DatabaseBenchmark
             stopButton_Click(sender, e);
             ApplicationManager.StoreDocking();
 
-            //TODO: Find new way
             //Environment.Exit(0);
         }
 

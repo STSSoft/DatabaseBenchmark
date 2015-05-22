@@ -17,19 +17,23 @@ namespace DatabaseBenchmark.Serialization
         // ComboBox name -> Selected value.
         public Dictionary<string, string> ComboBoxItems { get; private set; }
 
+        // ToolStripButton name -> IsChecked.
+        public Dictionary<string, bool> Buttons { get; private set; }
+
         public List<KeyValuePair<TestMethod, List<ChartSettings>>> ChartSettings { get; private set; }
 
         public int TrackBarValue { get; private set; }
 
         public XmlProjectPersist()
-            : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(), new List<KeyValuePair<TestMethod, List<ChartSettings>>>(), default(int))
+            : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(),new  Dictionary<string, bool>(), new List<KeyValuePair<TestMethod, List<ChartSettings>>>(), default(int))
         {
         }
 
-        public XmlProjectPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, List<KeyValuePair<TestMethod, List<ChartSettings>>> chartSettings, int trackBarValue)
+        public XmlProjectPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, Dictionary<string, bool> toolStripButtons, List<KeyValuePair<TestMethod, List<ChartSettings>>> chartSettings, int trackBarValue)
         {
             Databases = databases;
             ComboBoxItems = comboBoxItems;
+            Buttons  = toolStripButtons;
             TrackBarValue = trackBarValue;
             ChartSettings = chartSettings;
         }
@@ -75,6 +79,21 @@ namespace DatabaseBenchmark.Serialization
             }
 
             writer.WriteEndElement(); // ComboBoxes.
+
+            //Serialize Buttons.
+            writer.WriteStartElement("ToolStripButtons");
+
+            foreach (var btn in Buttons)
+            {   
+                writer.WriteStartElement("Button");
+
+                writer.WriteAttributeString("Name", btn.Key);
+                writer.WriteAttributeString("Checked", btn.Value.ToString());
+
+                writer.WriteEndElement(); // Button.
+            }
+
+            writer.WriteEndElement(); // Buttons.
 
             // Serialize TrackBar.
             writer.WriteStartElement("TrackBar");
@@ -147,6 +166,20 @@ namespace DatabaseBenchmark.Serialization
             }
 
             reader.ReadEndElement(); // ComboBoxes.
+
+            // Deserialize Buttons.
+            reader.ReadStartElement("ToolStripButtons");
+
+            while(reader.IsStartElement("Button"))
+            {
+                string name = reader.GetAttribute("Name");
+                bool state = bool.Parse(reader.GetAttribute("Checked"));
+  
+                reader.ReadStartElement("Button");
+                Buttons.Add(name, state);
+            }
+
+             reader.ReadEndElement(); // Buttons.
 
             reader.ReadStartElement("TrackBar");
             TrackBarValue = reader.ReadContentAsInt();

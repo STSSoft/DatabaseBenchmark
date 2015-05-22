@@ -41,7 +41,8 @@
             // LoadingForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = global::DatabaseBenchmark.Properties.Resources.background;
             resources.ApplyResources(this, "$this");
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
