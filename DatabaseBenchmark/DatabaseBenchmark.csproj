@@ -532,6 +532,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo_bechn.ico" />
+    <None Include="Resources\logo-01.png" />
+    <None Include="Resources\w_24x24.ico" />
+    <None Include="Resources\sr_24x24.ico" />
+    <None Include="Resources\r_24x24.ico" />
+    <None Include="Resources\options blue _24x24.ico" />
+    <None Include="Resources\database-icon.ico" />
+    <None Include="Resources\BenchmarkIcon.ico" />
+    <None Include="Resources\Benchmark48x48.ico" />
+    <None Include="Resources\pdf_24x24.png" />
+    <None Include="Resources\options blue _24x24.png" />
+    <None Include="Resources\jsoni_24x24.png" />
+    <None Include="Resources\database-icon.png" />
+    <None Include="Resources\csv_24x24.png" />
+    <None Include="Resources\AutoNavigate_48x48.png" />
+    <None Include="Resources\about_24x24.png" />
     <None Include="Resources\loading_throbber_icon.png" />
     <None Include="Resources\background.png" />
     <None Include="Resources\loading.png" />
