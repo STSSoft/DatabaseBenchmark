@@ -85,7 +85,7 @@
             this.toolStripSeparator2,
             this.propertiesToolStripMenuItem});
             this.contextMenuDatabase.Name = "contextMenuDatabase";
-            this.contextMenuDatabase.Size = new System.Drawing.Size(180, 232);
+            this.contextMenuDatabase.Size = new System.Drawing.Size(180, 254);
             // 
             // cloneToolStripMenuItem
             // 
@@ -121,7 +121,7 @@
             // 
             // restoreDefaultAllToolStripMenuItem
             // 
-            this.restoreDefaultAllToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.refresh_24x24;
+            this.restoreDefaultAllToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.default_24x24;
             this.restoreDefaultAllToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.restoreDefaultAllToolStripMenuItem.Name = "restoreDefaultAllToolStripMenuItem";
             this.restoreDefaultAllToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
