@@ -56,7 +56,7 @@ namespace DatabaseBenchmark.Databases
             CollectionName = "table1";
             ConnectionString = cb.ConnectionString;
 
-            InsertsPerQuery = 1000;
+            InsertsPerQuery = 10000;
         }
 
         protected IDbConnection GetConnection()

@@ -266,22 +266,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\SiaqodbPortable.dll</HintPath>
     </Reference>
-    <Reference Include="STS.General, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\STS.General.dll</HintPath>
-    </Reference>
-    <Reference Include="STS.General.GUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\STS.General.GUI.dll</HintPath>
-    </Reference>
-    <Reference Include="STS.General.SQL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\STS.General.SQL.dll</HintPath>
-    </Reference>
-    <Reference Include="STS.Hadoop.HDFS.Connector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\STS.Hadoop.HDFS.Connector.dll</HintPath>
-    </Reference>
     <Reference Include="STSdb, Version=3.5.13.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Release\STSdb.dll</HintPath>
@@ -781,10 +765,62 @@
     <None Include="Resources\renameToolStripMenuItem.Image.png" />
     <None Include="Resources\cloneToolStripMenuItem.Image.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\STS.General.GUI\STS.General.GUI\STS.General.GUI.csproj">
+      <Project>{19c6fd6a-2e47-407f-9940-620edc0f2ecb}</Project>
+      <Name>STS.General.GUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\STS.General.SQL\STS.General.SQL\STS.General.SQL.csproj">
+      <Project>{72693b8c-90cd-4681-97d2-4247432e2422}</Project>
+      <Name>STS.General.SQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\STS.General\STS.General\STS.General.csproj">
+      <Project>{820fc9a2-48a0-4463-8182-d1ac8d539fb9}</Project>
+      <Name>STS.General</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>set target=x64
+set drive=R:
+set source=%25drive%25\Databases
+set thirdParty=%25drive%25\Third Party
+
+if exist %25drive%25 (
+  xcopy /d /y /r "%25source%25\STSdb\STSdb.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\STSdb4\STSdb4.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\HamsterDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\BrightstarDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Volante\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\HamsterDB\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\CassandraDB\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Couchbase\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Aerospike\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Oracle BerkeleyDB\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\OrientDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Perst\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\db4object\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Firebird\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Microsoft SQL Server Compact\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\SQLite\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\MySQL\MySql.Data.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\PostgreSQL\Npgsql.net\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\PostgreSQL\Npgsql.net\policy.2.0.Npgsql.config" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\ScimoreDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\LevelDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\VelocityDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\MongoDB\Client\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\RaptorDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\RavenDB\RavenDB-Build-3528\Server\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\RavenDB\RavenDB-Build-3528\Client\Raven.Client.Lightweight.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Siaqodb\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\RedisDB\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\log4net\1.2.13\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\Json for .NET 1.2\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\DockingSuite\2.9.0\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\PdfExport\*.dll" "$(TargetDir)"
+)
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
