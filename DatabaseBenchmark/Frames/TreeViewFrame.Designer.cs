@@ -93,7 +93,7 @@
             this.toolStripSeparator2,
             this.propertiesToolStripMenuItem});
             this.contextMenuDatabase.Name = "contextMenuDatabase";
-            this.contextMenuDatabase.Size = new System.Drawing.Size(180, 232);
+            this.contextMenuDatabase.Size = new System.Drawing.Size(180, 254);
             // 
             // cloneToolStripMenuItem
             // 
