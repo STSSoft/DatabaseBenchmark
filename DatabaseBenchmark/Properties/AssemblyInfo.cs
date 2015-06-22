@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("STS Soft SC")]
 [assembly: AssemblyProduct("Database Benchmark")]
-[assembly: AssemblyCopyright("©  2010 All rights reserved.")]
+[assembly: AssemblyCopyright("©  2015 All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
