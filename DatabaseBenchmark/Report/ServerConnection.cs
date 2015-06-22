@@ -1,5 +1,7 @@
 ﻿using DatabaseBenchmark.Report;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,7 +10,7 @@ using System.Text;
 namespace DatabaseBenchmark.Report
 {
     /// <summary>
-    /// Sends the test data and computer configuration to the dedicated servers of DatabaseBenchmark.
+    /// Sends the test data and computer configuration to the dedicated servers of Database Benchmark.
     /// </summary>
     public class ServerConnection
     {
@@ -16,23 +18,29 @@ namespace DatabaseBenchmark.Report
 
         public ServerConnection()
         {
-            Host = "http://presence.bg/bm/public/api/v1/benchmarks";
+            Host = "http://reporting.stssoft.com/api/dbm/benchmarks/public/v1"; 
         }
 
-        public HttpStatusCode SendData(string jsonData)
+        public HttpWebResponse SendDataAsPost(string jsonData)
         {
             // Remove control characters from string.
             string output = new String(jsonData.Where(character => !char.IsControl(character)).ToArray());
 
-            using (var client = new HttpClient())
+            string postData = "Data=" + output;
+            byte[] rawdata = Encoding.UTF8.GetBytes(postData);
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Host);
+
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = rawdata.Length;
+
+            using (Stream stream = request.GetRequestStream())
             {
-                string json = JsonUtils.ConvertJsonToPostQuery(jsonData).ToString();
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = client.PostAsync(Host, content).Result;
-
-                return response.StatusCode;
+                stream.Write(rawdata, 0, rawdata.Length);
             }
+
+            return (HttpWebResponse)request.GetResponse();
         }
     }
 }

@@ -33,6 +33,10 @@ using DatabaseBenchmark.Properties;
  * 
 */
 
+// IMPROVEMENT: LayoutManager should be separated from ProjectManager.
+// BUG: when an existing project is opened, it does not save the changes in the current file, but instead creates a new one.
+// BUG: when the loading form is active, if a window pops up, it can't be selected.
+
 namespace DatabaseBenchmark
 {
     public partial class MainForm : Form
@@ -140,8 +144,13 @@ namespace DatabaseBenchmark
 
                 if (Cancellation.IsCancellationRequested)
                     History.Clear();
+                else
+                {
+                    if (!(bool)Properties.Settings.Default["HideReportForm"])
+                        StartOnlineReport();
+                }
             }
-        }
+          }
 
         #endregion
 
@@ -205,18 +214,7 @@ namespace DatabaseBenchmark
 
         private void onlineReportResultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                LoadingForm.Start("Obtaining computer configuration...", Bounds);
-                ReportForm form = new ReportForm(History);
-                LoadingForm.Stop();
-
-                form.ShowDialog();
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("Online report exception occured ...", exc);
-            }
+            StartOnlineReport();
         }
 
         // CSV.
@@ -308,24 +306,24 @@ namespace DatabaseBenchmark
             RecordCount = Int64.Parse(cbRecordCount.Text.Replace(" ", ""));
             Randomness = trackBar1.Value / 20.0f;
 
-            var benchmarks = ApplicationManager.SelectedDatabases;
-            if (benchmarks.Length == 0)
+            var databases = ApplicationManager.SelectedDatabases;
+            if (databases.Length == 0)
                 return;
 
             History.Clear();
             Cancellation = new CancellationTokenSource();
 
-            foreach (var benchmark in benchmarks)
+            foreach (var database in databases)
             {
-                var session = new BenchmarkTest(benchmark, TableCount, RecordCount, Randomness, Cancellation);
+                var session = new BenchmarkTest(database, TableCount, RecordCount, Randomness, Cancellation);
                 History.Add(session);
 
                 try
                 {
-                    foreach (var directory in Directory.GetDirectories(benchmark.DataDirectory))
+                    foreach (var directory in Directory.GetDirectories(database.DataDirectory))
                         Directory.Delete(directory, true);
 
-                    foreach (var files in Directory.GetFiles(benchmark.DataDirectory, "*.*", SearchOption.AllDirectories))
+                    foreach (var files in Directory.GetFiles(database.DataDirectory, "*.*", SearchOption.AllDirectories))
                         File.Delete(files);
                 }
                 catch (Exception exc)
@@ -415,7 +413,7 @@ namespace DatabaseBenchmark
                 saveFileDialogProject.FileName = openFileDialogProject.FileName;
                 saveConfigurationToolStripMenuItem.Enabled = true;
                 Text = String.Format("{0} - Database Benchmark", Path.GetFileName(saveFileDialogProject.FileName));
-
+               
                 LoadingForm.Stop();
             }
         }
@@ -450,7 +448,7 @@ namespace DatabaseBenchmark
                 LoadingForm.Stop();
 
                 saveConfigurationToolStripMenuItem.Enabled = true;
-                Text = String.Format("{0} - Database Benchmark", Path.GetFileName(saveFileDialogProject.FileName));
+                Text = String.Format("{0} - DatabaseBenchmark", Path.GetFileName(saveFileDialogProject.FileName));
             }
         }
 
@@ -517,9 +515,9 @@ namespace DatabaseBenchmark
             bool state = selectedFrame != null;
 
             viewToolStripMenuItem.DropDownItems[6].Visible = state;  // Separator.
-            viewToolStripMenuItem.DropDownItems[7].Visible = state;  // Show legend.
-            viewToolStripMenuItem.DropDownItems[8].Visible = state;  // Legend position.
-            viewToolStripMenuItem.DropDownItems[9].Visible = state;  // Logarithmic.
+            viewToolStripMenuItem.DropDownItems[8].Visible = state;  // Show legend.
+            viewToolStripMenuItem.DropDownItems[9].Visible = state;  // Legend position.
+            viewToolStripMenuItem.DropDownItems[10].Visible = state;  // Logarithmic.
 
             if (!state)
                 return;
@@ -675,9 +673,7 @@ namespace DatabaseBenchmark
 
                 bool isStoped = !(History.Count == 0 || MainTask.Status == TaskStatus.Running);
 
-                btnExportCsv.Enabled = isStoped;
-                btnExportJson.Enabled = isStoped;
-                btnExportPdf.Enabled = isStoped;
+                btnExports.Enabled = isStoped;
 
                 exportResultToPDFToolStripMenuItem.Enabled = isStoped;
                 exportToCSVToolStripMenuItem.Enabled = isStoped;
@@ -722,15 +718,11 @@ namespace DatabaseBenchmark
 
                     var averageSpeedData = session.GetAverageSpeed(method, averagePossition);
                     var momentSpeedData = session.GetMomentSpeed(method, momentPossition);
-                    //var cpuData = session.GetAverageUserTimeProcessor(method, averagePossition);
                     var memoryData = session.GetMomentWorkingSet(method, averagePossition);
-                    //var ioData = session.GetAverageDataIO(method, averagePossition);
 
                     activeFrame.AddAverageSpeed(database.Name, averageSpeedData);
                     activeFrame.AddMomentSpeed(database.Name, momentSpeedData);
-                    //activeFrame.AddAverageCpuUsage(database.Name, cpuData);
                     activeFrame.AddPeakMemoryUsage(database.Name, memoryData);
-                    //activeFrame.AddAverageIO(database.Name, ioData);
                 }
 
                 if (Math.Abs(progress - 0.0) <= double.Epsilon)
@@ -762,7 +754,7 @@ namespace DatabaseBenchmark
             stopButton_Click(sender, e);
             ApplicationManager.StoreDocking();
 
-            //Environment.Exit(0);
+            Application.Exit();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -794,6 +786,22 @@ namespace DatabaseBenchmark
                     LoadFromFile(arg);
                     break;
                 }
+            }
+        }
+        private void StartOnlineReport()
+        {
+            try
+            {
+                LoadingForm.Start("Obtaining computer configuration...", Bounds);
+                ReportForm form = new ReportForm(History);
+                LoadingForm.Stop();
+
+                form.ShowDialog();
+            }
+            catch (Exception exc)
+            {
+                LoadingForm.Stop();
+                Logger.Error("Online report exception occured ...", exc);
             }
         }
     }

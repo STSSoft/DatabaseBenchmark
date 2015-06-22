@@ -4,3 +4,6 @@
 [submodule "STS.General"]
 	path = STS.General
 	url = https://github.com/STSSoft/STS.General
+[submodule "STS.General.SQL"]
+	path = STS.General.SQL
+	url = https://github.com/STSSoft/STS.General.SQL

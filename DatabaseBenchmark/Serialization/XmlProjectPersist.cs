@@ -14,6 +14,9 @@ namespace DatabaseBenchmark.Serialization
         // Database -> Checked state in TreeView.
         public Dictionary<IDatabase, bool> Databases { get; private set; }
 
+        // Is category order of TreeView.
+        public bool IsCategoryOrder { get; set; }
+
         // ComboBox name -> Selected value.
         public Dictionary<string, string> ComboBoxItems { get; private set; }
 
@@ -25,15 +28,16 @@ namespace DatabaseBenchmark.Serialization
         public int TrackBarValue { get; private set; }
 
         public XmlProjectPersist()
-            : this(new Dictionary<IDatabase, bool>(), new Dictionary<string, string>(),new  Dictionary<string, bool>(), new List<KeyValuePair<TestMethod, List<ChartSettings>>>(), default(int))
+            : this(new Dictionary<IDatabase, bool>(), default(bool) , new Dictionary<string, string>(), new Dictionary<string, bool>(), new List<KeyValuePair<TestMethod, List<ChartSettings>>>(), default(int))
         {
         }
 
-        public XmlProjectPersist(Dictionary<IDatabase, bool> databases, Dictionary<string, string> comboBoxItems, Dictionary<string, bool> toolStripButtons, List<KeyValuePair<TestMethod, List<ChartSettings>>> chartSettings, int trackBarValue)
+        public XmlProjectPersist(Dictionary<IDatabase, bool> databases, bool isCategoryOrder, Dictionary<string, string> comboBoxItems, Dictionary<string, bool> toolStripButtons, List<KeyValuePair<TestMethod, List<ChartSettings>>> chartSettings, int trackBarValue)
         {
             Databases = databases;
+            IsCategoryOrder = isCategoryOrder;
             ComboBoxItems = comboBoxItems;
-            Buttons  = toolStripButtons;
+            Buttons = toolStripButtons;
             TrackBarValue = trackBarValue;
             ChartSettings = chartSettings;
         }
@@ -65,6 +69,14 @@ namespace DatabaseBenchmark.Serialization
 
             writer.WriteEndElement();
 
+            //Serialize TreeView Order.
+            writer.WriteStartElement("TreeViewOrder");
+
+            writer.WriteAttributeString("Value",IsCategoryOrder.ToString());
+
+            writer.WriteEndElement(); // TreeView Order.
+
+
             // Serialize ComboBoxes.
             writer.WriteStartElement("ComboBoxes");
 
@@ -84,7 +96,7 @@ namespace DatabaseBenchmark.Serialization
             writer.WriteStartElement("ToolStripButtons");
 
             foreach (var btn in Buttons)
-            {   
+            {
                 writer.WriteStartElement("Button");
 
                 writer.WriteAttributeString("Name", btn.Key);
@@ -152,6 +164,10 @@ namespace DatabaseBenchmark.Serialization
 
             reader.ReadEndElement(); // Databases.
 
+            //Deserialize TreeView Order.          
+            IsCategoryOrder = bool.Parse(reader.GetAttribute("Value"));
+            reader.ReadStartElement("TreeViewOrder");// TreeView order ends.
+
             // Deserialize ComboBoxes.
             reader.ReadStartElement("ComboBoxes");
 
@@ -170,16 +186,16 @@ namespace DatabaseBenchmark.Serialization
             // Deserialize Buttons.
             reader.ReadStartElement("ToolStripButtons");
 
-            while(reader.IsStartElement("Button"))
+            while (reader.IsStartElement("Button"))
             {
                 string name = reader.GetAttribute("Name");
                 bool state = bool.Parse(reader.GetAttribute("Checked"));
-  
+
                 reader.ReadStartElement("Button");
                 Buttons.Add(name, state);
             }
 
-             reader.ReadEndElement(); // Buttons.
+            reader.ReadEndElement(); // Buttons.
 
             reader.ReadStartElement("TrackBar");
             TrackBarValue = reader.ReadContentAsInt();

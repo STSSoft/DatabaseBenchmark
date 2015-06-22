@@ -143,6 +143,16 @@ namespace DatabaseBenchmark.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap csv_48x48_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("csv_48x48_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap database_24x24 {
             get {
                 object obj = ResourceManager.GetObject("database_24x24", resourceCulture);
@@ -157,16 +167,6 @@ namespace DatabaseBenchmark.Properties {
             get {
                 object obj = ResourceManager.GetObject("database_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        public static System.Drawing.Icon database_icon1 {
-            get {
-                object obj = ResourceManager.GetObject("database_icon1", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -196,6 +196,16 @@ namespace DatabaseBenchmark.Properties {
         public static System.Drawing.Bitmap exit_24x24 {
             get {
                 object obj = ResourceManager.GetObject("exit_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap export_48x48 {
+            get {
+                object obj = ResourceManager.GetObject("export_48x48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -331,16 +341,6 @@ namespace DatabaseBenchmark.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        public static System.Drawing.Icon options_blue__24x241 {
-            get {
-                object obj = ResourceManager.GetObject("options_blue__24x241", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap pdf_24x24 {
@@ -356,6 +356,16 @@ namespace DatabaseBenchmark.Properties {
         public static System.Drawing.Bitmap pdf_48x48 {
             get {
                 object obj = ResourceManager.GetObject("pdf_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap pdf_48x481 {
+            get {
+                object obj = ResourceManager.GetObject("pdf_48x481", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

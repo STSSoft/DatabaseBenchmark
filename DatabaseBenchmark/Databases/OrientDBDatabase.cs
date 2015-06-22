@@ -2,7 +2,9 @@
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -14,15 +16,27 @@ namespace DatabaseBenchmark.Databases
         private int flowCount;
         private long flowRecordCount;
 
-        /// <summary>
-        /// Specifies how many records are inserted with every batch.
-        /// </summary>
+        [Category("Settings")]
         public int InsertsPerQuery { get; set; }
 
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.SBTree; }
+        }
+
+        [Category("Connection Settings")]
         public string Server { get; set; }
+
+        [Category("Connection Settings")]
         public int Port { get; set; }
+
+        [Category("Connection Settings")]
         public string DatabaseTest { get; set; }
+
+        [Category("Connection Settings")]
         public string Ussername { get; set; }
+
+        [Category("Connection Settings")]
         public string Password { get; set; }
 
         public OrientDBDatabase()
@@ -149,13 +163,6 @@ namespace DatabaseBenchmark.Databases
                 skip += QUERY_CAPACITY;
             }
         }
-        public override long Size
-        {
-            get
-            {
-                return databases[0].Size;
-            }
-        }
 
         public override void Finish()
         {
@@ -163,6 +170,27 @@ namespace DatabaseBenchmark.Databases
 
             foreach (var database in databases)
                 database.Close();
+        }
+
+        public override long Size
+        {
+            get
+            {
+                return databases[0].Size;
+            }
+        }
+        //TODO: Check settings.
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                var settings = new Dictionary<string, string>();
+
+                settings.Add("InsertsPerQuery", InsertsPerQuery.ToString());
+
+                return settings;
+            }
         }
     }
 }

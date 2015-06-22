@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Serialization;
 using Volante;
 
 namespace DatabaseBenchmark.Databases
@@ -13,6 +14,11 @@ namespace DatabaseBenchmark.Databases
 
         private Volante.IDatabase database = DatabaseFactory.CreateDatabase();
         private IIndex<long, TickEntity> table;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
+        }
 
         public VolanteDatabase()
         {
@@ -85,6 +91,15 @@ namespace DatabaseBenchmark.Databases
         public override long Size
         {
             get { return database.DatabaseSize; }
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public class TickEntity : Persistent

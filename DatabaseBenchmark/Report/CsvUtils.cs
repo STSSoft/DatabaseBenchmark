@@ -39,7 +39,7 @@ namespace DatabaseBenchmark.Report
 
                 // write computer configuration
                 writer.WriteLine();
-                ExportConputerConfiguration(writer, SystemUtils.GetComputerConfiguration());
+                ExportComputerConfiguration(writer, SystemUtils.GetComputerConfiguration());
 
                 writer.WriteLine();
 
@@ -77,7 +77,7 @@ namespace DatabaseBenchmark.Report
 
                 // write computer configuration
                 writer.WriteLine();
-                ExportConputerConfiguration(writer, SystemUtils.GetComputerConfiguration());
+                ExportComputerConfiguration(writer, SystemUtils.GetComputerConfiguration());
 
                 writer.WriteLine();
 
@@ -86,7 +86,7 @@ namespace DatabaseBenchmark.Report
                 writer.WriteLine(String.Join(";", Enumerable.Repeat("Records;Write time;Read time;Secondary read time;Average write;Average read;Average secondary read;Moment write;Moment read;Moment secondary read;", sessions.Count)));
 
                 StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < BenchmarkTest.INTERVAL_COUNT + 1; i++)
+                for (int i = 0; i < BenchmarkTest.INTERVAL_COUNT; i++)
                 {
                     for (int k = 0; k < sessions.Count; k++)
                     {
@@ -155,7 +155,7 @@ namespace DatabaseBenchmark.Report
             writer.WriteLine(randomness + ";");
         }
 
-        public static void ExportConputerConfiguration(StreamWriter writer, ComputerConfiguration computerInfo)
+        public static void ExportComputerConfiguration(StreamWriter writer, ComputerConfiguration computerInfo)
         {
             StringBuilder builder = new StringBuilder();
 

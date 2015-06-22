@@ -5,8 +5,10 @@ using STS.General.Extensions;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -15,10 +17,13 @@ namespace DatabaseBenchmark.Databases
         private MongoClient[] clients;
         private IMongoCollection<Row>[] collections;
 
-        /// <summary>
-        /// Specifies how many records are inserted with every batch.
-        /// </summary>
+       [Category("Settings")]
         public int InsertsPerQuery { get; set; }
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
+        }
 
         public MongoDBDatabase()
         {
@@ -120,6 +125,18 @@ namespace DatabaseBenchmark.Databases
             }
         }
 
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                var settings = new Dictionary<string, string>();
+
+                settings.Add("InsertsPerQuery", InsertsPerQuery.ToString());
+
+                return settings;
+            }
+        }
         private class Row
         {
             public long _id { get; set; }

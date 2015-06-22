@@ -23,6 +23,11 @@ namespace DatabaseBenchmark
         string Category { get; set; }
 
         /// <summary>
+        /// The indexing technology of the database (B-tree, LSM Tree etc.)
+        /// </summary>
+        IndexingTechnology IndexingTechnology { get; }
+
+        /// <summary>
         /// A description of the database. Usually the name and version.
         /// </summary>
         string Description { get; set; }
@@ -58,6 +63,13 @@ namespace DatabaseBenchmark
         /// </summary>
         string ConnectionString { get; set; }
 
+        /// <summary>
+        /// A set of key-value pairs containing the settings of the database used for the tests.
+        /// The settings are used when sending the benchmark results to the dedicated servers of Database Benchmark.
+        /// This property is not necessary, but providing the database settings helps creating a more detailed test results database.
+        /// </summary>
+        Dictionary<string, string> Settings { get; }
+
         #endregion
 
         #region Database Methods
@@ -90,5 +102,23 @@ namespace DatabaseBenchmark
         long Size { get; }
 
         #endregion
+    }
+
+    public enum IndexingTechnology
+    {
+        None,
+        BPlusTree,
+        BTree,
+        FractalTree,
+        GiST,
+        HashTable,
+        LSMTree,
+        NoTree,
+        RadixTree,
+        RDFGraph,
+        RedBlackTree,
+        RTree,
+        SBTree,
+        WaterfallTree
     }
 }

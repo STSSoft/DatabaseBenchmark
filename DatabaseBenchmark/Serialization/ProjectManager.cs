@@ -58,7 +58,7 @@ namespace DatabaseBenchmark.Serialization
                     foreach (var frame in LayoutManager.StepFrames)
                         chartSettings.Add(new KeyValuePair<TestMethod, List<ChartSettings>>(frame.Key, frame.Value.GetLineChartSettings()));
 
-                    XmlProjectPersist persist = new XmlProjectPersist(databases, selectedItmes, toolStripButtons, chartSettings, LayoutManager.TrackBar.Value);
+                    XmlProjectPersist persist = new XmlProjectPersist(databases,LayoutManager.TreeView.IsCategoryOrder(), selectedItmes, toolStripButtons, chartSettings, LayoutManager.TrackBar.Value);
 
                     XmlSerializer serializer = new XmlSerializer(typeof(XmlProjectPersist));
                     serializer.Serialize(stream, persist);
@@ -89,7 +89,7 @@ namespace DatabaseBenchmark.Serialization
 
                     // Add databases in TreeView.
                     foreach (var database in appPersist.Databases)
-                        treeView.CreateTreeViewNode(database.Key, database.Value);
+                        treeView.CreateTreeViewNode(database.Key, database.Value, appPersist.IsCategoryOrder);
 
                     foreach (var comboBox in appPersist.ComboBoxItems)
                         LayoutManager.ComboBoxes.First(x => x.Name == comboBox.Key).Text = comboBox.Value;
@@ -109,6 +109,8 @@ namespace DatabaseBenchmark.Serialization
 
                 treeView.ExpandAll();
                 treeView.SelectFirstNode();
+
+                LayoutManager.RefreshPropertyFrame();
             }
             catch (Exception exc)
             {
@@ -206,7 +208,7 @@ namespace DatabaseBenchmark.Serialization
 
         public Database[] SelectedDatabases
         {
-            get { return LayoutManager.TreeView.GetSelectedBenchmarks(); }
+            get { return LayoutManager.TreeView.GetSelectedBenchmarks(); } // TODO: fix to GetSelectedDatabases()
         }
 
         public TreeViewFrame TreeView

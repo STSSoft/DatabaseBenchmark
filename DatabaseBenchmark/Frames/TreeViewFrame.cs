@@ -16,18 +16,26 @@ namespace DatabaseBenchmark.Frames
     {
         private ILog Logger;
 
-        public event Action<Object> SelectedDatabaseChanged; // object = database
+        public event Action<Object> SelectedDatabaseChanged; // Object = Database
+
         public bool TreeViewEnabled
         {
             get { return treeView.Enabled; }
-            set { treeView.Enabled = value; }
+            set 
+            { 
+                treeView.Enabled = value;
+                groupBoxOrder.Enabled = value;  // TODO: Fix this later.
+            }
         }
+
         public TreeViewFrame()
         {
             InitializeComponent();
 
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
+
         }
+
         public void CreateTreeView()
         {
             Type[] benchmarksTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(Database)) && t.GetConstructor(new Type[] { }) != null).ToArray();
@@ -62,7 +70,9 @@ namespace DatabaseBenchmark.Frames
 
                 foreach (var database in databases.OrderBy(db => db.Name))
                 {
-                    AddAfter(null, database);
+                    string treeViewType = radioBtn_Category.Checked ? database.Category : database.IndexingTechnology.ToString();
+
+                    AddAfter(null, database, treeViewType);
                     database.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, database.Name);
 
                     if (!Directory.Exists(database.DataDirectory))
@@ -78,9 +88,18 @@ namespace DatabaseBenchmark.Frames
             treeView.SelectedNode = treeView.Nodes[0];
         }
 
-        public void CreateTreeViewNode(IDatabase database, bool state)
+        public void CreateTreeViewNode(IDatabase database, bool state, bool order)
         {
-            AddAfter(null, database, state);
+            if (order)
+            {
+                AddAfter(null, database, database.Category, state);
+                radioBtn_Category.Checked = true;
+            }
+            else
+            {
+                AddAfter(null, database, database.IndexingTechnology.ToString(), state);
+                radioBtn_IndexTech.Checked = true;
+            }
 
             if (!Directory.Exists(database.DataDirectory))
                 Directory.CreateDirectory(database.DataDirectory);
@@ -137,11 +156,14 @@ namespace DatabaseBenchmark.Frames
             return treeView.Nodes.Iterate().Where(x => x.Tag != null).ToDictionary(x => x.Tag as IDatabase, v => v.Checked);
         }
 
-        private void AddAfter(IDatabase database, IDatabase newDatabase, bool state = false)
+        private void AddAfter(IDatabase database, IDatabase newDatabase, string treeViewType, bool state = false)
         {
             if (database == null)
             {
-                var node1 = treeView.Nodes.BuildNode(newDatabase.Category, newDatabase.Name);
+                TreeNode node1 = new TreeNode();
+
+                node1 = treeView.Nodes.BuildNode(treeViewType, newDatabase.Name);
+
                 node1.ImageIndex = 0;
                 node1.Tag = newDatabase;
                 node1.Checked = state;
@@ -158,8 +180,8 @@ namespace DatabaseBenchmark.Frames
             newNode.ImageIndex = 0;
 
             treeView.SelectedNode = newNode;
-        }
 
+        }
         public bool IsSelectedBenchamrkNode
         {
             get
@@ -178,7 +200,8 @@ namespace DatabaseBenchmark.Frames
 
             try
             {
-                Database selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
+                //Database selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
+                var selectedDatabase = treeView.SelectedNode.Tag as Database;
 
                 if (selectedDatabase != null)
                 {
@@ -191,7 +214,9 @@ namespace DatabaseBenchmark.Frames
                     if (!Directory.Exists(tempDatabase.DataDirectory))
                         Directory.CreateDirectory(tempDatabase.DataDirectory);
 
-                    AddAfter(selectedDatabase, tempDatabase);
+                    string treeViewType = radioBtn_Category.Checked ? selectedDatabase.Category : selectedDatabase.IndexingTechnology.ToString();
+
+                    AddAfter(selectedDatabase, tempDatabase, treeViewType);
                 }
 
                 treeView.Update();
@@ -231,7 +256,7 @@ namespace DatabaseBenchmark.Frames
                 instance.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, instance.Name);
 
                 selectedNode.Tag = instance;
-                selectedNode.Text = instance.Name;     
+                selectedNode.Text = instance.Name;
 
                 if (SelectedDatabaseChanged != null)
                     SelectedDatabaseChanged.Invoke(instance);
@@ -370,6 +395,69 @@ namespace DatabaseBenchmark.Frames
             {
                 propertiesToolStripMenuItem.Click -= value;
             }
+        }
+
+        public bool IsCategoryOrder()
+        {
+            return radioBtn_Category.Checked ? true : false;
+        }
+
+        private void radioBtn_IndexTech_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioBtn_IndexTech.Checked)
+                SetIndexingOrder();
+        }
+        private void radioBtn_Category_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioBtn_Category.Checked)
+                SetCategoryOrder();
+        }
+        public void SetCategoryOrder()
+        {
+            List<TreeNode> newTree = new List<TreeNode>();
+            newTree = treeView.Nodes.Iterate().Where(x => x.Tag != null).OrderBy(db => db.Name).ToList();
+
+            ClearTreeViewNodes();
+
+            foreach (var node in newTree)
+            {
+                TreeNode node1 = new TreeNode();
+                node1 = treeView.Nodes.BuildNode((node.Tag as Database).Category, (node.Tag as Database).Name);
+
+                node1.ImageIndex = 0;
+                node1.Tag = node.Tag;
+                node1.Checked = node.Checked;
+            }
+            SetTreeView();        
+        }
+
+        public void SetIndexingOrder()
+        {
+
+            var newtree = treeView.Nodes.Iterate().Where(x => x.Tag != null)
+                         .GroupBy(db => ((Database)db.Tag).IndexingTechnology)
+                         .ToList();
+
+            ClearTreeViewNodes();
+
+            foreach (var node in newtree)
+            {
+                var t = node.ToArray();
+                TreeNode newNode = new TreeNode(node.Key.ToString(), t);
+                treeView.Nodes.Add(newNode);
+            }
+            SetTreeView();   
+        }
+
+        private void SetTreeView()
+        {
+           if (SelectedDatabaseChanged != null)
+               SelectedDatabaseChanged.Invoke(null);
+
+            SelectFirstNode();
+
+            treeView.ExpandAll();
+            treeView.Focus();
         }
     }
 }

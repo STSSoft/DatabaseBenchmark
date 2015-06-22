@@ -1,11 +1,13 @@
 ﻿using MySql.Data.MySqlClient;
-using STS.General.Extensions;
 using STS.General.Generators;
 using STS.General.SQL;
+using STS.General.SQL.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -15,6 +17,7 @@ namespace DatabaseBenchmark.Databases
         INNODB,
         TokuDB,
         MEMORY,
+        ARCHIVE,
         BLACKHOLE
     }
 
@@ -23,15 +26,14 @@ namespace DatabaseBenchmark.Databases
         private IDbConnection[] connections;
         private SQLMultiInsert[] helpers;
 
-        /// <summary>
-        /// Specifies how many records are inserted with every batch.
-        /// </summary>
-        public int InsertsPerQuery { get; set; }
-
+        [Category("Settings")]
+        public int InsertsPerQuery { get; set; } 
         public MySQLStorageEngine StorageEngine { get; set; }
 
-        public MySQLDatabase()
+        protected MySQLDatabase(MySQLStorageEngine engine)
         {
+            StorageEngine = engine;
+
             Name = String.Format("MySQL ({0})", StorageEngine);
             Category = "SQL";
             Description = "MySQL + .NET Connector";
@@ -43,8 +45,6 @@ namespace DatabaseBenchmark.Databases
                 "MySql.Data.dll"
             };
 
-            StorageEngine = MySQLStorageEngine.MyISAM;
-
             MySqlConnectionStringBuilder cb = new MySqlConnectionStringBuilder();
             cb.ConnectionLifeTime = 0;
             cb.DefaultCommandTimeout = 0;
@@ -52,21 +52,22 @@ namespace DatabaseBenchmark.Databases
             cb.UserID = "root";
             cb.Password = "";
             cb.Database = "test";
+
             CollectionName = "table1";
             ConnectionString = cb.ConnectionString;
 
             InsertsPerQuery = 1000;
         }
 
-        private IDbConnection GetConnection()
+        protected IDbConnection GetConnection()
         {
-            IDbConnection conn = new MySqlConnection(ConnectionString);
+            IDbConnection conn = new MySqlConnection();
             conn.Open();
 
             return conn;
         }
 
-        private string CreateTableQuery()
+        protected virtual string CreateTableQuery()
         {
             return String.Format("CREATE TABLE `{0}` (", CollectionName) +
                       "`ID` bigint(20) NOT NULL," +
@@ -81,7 +82,7 @@ namespace DatabaseBenchmark.Databases
                     String.Format(") ENGINE={0};", StorageEngine);
         }
 
-        private SQLMultiInsert GetInsertHelper(IDbConnection conn)
+        protected virtual SQLMultiInsert GetInsertHelper(IDbConnection conn)
         {
             SQLMultiInsert helper = new SQLMultiInsert(conn, CollectionName, InsertsPerQuery);
             helper.InsertCommand = "replace"; // the old row is deleted before the new row is inserted
@@ -191,6 +192,19 @@ namespace DatabaseBenchmark.Databases
                 {
                     conn.Close();
                 }
+            }
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                var settings = new Dictionary<string, string>();
+
+                settings.Add("InsertsPerQuery", InsertsPerQuery.ToString());
+
+                return settings;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using STSdb5.Engine;
+using System;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -6,16 +7,12 @@ using System.Resources;
 using System.Security.Permissions;
 using System.Security.Principal;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace DatabaseBenchmark
 {
     static class Program
     {
-        static bool IsAdministrator()
-        {
-            return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
-        }
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -37,6 +34,11 @@ namespace DatabaseBenchmark
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
+        }
+
+        static bool IsAdministrator()
+        {
+            return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
         }
     }
 }

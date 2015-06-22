@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -17,6 +18,11 @@ namespace DatabaseBenchmark.Databases
         private int recordsCount;
         private EmbeddableDocumentStore dataStore;
         private BulkInsertOperation[] bulkInsertSessions;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BPlusTree; }
+        }
 
         public RavenDBDatabase()
         {
@@ -89,17 +95,6 @@ namespace DatabaseBenchmark.Databases
             session.Dispose();
         }
 
-        public override long Size
-        {
-            get
-            {
-                string directoryPath = Path.Combine(DataDirectory, "Data");
-                FileInfo info = new FileInfo(directoryPath);
-
-                return info.Length;
-            }
-        }
-
         public override void Finish()
         {
             foreach (var item in bulkInsertSessions)
@@ -112,6 +107,26 @@ namespace DatabaseBenchmark.Databases
                 File.Delete(file);
 
             IOExtensions.DeleteDirectory(DataDirectory);
+        }
+
+        public override long Size
+        {
+            get
+            {
+                string directoryPath = Path.Combine(DataDirectory, "Data");
+                FileInfo info = new FileInfo(directoryPath);
+
+                return info.Length;
+            }
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public class TickRecord

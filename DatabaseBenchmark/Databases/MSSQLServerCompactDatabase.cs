@@ -1,10 +1,11 @@
-﻿using STS.General.Extensions;
-using STS.General.Generators;
+﻿using STS.General.Generators;
+using STS.General.SQL.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlServerCe;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -16,6 +17,11 @@ namespace DatabaseBenchmark.Databases
         private string DatabaseFile
         {
             get { return Path.Combine(DataDirectory, "test.sdf"); }
+        }
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
         }
 
         public MSSQLServerCompactDatabase()
@@ -147,6 +153,15 @@ namespace DatabaseBenchmark.Databases
         {
             for (int i = 0; i < connections.Length; i++)
                 connections[i].Close();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
 
         private IDbCommand CreateCommand(IDbConnection connection)

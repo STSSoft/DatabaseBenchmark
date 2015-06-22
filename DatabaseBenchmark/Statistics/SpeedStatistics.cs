@@ -21,7 +21,7 @@ namespace DatabaseBenchmark.Statistics
         public SpeedStatistics(int capacity)
         {
             recordTimeStat = new List<KeyValuePair<long, TimeSpan>>(capacity);
-            recordTimeStat.Add(new KeyValuePair<long, TimeSpan>(0, new TimeSpan()));
+            //recordTimeStat.Add(new KeyValuePair<long, TimeSpan>(0, new TimeSpan()));
         }
 
         public SpeedStatistics()
@@ -110,8 +110,8 @@ namespace DatabaseBenchmark.Statistics
 
         public double GetAverageSpeedAt(int index)
         {
-            if (index == 0 || index >= recordTimeStat.Count)
-                return 0;
+            if (index >= recordTimeStat.Count)
+                return -1;
 
             var curr = recordTimeStat[index];
 
@@ -120,19 +120,23 @@ namespace DatabaseBenchmark.Statistics
 
         public double GetMomentSpeedAt(int index)
         {
-            if (index == 0 || index >= recordTimeStat.Count)
-                return 0;
+            if (index >= recordTimeStat.Count)
+                return -1;
 
-            var curr = recordTimeStat[index];
-            var prev = recordTimeStat[index - 1];
+            var current = recordTimeStat[index];
 
-            return (curr.Key - prev.Key) / (curr.Value - prev.Value).TotalSeconds;
+            if (index == 0)
+                return current.Key / current.Value.TotalSeconds;
+
+            var previous = recordTimeStat[index - 1];
+
+            return (current.Key - previous.Key) / (current.Value - previous.Value).TotalSeconds;
         }
 
         public KeyValuePair<long, TimeSpan> GetRecordAt(int index)
         {
             if (index >= recordTimeStat.Count)
-                return new KeyValuePair<long, TimeSpan>();
+                return new KeyValuePair<long, TimeSpan>(-1, TimeSpan.Zero);
 
             return recordTimeStat[index];
         }

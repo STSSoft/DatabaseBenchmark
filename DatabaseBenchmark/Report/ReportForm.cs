@@ -1,4 +1,5 @@
 ﻿using DatabaseBenchmark.Benchmarking;
+using DatabaseBenchmark.Properties;
 using DatabaseBenchmark.Report;
 using log4net;
 using System;
@@ -22,7 +23,7 @@ namespace DatabaseBenchmark.Report
         public ReportForm(List<BenchmarkTest> benchmarkTests)
             : this()
         {
-            Logger = LogManager.GetLogger(Properties.Settings.Default.ApplicationLogger);
+            Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
             BenchmarkTests = benchmarkTests;
 
             PopulateHardwareInfo();
@@ -31,6 +32,8 @@ namespace DatabaseBenchmark.Report
         public ReportForm()
         {
             InitializeComponent();
+            //checkBoxShow.Visible = !(bool)Properties.Settings.Default["HideReportForm"];
+            checkBoxShow.Checked = (bool)Properties.Settings.Default["HideReportForm"];
         }
 
         private void PopulateHardwareInfo()
@@ -79,6 +82,9 @@ namespace DatabaseBenchmark.Report
         private void btnValidate_Click(object sender, EventArgs e)
         {
             UserInfo user = new UserInfo(txtBoxEmail.Text, txtBoxAdditionalInfo.Text);
+
+            Properties.Settings.Default["HideReportForm"] = checkBoxShow.Checked;
+            Properties.Settings.Default.Save();
             
             try
             {
@@ -88,23 +94,28 @@ namespace DatabaseBenchmark.Report
                 ServerConnector = new ServerConnection();
 
                 Logger.Info("Sending data to server...");
-                HttpStatusCode responseCode = ServerConnector.SendData(jsonData);
 
-                if (responseCode == HttpStatusCode.OK)
+                HttpWebResponse response = ServerConnector.SendDataAsPost(jsonData);
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                string benchmarkLink = reader.ReadLine();
+
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     Logger.Info("Data sent succesfully to server...");
 
                     MessageBox.Show("Data sent successfully to server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // TODO: Add the real link.
-                    Process.Start("http://presence.bg/bm/public/benchmark/13/view");
+                    Process.Start(benchmarkLink);
 
                     this.Close();
                 }
                 else
                 {
-                    Logger.Info("Send error...");
-                    MessageBox.Show("The server is not responding at the moment.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Logger.Info(String.Format("Send error..."));
+                    Logger.Info(String.Format("Server return code: {0}", response.StatusCode));
+
+                    MessageBox.Show(String.Format("There was an error. The server returned code: {0}", response.StatusCode.ToString()), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }    
             }
             catch (Exception exc)
@@ -117,6 +128,9 @@ namespace DatabaseBenchmark.Report
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+
+            Properties.Settings.Default["HideReportForm"] = checkBoxShow.Checked;
+            Properties.Settings.Default.Save();
         }
 
         private void timer1_Tick(object sender, EventArgs e)

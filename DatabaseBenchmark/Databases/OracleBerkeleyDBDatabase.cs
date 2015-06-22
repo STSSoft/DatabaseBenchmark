@@ -4,12 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
     public class OracleBerkeleyDBDatabase : Database
     {
         private BTreeDatabase database;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
+        }
 
         public OracleBerkeleyDBDatabase()
         {
@@ -78,6 +84,15 @@ namespace DatabaseBenchmark.Databases
         public override void Finish()
         {
             database.Close();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
 
         #region Helper Methods

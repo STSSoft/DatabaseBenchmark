@@ -43,22 +43,30 @@
             this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBoxOrder = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.radioBtn_IndexTech = new System.Windows.Forms.RadioButton();
+            this.radioBtn_Category = new System.Windows.Forms.RadioButton();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.contextMenuDatabase.SuspendLayout();
+            this.groupBoxOrder.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView
             // 
             this.treeView.AllowDrop = true;
+            this.treeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView.CheckBoxes = true;
-            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView.HideSelection = false;
             this.treeView.ImageIndex = 0;
             this.treeView.ImageList = this.imageListTreeView;
             this.treeView.LabelEdit = true;
-            this.treeView.Location = new System.Drawing.Point(0, 0);
+            this.treeView.Location = new System.Drawing.Point(0, 36);
             this.treeView.Name = "treeView";
             this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(240, 483);
+            this.treeView.Size = new System.Drawing.Size(285, 447);
             this.treeView.TabIndex = 1;
             this.treeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_AfterLabelEdit);
             this.treeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView_AfterCheck);
@@ -121,7 +129,7 @@
             // 
             // restoreDefaultAllToolStripMenuItem
             // 
-            this.restoreDefaultAllToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.refresh_24x24;
+            this.restoreDefaultAllToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.default_24x24;
             this.restoreDefaultAllToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.restoreDefaultAllToolStripMenuItem.Name = "restoreDefaultAllToolStripMenuItem";
             this.restoreDefaultAllToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
@@ -161,11 +169,62 @@
             this.propertiesToolStripMenuItem.Text = "Properties";
             this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
             // 
+            // groupBoxOrder
+            // 
+            this.groupBoxOrder.BackColor = System.Drawing.Color.Transparent;
+            this.groupBoxOrder.Controls.Add(this.label1);
+            this.groupBoxOrder.Controls.Add(this.radioBtn_IndexTech);
+            this.groupBoxOrder.Controls.Add(this.radioBtn_Category);
+            this.groupBoxOrder.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBoxOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBoxOrder.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxOrder.Name = "groupBoxOrder";
+            this.groupBoxOrder.Size = new System.Drawing.Size(285, 34);
+            this.groupBoxOrder.TabIndex = 5;
+            this.groupBoxOrder.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 12);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Order By:";
+            // 
+            // radioBtn_IndexTech
+            // 
+            this.radioBtn_IndexTech.AutoSize = true;
+            this.radioBtn_IndexTech.Checked = true;
+            this.radioBtn_IndexTech.Location = new System.Drawing.Point(140, 11);
+            this.radioBtn_IndexTech.Name = "radioBtn_IndexTech";
+            this.radioBtn_IndexTech.Size = new System.Drawing.Size(124, 17);
+            this.radioBtn_IndexTech.TabIndex = 1;
+            this.radioBtn_IndexTech.TabStop = true;
+            this.radioBtn_IndexTech.Text = "Indexing Technology";
+            this.radioBtn_IndexTech.UseVisualStyleBackColor = true;
+            this.radioBtn_IndexTech.CheckedChanged += new System.EventHandler(this.radioBtn_IndexTech_CheckedChanged);
+            // 
+            // radioBtn_Category
+            // 
+            this.radioBtn_Category.AutoSize = true;
+            this.radioBtn_Category.Location = new System.Drawing.Point(67, 11);
+            this.radioBtn_Category.Name = "radioBtn_Category";
+            this.radioBtn_Category.Size = new System.Drawing.Size(67, 17);
+            this.radioBtn_Category.TabIndex = 0;
+            this.radioBtn_Category.Text = "Category";
+            this.radioBtn_Category.UseVisualStyleBackColor = true;
+            this.radioBtn_Category.CheckedChanged += new System.EventHandler(this.radioBtn_Category_CheckedChanged);
+            // 
+            // timer1
+            // 
+            // 
             // TreeViewFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(240, 483);
+            this.ClientSize = new System.Drawing.Size(285, 483);
+            this.Controls.Add(this.groupBoxOrder);
             this.Controls.Add(this.treeView);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -175,6 +234,8 @@
             this.ShowIcon = false;
             this.Text = "Databases";
             this.contextMenuDatabase.ResumeLayout(false);
+            this.groupBoxOrder.ResumeLayout(false);
+            this.groupBoxOrder.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -194,6 +255,11 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem expandAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem collapseAllToolStripMenuItem;
+        private System.Windows.Forms.RadioButton radioBtn_IndexTech;
+        private System.Windows.Forms.RadioButton radioBtn_Category;
+        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.GroupBox groupBoxOrder;
+        private System.Windows.Forms.Timer timer1;
 
     }
 }

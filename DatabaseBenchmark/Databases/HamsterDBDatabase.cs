@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -14,6 +15,11 @@ namespace DatabaseBenchmark.Databases
 
         private Hamster.Environment enviroment;
         private Hamster.Database database;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BPlusTree; }
+        }
 
         public HamsterDBDatabase()
         {
@@ -70,6 +76,15 @@ namespace DatabaseBenchmark.Databases
         {
             database.Close();
             enviroment.Close();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
 
         #region HelpMethods

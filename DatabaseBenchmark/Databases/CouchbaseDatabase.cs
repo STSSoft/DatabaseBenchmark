@@ -5,6 +5,7 @@ using Couchbase.Views;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -15,6 +16,11 @@ namespace DatabaseBenchmark.Databases
 
         public string DocDesignName { get; set; }
         public string ViewName { get; set; }
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
+        }
 
         public CouchbaseDatabase()
         {
@@ -86,15 +92,24 @@ namespace DatabaseBenchmark.Databases
             }
         }
 
+        public override void Finish()
+        {
+            foreach (var item in buckets)
+                cluster.CloseBucket(item);
+        }
+
         public override long Size
         {
             get { return 0; }
         }
 
-        public override void Finish()
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
         {
-            foreach (var item in buckets)
-                cluster.CloseBucket(item);
+            get
+            {
+                return null;
+            }
         }
     }
 }

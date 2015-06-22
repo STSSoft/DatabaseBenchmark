@@ -5,8 +5,10 @@ using log4net;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -16,10 +18,13 @@ namespace DatabaseBenchmark.Databases
         private ILog Logger;
         private MyEntityContext[] contexts;
 
-        /// <summary>
-        /// Specifies how many records are inserted with every batch.
-        /// </summary>
+        [Category("Settings")]
         public int InsertsPerQuery { get; set; }
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.RDFGraph; }
+        }
 
         public BrightstarDBDatabase()
         {
@@ -37,7 +42,7 @@ namespace DatabaseBenchmark.Databases
 
             InsertsPerQuery = 10000;
 
-            Logger = LogManager.GetLogger(Settings.Default.TestLogger);
+            Logger = LogManager.GetLogger(Properties.Settings.Default.TestLogger);
         }
 
         public override void Init(int flowCount, long flowRecordCount)
@@ -97,6 +102,19 @@ namespace DatabaseBenchmark.Databases
         {
             foreach (var context in contexts)
                 context.Dispose();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                var settings = new Dictionary<string, string>();
+
+                settings.Add("InsertsPerQuery", InsertsPerQuery.ToString());
+
+                return settings;
+            }
         }
 
         public class MyEntityContext : BrightstarEntityContext

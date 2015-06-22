@@ -3,7 +3,9 @@ using ServiceStack.Redis.Generic;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -12,8 +14,16 @@ namespace DatabaseBenchmark.Databases
         private RedisTypedClient<KeyValuePair<long, TickRecord>>[] clients;
         private RedisSortedSet sortedSet;
 
+        [Category("Connection Settings")]
         public string Server { get; set; }
+
+        [Category("Connection Settings")]
         public int Port { get; set; }
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.HashTable; }
+        }
 
         public RedisDatabase()
         {
@@ -98,6 +108,14 @@ namespace DatabaseBenchmark.Databases
             get { return long.Parse(clients[0].NativeClient.Info["used_memory"]); }
         }
 
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
+        }
         public class TickRecord
         {
             public string Symbol { get; set; }

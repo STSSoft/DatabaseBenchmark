@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -12,6 +13,11 @@ namespace DatabaseBenchmark.Databases
         private Storage perst;
         private Index index;
         private string fileName;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
+        }
 
         public PerstDatabase()
         { 
@@ -63,6 +69,15 @@ namespace DatabaseBenchmark.Databases
         public override void Finish()
         {
             perst.Close();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
     }
 }

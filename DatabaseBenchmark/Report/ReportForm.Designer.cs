@@ -62,6 +62,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.cbUserDefined = new System.Windows.Forms.CheckBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.checkBoxShow = new System.Windows.Forms.CheckBox();
             this.groupBoxConfiguration.SuspendLayout();
             this.groupBoxStorage.SuspendLayout();
             this.groupBoxOS.SuspendLayout();
@@ -228,7 +229,7 @@
             // 
             // btnValidate
             // 
-            this.btnValidate.Location = new System.Drawing.Point(424, 313);
+            this.btnValidate.Location = new System.Drawing.Point(424, 336);
             this.btnValidate.Name = "btnValidate";
             this.btnValidate.Size = new System.Drawing.Size(75, 23);
             this.btnValidate.TabIndex = 1;
@@ -238,7 +239,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(505, 313);
+            this.btnCancel.Location = new System.Drawing.Point(505, 336);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -373,11 +374,22 @@
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // checkBoxShow
+            // 
+            this.checkBoxShow.AutoSize = true;
+            this.checkBoxShow.Location = new System.Drawing.Point(3, 342);
+            this.checkBoxShow.Name = "checkBoxShow";
+            this.checkBoxShow.Size = new System.Drawing.Size(169, 17);
+            this.checkBoxShow.TabIndex = 25;
+            this.checkBoxShow.Text = "Don\'t show this window again.";
+            this.checkBoxShow.UseVisualStyleBackColor = true;
+            // 
             // ReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 341);
+            this.ClientSize = new System.Drawing.Size(584, 367);
+            this.Controls.Add(this.checkBoxShow);
             this.Controls.Add(this.cbUserDefined);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.linkLabel2);
@@ -396,7 +408,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Report Results";
+            this.Text = "Online Report";
             this.groupBoxConfiguration.ResumeLayout(false);
             this.groupBoxConfiguration.PerformLayout();
             this.groupBoxStorage.ResumeLayout(false);
@@ -445,6 +457,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblModules;
+        private System.Windows.Forms.CheckBox checkBoxShow;
 
     }
 }

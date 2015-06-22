@@ -1,16 +1,21 @@
 ﻿using Npgsql;
-using STS.General.Extensions;
 using STS.General.Generators;
-using STS.General.SQL;
+using STS.General.SQL.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
     public class PostgreSQLDatabase : Database
     {
         private IDbConnection[] connections;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.GiST; } // Generalized Search Tree
+        }
 
         public PostgreSQLDatabase()
         {    
@@ -171,6 +176,15 @@ namespace DatabaseBenchmark.Databases
                 {
                     conn.Close();
                 }
+            }
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
             }
         }
     }

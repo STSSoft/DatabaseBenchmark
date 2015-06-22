@@ -3,6 +3,7 @@ using STSdb.Data;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -10,6 +11,11 @@ namespace DatabaseBenchmark.Databases
     {
         private StorageEngine engine;
         private XTable<long, Tick> table;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.RadixTree; }
+        }
 
         public STSdbDatabase()
         {
@@ -56,6 +62,15 @@ namespace DatabaseBenchmark.Databases
         public override void Finish()
         {
             engine.Dispose();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
     }
 }

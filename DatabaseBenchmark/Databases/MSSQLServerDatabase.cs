@@ -1,9 +1,11 @@
 ﻿using STS.General.Extensions;
+using STS.General.SQL.Extensions;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -11,6 +13,11 @@ namespace DatabaseBenchmark.Databases
     {
         private IDbConnection[] connections;
         private IDbCommand[] commands;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
+        }
 
         public MSSQLServerDatabase()
         {   
@@ -162,6 +169,15 @@ namespace DatabaseBenchmark.Databases
                 {
                     conn.Close();
                 }
+            }
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using DatabaseBenchmark.Benchmarking;
 using DatabaseBenchmark.Statistics;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Json;
@@ -8,24 +9,32 @@ namespace DatabaseBenchmark.Report
 {
     public static class JsonUtils
     {
+        /// <summary>
+        /// Exports the given data into a JSON file.
+        /// </summary>
         public static void ExportToJson(string path, ComputerConfiguration configuration, List<BenchmarkTest> benchmarks, ReportType type)
         {
-            JsonObjectCollection jsonData = new JsonObjectCollection();
+            List<JsonObjectCollection> collection = new List<JsonObjectCollection>();
 
-            jsonData.Add(ConvertToJson(configuration));
+            collection.Add(ConvertToJson(configuration));
 
             foreach (var benchmark in benchmarks)
-                jsonData.Add(ConvertToJson(benchmark, type));
+                collection.Add(ConvertToJson(benchmark, type));
 
-            using (FileStream stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
+            using (FileStream stream = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
                 StreamWriter writer = new StreamWriter(stream);
-                jsonData.WriteTo(writer);
+
+                JsonObjectCollection json = new JsonObjectCollection(collection);
+                json.WriteTo(writer);
 
                 writer.Flush();
             }
         }
 
+        /// <summary>
+        /// Convert the data into a JSON format.
+        /// </summary>
         public static JsonObjectCollection ConvertToJson(UserInfo user, ComputerConfiguration configuration, List<BenchmarkTest> benchmarks)
         {
             List<JsonObjectCollection> jsonData = new List<JsonObjectCollection>();
@@ -61,22 +70,38 @@ namespace DatabaseBenchmark.Report
         {
             JsonObjectCollection jsonBenchmark = new JsonObjectCollection("BenchmarkTest");
 
-            // Write test parameters.
+            // Test info parameters.
             JsonObjectCollection jsonSettings = new JsonObjectCollection("TestInfo");
             jsonSettings.Add(new JsonNumericValue("FlowCount", benchmark.FlowCount));
-            jsonSettings.Add(new JsonNumericValue("RecordCount", benchmark.FlowCount));
+            jsonSettings.Add(new JsonNumericValue("RecordCount", benchmark.RecordCount));
             jsonSettings.Add(new JsonNumericValue("Randomness", benchmark.Randomness * 100));
 
             long elapsedTime = benchmark.EndTime.Ticks - benchmark.StartTime.Ticks;
-            jsonSettings.Add(new JsonNumericValue("ElapsedTime", elapsedTime));
-            jsonSettings.Add(new JsonStringValue("DatabaseName", benchmark.Database.Name));
-            jsonSettings.Add(new JsonNumericValue("DatabaseSize", benchmark.DatabaseSize / (1024.0 * 1024.0)));
+            jsonSettings.Add(new JsonNumericValue("ElapsedTime", new TimeSpan(elapsedTime).TotalMilliseconds));
 
-            // Write test data.
+            JsonObjectCollection jsonDatabase = new JsonObjectCollection("Database");
+            jsonDatabase.Add(new JsonStringValue("Name", benchmark.Database.Name));
+            jsonDatabase.Add(new JsonStringValue("IndexingTechnology", benchmark.Database.IndexingTechnology.ToString()));
+            jsonDatabase.Add(new JsonStringValue("Category", benchmark.Database.Name));
+            jsonDatabase.Add(new JsonNumericValue("Size", benchmark.DatabaseSize / (1024.0 * 1024.0)));
+
+            if (benchmark.Database.Settings != null)
+            {
+                JsonObjectCollection jsonDatabaseSettings = new JsonObjectCollection("Settings");
+
+                foreach (var item in benchmark.Database.Settings)
+                    jsonDatabaseSettings.Add(new JsonStringValue(item.Key, item.Value));
+
+                jsonDatabase.Add(jsonDatabaseSettings);
+            }
+
+            //jsonDatabase.Add(new JsonStringValue("Settings", ReflectionUtils.GetPublicPropertyValues(benchmark.Database))); // TODO: sync with remote server
+
+            // Test results.
             JsonObjectCollection jsonTestData = new JsonObjectCollection("TestResults");
-            JsonObject jsonWrite;
-            JsonObject jsonRead ;
-            JsonObject jsonSecondaryRead;
+            JsonObject jsonWrite = null;
+            JsonObject jsonRead = null;
+            JsonObject jsonSecondaryRead = null;
 
             if (type == ReportType.Summary)
             {
@@ -84,7 +109,7 @@ namespace DatabaseBenchmark.Report
                 jsonRead = new JsonNumericValue("Read", benchmark.GetSpeed(TestMethod.Read));
                 jsonSecondaryRead = new JsonNumericValue("SecondaryRead", benchmark.GetSpeed(TestMethod.SecondaryRead));
             }
-            else
+            else // type == ReportType.Detailed
             {
                 // Get statistics and convert them to JSON.
                 SpeedStatistics writeStat = benchmark.SpeedStatistics[(int)TestMethod.Write];
@@ -92,27 +117,20 @@ namespace DatabaseBenchmark.Report
                 SpeedStatistics secondaryReadStat = benchmark.SpeedStatistics[(int)TestMethod.SecondaryRead];
 
                 jsonWrite = ConvertStatisticToJson(writeStat, "Write");
-                jsonRead = ConvertStatisticToJson(writeStat, "Read");
-                jsonSecondaryRead = ConvertStatisticToJson(writeStat, "SecondaryRead");
+                jsonRead = ConvertStatisticToJson(readStat, "Read");
+                jsonSecondaryRead = ConvertStatisticToJson(secondaryReadStat, "SecondaryRead");
             }
 
-            // Form the end JSON structure.
             jsonTestData.Add(jsonWrite);
             jsonTestData.Add(jsonRead);
             jsonTestData.Add(jsonSecondaryRead);
-          
+
+            // Form the end JSON structure.
             jsonBenchmark.Add(jsonSettings);
+            jsonBenchmark.Add(jsonDatabase);
             jsonBenchmark.Add(jsonTestData);
 
             return jsonBenchmark;
-        }
-
-        public static JsonObjectCollection ConvertJsonToPostQuery(string json)
-        {
-            JsonObjectCollection jsonData = new JsonObjectCollection("Data");
-            jsonData.Add(new JsonStringValue(json));
-
-            return jsonData;
         }
 
         #region Statistics to JSON
@@ -125,7 +143,7 @@ namespace DatabaseBenchmark.Report
             JsonArrayCollection jsonAverageSpeed = new JsonArrayCollection("AverageSpeed");
             JsonArrayCollection jsonMomentSpeed = new JsonArrayCollection("MomentSpeed");
 
-            for (int i = 0; i < BenchmarkTest.INTERVAL_COUNT + 1; i++)
+            for (int i = 0; i < BenchmarkTest.INTERVAL_COUNT; i++)
             {
                 // Number of records & timespan.
                 var rec = statistic.GetRecordAt(i);

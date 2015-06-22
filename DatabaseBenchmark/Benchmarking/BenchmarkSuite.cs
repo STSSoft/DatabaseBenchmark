@@ -37,7 +37,7 @@ namespace DatabaseBenchmark.Benchmarking
             catch (Exception exc)
             {
                 Logger.Error(String.Format("{0} Init()", databaseName), exc);
-                Logger.Info(String.Format("{0} Init() failed...", databaseName));
+                Logger.Error(String.Format("{0} Init() failed...", databaseName));
             }
             finally
             {
@@ -59,7 +59,7 @@ namespace DatabaseBenchmark.Benchmarking
             catch (Exception exc)
             {
                 Logger.Error(String.Format("{0} Write()", databaseName), exc);
-                Logger.Info(String.Format("{0} Write() failed...", databaseName));
+                Logger.Error(String.Format("{0} Write() failed...", databaseName));
             }
             finally
             {
@@ -79,6 +79,7 @@ namespace DatabaseBenchmark.Benchmarking
             {
                 Logger.Info(String.Format("{0} Read() started...", databaseName));
                 Current.Read();
+                Logger.Info(String.Format("Records read: {0}", test.RecordsRead.ToString("N0")));
                 Logger.Info(String.Format("{0} Read() ended...", databaseName));
             }
             catch(KeysNotOrderedException exc)
@@ -89,7 +90,7 @@ namespace DatabaseBenchmark.Benchmarking
             catch (Exception exc)
             {
                 Logger.Error(String.Format("{0} Read()", databaseName), exc);
-                Logger.Info(String.Format("{0} Read() failed...", databaseName));
+                Logger.Error(String.Format("{0} Read() failed...", databaseName));
             }
             finally
             {
@@ -109,17 +110,18 @@ namespace DatabaseBenchmark.Benchmarking
             {
                 Logger.Info(String.Format("{0} SecondaryRead() started...", databaseName));
                 Current.SecondaryRead();
+                Logger.Info(String.Format("Records read: {0}", test.RecordsRead.ToString("N0")));
                 Logger.Info(String.Format("{0} SecondaryRead() ended...", databaseName));
             }
             catch (KeysNotOrderedException exc)
             {
                 Logger.Error(String.Format("{0} Read()", databaseName), exc);
-                Logger.Info(String.Format("{0} The database does not return the records ordered by key. The test is invalid!...", databaseName));
+                Logger.Error(String.Format("{0} The database does not return the records ordered by key. The test is invalid!...", databaseName));
             }
             catch (Exception exc)
             {
                 Logger.Error(String.Format("{0} Secondary Read()", databaseName), exc);
-                Logger.Info(String.Format("{0} Secondary Read failed...", databaseName));
+                Logger.Error(String.Format("{0} Secondary Read failed...", databaseName));
             }
             finally
             {
@@ -141,7 +143,7 @@ namespace DatabaseBenchmark.Benchmarking
             catch (Exception exc)
             {
                 Logger.Error(String.Format("{0} Finish()", test.Database.Name), exc);
-                Logger.Info(String.Format("{0} Finish() failed...", test.Database.Name));
+                Logger.Error(String.Format("{0} Finish() failed...", test.Database.Name));
             }
             finally
             {

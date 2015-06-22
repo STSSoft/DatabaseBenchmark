@@ -5,8 +5,10 @@ using STS.General.Extensions;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -18,7 +20,13 @@ namespace DatabaseBenchmark.Databases
         /// <summary>
         /// Specifies how many records are inserted with every batch.
         /// </summary>
+        [Category("Settings")]
         public int InsertsPerQuery { get; set; }
+
+        public override IndexingTechnology IndexingTechnology 
+        {
+            get { return IndexingTechnology.FractalTree; }
+        }
 
         public TokuMXDatabase()
         {
@@ -117,6 +125,19 @@ namespace DatabaseBenchmark.Databases
                 sum += stat.DataSize + stat.TotalIndexSize;
 
                 return sum;
+            }
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                var settings = new Dictionary<string, string>();
+
+                settings.Add("InsertsPerQuery", InsertsPerQuery.ToString());
+
+                return settings;
             }
         }
 

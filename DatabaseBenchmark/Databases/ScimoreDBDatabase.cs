@@ -1,9 +1,10 @@
 ﻿using Scimore.Data.ScimoreClient;
-using STS.General.Extensions;
 using STS.General.Generators;
+using STS.General.SQL.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -13,6 +14,11 @@ namespace DatabaseBenchmark.Databases
 
         private IDbConnection[] connections;
         private IDbCommand[] commands;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
+        }
 
         public ScimoreDBDatabase()
         {
@@ -149,6 +155,15 @@ namespace DatabaseBenchmark.Databases
         {
             foreach (var connection in connections)
                 connection.Close();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
 
         private IDbCommand CreateCommand(IDbConnection connection)

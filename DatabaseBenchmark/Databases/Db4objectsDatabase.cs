@@ -5,6 +5,7 @@ using STS.General.Generators;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -13,6 +14,11 @@ namespace DatabaseBenchmark.Databases
         private IObjectContainer[] sessions;
         private IEmbeddedObjectContainer database;
         private string fileName;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
+        }
 
         public Db4objectsDatabase()
         {
@@ -70,6 +76,15 @@ namespace DatabaseBenchmark.Databases
         public override void Finish()
         {
             database.Close();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
 
         private class Row<TKey, TRecord>

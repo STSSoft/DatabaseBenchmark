@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Xml.Serialization;
 using VelocityDb;
 using VelocityDb.Collection.BTree;
 using VelocityDb.Session;
@@ -12,6 +13,11 @@ namespace DatabaseBenchmark.Databases
     {
         protected UInt64 mapId;
         private SessionNoServerShared session;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
+        }
 
         public VelocityDBDatabase()
         {
@@ -70,6 +76,15 @@ namespace DatabaseBenchmark.Databases
         {
             if (session.InTransaction)
                 session.Commit();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
 
         public class VelocityTick : OptimizedPersistable

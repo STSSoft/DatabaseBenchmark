@@ -1,5 +1,6 @@
 ﻿using FirebirdSql.Data.FirebirdClient;
 using STS.General.Extensions;
+using STS.General.SQL.Extensions;
 using STS.General.Generators;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Xml.Serialization;
+using System.ComponentModel;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -20,10 +23,7 @@ namespace DatabaseBenchmark.Databases
 
         private int insertsPerQuery;
 
-        /// <summary>
-        /// Specifies how many records are inserted with every batch.
-        /// Maximum value is 80. 
-        /// </summary>
+        [Category("Settings")]
         public int InsertsPerQuery
         {
             get { return insertsPerQuery; }
@@ -34,6 +34,11 @@ namespace DatabaseBenchmark.Databases
                 if (insertsPerQuery > MAX_INSERT_PER_QUERY)
                     insertsPerQuery = MAX_INSERT_PER_QUERY;
             }
+        }
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.BTree; }
         }
 
         public FirebirdDatabase()
@@ -109,6 +114,19 @@ namespace DatabaseBenchmark.Databases
         {
             foreach (var connection in connections)
                 connection.Close();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                var settings = new Dictionary<string, string>();
+
+                settings.Add("InsertsPerQuery", InsertsPerQuery.ToString());
+
+                return settings;
+            }
         }
 
         public string GetConnectionString()

@@ -3,6 +3,7 @@ using STS.General.Generators;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -10,6 +11,11 @@ namespace DatabaseBenchmark.Databases
     {
         private AerospikeClient client;
         private LargeList[] indexes;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.RedBlackTree; }
+        }
 
         public AerospikeDatabase()
         {
@@ -29,7 +35,6 @@ namespace DatabaseBenchmark.Databases
 
             ConnectionString = "Server:10.11.11.91;Port:3000;Namespace:test;Set:demoset;";
         }
-
         public override void Init(int flowCount, long flowRecordCount)
         {
             string[] str = ConnectionString.Split(';');
@@ -89,12 +94,21 @@ namespace DatabaseBenchmark.Databases
             client.Close();
         }
 
-        public override long Size 
-        { 
-            get 
+        public override long Size
+        {
+            get
             {
-                return 0; 
-            } 
+                return 0;
+            }
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
     }
 }

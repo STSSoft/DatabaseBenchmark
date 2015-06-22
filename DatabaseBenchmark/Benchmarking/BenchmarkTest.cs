@@ -18,22 +18,20 @@ namespace DatabaseBenchmark.Benchmarking
     {
         public const int INTERVAL_COUNT = 100; // Gives the maximum number of intervals measured by the statistic.
 
-        private ILog Logger;
         public SpeedStatistics[] SpeedStatistics { get; private set; }
-        public ProcessorStatistics[] ProcessorStatistics { get; private set; }
         public MemoryStatistics[] MemoryStatistics { get; private set; }
-        public IOStatistics[] IOStatistics { get; private set; }
 
         public TestMethod CurrentMethod { get; private set; }
         public Database Database { get; private set; }
 
         public long RecordCount { get; private set; }
         public int FlowCount { get; private set; }
-       
+
         public float Randomness { get; private set; }
         public KeysType KeysType { get; private set; }
 
         public long DatabaseSize { get; private set; }
+        public long RecordsRead { get; private set; }
 
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
@@ -42,21 +40,18 @@ namespace DatabaseBenchmark.Benchmarking
 
         public BenchmarkTest(Database database, int flowCount, long recordCount, float randomness, CancellationTokenSource cancellation)
         {
-            Logger = LogManager.GetLogger(Settings.Default.TestLogger);
             Database = database;
 
             FlowCount = flowCount;
             RecordCount = recordCount;
             Randomness = randomness;
-            KeysType =  Randomness == 0f ? KeysType.Sequential : KeysType.Random;
+            KeysType = Randomness == 0f ? KeysType.Sequential : KeysType.Random;
 
             // Statistics.
             int length = Enum.GetValues(typeof(TestMethod)).Length - 1;
 
             SpeedStatistics = new SpeedStatistics[length];
-            ProcessorStatistics = new ProcessorStatistics[length];
             MemoryStatistics = new MemoryStatistics[length];
-            IOStatistics = new IOStatistics[length];
 
             int step = (int)((recordCount) / INTERVAL_COUNT);
 
@@ -72,17 +67,17 @@ namespace DatabaseBenchmark.Benchmarking
             Cancellation = cancellation;
         }
 
-		private void StartStatistics(int method)
-		{
-			SpeedStatistics[method].Start();
-			MemoryStatistics[method].Start();
-		}
+        private void StartStatistics(int method)
+        {
+            SpeedStatistics[method].Start();
+            MemoryStatistics[method].Start();
+        }
 
-		private void StopStatistics(int method)
-		{
-			SpeedStatistics[method].Stop();
-			MemoryStatistics[method].Stop();
-		}
+        private void StopStatistics(int method)
+        {
+            SpeedStatistics[method].Stop();
+            MemoryStatistics[method].Stop();
+        }
 
         private void ResetStatistics()
         {
@@ -101,17 +96,21 @@ namespace DatabaseBenchmark.Benchmarking
         {
             StartTime = DateTime.Now;
 
-			int method = (int)TestMethod.Write;
+            int method = (int)TestMethod.Write;
 
-			try
+            try
             {
-				StartStatistics(method);
+                StartStatistics(method);
 
-				Database.Init(FlowCount, RecordCount);
+                Database.Init(FlowCount, RecordCount);
+            }
+            catch (OperationCanceledException)
+            {
+                ResetStatistics();
             }
             finally
             {
-				StopStatistics(method);
+                StopStatistics(method);
             }
         }
 
@@ -144,14 +143,13 @@ namespace DatabaseBenchmark.Benchmarking
             catch (OperationCanceledException)
             {
                 ResetStatistics();
-
-                tasks = null;
             }
             finally
             {
                 CurrentMethod = TestMethod.None;
 
-				StopStatistics(method);
+                StopStatistics(method);
+                tasks = null;
             }
         }
 
@@ -173,22 +171,25 @@ namespace DatabaseBenchmark.Benchmarking
                 StartStatistics(method);
 
                 task = DoRead(TestMethod.Read);
-                Task.WaitAll(new Task[] { task }, Cancellation.Token);
+                task.Wait(Cancellation.Token);
 
                 DatabaseSize = Database.Size;
+            }
+            catch (KeysNotOrderedException)
+            {
+                ResetStatistics();
             }
             catch (OperationCanceledException)
             {
                 ResetStatistics();
-
-                task = null;
             }
             finally
             {
                 CurrentMethod = TestMethod.None;
 
-				StopStatistics(method);
-			}
+                StopStatistics(method);
+                task = null;
+            }
         }
 
         /// <summary>
@@ -213,18 +214,21 @@ namespace DatabaseBenchmark.Benchmarking
 
                 DatabaseSize = Database.Size;
             }
+            catch (KeysNotOrderedException)
+            {
+                ResetStatistics();
+            }
             catch (OperationCanceledException)
             {
                 ResetStatistics();
-
-                task = null;
             }
             finally
             {
                 CurrentMethod = TestMethod.None;
 
-				StopStatistics(method);
-			}
+                StopStatistics(method);
+                task = null;
+            }
         }
 
         public void Finish()
@@ -234,9 +238,9 @@ namespace DatabaseBenchmark.Benchmarking
             else
                 DatabaseSize = Database.Size;
 
-			int method = (int)TestMethod.SecondaryRead;
+            int method = (int)TestMethod.SecondaryRead;
 
-			StartStatistics(method);
+            StartStatistics(method);
 
             try
             {
@@ -245,7 +249,7 @@ namespace DatabaseBenchmark.Benchmarking
             }
             finally
             {
-				StopStatistics(method);
+                StopStatistics(method);
             }
         }
 
@@ -277,27 +281,11 @@ namespace DatabaseBenchmark.Benchmarking
             }
         }
 
-        public float GetAverageProcessorTime(TestMethod method)
-        {
-            lock (ProcessorStatistics)
-            {
-                return ProcessorStatistics[(int)method].MomentProcessorTime;
-            }
-        }
-
         public float GetPeakWorkingSet(TestMethod method)
         {
             lock (MemoryStatistics)
             {
                 return MemoryStatistics[(int)method].PeakWorkingSet;
-            }
-        }
-
-        public float GetAverageIOData(TestMethod method)
-        {
-            lock (IOStatistics)
-            {
-                return IOStatistics[(int)method].MomentIOData;
             }
         }
 
@@ -351,27 +339,6 @@ namespace DatabaseBenchmark.Benchmarking
             }
         }
 
-        public IEnumerable<KeyValuePair<long, double>> GetAverageUserTimeProcessor(TestMethod method, int position)
-        {
-            lock (ProcessorStatistics)
-            {
-                var array = ProcessorStatistics[(int)method].MomentUserTimeStats.ToArray();
-                var length = array.Length;
-
-                if (position == 0)
-                    position = 1;
-
-                for (; position < length; position++)
-                {
-
-                    var records = array[position].Key;
-                    var userTime = array[position].Value;
-
-                    yield return new KeyValuePair<long, double>(records, userTime);
-                }
-            }
-        }
-
         /// <summary>
         /// Gets the average memory working set in bytes.
         /// </summary>
@@ -395,29 +362,6 @@ namespace DatabaseBenchmark.Benchmarking
             }
         }
 
-        /// <summary>
-        /// Gets the average process I/O.
-        /// </summary>
-        public IEnumerable<KeyValuePair<long, double>> GetAverageDataIO(TestMethod method, int position)
-        {
-            lock (IOStatistics)
-            {
-                var array = IOStatistics[(int)method].MomentDataIOStats.ToArray();
-                var length = array.Length;
-
-                if (position == 0)
-                    position = 1;
-
-                for (; position < length; position++)
-                {
-                    var records = array[position].Key;
-                    var io = array[position].Value;
-
-                    yield return new KeyValuePair<long, double>(records, io);
-                }
-            }
-        }
-
         #endregion
 
         private IEnumerable<KeyValuePair<long, Tick>> GetFlow()
@@ -426,7 +370,7 @@ namespace DatabaseBenchmark.Benchmarking
             Random random2 = new Random();
 
             SemiRandomGenerator generator = new SemiRandomGenerator(random1.Next(), random2.Next(), Randomness);
-            
+
             return TicksGenerator.GetFlow(RecordCount, generator);
         }
 
@@ -446,7 +390,7 @@ namespace DatabaseBenchmark.Benchmarking
 
                 for (int i = 0; i < statistics.Length; i++)
                 {
-                    lock(statistics)
+                    lock (statistics)
                         statistics[i].Add();
                 }
             }
@@ -463,7 +407,7 @@ namespace DatabaseBenchmark.Benchmarking
                     int index = (int)state;
                     int method = (int)TestMethod.Write;
                     var flow = Wrap(flows[index], Cancellation.Token, SpeedStatistics[method], MemoryStatistics[method]);
-                    
+
                     Database.Write(index, flow);
 
                 }, i, Cancellation.Token, TaskCreationOptions.AttachedToParent | TaskCreationOptions.LongRunning, TaskScheduler.Default);
@@ -479,29 +423,23 @@ namespace DatabaseBenchmark.Benchmarking
                 int methodIndex = (int)state;
                 var flow = Wrap(Database.Read(), Cancellation.Token, SpeedStatistics[methodIndex], MemoryStatistics[methodIndex]);
 
-                bool ordered = true;
                 long count = 0;
-                long previous = flow.First().Key;
+                RecordsRead = 0;
+
+                long previous = long.MinValue;
 
                 foreach (var kv in flow)
                 {
                     var key = kv.Key;
 
                     if (previous > key)
-                    {
-                        ordered = false;
-                        break;
-                    }
+                        throw new KeysNotOrderedException("Keys are not ordered.");
 
                     previous = key;
                     count++;
                 }
 
-                // TODO: find a better place for that.
-                Logger.Info(String.Format("Records read: {0}", count.ToString("N0")));
-
-                if (!ordered)
-                    throw new KeysNotOrderedException("Keys are not ordered.");
+                RecordsRead = count;
 
             }, (int)method, Cancellation.Token, TaskCreationOptions.AttachedToParent | TaskCreationOptions.LongRunning, TaskScheduler.Default);
 

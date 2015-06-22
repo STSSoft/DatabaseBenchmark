@@ -1,14 +1,14 @@
-﻿using DatabaseBenchmark.Properties;
-using log4net;
+﻿using log4net;
 using Microsoft.Office.Interop.Access.Dao;
-using STS.General.Extensions;
 using STS.General.Generators;
+using STS.General.SQL.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
 using System.Drawing;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -17,6 +17,14 @@ namespace DatabaseBenchmark.Databases
         private ILog Logger;
         private IDbConnection[] connections;
         private IDbCommand[] commands;
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get
+            {
+                return IndexingTechnology.BTree;
+            }
+        }
 
         public AccessDatabase()
         {
@@ -42,7 +50,7 @@ namespace DatabaseBenchmark.Databases
             cb.DataSource = String.Format(@"{0}\{1}.accdb", DataDirectory, Name);
             ConnectionString = cb.ConnectionString;
 
-            Logger = LogManager.GetLogger(Settings.Default.TestLogger);
+            Logger = LogManager.GetLogger(Properties.Settings.Default.TestLogger);
         }
 
         public override void Init(int flowCount, long flowRecordCount)
@@ -142,6 +150,15 @@ namespace DatabaseBenchmark.Databases
         {
             for (int i = 0; i < connections.Length; i++)
                 connections[i].Close();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                return null;
+            }
         }
 
         private byte[] Direct(Int64 key)

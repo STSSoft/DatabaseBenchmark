@@ -28,12 +28,16 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -262,13 +266,45 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\SiaqodbPortable.dll</HintPath>
     </Reference>
+    <Reference Include="STS.General, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STS.General.dll</HintPath>
+    </Reference>
+    <Reference Include="STS.General.GUI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STS.General.GUI.dll</HintPath>
+    </Reference>
+    <Reference Include="STS.General.SQL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STS.General.SQL.dll</HintPath>
+    </Reference>
+    <Reference Include="STS.Hadoop.HDFS.Connector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STS.Hadoop.HDFS.Connector.dll</HintPath>
+    </Reference>
     <Reference Include="STSdb, Version=3.5.13.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Release\STSdb.dll</HintPath>
     </Reference>
-    <Reference Include="STSdb4, Version=4.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="STSdb4, Version=4.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\STSdb4.dll</HintPath>
+    </Reference>
+    <Reference Include="STSdb5, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STSdb5.dll</HintPath>
+    </Reference>
+    <Reference Include="STSdb5.Azure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STSdb5.Azure.dll</HintPath>
+    </Reference>
+    <Reference Include="STSdb5.Google, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STSdb5.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="STSdb5.Hadoop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STSdb5.Hadoop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -284,6 +320,13 @@
     </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Net.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\System.Net.Json.dll</HintPath>
@@ -343,6 +386,12 @@
     <Compile Include="Charts\LineChart.Designer.cs">
       <DependentUpon>LineChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Databases\MySQLArchiveDatabase.cs" />
+    <Compile Include="Databases\MySQLBlackholeDatabase.cs" />
+    <Compile Include="Databases\MySQLInnoDBDatabase.cs" />
+    <Compile Include="Databases\MySQLMemoryDatabase.cs" />
+    <Compile Include="Databases\MySQLMyIsamDatabase.cs" />
+    <Compile Include="Databases\MySQLTokuDBDatabase.cs" />
     <Compile Include="Exceptions\KeysNotOrderedException.cs" />
     <Compile Include="FileAssociations.cs" />
     <Compile Include="Frames\LogFrame.cs">
@@ -362,6 +411,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Reflection.cs" />
     <Compile Include="Serialization\LayoutManager.cs" />
     <Compile Include="StringAppender.cs" />
     <Compile Include="Report\CsvUtils.cs" />
@@ -474,8 +524,8 @@
     <None Include="Doc\DatabaseBenchmark.DevelopersGuide.doc" />
     <None Include="Log4Net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
@@ -486,6 +536,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AxisType-new.ico" />
+    <None Include="Resources\CSV_new.ico" />
+    <None Include="Resources\SizeView.ico" />
+    <None Include="Resources\TimeView.ico" />
+    <None Include="Resources\SpeedView.ico" />
+    <None Include="Resources\AxisType.ico" />
+    <None Include="Resources\AutoNavigate.ico" />
+    <None Include="Resources\TreeView.ico" />
+    <None Include="Resources\CSV.ico" />
+    <None Include="Resources\Stop.ico" />
+    <None Include="Resources\Play.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -521,119 +584,223 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\STS.General.GUI\STS.General.GUI\STS.General.GUI.csproj">
-      <Project>{19c6fd6a-2e47-407f-9940-620edc0f2ecb}</Project>
-      <Name>STS.General.GUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\STS.General\STS.General\STS.General.csproj">
-      <Project>{820fc9a2-48a0-4463-8182-d1ac8d539fb9}</Project>
-      <Name>STS.General</Name>
-    </ProjectReference>
+    <None Include="Resources\play-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Auto Navigate-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cpu-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\json-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\log new-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\memory-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\size-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SpeedView-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TimeView-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\csv-blue .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\csvfile-blue .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\io-blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CSVicon_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\JSONicon_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PDFicon_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sizeview48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SDCard-512_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ioicon_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ioicon_48x481.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logicon_48x48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading_200.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\newicon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\csvmini_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load-icon3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save-icon3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jsonmini_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pdfmini_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UniWindowIcon_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about_24x24%281%291.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Very-Basic-Reload-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tumblr_m5xo9frXtv1rysqvgo1_1280_24x24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r24x24%281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr24x24%281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r_24x241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sr_24x242.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo_bechn.ico" />
+    <None Include="Resources\export_48x48.png" />
+    <None Include="Resources\csv_48x48_24x24.png" />
+    <None Include="Resources\pdf_48x481.png" />
+    <None Include="Resources\w_24x24.png" />
+    <None Include="Resources\view_48x48.png" />
+    <None Include="Resources\TimeView_48x48.png" />
+    <None Include="Resources\TimeView_24x24.png" />
+    <None Include="Resources\stop_48x48.png" />
+    <None Include="Resources\start_48x48.png" />
+    <None Include="Resources\sr_24x24.png" />
+    <None Include="Resources\SpeedView_48x48.png" />
+    <None Include="Resources\SpeedView_24x24.png" />
+    <None Include="Resources\sizeview_48x48.png" />
+    <None Include="Resources\sizeview_24x24.png" />
+    <None Include="Resources\save_24x24.png" />
+    <None Include="Resources\rename_24x24.png" />
+    <None Include="Resources\refresh_24x24.png" />
+    <None Include="Resources\ram_48x48.png" />
+    <None Include="Resources\ram_24x24.png" />
+    <None Include="Resources\r_24x24.png" />
+    <None Include="Resources\processor_48x48.png" />
+    <None Include="Resources\processor_24x24.png" />
+    <None Include="Resources\pdf_48x48.png" />
+    <None Include="Resources\pdf_24x24.png" />
+    <None Include="Resources\options_24x24.png" />
+    <None Include="Resources\options blue _24x24.png" />
+    <None Include="Resources\open_24x24.png" />
+    <None Include="Resources\online_24x24.png" />
+    <None Include="Resources\new_24x24.png" />
     <None Include="Resources\logo-01.png" />
+    <None Include="Resources\log_48x48.png" />
+    <None Include="Resources\log_24x24.png" />
+    <None Include="Resources\loading_throbber_icon.png" />
+    <None Include="Resources\jsoni_24x24.png" />
+    <None Include="Resources\json_48x48.png" />
+    <None Include="Resources\io_48x48.png" />
+    <None Include="Resources\io_24x24.png" />
+    <None Include="Resources\exit_24x24.png" />
+    <None Include="Resources\delete_24x24.png" />
+    <None Include="Resources\default_24x24.png" />
+    <None Include="Resources\database-icon.png" />
+    <None Include="Resources\database_24x24.png" />
+    <None Include="Resources\csv_48x48.png" />
+    <None Include="Resources\csv_24x24.png" />
+    <None Include="Resources\clone_24x24.png" />
+    <None Include="Resources\background.png" />
+    <None Include="Resources\AutoNavigate_48x48.png" />
+    <None Include="Resources\about_24x24.png" />
+    <None Include="Resources\Benchmark48x48.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\BenchmarkIcon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\w_24x24.ico" />
     <None Include="Resources\sr_24x24.ico" />
     <None Include="Resources\r_24x24.ico" />
-    <None Include="Resources\options blue _24x24.ico" />
-    <None Include="Resources\database-icon.ico" />
-    <None Include="Resources\BenchmarkIcon.ico" />
-    <None Include="Resources\Benchmark48x48.ico" />
-    <None Include="Resources\pdf_24x24.png" />
-    <None Include="Resources\options blue _24x24.png" />
-    <None Include="Resources\jsoni_24x24.png" />
-    <None Include="Resources\database-icon.png" />
-    <None Include="Resources\csv_24x24.png" />
-    <None Include="Resources\AutoNavigate_48x48.png" />
-    <None Include="Resources\about_24x24.png" />
-    <None Include="Resources\loading_throbber_icon.png" />
-    <None Include="Resources\background.png" />
-    <None Include="Resources\loading.png" />
-    <None Include="Resources\refresh_24x24.png" />
-    <None Include="Resources\log_24x24.png" />
-    <None Include="Resources\sr_24x24.png" />
-    <None Include="Resources\r_24x24.png" />
-    <None Include="Resources\w_24x24.png" />
-    <None Include="Resources\database_24x24.png" />
-    <None Include="Resources\about_24x241.png" />
-    <None Include="Resources\online_24x24.png" />
+    <None Include="Resources\arrow-refresh.png" />
+    <None Include="Resources\Users-Exit-icon_24x241.png" />
     <None Include="Resources\pdf_24x241.png" />
     <None Include="Resources\jsoni_24x241.png" />
     <None Include="Resources\csv_24x241.png" />
-    <None Include="Resources\options_24x24.png" />
-    <None Include="Resources\default_24x24.png" />
-    <None Include="Resources\delete_24x24.png" />
-    <None Include="Resources\rename_24x24.png" />
-    <None Include="Resources\clone_24x24.png" />
-    <None Include="Resources\exit_24x24.png" />
-    <None Include="Resources\save_24x24.png" />
-    <None Include="Resources\open_24x24.png" />
-    <None Include="Resources\new_24x24.png" />
-    <None Include="Resources\io_24x24.png" />
-    <None Include="Resources\ram_24x24.png" />
-    <None Include="Resources\processor_24x24.png" />
-    <None Include="Resources\sizeview_24x24.png" />
-    <None Include="Resources\TimeView_24x24.png" />
-    <None Include="Resources\SpeedView_24x24.png" />
-    <None Include="Resources\log_48x48.png" />
-    <None Include="Resources\sizeview_48x48.png" />
-    <None Include="Resources\io_48x48.png" />
-    <None Include="Resources\ram_48x48.png" />
-    <None Include="Resources\processor_48x48.png" />
-    <None Include="Resources\TimeView_48x48.png" />
-    <None Include="Resources\SpeedView_48x48.png" />
-    <None Include="Resources\view_48x48.png" />
-    <None Include="Resources\pdf_48x48.png" />
-    <None Include="Resources\json_48x48.png" />
-    <None Include="Resources\csv_48x48.png" />
-    <None Include="Resources\stop_48x48.png" />
-    <None Include="Resources\start_48x48.png" />
+    <None Include="Resources\Messaging1.png" />
+    <None Include="Resources\sr1.png" />
+    <None Include="Resources\w1.png" />
+    <None Include="Resources\r1.png" />
+    <None Include="Resources\database1.png" />
+    <None Include="Resources\options-2-icon_24x241.png" />
+    <None Include="Resources\Actions-home-icon_24x241.png" />
+    <None Include="Resources\close-icon_24x24.png" />
+    <None Include="Resources\Editing-Rename-icon2.png" />
+    <None Include="Resources\Healthcare-Clone-icon1.png" />
+    <None Include="Resources\propertiesToolStripMenuItem.Image.png" />
+    <None Include="Resources\Options-icon.png" />
+    <None Include="Resources\Pencil-icon.png" />
+    <None Include="Resources\restoreDefaultToolStripMenuItem.Image.png" />
+    <None Include="Resources\deleteToolStripMenuItem.Image.png" />
+    <None Include="Resources\renameToolStripMenuItem.Image.png" />
+    <None Include="Resources\cloneToolStripMenuItem.Image.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>set target=x64
-
-set drive=R:
-set source=%25drive%25\Databases
-set thirdParty=%25drive%25\Third Party\
-
-if exist %25drive%25 (
-   xcopy /d /y /r "%25source%25\HamsterDB\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\BrightstarDB\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\Volante\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\HamsterDB\%25target%25\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\CassandraDB\%25target%25\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\Couchbase\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\Aerospike\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\Oracle BerkeleyDB\%25target%25\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\OrientDB\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\Perst\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\db4object\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\Firebird\%25target%25\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\Microsoft SQL Server Compact\%25target%25\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\SQLite\%25target%25\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\MySQL\MySql.Data.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\PostgreSQL\Npgsql.net\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\PostgreSQL\Npgsql.net\policy.2.0.Npgsql.config" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\ScimoreDB\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\LevelDB\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\VelocityDB\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\MongoDB\Client\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\RaptorDB\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\RavenDB\RavenDB-Build-3528\Server\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\RavenDB\RavenDB-Build-3528\Client\Raven.Client.Lightweight.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\Siaqodb\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\RedisDB\%25target%25\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25source%25\STSdb\STSdb.dll" "$(TargetDir)"
-   xcopy /d /y /r "R:\Deployment\STSdb4\STSdb4.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25thirdParty%25\log4net\1.2.13\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25thirdParty%25\Json for .NET 1.2\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25thirdParty%25\DockingSuite\2.9.0\*.dll" "$(TargetDir)"
-   xcopy /d /y /r "%25thirdParty%25\PdfExport\*.dll" "$(TargetDir)"
-)
-</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

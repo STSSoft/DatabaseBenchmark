@@ -1,12 +1,13 @@
-﻿using STS.General.Extensions;
-using STS.General.Generators;
+﻿using STS.General.Generators;
 using STS.General.SQL;
+using STS.General.SQL.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -18,14 +19,19 @@ namespace DatabaseBenchmark.Databases
         private SQLMultiInsert[] helpers;
         private int insertsPerQuery;
 
-        [Category("Connection Settings")]
-        public bool InMemoryDatabase { get; set; }
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.RTree; }
+        }
 
-        [Category("Connection Settings")]
+        [Category("Settings")]
         public int PageSize { get; set; }
 
-        [Category("Connection Settings")]
+        [Category("Settings")]
         public int CacheSize { get; set; }
+
+        [Category("Settings")]
+        public bool InMemoryDatabase { get; set; }
 
         /// <summary>
         /// Specifies how many records are inserted with every batch.
@@ -189,6 +195,22 @@ namespace DatabaseBenchmark.Databases
             {
                 connections[i].Close();
                 helpers[i].Close();
+            }
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                var settings = new Dictionary<string, string>();
+              
+                settings.Add("PageSize", PageSize.ToString());
+                settings.Add("CacheSize", CacheSize.ToString());
+                settings.Add("InMemoryDatabase", InMemoryDatabase.ToString());
+                settings.Add("InsertsPerQuery", InsertsPerQuery.ToString());
+
+                return settings;
             }
         }
     }

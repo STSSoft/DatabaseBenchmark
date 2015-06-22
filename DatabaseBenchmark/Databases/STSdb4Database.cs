@@ -1,9 +1,11 @@
 ﻿using STS.General.Generators;
 using STSdb4.Database;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 
 namespace DatabaseBenchmark.Databases
 {
@@ -12,8 +14,16 @@ namespace DatabaseBenchmark.Databases
         private IStorageEngine engine;
         private ITable<long, Tick> table;
 
+        [Category("Settings")]
         public int CacheSize { get; set; }
+
+        [Category("Settings")]
         public bool InMemoryDatabase { get; set; }
+
+        public override IndexingTechnology IndexingTechnology
+        {
+            get { return IndexingTechnology.WaterfallTree; }
+        }
 
         public STSdb4Database()
         {
@@ -61,6 +71,19 @@ namespace DatabaseBenchmark.Databases
         public override void Finish()
         {
             engine.Close();
+        }
+
+        [XmlIgnore]
+        public override Dictionary<string, string> Settings
+        {
+            get
+            {
+                var settings = new Dictionary<string, string>();
+
+                settings.Add("CacheSize", CacheSize.ToString());
+
+                return settings;
+            }
         }
     }
 }

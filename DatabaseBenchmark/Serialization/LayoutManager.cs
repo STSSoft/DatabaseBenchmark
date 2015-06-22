@@ -121,6 +121,11 @@ namespace DatabaseBenchmark.Serialization
             InstanceProperites.Text = "Properties";
         }
 
+        public bool IsCategoryOrder()
+        {
+          return  TreeView.IsCategoryOrder();
+        }
+
         public void SelectFrame(TestMethod method)
         {
             StepFrame frame = StepFrames[method];
@@ -178,6 +183,10 @@ namespace DatabaseBenchmark.Serialization
         public void EnablePropertyFrame(bool state)
         {
             InstanceProperites.Enabled = state;
+        }
+        public void RefreshPropertyFrame()
+        {
+            InstanceProperites.SetProperties(TreeView.GetSelectedDatabase());
         }
 
         public void ShowProperties()
