@@ -290,22 +290,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\STSdb4.dll</HintPath>
     </Reference>
-    <Reference Include="STSdb5, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\STSdb5.dll</HintPath>
-    </Reference>
-    <Reference Include="STSdb5.Azure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\STSdb5.Azure.dll</HintPath>
-    </Reference>
-    <Reference Include="STSdb5.Google, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\STSdb5.Google.dll</HintPath>
-    </Reference>
-    <Reference Include="STSdb5.Hadoop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\STSdb5.Hadoop.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
