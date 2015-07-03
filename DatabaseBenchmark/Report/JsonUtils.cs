@@ -83,19 +83,26 @@ namespace DatabaseBenchmark.Report
             jsonDatabase.Add(new JsonStringValue("Name", benchmark.Database.Name));
             jsonDatabase.Add(new JsonStringValue("IndexingTechnology", benchmark.Database.IndexingTechnology.ToString()));
             jsonDatabase.Add(new JsonStringValue("Category", benchmark.Database.Name));
+
+            jsonDatabase.Add(new JsonNumericValue("AverageWriteSpeed", benchmark.GetSpeed(TestMethod.Write)));
+            jsonDatabase.Add(new JsonNumericValue("AverageReadSpeed", benchmark.GetSpeed(TestMethod.Read)));
+            jsonDatabase.Add(new JsonNumericValue("AverageSecondaryReadSpeed", benchmark.GetSpeed(TestMethod.SecondaryRead)));
+
+            jsonDatabase.Add(new JsonNumericValue("WritePeakMemoryUsage", benchmark.GetPeakWorkingSet(TestMethod.Write) / (1024.0 * 1024.0)));
+            jsonDatabase.Add(new JsonNumericValue("ReadPeakMemoryUsage", benchmark.GetPeakWorkingSet(TestMethod.Read) / (1024.0 * 1024.0)));
+            jsonDatabase.Add(new JsonNumericValue("SecondaryReadPeakMemoryUsage", benchmark.GetPeakWorkingSet(TestMethod.SecondaryRead) / (1024.0 * 1024.0)));
+
             jsonDatabase.Add(new JsonNumericValue("Size", benchmark.DatabaseSize / (1024.0 * 1024.0)));
+
+            JsonObjectCollection jsonDatabaseSettings = new JsonObjectCollection("Settings");
 
             if (benchmark.Database.Settings != null)
             {
-                JsonObjectCollection jsonDatabaseSettings = new JsonObjectCollection("Settings");
-
                 foreach (var item in benchmark.Database.Settings)
                     jsonDatabaseSettings.Add(new JsonStringValue(item.Key, item.Value));
 
                 jsonDatabase.Add(jsonDatabaseSettings);
             }
-
-            //jsonDatabase.Add(new JsonStringValue("Settings", ReflectionUtils.GetPublicPropertyValues(benchmark.Database))); // TODO: sync with remote server
 
             // Test results.
             JsonObjectCollection jsonTestData = new JsonObjectCollection("TestResults");
