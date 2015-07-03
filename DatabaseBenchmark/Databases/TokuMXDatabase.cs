@@ -122,7 +122,7 @@ namespace DatabaseBenchmark.Databases
 
                 // TODO: Finding another way to take the size.
                 var stat = clients[0].GetServer().GetDatabase("test").GetCollection<Row>(CollectionName).GetStats();
-                sum += stat.DataSize + stat.TotalIndexSize;
+                sum += stat.StorageSize + stat.TotalIndexSize;
 
                 return sum;
             }
