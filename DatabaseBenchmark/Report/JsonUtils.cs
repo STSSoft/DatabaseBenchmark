@@ -100,9 +100,9 @@ namespace DatabaseBenchmark.Report
             {
                 foreach (var item in benchmark.Database.Settings)
                     jsonDatabaseSettings.Add(new JsonStringValue(item.Key, item.Value));
-
-                jsonDatabase.Add(jsonDatabaseSettings);
             }
+
+            jsonDatabase.Add(jsonDatabaseSettings);
 
             // Test results.
             JsonObjectCollection jsonTestData = new JsonObjectCollection("TestResults");
