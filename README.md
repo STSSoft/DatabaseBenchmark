@@ -15,12 +15,6 @@ Database Benchmark is a very powerfull stress test tool. The main parameters tha
 
 Every tested database must be capable of performing this simple test - insert the generated records and read them, ordered by their keys.
 
-The application also provides monitoring of the following parameters in real-time:
-
-* Average CPU usage.
-* Average memory usage.
-* Average I/O usage.
-
 # Included databases
 All of the databases included in the benchmark are implemented by our team. We are doing our best to make sure that the implementations are the best possible. If you can propose a better implementation or if you want to make a change, we encourage you to do it, following the Contributing guide: https://github.com/STSSoft/DatabaseBenchmark/wiki/Contributing.
 
