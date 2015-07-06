@@ -334,7 +334,9 @@
     </Compile>
     <Compile Include="Charts\ChartSettings.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="BenchmarkInstanceProperies.cs" />
+    <Compile Include="BenchmarkInstanceProperies.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="BenchmarkInstanceProperies.Designer.cs">
       <DependentUpon>BenchmarkInstanceProperies.cs</DependentUpon>
     </Compile>
@@ -360,7 +362,9 @@
     <Compile Include="Databases\MySQLTokuDBDatabase.cs" />
     <Compile Include="Exceptions\KeysNotOrderedException.cs" />
     <Compile Include="FileAssociations.cs" />
-    <Compile Include="Frames\LogFrame.cs" />
+    <Compile Include="Frames\LogFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Frames\LogFrame.Designer.cs">
       <DependentUpon>LogFrame.cs</DependentUpon>
     </Compile>
@@ -385,7 +389,9 @@
     <Compile Include="Databases\AerospikeDatabase.cs" />
     <Compile Include="Databases\OrientDBDatabase.cs" />
     <Compile Include="Databases\RedisDatabase.cs" />
-    <Compile Include="Frames\StepFrame.cs" />
+    <Compile Include="Frames\StepFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Frames\StepFrame.Designer.cs">
       <DependentUpon>StepFrame.cs</DependentUpon>
     </Compile>
@@ -412,7 +418,9 @@
     <Compile Include="Databases\TokuMXDatabase.cs" />
     <Compile Include="Databases\VelocityDBDatabase.cs" />
     <Compile Include="Databases\VolanteDatabase.cs" />
-    <Compile Include="Frames\TreeViewFrame.cs" />
+    <Compile Include="Frames\TreeViewFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Frames\TreeViewFrame.Designer.cs">
       <DependentUpon>TreeViewFrame.cs</DependentUpon>
     </Compile>

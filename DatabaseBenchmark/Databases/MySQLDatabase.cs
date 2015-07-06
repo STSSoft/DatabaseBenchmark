@@ -61,7 +61,7 @@ namespace DatabaseBenchmark.Databases
 
         protected IDbConnection GetConnection()
         {
-            IDbConnection conn = new MySqlConnection();
+            IDbConnection conn = new MySqlConnection(ConnectionString);
             conn.Open();
 
             return conn;
