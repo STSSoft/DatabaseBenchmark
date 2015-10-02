@@ -1,5 +1,5 @@
-﻿using DatabaseBenchmark.Benchmarking;
-using DatabaseBenchmark.Charts;
+﻿using DatabaseBenchmark.Charts;
+using DatabaseBenchmark.Core.Benchmarking;
 using DatabaseBenchmark.Frames;
 using iTextSharp.text;
 using iTextSharp.text.pdf;

@@ -1,6 +1,5 @@
-﻿using DatabaseBenchmark.Benchmarking;
+﻿using DatabaseBenchmark.Core.Benchmarking;
 using DatabaseBenchmark.Properties;
-using DatabaseBenchmark.Report;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -15,16 +14,17 @@ namespace DatabaseBenchmark.Report
     public partial class ReportForm : Form
     {
         private ILog Logger;
+
         private ComputerConfiguration Configuration;
         private ServerConnection ServerConnector;
 
-        public List<BenchmarkTest> BenchmarkTests { get; private set; }
+        public List<BenchmarkSession> BenchmarkSessions { get; private set; }
 
-        public ReportForm(List<BenchmarkTest> benchmarkTests)
+        public ReportForm(List<BenchmarkSession> benchmarkSessions)
             : this()
         {
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
-            BenchmarkTests = benchmarkTests;
+            BenchmarkSessions = benchmarkSessions;
 
             PopulateHardwareInfo();
         }
@@ -32,8 +32,8 @@ namespace DatabaseBenchmark.Report
         public ReportForm()
         {
             InitializeComponent();
-            //checkBoxShow.Visible = !(bool)Properties.Settings.Default["HideReportForm"];
-            checkBoxShow.Checked = (bool)Properties.Settings.Default["HideReportForm"];
+
+            checkBoxShow.Checked = (bool)Settings.Default.HideReportForm;
         }
 
         private void PopulateHardwareInfo()
@@ -69,7 +69,7 @@ namespace DatabaseBenchmark.Report
             txtBoxMemoryBanks.Text = memory.Count.ToString();
 
             // STORAGE
-            string benchmarkDataDirectoryRoot = Path.GetPathRoot(BenchmarkTests.First().Database.DataDirectory);
+            string benchmarkDataDirectoryRoot = Path.GetPathRoot(BenchmarkSessions.First().Database.DataDirectory);
             StorageDeviceInfo dataDrive = storage.Find(drive => drive.DriveLetters.Contains(benchmarkDataDirectoryRoot.Trim('\\')));
 
             comboBoxStorageModel.Items.AddRange(storage.Select(device => device.Model).ToArray());
@@ -83,29 +83,29 @@ namespace DatabaseBenchmark.Report
         {
             UserInfo user = new UserInfo(txtBoxEmail.Text, txtBoxAdditionalInfo.Text);
 
-            Properties.Settings.Default["HideReportForm"] = checkBoxShow.Checked;
-            Properties.Settings.Default.Save();
+            Settings.Default.HideReportForm = checkBoxShow.Checked;
+            Settings.Default.Save();
             
             try
             {
                 Configuration.StorageDevices.RemoveAll(device => device.Model != comboBoxStorageModel.Text);
 
-                string jsonData = JsonUtils.ConvertToJson(user, Configuration, BenchmarkTests).ToString();
+                // TODO: fix this method to return string.
+                string jsonData = JsonUtils.ConvertToJson(user, Configuration, BenchmarkSessions).ToString();
                 ServerConnector = new ServerConnection();
 
                 Logger.Info("Sending data to server...");
 
                 HttpWebResponse response = ServerConnector.SendDataAsPost(jsonData);
                 StreamReader reader = new StreamReader(response.GetResponseStream());
+
                 string benchmarkLink = reader.ReadLine();
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     Logger.Info("Data sent succesfully to server...");
-
                     MessageBox.Show("Data sent successfully to server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // TODO: Add the real link.
                     Process.Start(benchmarkLink);
 
                     this.Close();
@@ -129,8 +129,8 @@ namespace DatabaseBenchmark.Report
         {
             this.Close();
 
-            Properties.Settings.Default["HideReportForm"] = checkBoxShow.Checked;
-            Properties.Settings.Default.Save();
+            Settings.Default.HideReportForm = checkBoxShow.Checked;
+            Settings.Default.Save();
         }
 
         private void timer1_Tick(object sender, EventArgs e)

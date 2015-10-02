@@ -10,6 +10,8 @@ namespace DatabaseBenchmark.Frames
 {
     public partial class LogFrame : DockContent
     {
+        private const string ERROR_LINE = "ERROR";
+
         private ILog Logger;
         private StringAppender TestAppender;
 
@@ -35,7 +37,8 @@ namespace DatabaseBenchmark.Frames
 
             try
             {
-                Invoke(addLine, TestAppender.LastLine);
+                if(!IsDisposed)
+                    Invoke(addLine, TestAppender.LastLine);
             }
             catch(Exception exc)
             {
@@ -49,7 +52,7 @@ namespace DatabaseBenchmark.Frames
             richTextBoxLogs.AppendText(line);
 
             // Highlight error lines.
-            if (line.Contains("ERROR"))
+            if (line.Contains(ERROR_LINE))
             {
                 richTextBoxLogs.Select(startIndex, line.Length);
                 richTextBoxLogs.SelectionBackColor = Color.FromArgb(64, Color.Red);

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OxyPlot;
 
 namespace DatabaseBenchmark.Charts
 {
@@ -24,9 +20,9 @@ namespace DatabaseBenchmark.Charts
 
     public enum LegendPossition
     {
-        Left,
-        Right,
         Top,
-        Bottom
+        Bottom,
+        Left,
+        Right
     }
 }

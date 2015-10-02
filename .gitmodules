@@ -1,9 +1,6 @@
 [submodule "STS.General.GUI"]
 	path = STS.General.GUI
 	url = https://github.com/STSSoft/STS.General.GUI
-[submodule "STS.General"]
-	path = STS.General
-	url = https://github.com/STSSoft/STS.General
-[submodule "STS.General.SQL"]
-	path = STS.General.SQL
-	url = https://github.com/STSSoft/STS.General.SQL
+[submodule "DatabaseBenchmark.Core"]
+	path = DatabaseBenchmark.Core
+	url = https://github.com/STSSoft/DatabaseBenchmark.Core

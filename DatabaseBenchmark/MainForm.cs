@@ -1,7 +1,7 @@
-﻿using DatabaseBenchmark.Benchmarking;
-using DatabaseBenchmark.Charts;
+﻿using DatabaseBenchmark.Charts;
 using DatabaseBenchmark.Frames;
 using DatabaseBenchmark.Report;
+using DatabaseBenchmark.Core;
 using DatabaseBenchmark.Serialization;
 using log4net;
 using System;
@@ -15,6 +15,9 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Diagnostics;
 using DatabaseBenchmark.Properties;
+using DatabaseBenchmark.Utils;
+using DatabaseBenchmark.Core.Benchmarking;
+using OxyPlot;
 
 /*
  * Copyright (c) 2010-2015 STS Soft SC
@@ -33,10 +36,6 @@ using DatabaseBenchmark.Properties;
  * 
 */
 
-// IMPROVEMENT: LayoutManager should be separated from ProjectManager.
-// BUG: when an existing project is opened, it does not save the changes in the current file, but instead creates a new one.
-// BUG: when the loading form is active, if a window pops up, it can't be selected.
-
 namespace DatabaseBenchmark
 {
     public partial class MainForm : Form
@@ -45,10 +44,12 @@ namespace DatabaseBenchmark
         public static readonly string CONFIGURATION_FOLDER = Path.Combine(Application.StartupPath + "\\Config");
 
         private volatile Task MainTask = null;
+
         private CancellationTokenSource Cancellation;
 
-        private BenchmarkTest Current;
-        private List<BenchmarkTest> History;
+        private bool TestFailed;
+        private BenchmarkSession Current;
+        private List<BenchmarkSession> History;
 
         private int TableCount;
         private long RecordCount;
@@ -57,7 +58,9 @@ namespace DatabaseBenchmark
         private string CurrentStatus;
 
         private ILog Logger;
-        private ProjectManager ApplicationManager;
+
+        private ProjectManager Manager;
+        private MainLayout MainLayout;
 
         private List<ToolStripButton> ViewButtons;
 
@@ -65,28 +68,33 @@ namespace DatabaseBenchmark
         {
             InitializeComponent();
 
-            History = new List<BenchmarkTest>();
-            ViewButtons= new List<ToolStripButton>();
+            History = new List<BenchmarkSession>();
+            ViewButtons = new List<ToolStripButton>();
 
-            ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x=>x.CheckOnClick).ToList();
-            
+            ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x => x.CheckOnClick).ToList();
+
             // Loggers and tracers.
-            Trace.Listeners.Add(new Log4NetTraceListener());
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
             Logger.Info(Environment.NewLine);
             Logger.Info("Application started...");
+
+            Trace.Listeners.Add(new Log4NetTraceListener(Settings.Default.TestLogger));
+            Trace.Listeners.Add(new Log4NetTraceListener(Settings.Default.TestLogger));
 
             this.SuspendLayout();
 
             toolStripMain.Items.Insert(toolStripMain.Items.Count - 2, new ToolStripControlHost(trackBar1));
 
-            // Load dock and application configuration.
-            ApplicationManager = new ProjectManager(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }, ViewButtons, trackBar1, CONFIGURATION_FOLDER);
+            // Layout.
+            MainLayout = new MainLayout(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }.ToList(), ViewButtons, trackBar1, CONFIGURATION_FOLDER);
 
-            ApplicationManager.TreeView.CreateTreeView();
-            ApplicationManager.LoadDocking();
+            MainLayout.Initialize();
+            MainLayout.TreeView.CreateTreeView();
+            MainLayout.LoadDocking();
 
-            ApplicationManager.ShowStepFrame(TestMethod.Write);
+            MainLayout.SelectFrame(TestMethod.Write);
+
+            Manager = new ProjectManager(MainLayout);
 
             View_Click(btnSizeView, EventArgs.Empty);
 
@@ -103,7 +111,8 @@ namespace DatabaseBenchmark
         private void DoBenchmark()
         {
             BenchmarkSuite testSuite = new BenchmarkSuite();
-            testSuite.OnTestFinish += Report;
+            testSuite.OnTestMethodCompleted += Report;
+            testSuite.OnException += OnException;
 
             try
             {
@@ -116,19 +125,19 @@ namespace DatabaseBenchmark
                     testSuite.ExecuteInit(benchmark);
 
                     // Write.
-                    ApplicationManager.SetCurrentMethod(TestMethod.Write);
+                    MainLayout.SetCurrentMethod(TestMethod.Write);
                     CurrentStatus = TestMethod.Write.ToString();
 
                     testSuite.ExecuteWrite(benchmark);
 
                     // Read.
-                    ApplicationManager.SetCurrentMethod(TestMethod.Read);
+                    MainLayout.SetCurrentMethod(TestMethod.Read);
                     CurrentStatus = TestMethod.Read.ToString();
 
                     testSuite.ExecuteRead(benchmark);
 
                     // Secondary Read.
-                    ApplicationManager.SetCurrentMethod(TestMethod.SecondaryRead);
+                    MainLayout.SetCurrentMethod(TestMethod.SecondaryRead);
                     CurrentStatus = TestMethod.SecondaryRead.ToString();
 
                     testSuite.ExecuteSecondaryRead(benchmark);
@@ -146,29 +155,37 @@ namespace DatabaseBenchmark
                     History.Clear();
                 else
                 {
-                    if (!(bool)Properties.Settings.Default["HideReportForm"])
-                        StartOnlineReport();
+                    if (!TestFailed)
+                    {
+                        if (!Settings.Default.HideReportForm)
+                            OnlineReport();
+                    }
                 }
             }
-          }
+        }
+
+        private void OnException(Exception exception, BenchmarkSession test)
+        {
+            TestFailed = true;
+        }
 
         #endregion
 
         #region Report methods
 
-        private void Report(BenchmarkTest benchmark, TestMethod method)
+        private void Report(BenchmarkSession benchmark, TestMethod method)
         {
             try
             {
                 Action<string, object, Color> updateChart = null;
 
-                StepFrame ActiveStepFrame = ApplicationManager.GetCurrentStepFrame();
+                StepFrame ActiveStepFrame = MainLayout.GetCurrentFrame();
                 string databaseName = benchmark.Database.Name;
                 Color databaseColor = benchmark.Database.Color;
 
                 // Speed chart.
                 updateChart = ActiveStepFrame.AddAverageSpeedToBar;
-                Report(databaseName, databaseColor, updateChart, benchmark.GetSpeed(method));
+                Report(databaseName, databaseColor, updateChart, benchmark.GetAverageSpeed(method));
 
                 // Size chart.
                 updateChart = ActiveStepFrame.AddSizeToBar;
@@ -176,19 +193,11 @@ namespace DatabaseBenchmark
 
                 // Time chart.
                 updateChart = ActiveStepFrame.AddTimeToBar;
-                Report(databaseName, databaseColor, updateChart, new DateTime(benchmark.GetTime(method).Ticks));
-
-                // CPU chart.
-                //updateChart = ActiveStepFrame.AddCpuUsageToBar;
-                //Report(databaseName, databaseColor, updateChart, benchmark.GetAverageProcessorTime(method));
+                Report(databaseName, databaseColor, updateChart, new DateTime(benchmark.GetElapsedTime(method).Ticks));
 
                 // Memory chart.
                 updateChart = ActiveStepFrame.AddMemoryUsageToBar;
                 Report(databaseName, databaseColor, updateChart, benchmark.GetPeakWorkingSet(method) / (1024.0 * 1024.0));
-
-                // I/O chart.
-                //updateChart = ActiveStepFrame.AddIoUsageToBar;
-                //Report(databaseName, databaseColor, updateChart, benchmark.GetAverageIOData(method) / (1024.0 * 1024.0));
             }
             catch (Exception exc)
             {
@@ -208,14 +217,14 @@ namespace DatabaseBenchmark
             }
         }
 
+        private void onlineReportResultsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OnlineReport();
+        }
+
         #endregion
 
         #region Export
-
-        private void onlineReportResultsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StartOnlineReport();
-        }
 
         // CSV.
         private void summaryReportToolStripMenuItemCsv_Click(object sender, EventArgs e)
@@ -252,14 +261,15 @@ namespace DatabaseBenchmark
 
         private void Export(ReportFormat reportFormat, ReportType reportType, SaveFileDialog dialog)
         {
-            dialog.FileName = String.Format("Database Benchmark {0:yyyy-MM-dd HH.mm}", DateTime.Now);
+            string postfix = reportType == ReportType.Detailed ? "detailed" : "summary";
+            dialog.FileName = String.Format("DatabaseBenchmark-{0:yyyy-MM-dd HH.mm}-{1}", DateTime.Now, postfix);
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 try
                 {
                     // Start loading and disable MainForm.
-                    LoadingForm.Start(string.Format("Exporting to {0} ....", reportFormat), Bounds);
+                    LoadingFrame.Start(string.Format("Exporting to {0}...", reportFormat), Bounds);
                     Enabled = false;
 
                     switch (reportFormat)
@@ -274,13 +284,13 @@ namespace DatabaseBenchmark
                             break;
 
                         case ReportFormat.PDF:
-                            BenchmarkTest test = History[0];
-                            PdfUtils.Export(saveFileDialogPdf.FileName, ApplicationManager.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
+                            BenchmarkSession test = History[0];
+                            PdfUtils.Export(saveFileDialogPdf.FileName, MainLayout.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
                             break;
                     }
 
                     // Stop loading end enable MainForm
-                    LoadingForm.Stop();
+                    LoadingFrame.Stop();
                     Enabled = true;
                 }
                 catch (Exception exc)
@@ -290,7 +300,7 @@ namespace DatabaseBenchmark
                     Logger.Error(message, exc);
                     ReportError(message);
                     Enabled = true;
-                    LoadingForm.Stop();
+                    LoadingFrame.Stop();
                 }
             }
         }
@@ -306,36 +316,38 @@ namespace DatabaseBenchmark
             RecordCount = Int64.Parse(cbRecordCount.Text.Replace(" ", ""));
             Randomness = trackBar1.Value / 20.0f;
 
-            var databases = ApplicationManager.SelectedDatabases;
-            if (databases.Length == 0)
+            MainLayout.InitializeCharts(MainLayout.GetSelectedDatabasesChartValues());
+
+            if (MainLayout.TreeView.GetSelectedDatabases().Length == 0 && MainLayout.TreeView.GetSelectedDatabase() == null)
                 return;
 
             History.Clear();
             Cancellation = new CancellationTokenSource();
 
-            foreach (var database in databases)
+            foreach (var database in MainLayout.TreeView.GetSelectedDatabases())
             {
-                var session = new BenchmarkTest(database, TableCount, RecordCount, Randomness, Cancellation);
+                var session = new BenchmarkSession(database, TableCount, RecordCount, Randomness, Cancellation);
                 History.Add(session);
 
-                try
-                {
-                    foreach (var directory in Directory.GetDirectories(database.DataDirectory))
-                        Directory.Delete(directory, true);
-
-                    foreach (var files in Directory.GetFiles(database.DataDirectory, "*.*", SearchOption.AllDirectories))
-                        File.Delete(files);
-                }
-                catch (Exception exc)
-                {
-                    Logger.Error("Application exception occured...", exc);
-                }
+                DirectoryUtils.ClearDatabaseDataDirectory(database);
             }
 
-            ApplicationManager.Prepare();
+            MainLayout.ClearLogFrame();
 
             // Start the benchmark.
             MainTask = Task.Factory.StartNew(DoBenchmark, Cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        }
+
+        private void StartTest(Database[] databases, List<KeyValuePair<string, Color>> chartValues )
+        {
+           
+
+          
+        }
+
+        private void Tuning_TuningButtonClicked(List<Database> obj)
+        {
+            throw new NotImplementedException();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -344,7 +356,7 @@ namespace DatabaseBenchmark
                 return;
 
             Cancellation.Cancel();
-            ApplicationManager.ClearCharts();
+            MainLayout.ClearCharts();
         }
 
         private void View_Click(object sender, EventArgs e)
@@ -352,7 +364,7 @@ namespace DatabaseBenchmark
             ToolStripButton button = (ToolStripButton)sender;
             int column = Int32.Parse(button.Tag.ToString());
 
-            ApplicationManager.ShowBarChart(column, button.Checked);
+            MainLayout.ShowBarChart(column, button.Checked);
             ((ToolStripMenuItem)showBarChartsToolStripMenuItem.DropDownItems[column]).Checked = button.Checked;
         }
 
@@ -361,7 +373,7 @@ namespace DatabaseBenchmark
             ToolStripMenuItem button = (ToolStripMenuItem)sender;
             int column = Int32.Parse(button.Tag.ToString());
 
-            ApplicationManager.ShowBarChart(column, button.Checked);
+            MainLayout.ShowBarChart(column, button.Checked);
             ((ToolStripButton)toolStripMain.Items[9 + column]).Checked = button.Checked;
         }
 
@@ -369,7 +381,7 @@ namespace DatabaseBenchmark
         {
             bool isChecked = (sender as ToolStripButton).Checked;
 
-            foreach (var frame in ApplicationManager.StepFrames)
+            foreach (var frame in MainLayout.StepFrames)
                 frame.Value.SelectedChartIsLogarithmic = isChecked;
         }
 
@@ -389,7 +401,7 @@ namespace DatabaseBenchmark
 
         private void buttonTreeView_Click(object sender, EventArgs e)
         {
-            ApplicationManager.SelectTreeView(btnTreeView.Checked);
+            MainLayout.SelectTreeView(btnTreeView.Checked);
         }
 
         #endregion
@@ -398,29 +410,32 @@ namespace DatabaseBenchmark
 
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoadingForm.Start("Saving project...", Bounds);
-            ApplicationManager.Store(saveFileDialogProject.FileName);
-            LoadingForm.Stop();
+            LoadingFrame.Start("Saving project...", Bounds);
+            Manager.Store(saveFileDialogProject.FileName);
+            LoadingFrame.Stop();
         }
 
         private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                LoadingForm.Start("Loading project...", Bounds);
+                LoadingFrame.Start("Loading project...", Bounds);
 
-                ApplicationManager.Load(openFileDialogProject.FileName);
+                Manager.Load(openFileDialogProject.FileName);
                 saveFileDialogProject.FileName = openFileDialogProject.FileName;
                 saveConfigurationToolStripMenuItem.Enabled = true;
                 Text = String.Format("{0} - Database Benchmark", Path.GetFileName(saveFileDialogProject.FileName));
-               
-                LoadingForm.Stop();
+
+                LoadingFrame.Stop();
             }
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Save current project ?", "Save project", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Save current project ?", "Save project", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Cancel)
+                return;
 
             if (result == DialogResult.Yes)
             {
@@ -430,25 +445,25 @@ namespace DatabaseBenchmark
                     saveAsToolStripMenuItem_Click(sender, e);
             }
 
-            LoadingForm.Start("Creating project...", Bounds);
+            LoadingFrame.Start("Creating project...", Bounds);
 
-            ApplicationManager.Reset();
+            MainLayout.Reset();
             saveConfigurationToolStripMenuItem.Enabled = false;
-            Text = "Database Benchmark.dbproj - Database Benchmark";
+            Text = "NewProject.dbproj - Database Benchmark";
 
-            LoadingForm.Stop();
+            LoadingFrame.Stop();
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (saveFileDialogProject.ShowDialog() == DialogResult.OK)
             {
-                LoadingForm.Start("Saving project...", Bounds);
-                ApplicationManager.Store(saveFileDialogProject.FileName);
-                LoadingForm.Stop();
+                LoadingFrame.Start("Saving project...", Bounds);
+                Manager.Store(saveFileDialogProject.FileName);
+                LoadingFrame.Stop();
 
                 saveConfigurationToolStripMenuItem.Enabled = true;
-                Text = String.Format("{0} - DatabaseBenchmark", Path.GetFileName(saveFileDialogProject.FileName));
+                Text = String.Format("{0} - Database Benchmark", Path.GetFileName(saveFileDialogProject.FileName));
             }
         }
 
@@ -458,7 +473,7 @@ namespace DatabaseBenchmark
 
         private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            bool state = ApplicationManager.TreeView.IsSelectedBenchamrkNode;
+            bool state = MainLayout.TreeView.IsSelectedNodeDatabase;
 
             editToolStripMenuItem.DropDownItems[0].Visible = state; // Clone.
             editToolStripMenuItem.DropDownItems[1].Visible = state; // Rename.
@@ -466,43 +481,43 @@ namespace DatabaseBenchmark
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.TreeView.CloneNode();
+            MainLayout.TreeView.CloneNode();
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.TreeView.RenameNade();
+            MainLayout.TreeView.RenameNode();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.TreeView.DeleteNode();
+            MainLayout.TreeView.DeleteNode();
         }
 
         private void restoreDefaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.TreeView.RestoreDefault();
+            MainLayout.TreeView.RestoreDefault();
         }
 
         private void restoreDefaultAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.TreeView.ClearTreeViewNodes();
-            ApplicationManager.TreeView.CreateTreeView();
+            MainLayout.TreeView.ClearTreeViewNodes();
+            MainLayout.TreeView.CreateTreeView();
         }
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.ShowProperties();
+            MainLayout.ShowPropertiesFrame();
         }
 
         private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.TreeView.ExpandAll();
+            MainLayout.TreeView.ExpandAll();
         }
 
         private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.TreeView.CollapseAll();
+            MainLayout.TreeView.CollapseAll();
         }
 
         #endregion
@@ -511,7 +526,7 @@ namespace DatabaseBenchmark
 
         private void viewToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            StepFrame selectedFrame = ApplicationManager.GetSelectedStepFrame();
+            StepFrame selectedFrame = MainLayout.GetActiveFrame();
             bool state = selectedFrame != null;
 
             viewToolStripMenuItem.DropDownItems[6].Visible = state;  // Separator.
@@ -533,35 +548,35 @@ namespace DatabaseBenchmark
 
         private void databasesWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.SelectTreeView(true);
+            MainLayout.SelectTreeView(true);
             btnTreeView.Checked = true;
         }
 
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.ShowStepFrame(TestMethod.Write);
+            MainLayout.SelectFrame(TestMethod.Write);
         }
 
         private void readWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.ShowStepFrame(TestMethod.Read);
+            MainLayout.SelectFrame(TestMethod.Read);
         }
 
         private void secondaryReadWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.ShowStepFrame(TestMethod.SecondaryRead);
+            MainLayout.SelectFrame(TestMethod.SecondaryRead);
         }
 
         private void logWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ApplicationManager.ShowLogFrame();
+            MainLayout.ShowLogFrame();
         }
 
         private void MoveLegend(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             LegendPossition position = (LegendPossition)Enum.Parse(typeof(LegendPossition), item.Text);
-            StepFrame selectedFrame = ApplicationManager.GetSelectedStepFrame();
+            StepFrame selectedFrame = MainLayout.GetActiveFrame();
 
             selectedFrame.SelectedChartPosition = position;
 
@@ -572,20 +587,20 @@ namespace DatabaseBenchmark
         private void showLegendToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripMenuItem).Checked;
-            ApplicationManager.GetSelectedStepFrame().SelectedChartLegendIsVisible = isChecked;
+            MainLayout.GetActiveFrame().SelectedChartLegendIsVisible = isChecked;
         }
 
         private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripMenuItem).Checked;
-            ApplicationManager.GetSelectedStepFrame().SelectedChartIsLogarithmic = isChecked;
+            MainLayout.GetActiveFrame().SelectedChartIsLogarithmic = isChecked;
         }
 
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
 
-            ApplicationManager.ResetDocking();
+            MainLayout.RefreshDocking();
 
             this.ResumeLayout();
         }
@@ -615,6 +630,7 @@ namespace DatabaseBenchmark
                 {
                     if (!item.Contains(".dbproj"))
                     {
+                        MessageBox.Show(item);
                         e.Effect = DragDropEffects.None;
                         break;
                     }
@@ -630,13 +646,13 @@ namespace DatabaseBenchmark
 
         private void LoadFromFile(string path)
         {
-            LoadingForm.Start("Loading project...", Bounds);
+            LoadingFrame.Start("Loading project...", Bounds);
 
-            ApplicationManager.Load(path);
+            Manager.Load(path);
             Text = String.Format("{0} - Database Benchmark", Path.GetFileName(path));
             saveConfigurationToolStripMenuItem.Enabled = true;
 
-            LoadingForm.Stop();
+            LoadingFrame.Stop();
         }
 
         #endregion
@@ -653,12 +669,12 @@ namespace DatabaseBenchmark
                 if (MainTask != null)
                     btnStop.Enabled = MainTask.Status == TaskStatus.Running ? true : false;
 
-                btnTreeView.Checked = ApplicationManager.TreeView.Visible;
+                btnTreeView.Checked = MainLayout.TreeView.Visible;
 
                 btnStart.Enabled = !btnStop.Enabled;
 
-                ApplicationManager.TreeView.TreeViewEnabled = btnStart.Enabled;
-                ApplicationManager.EnablePropertyFrame(btnStart.Enabled);
+                MainLayout.TreeView.TreeViewEnabled = btnStart.Enabled;
+                MainLayout.EnablePropertiesFrame(btnStart.Enabled);
 
                 cbFlowsCount.Enabled = btnStart.Enabled;
                 cbRecordCount.Enabled = btnStart.Enabled;
@@ -682,7 +698,7 @@ namespace DatabaseBenchmark
 
                 legendPossitionToolStripMenuItem.Enabled = showLegendToolStripMenuItem.Checked;
 
-                var activeFrame = ApplicationManager.GetCurrentStepFrame();
+                var activeFrame = MainLayout.GetCurrentFrame();
                 var session = Current;
 
                 if (session == null)
@@ -700,9 +716,9 @@ namespace DatabaseBenchmark
                     return;
 
                 if (autoNavigatetoolStripMenuItem.Checked)
-                    ApplicationManager.StepFrames[method].Activate();
+                    MainLayout.StepFrames[method].Activate();
 
-                TimeSpan elapsed = session.GetTime(method);
+                TimeSpan elapsed = session.GetElapsedTime(method);
 
                 long currentRecords = session.GetRecords(method);
                 long totalRecords = TableCount * RecordCount;
@@ -716,9 +732,9 @@ namespace DatabaseBenchmark
                     int averagePossition = activeFrame.lineChartAverageSpeed.GetPointsCount(database.Name);
                     int momentPossition = activeFrame.lineChartMomentSpeed.GetPointsCount(database.Name);
 
-                    var averageSpeedData = session.GetAverageSpeed(method, averagePossition);
-                    var momentSpeedData = session.GetMomentSpeed(method, momentPossition);
-                    var memoryData = session.GetMomentWorkingSet(method, averagePossition);
+                    var averageSpeedData = session.GetAverageSpeeds(method, averagePossition);
+                    var momentSpeedData = session.GetMomentSpeeds(method, momentPossition);
+                    var memoryData = session.GetMomentWorkingSets(method, averagePossition);
 
                     activeFrame.AddAverageSpeed(database.Name, averageSpeedData);
                     activeFrame.AddMomentSpeed(database.Name, momentSpeedData);
@@ -752,7 +768,7 @@ namespace DatabaseBenchmark
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             stopButton_Click(sender, e);
-            ApplicationManager.StoreDocking();
+            MainLayout.StoreDocking();
 
             Application.Exit();
         }
@@ -779,7 +795,7 @@ namespace DatabaseBenchmark
         {
             string[] args = Environment.GetCommandLineArgs();
 
-            foreach(var arg in args)
+            foreach (var arg in args)
             {
                 if (arg.EndsWith(".dbproj"))
                 {
@@ -788,21 +804,34 @@ namespace DatabaseBenchmark
                 }
             }
         }
-        private void StartOnlineReport()
+
+        private void OnlineReport()
         {
             try
             {
-                LoadingForm.Start("Obtaining computer configuration...", Bounds);
+                LoadingFrame.Start("Obtaining computer configuration...", Bounds);
                 ReportForm form = new ReportForm(History);
-                LoadingForm.Stop();
+                LoadingFrame.Stop();
 
                 form.ShowDialog();
             }
             catch (Exception exc)
             {
-                LoadingForm.Stop();
+                LoadingFrame.Stop();
                 Logger.Error("Online report exception occured ...", exc);
             }
+        }
+
+        private void categoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainLayout.TreeView.treeViewOrder = TreeViewOrder.Category;
+            MainLayout.TreeView.SetTreeViewOrder();
+        }
+
+        private void indexTechnologyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainLayout.TreeView.treeViewOrder = TreeViewOrder.IndexTechnology;
+            MainLayout.TreeView.SetTreeViewOrder();
         }
     }
 }

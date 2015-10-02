@@ -345,10 +345,10 @@
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Location = new System.Drawing.Point(259, 64);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(247, 13);
+            this.linkLabel2.Size = new System.Drawing.Size(297, 13);
             this.linkLabel2.TabIndex = 22;
             this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "http://stssoft.com/products/database-benchmark/";
+            this.linkLabel2.Text = "http://reporting.stssoft.com/management/public/benchmarks";
             // 
             // label9
             // 

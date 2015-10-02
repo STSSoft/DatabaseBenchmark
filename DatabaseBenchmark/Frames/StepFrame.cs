@@ -1,4 +1,5 @@
 ﻿using DatabaseBenchmark.Charts;
+using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,7 +21,7 @@ namespace DatabaseBenchmark.Frames
         public void InitializeCharts(IEnumerable<KeyValuePair<string, Color>> lineSeries)
         {
             // Bar charts.
-            barChartSpeed.CreateSeries("Series1", "{#,#}");
+            barChartSpeed.CreateSeries("Series1", "{0:N0}"); // "{#,#}"
             barChartSize.CreateSeries("Series1", "{0:0.#}");
             barChartTime.CreateSeries("Series1", "HH:mm:ss");
             barChartTime.AxisYValueType = ChartValueType.DateTime;

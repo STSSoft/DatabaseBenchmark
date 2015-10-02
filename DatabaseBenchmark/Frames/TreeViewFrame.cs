@@ -1,12 +1,15 @@
-﻿using DatabaseBenchmark.Properties;
-using DatabaseBenchmark.Serialization;
+﻿using DatabaseBenchmark.Core;
+using DatabaseBenchmark.Core.Utils;
+using DatabaseBenchmark.Properties;
+using DatabaseBenchmark.Utils;
 using log4net;
 using STS.General.GUI.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing.Design;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -15,94 +18,50 @@ namespace DatabaseBenchmark.Frames
     public partial class TreeViewFrame : DockContent
     {
         private ILog Logger;
+        private List<Database> TuningDatabaseInstances;
 
+        public TreeViewOrder treeViewOrder;
         public event Action<Object> SelectedDatabaseChanged; // Object = Database
-
-        public bool TreeViewEnabled
-        {
-            get { return treeView.Enabled; }
-            set 
-            { 
-                treeView.Enabled = value;
-                groupBoxOrder.Enabled = value;  // TODO: Fix this later.
-            }
-        }
 
         public TreeViewFrame()
         {
             InitializeComponent();
 
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
-
+            TreeViewOrderComboBox.Text = TreeViewOrder.Category.ToString();
         }
 
         public void CreateTreeView()
         {
-            Type[] benchmarksTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(Database)) && t.GetConstructor(new Type[] { }) != null).ToArray();
-            Database[] databases = new Database[benchmarksTypes.Length];
-
             try
             {
-                try
-                {
-                    for (int i = 0; i < benchmarksTypes.Length; i++)
-                        databases[i] = (Database)Activator.CreateInstance(benchmarksTypes[i]);
-                }
-                catch (Exception exc)
-                {
-                    Logger.Error("Database create instance error...", exc);
-                }
-
-                if (!Directory.Exists(MainForm.DATABASES_DIRECTORY))
-                    Directory.CreateDirectory(MainForm.DATABASES_DIRECTORY);
-
-                foreach (var directory in Directory.GetDirectories(MainForm.DATABASES_DIRECTORY))
-                {
-                    try // Some databases hold the rights to their data directory.
-                    {
-                        Directory.Delete(directory, true);
-                    }
-                    catch (Exception exc)
-                    {
-                        Logger.Error("Database delete directory error...", exc);
-                    }
-                }
+                Database[] databases = ReflectionUtils.CreateDatabaseInstances();
+                DirectoryUtils.CreateAndSetDatabasesDataDirectory(MainForm.DATABASES_DIRECTORY, databases);
 
                 foreach (var database in databases.OrderBy(db => db.Name))
-                {
-                    string treeViewType = radioBtn_Category.Checked ? database.Category : database.IndexingTechnology.ToString();
+                    CreateTreeViewNode(database, false);
 
-                    AddAfter(null, database, treeViewType);
-                    database.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, database.Name);
+                treeView.ExpandAll();
 
-                    if (!Directory.Exists(database.DataDirectory))
-                        Directory.CreateDirectory(database.DataDirectory);
-                }
+                var node = treeView.Nodes[0];
+                treeView.SelectedNode = node;
+
+                TreeViewOrderComboBox.Text = treeViewOrder.ToString();
+
+                if (SelectedDatabaseChanged != null)
+                    SelectedDatabaseChanged.Invoke(node.Tag);
+
             }
             catch (Exception exc)
             {
-                Logger.Error("Databases initialization error...", exc);
+                Logger.Error("TreeView creation error...", exc);
             }
-
-            treeView.ExpandAll();
-            treeView.SelectedNode = treeView.Nodes[0];
         }
 
-        public void CreateTreeViewNode(IDatabase database, bool state, bool order)
+        public void CreateTreeViewNode(IDatabase database, bool state)
         {
-            if (order)
-            {
-                AddAfter(null, database, database.Category, state);
-                radioBtn_Category.Checked = true;
-            }
-            else
-            {
-                AddAfter(null, database, database.IndexingTechnology.ToString(), state);
-                radioBtn_IndexTech.Checked = true;
-            }
-
-            if (!Directory.Exists(database.DataDirectory))
-                Directory.CreateDirectory(database.DataDirectory);
+            TreeNode node1 = CreateTreeNode(database);
+            SetTreeNodeProperies(node1, database, 0, state);
         }
 
         public void RefreshTreeView()
@@ -143,46 +102,38 @@ namespace DatabaseBenchmark.Frames
             treeView.SelectedNode = treeView.Nodes[0];
         }
 
-        public Database[] GetSelectedBenchmarks()
+        public Database[] GetSelectedDatabases()
         {
+            if (TuningDatabaseInstances != null)
+                return TuningDatabaseInstances.ToArray();
+
             return treeView.Nodes.Iterate().Where(x => x.Checked && x.Tag as Database != null).Select(y => y.Tag as Database).ToArray();
         }
 
         /// <summary>
         /// Returns all databases and their checked state.
         /// </summary>
-        public Dictionary<IDatabase, bool> GetAllDatabases()
+        public Dictionary<IDatabase, bool> GetAllDatabasesAndCheckedStates()
         {
             return treeView.Nodes.Iterate().Where(x => x.Tag != null).ToDictionary(x => x.Tag as IDatabase, v => v.Checked);
         }
 
-        private void AddAfter(IDatabase database, IDatabase newDatabase, string treeViewType, bool state = false)
+        public bool TreeViewEnabled
         {
-            if (database == null)
+            get { return treeView.Enabled; }
+            set
             {
-                TreeNode node1 = new TreeNode();
-
-                node1 = treeView.Nodes.BuildNode(treeViewType, newDatabase.Name);
-
-                node1.ImageIndex = 0;
-                node1.Tag = newDatabase;
-                node1.Checked = state;
-
-                return;
+                treeView.Enabled = value;
+                groupBoxOrder.Enabled = value;
             }
-
-            TreeNode node = treeView.Nodes.Iterate().Where(x => x.Tag == database).FirstOrDefault();
-            TreeNodeCollection nodes = node.Parent != null ? node.Parent.Nodes : treeView.Nodes;
-
-            TreeNode newNode = nodes.Insert(node.Index + 1, newDatabase.Name);
-            newNode.Tag = newDatabase;
-            newNode.Checked = state;
-            newNode.ImageIndex = 0;
-
-            treeView.SelectedNode = newNode;
-
         }
-        public bool IsSelectedBenchamrkNode
+
+        public List<Database> GetTuningDatabaseInstances()
+        {
+            return TuningDatabaseInstances;
+        }
+
+        public bool IsSelectedNodeDatabase
         {
             get
             {
@@ -200,23 +151,24 @@ namespace DatabaseBenchmark.Frames
 
             try
             {
-                //Database selectedDatabase = treeView.Nodes.Iterate().Where(x => x.Name.Equals(treeView.SelectedNode.Name)).Select(y => y.Tag as Database).ToArray()[0];
                 var selectedDatabase = treeView.SelectedNode.Tag as Database;
 
                 if (selectedDatabase != null)
                 {
                     Type databaseType = selectedDatabase.GetType();
-                    Database tempDatabase = (Database)Activator.CreateInstance(databaseType);
 
+                    Database tempDatabase = ReflectionUtils.CreateDatabaseInstance(databaseType);
                     tempDatabase.Name = treeView.SelectedNode.Text + " Clone";
-                    tempDatabase.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, tempDatabase.Name);
 
-                    if (!Directory.Exists(tempDatabase.DataDirectory))
-                        Directory.CreateDirectory(tempDatabase.DataDirectory);
+                    DirectoryUtils.CreateAndSetDatabaseDirectory(MainForm.DATABASES_DIRECTORY, tempDatabase);
 
-                    string treeViewType = radioBtn_Category.Checked ? selectedDatabase.Category : selectedDatabase.IndexingTechnology.ToString();
+                    TreeNode node = treeView.Nodes.Iterate().Where(x => x.Tag == selectedDatabase).FirstOrDefault();
+                    TreeNodeCollection nodes = node.Parent != null ? node.Parent.Nodes : treeView.Nodes;
 
-                    AddAfter(selectedDatabase, tempDatabase, treeViewType);
+                    TreeNode newNode = nodes.Insert(node.Index + 1, tempDatabase.Name);
+                    SetTreeNodeProperies(newNode, tempDatabase, 0, false);
+
+                    treeView.SelectedNode = newNode;
                 }
 
                 treeView.Update();
@@ -226,7 +178,8 @@ namespace DatabaseBenchmark.Frames
                 Logger.Error("TreeView clone ...", exc);
             }
         }
-        public void RenameNade()
+
+        public void RenameNode()
         {
             if (treeView.SelectedNode == null)
                 return;
@@ -260,6 +213,7 @@ namespace DatabaseBenchmark.Frames
 
                 if (SelectedDatabaseChanged != null)
                     SelectedDatabaseChanged.Invoke(instance);
+
             }
             catch (Exception exc)
             {
@@ -270,6 +224,57 @@ namespace DatabaseBenchmark.Frames
         public Database GetSelectedDatabase()
         {
             return treeView.SelectedNode.Tag as Database;
+        }
+
+        public void SetTreeViewOrder()
+        {
+            var newTree = treeView.Nodes.Iterate().Where(x => x.Tag != null).OrderBy(db => db.Name);
+
+            List<KeyValuePair<string, TreeNode>> groupedTree;
+
+            if (treeViewOrder == TreeViewOrder.Category)
+                groupedTree = newTree.Select(x => new KeyValuePair<string, TreeNode>((x.Tag as Database).Category, x)).ToList();
+            else
+                groupedTree = newTree.Select(x => new KeyValuePair<string, TreeNode>((x.Tag as Database).IndexingTechnology.ToString(), x)).ToList();
+
+            ClearTreeViewNodes();
+
+            foreach (var item in groupedTree.OrderBy(node => node.Key))
+            {
+                Database database = item.Value.Tag as Database;
+
+                TreeNode node1 = CreateTreeNode(database);
+                SetTreeNodeProperies(node1, database, 0, item.Value.Checked);
+            }
+
+            if (SelectedDatabaseChanged != null)
+                SelectedDatabaseChanged.Invoke(null);
+
+            SelectFirstNode();
+
+            treeView.ExpandAll();
+            treeView.Focus();
+        }
+
+        private TreeNode CreateTreeNode(IDatabase database)
+        {
+            TreeNode node = new TreeNode();
+            TreeViewOrderComboBox.Text = treeViewOrder.ToString();
+
+
+            if (treeViewOrder == TreeViewOrder.Category)
+                node = treeView.Nodes.BuildNode(database.Category, database.Name);
+            else
+                node = treeView.Nodes.BuildNode(database.IndexingTechnology, database.Name);
+
+            return node;
+        }
+
+        private void SetTreeNodeProperies(TreeNode node, IDatabase database, int imageIndex, bool state)
+        {
+            node.Tag = database;
+            node.ImageIndex = imageIndex;
+            node.Checked = state;
         }
 
         #region TreeView events
@@ -316,10 +321,11 @@ namespace DatabaseBenchmark.Frames
             {
                 bool state = e.Node.Tag != null;
 
-                contextMenuDatabase.Items[0].Visible = state;
-                contextMenuDatabase.Items[1].Visible = state;
-                contextMenuDatabase.Items[8].Visible = state;
-                contextMenuDatabase.Items[9].Visible = state;
+                contextMenuDatabase.Items["cloneToolStripMenuItem"].Visible = state;
+                contextMenuDatabase.Items["renameToolStripMenuItem"].Visible = state;
+                contextMenuDatabase.Items["separator3"].Visible = state;
+                contextMenuDatabase.Items["tuningToolStripMenuItem"].Visible = state;
+                contextMenuDatabase.Items["propertiesToolStripMenuItem"].Visible = state;
 
                 contextMenuDatabase.Show(MousePosition);
             }
@@ -341,7 +347,7 @@ namespace DatabaseBenchmark.Frames
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RenameNade();
+            RenameNode();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -358,10 +364,6 @@ namespace DatabaseBenchmark.Frames
             CreateTreeView();
             this.ResumeLayout();
         }
-        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -370,7 +372,7 @@ namespace DatabaseBenchmark.Frames
 
         private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            treeView.CollapseAll();
+            CollapseAll();
         }
 
         private void treeView_KeyDown(object sender, KeyEventArgs e)
@@ -379,10 +381,20 @@ namespace DatabaseBenchmark.Frames
                 DeleteNode();
             if (e.KeyData == Keys.Enter)
                 SelectedDatabaseChanged.Invoke(treeView.SelectedNode.Tag);
-
         }
 
         #endregion
+
+        private void TreeViewOrderComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            treeViewOrder = (TreeViewOrder)Enum.Parse(typeof(TreeViewOrder), TreeViewOrderComboBox.Text);
+            try
+            {
+                SetTreeViewOrder(); //TODO: fix 
+            }
+            catch
+            { }
+        }
 
         public event EventHandler PropertiesClick
         {
@@ -397,67 +409,32 @@ namespace DatabaseBenchmark.Frames
             }
         }
 
-        public bool IsCategoryOrder()
+        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            return radioBtn_Category.Checked ? true : false;
+
         }
 
-        private void radioBtn_IndexTech_CheckedChanged(object sender, EventArgs e)
+        private void tuningToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (radioBtn_IndexTech.Checked)
-                SetIndexingOrder();
-        }
-        private void radioBtn_Category_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioBtn_Category.Checked)
-                SetCategoryOrder();
-        }
-        public void SetCategoryOrder()
-        {
-            List<TreeNode> newTree = new List<TreeNode>();
-            newTree = treeView.Nodes.Iterate().Where(x => x.Tag != null).OrderBy(db => db.Name).ToList();
+            TuningForm tuning = new TuningForm();
+            tuning.Initialize(ReflectionUtils.GetPublicPropertiesAndValues(GetSelectedDatabase()), GetSelectedDatabase());
+            tuning.Name = GetSelectedDatabase().Name;
 
-            ClearTreeViewNodes();
+            tuning.ShowDialog();
 
-            foreach (var node in newTree)
+            if (tuning.DialogResult == DialogResult.OK)
             {
-                TreeNode node1 = new TreeNode();
-                node1 = treeView.Nodes.BuildNode((node.Tag as Database).Category, (node.Tag as Database).Name);
+                TuningDatabaseInstances = new List<Database>();
+                TuningDatabaseInstances = tuning.GetTuningDatabaseInstances();
 
-                node1.ImageIndex = 0;
-                node1.Tag = node.Tag;
-                node1.Checked = node.Checked;
+                tuning.Close();
             }
-            SetTreeView();        
         }
+    }
 
-        public void SetIndexingOrder()
-        {
-
-            var newtree = treeView.Nodes.Iterate().Where(x => x.Tag != null)
-                         .GroupBy(db => ((Database)db.Tag).IndexingTechnology)
-                         .ToList();
-
-            ClearTreeViewNodes();
-
-            foreach (var node in newtree)
-            {
-                var t = node.ToArray();
-                TreeNode newNode = new TreeNode(node.Key.ToString(), t);
-                treeView.Nodes.Add(newNode);
-            }
-            SetTreeView();   
-        }
-
-        private void SetTreeView()
-        {
-           if (SelectedDatabaseChanged != null)
-               SelectedDatabaseChanged.Invoke(null);
-
-            SelectFirstNode();
-
-            treeView.ExpandAll();
-            treeView.Focus();
-        }
+    public enum TreeViewOrder
+    {
+        Category,
+        IndexTechnology
     }
 }

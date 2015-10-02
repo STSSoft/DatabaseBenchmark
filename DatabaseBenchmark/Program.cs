@@ -1,32 +1,27 @@
-﻿using System;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Resources;
-using System.Security.Permissions;
+﻿using DatabaseBenchmark.Utils;
+using System;
 using System.Security.Principal;
 using System.Windows.Forms;
-using System.Linq;
 
 namespace DatabaseBenchmark
 {
     static class Program
     {
+        const string PROJECT_EXTENSION = ".dbproj";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            string extension = ".dbproj";
-
             try
             {
-                if (FileAssociations.Exists(extension) && IsAdministrator())
-                    FileAssociations.Delete(extension);
+                if (RegistryUtils.Exists(PROJECT_EXTENSION) && IsAdministrator())
+                    RegistryUtils.Delete(PROJECT_EXTENSION);
 
-                if (!FileAssociations.Exists(extension) && IsAdministrator())
-                    FileAssociations.Create(extension, "DatabaseBenchmark");
+                if (!RegistryUtils.Exists(PROJECT_EXTENSION) && IsAdministrator())
+                    RegistryUtils.Create(PROJECT_EXTENSION, "DatabaseBenchmark");
             }
             catch { }
 
