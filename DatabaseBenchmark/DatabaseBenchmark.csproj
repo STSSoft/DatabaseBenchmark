@@ -552,6 +552,10 @@
       <Project>{ee22f8e1-dd02-48be-827f-02c334586949}</Project>
       <Name>DatabaseBenchmark.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatabaseBenchmark.Core\STS.General\STS.General\STS.General.csproj">
+      <Project>{820fc9a2-48a0-4463-8182-d1ac8d539fb9}</Project>
+      <Name>STS.General</Name>
+    </ProjectReference>
     <ProjectReference Include="..\STS.General.GUI\STS.General.GUI\STS.General.GUI.csproj">
       <Project>{19c6fd6a-2e47-407f-9940-620edc0f2ecb}</Project>
       <Name>STS.General.GUI</Name>
