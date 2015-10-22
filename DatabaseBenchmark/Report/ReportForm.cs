@@ -1,5 +1,6 @@
 ﻿using DatabaseBenchmark.Core.Benchmarking;
 using DatabaseBenchmark.Properties;
+using DatabaseBenchmark.Reporting;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -68,15 +69,16 @@ namespace DatabaseBenchmark.Report
             txtBoxMemoryFrequency.Text = String.Format("{0} MHz", ram.Speed);
             txtBoxMemoryBanks.Text = memory.Count.ToString();
 
+            // TODO: Fix this.
             // STORAGE
-            string benchmarkDataDirectoryRoot = Path.GetPathRoot(BenchmarkSessions.First().Database.DataDirectory);
-            StorageDeviceInfo dataDrive = storage.Find(drive => drive.DriveLetters.Contains(benchmarkDataDirectoryRoot.Trim('\\')));
+            //string benchmarkDataDirectoryRoot = Path.GetPathRoot(BenchmarkSessions.First().Database.DataDirectory);
+            //StorageDeviceInfo dataDrive = storage.Find(drive => drive.DriveLetters.Contains(benchmarkDataDirectoryRoot.Trim('\\')));
 
-            comboBoxStorageModel.Items.AddRange(storage.Select(device => device.Model).ToArray());
-            int selectedIndex = comboBoxStorageModel.Items.IndexOf(dataDrive.Model);
-            comboBoxStorageModel.SelectedIndex = selectedIndex;
+            //comboBoxStorageModel.Items.AddRange(storage.Select(device => device.Model).ToArray());
+            //int selectedIndex = comboBoxStorageModel.Items.IndexOf(dataDrive.Model);
+            //comboBoxStorageModel.SelectedIndex = selectedIndex;
 
-            txtBoxHddSize.Text = String.Format("{0} GB", dataDrive.Size);
+            //txtBoxHddSize.Text = String.Format("{0} GB", dataDrive.Size);
         }
 
         private void btnValidate_Click(object sender, EventArgs e)
