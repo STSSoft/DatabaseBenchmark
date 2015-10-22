@@ -18,6 +18,8 @@ using DatabaseBenchmark.Properties;
 using DatabaseBenchmark.Utils;
 using DatabaseBenchmark.Core.Benchmarking;
 using OxyPlot;
+using DatabaseBenchmark.Reporting;
+using DatabaseBenchmark.Core.Benchmarking.Tests;
 
 /*
  * Copyright (c) 2010-2015 STS Soft SC
@@ -49,6 +51,8 @@ namespace DatabaseBenchmark
 
         private bool TestFailed;
         private BenchmarkSession Current;
+        private BenchmarkSuite CurrentTest;
+        private FullWriteReadTest Test;
         private List<BenchmarkSession> History;
 
         private int TableCount;
@@ -110,9 +114,12 @@ namespace DatabaseBenchmark
 
         private void DoBenchmark()
         {
-            BenchmarkSuite testSuite = new BenchmarkSuite();
-            testSuite.OnTestMethodCompleted += Report;
-            testSuite.OnException += OnException;
+            CurrentTest = new BenchmarkSuite();
+            CurrentTest.ExecuteTests(TableCount, RecordCount, Randomness, Cancellation, Test);
+
+            // TODO: Fix this.
+            //testSuite.OnTestMethodCompleted += Report;
+            //testSuite.OnException += OnException;
 
             try
             {
@@ -121,30 +128,30 @@ namespace DatabaseBenchmark
                     if (Cancellation.IsCancellationRequested)
                         break;
 
-                    Current = benchmark;
-                    testSuite.ExecuteInit(benchmark);
+                    //Current = benchmark;
+                    //testSuite.ExecuteInit(benchmark);
 
-                    // Write.
-                    MainLayout.SetCurrentMethod(TestMethod.Write);
-                    CurrentStatus = TestMethod.Write.ToString();
+                    //// Write.
+                    //MainLayout.SetCurrentMethod(TestMethod.Write);
+                    //CurrentStatus = TestMethod.Write.ToString();
 
-                    testSuite.ExecuteWrite(benchmark);
+                    //testSuite.ExecuteWrite(benchmark);
 
-                    // Read.
-                    MainLayout.SetCurrentMethod(TestMethod.Read);
-                    CurrentStatus = TestMethod.Read.ToString();
+                    //// Read.
+                    //MainLayout.SetCurrentMethod(TestMethod.Read);
+                    //CurrentStatus = TestMethod.Read.ToString();
 
-                    testSuite.ExecuteRead(benchmark);
+                    //testSuite.ExecuteRead(benchmark);
 
-                    // Secondary Read.
-                    MainLayout.SetCurrentMethod(TestMethod.SecondaryRead);
-                    CurrentStatus = TestMethod.SecondaryRead.ToString();
+                    //// Secondary Read.
+                    //MainLayout.SetCurrentMethod(TestMethod.SecondaryRead);
+                    //CurrentStatus = TestMethod.SecondaryRead.ToString();
 
-                    testSuite.ExecuteSecondaryRead(benchmark);
+                    //testSuite.ExecuteSecondaryRead(benchmark);
 
-                    // Finish.
-                    CurrentStatus = TestMethod.None.ToString();
-                    testSuite.ExecuteFinish(benchmark);
+                    //// Finish.
+                    //CurrentStatus = TestMethod.None.ToString();
+                    //testSuite.ExecuteFinish(benchmark);
                 }
             }
             finally
@@ -177,27 +184,28 @@ namespace DatabaseBenchmark
         {
             try
             {
-                Action<string, object, Color> updateChart = null;
+                // TODO: Fix this.
+                //Action<string, object, Color> updateChart = null;
 
-                StepFrame ActiveStepFrame = MainLayout.GetCurrentFrame();
-                string databaseName = benchmark.Database.Name;
-                Color databaseColor = benchmark.Database.Color;
+                //StepFrame ActiveStepFrame = MainLayout.GetCurrentFrame();
+                //string databaseName = benchmark.Database.Name;
+                //Color databaseColor = benchmark.Database.Color;
 
-                // Speed chart.
-                updateChart = ActiveStepFrame.AddAverageSpeedToBar;
-                Report(databaseName, databaseColor, updateChart, benchmark.GetAverageSpeed(method));
+                //// Speed chart.
+                //updateChart = ActiveStepFrame.AddAverageSpeedToBar;
+                //Report(databaseName, databaseColor, updateChart, benchmark.GetAverageSpeed(method));
 
-                // Size chart.
-                updateChart = ActiveStepFrame.AddSizeToBar;
-                Report(databaseName, databaseColor, updateChart, benchmark.DatabaseSize / (1024.0 * 1024.0));
+                //// Size chart.
+                //updateChart = ActiveStepFrame.AddSizeToBar;
+                //Report(databaseName, databaseColor, updateChart, benchmark.DatabaseSize / (1024.0 * 1024.0));
 
-                // Time chart.
-                updateChart = ActiveStepFrame.AddTimeToBar;
-                Report(databaseName, databaseColor, updateChart, new DateTime(benchmark.GetElapsedTime(method).Ticks));
+                //// Time chart.
+                //updateChart = ActiveStepFrame.AddTimeToBar;
+                //Report(databaseName, databaseColor, updateChart, new DateTime(benchmark.GetElapsedTime(method).Ticks));
 
-                // Memory chart.
-                updateChart = ActiveStepFrame.AddMemoryUsageToBar;
-                Report(databaseName, databaseColor, updateChart, benchmark.GetPeakWorkingSet(method) / (1024.0 * 1024.0));
+                //// Memory chart.
+                //updateChart = ActiveStepFrame.AddMemoryUsageToBar;
+                //Report(databaseName, databaseColor, updateChart, benchmark.GetPeakWorkingSet(method) / (1024.0 * 1024.0));
             }
             catch (Exception exc)
             {
@@ -284,8 +292,9 @@ namespace DatabaseBenchmark
                             break;
 
                         case ReportFormat.PDF:
-                            BenchmarkSession test = History[0];
-                            PdfUtils.Export(saveFileDialogPdf.FileName, MainLayout.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
+                            // TODO: Fix this.
+                            //BenchmarkSession test = History[0];
+                            //PdfUtils.Export(saveFileDialogPdf.FileName, MainLayout.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
                             break;
                     }
 
@@ -326,9 +335,11 @@ namespace DatabaseBenchmark
 
             foreach (var database in MainLayout.TreeView.GetSelectedDatabases())
             {
-                var session = new BenchmarkSession(database, TableCount, RecordCount, Randomness, Cancellation);
-                History.Add(session);
+                // TODO: Fix this.
+                //var session = new BenchmarkSession(database, TableCount, RecordCount, Randomness, Cancellation);
+                //History.Add(session);
 
+                Test = new FullWriteReadTest(database, TableCount, RecordCount, Randomness, Cancellation);
                 DirectoryUtils.ClearDatabaseDataDirectory(database);
             }
 
@@ -711,48 +722,49 @@ namespace DatabaseBenchmark
                     return;
                 }
 
-                var method = session.CurrentMethod;
-                if (method == TestMethod.None)
-                    return;
+                // TODO: Fix this.
+                //var method = session.CurrentMethod;
+                //if (method == TestMethod.None)
+                //    return;
 
-                if (autoNavigatetoolStripMenuItem.Checked)
-                    MainLayout.StepFrames[method].Activate();
+                //if (autoNavigatetoolStripMenuItem.Checked)
+                //    MainLayout.StepFrames[method].Activate();
 
-                TimeSpan elapsed = session.GetElapsedTime(method);
+                //TimeSpan elapsed = session.GetElapsedTime(method);
 
-                long currentRecords = session.GetRecords(method);
-                long totalRecords = TableCount * RecordCount;
-                double progress = (100.0 * currentRecords) / totalRecords;
+                //long currentRecords = session.GetRecords(method);
+                //long totalRecords = TableCount * RecordCount;
+                //double progress = (100.0 * currentRecords) / totalRecords;
 
-                var database = session.Database;
+                //var database = session.Database;
 
-                // Draw charts.
-                if (activeFrame.Text != null) // Frame is in write, read or other mode.
-                {
-                    int averagePossition = activeFrame.lineChartAverageSpeed.GetPointsCount(database.Name);
-                    int momentPossition = activeFrame.lineChartMomentSpeed.GetPointsCount(database.Name);
+                //// Draw charts.
+                //if (activeFrame.Text != null) // Frame is in write, read or other mode.
+                //{
+                //    int averagePossition = activeFrame.lineChartAverageSpeed.GetPointsCount(database.Name);
+                //    int momentPossition = activeFrame.lineChartMomentSpeed.GetPointsCount(database.Name);
 
-                    var averageSpeedData = session.GetAverageSpeeds(method, averagePossition);
-                    var momentSpeedData = session.GetMomentSpeeds(method, momentPossition);
-                    var memoryData = session.GetMomentWorkingSets(method, averagePossition);
+                //    var averageSpeedData = session.GetAverageSpeeds(method, averagePossition);
+                //    var momentSpeedData = session.GetMomentSpeeds(method, momentPossition);
+                //    var memoryData = session.GetMomentWorkingSets(method, averagePossition);
 
-                    activeFrame.AddAverageSpeed(database.Name, averageSpeedData);
-                    activeFrame.AddMomentSpeed(database.Name, momentSpeedData);
-                    activeFrame.AddPeakMemoryUsage(database.Name, memoryData);
-                }
+                //    activeFrame.AddAverageSpeed(database.Name, averageSpeedData);
+                //    activeFrame.AddMomentSpeed(database.Name, momentSpeedData);
+                //    activeFrame.AddPeakMemoryUsage(database.Name, memoryData);
+                //}
 
-                if (Math.Abs(progress - 0.0) <= double.Epsilon)
-                    estimateTimeStatus.Text = "Estimate: infinity";
-                else
-                {
-                    TimeSpan timeSpan = new TimeSpan((long)((elapsed.Ticks * (100.0 - progress)) / progress));
-                    estimateTimeStatus.Text = String.Format("Estimate: {0:dd\\.hh\\:mm\\:ss}", timeSpan);
-                }
+                //if (Math.Abs(progress - 0.0) <= double.Epsilon)
+                //    estimateTimeStatus.Text = "Estimate: infinity";
+                //else
+                //{
+                //    TimeSpan timeSpan = new TimeSpan((long)((elapsed.Ticks * (100.0 - progress)) / progress));
+                //    estimateTimeStatus.Text = String.Format("Estimate: {0:dd\\.hh\\:mm\\:ss}", timeSpan);
+                //}
 
-                elapsedTimeStatus.Text = String.Format("Elapsed: {0:dd\\.hh\\:mm\\:ss} ", elapsed);
-                progressBar.Value = (int)progress;
-                percentStatus.Text = string.Format("{0:f2}%", progress);
-                progressStatus.Text = database.Name + " " + CurrentStatus;
+                //elapsedTimeStatus.Text = String.Format("Elapsed: {0:dd\\.hh\\:mm\\:ss} ", elapsed);
+                //progressBar.Value = (int)progress;
+                //percentStatus.Text = string.Format("{0:f2}%", progress);
+                //progressStatus.Text = database.Name + " " + CurrentStatus;
             }
             catch (Exception exc)
             {
