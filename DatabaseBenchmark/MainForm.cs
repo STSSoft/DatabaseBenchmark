@@ -51,7 +51,7 @@ namespace DatabaseBenchmark
 
         private bool TestFailed;
         private BenchmarkSession Current;
-        private BenchmarkSuite CurrentTest;
+        private Benchmark CurrentTest;
         private FullWriteReadTest Test;
         private List<BenchmarkSession> History;
 
@@ -114,8 +114,8 @@ namespace DatabaseBenchmark
 
         private void DoBenchmark()
         {
-            CurrentTest = new BenchmarkSuite();
-            CurrentTest.ExecuteTests(TableCount, RecordCount, Randomness, Cancellation, Test);
+            //CurrentTest = new BenchmarkSuite();
+            //CurrentTest.ExecuteTests(TableCount, RecordCount, Randomness, Cancellation, Test);
 
             // TODO: Fix this.
             //testSuite.OnTestMethodCompleted += Report;
@@ -339,7 +339,7 @@ namespace DatabaseBenchmark
                 //var session = new BenchmarkSession(database, TableCount, RecordCount, Randomness, Cancellation);
                 //History.Add(session);
 
-                Test = new FullWriteReadTest(database, TableCount, RecordCount, Randomness, Cancellation);
+                //Test = new FullWriteReadTest(database, TableCount, RecordCount, Randomness, Cancellation);
                 DirectoryUtils.ClearDatabaseDataDirectory(database);
             }
 
@@ -351,9 +351,6 @@ namespace DatabaseBenchmark
 
         private void StartTest(Database[] databases, List<KeyValuePair<string, Color>> chartValues )
         {
-           
-
-          
         }
 
         private void Tuning_TuningButtonClicked(List<Database> obj)
