@@ -153,6 +153,12 @@
     <Compile Include="Charts\Linux\LineChart.Mono.Designer.cs">
       <DependentUpon>LineChart.Mono.cs</DependentUpon>
     </Compile>
+    <Compile Include="Commands\Test\Command.cs" />
+    <Compile Include="Commands\Test\DatabasesCommand.cs" />
+    <Compile Include="Commands\View\PrepareViewCommand.cs" />
+    <Compile Include="Commands\Test\TestCommand.cs" />
+    <Compile Include="Commands\Test\ExecuteTestsCommand.cs" />
+    <Compile Include="Commands\View\ViewCommand.cs" />
     <Compile Include="Frames\PropertiesFrame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +189,9 @@
     <Compile Include="Frames\TuningResultsFrame.Designer.cs">
       <DependentUpon>TuningResultsFrame.cs</DependentUpon>
     </Compile>
+    <Compile Include="States\ApplicationState.cs" />
+    <Compile Include="States\RunningState.cs" />
+    <Compile Include="States\StoppedState.cs" />
     <Compile Include="Utils\PropertyGridUtils.cs" />
     <Compile Include="Utils\RegistryUtils.cs" />
     <Compile Include="Frames\LogFrame.cs">

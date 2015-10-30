@@ -20,6 +20,8 @@ using DatabaseBenchmark.Core.Benchmarking;
 using OxyPlot;
 using DatabaseBenchmark.Reporting;
 using DatabaseBenchmark.Core.Benchmarking.Tests;
+using DatabaseBenchmark.Commands;
+using DatabaseBenchmark.States;
 
 /*
  * Copyright (c) 2010-2015 STS Soft SC
@@ -45,28 +47,37 @@ namespace DatabaseBenchmark
         public static readonly string DATABASES_DIRECTORY = Path.Combine(Application.StartupPath + "\\Databases");
         public static readonly string CONFIGURATION_FOLDER = Path.Combine(Application.StartupPath + "\\Config");
 
-        private volatile Task MainTask = null;
+        public volatile Task MainTask = null;
 
-        private CancellationTokenSource Cancellation;
+        public CancellationTokenSource Cancellation;
 
-        private bool TestFailed;
-        private BenchmarkSession Current;
-        private Benchmark CurrentTest;
-        private FullWriteReadTest Test;
-        private List<BenchmarkSession> History;
+        public State MainState;
+        public RunningState RunState;
+        public StoppedState StopState;
 
-        private int TableCount;
-        private long RecordCount;
+        public PrepareInterfaceCommand PrepareGuiCommand;
+        public DatabasesCommand PrepareTestsAndDatabasesCommand;
+        public ExecuteTestsCommand TestsCommand;
 
-        private float Randomness = 0.0f;
-        private string CurrentStatus;
+        public bool TestFailed;
 
-        private ILog Logger;
+        public BenchmarkSession Current;
+        public Benchmark CurrentTest;
+        public FullWriteReadTest Test;
+        public List<BenchmarkSession> History;
 
-        private ProjectManager Manager;
-        private MainLayout MainLayout;
+        public int TableCount;
+        public long RecordCount;
 
-        private List<ToolStripButton> ViewButtons;
+        public float Randomness = 0.0f;
+        public string CurrentStatus;
+
+        public ILog Logger;
+
+        public ProjectManager Manager;
+        public MainLayout MainLayout;
+
+        public List<ToolStripButton> ViewButtons;
 
         public MainForm()
         {
@@ -74,6 +85,9 @@ namespace DatabaseBenchmark
 
             History = new List<BenchmarkSession>();
             ViewButtons = new List<ToolStripButton>();
+
+            PrepareGuiCommand = new PrepareInterfaceCommand(this);
+            PrepareTestsAndDatabasesCommand = new DatabasesCommand();
 
             ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x => x.CheckOnClick).ToList();
 
@@ -320,51 +334,25 @@ namespace DatabaseBenchmark
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            // Parse test parameters.
-            TableCount = Int32.Parse(cbFlowsCount.Text.Replace(" ", ""));
-            RecordCount = Int64.Parse(cbRecordCount.Text.Replace(" ", ""));
-            Randomness = trackBar1.Value / 20.0f;
+            PrepareGuiCommand.Execute();
+            PrepareTestsAndDatabasesCommand.Execute();
 
-            MainLayout.InitializeCharts(MainLayout.GetSelectedDatabasesChartValues());
-
-            if (MainLayout.TreeView.GetSelectedDatabases().Length == 0 && MainLayout.TreeView.GetSelectedDatabase() == null)
-                return;
-
-            History.Clear();
-            Cancellation = new CancellationTokenSource();
-
-            foreach (var database in MainLayout.TreeView.GetSelectedDatabases())
-            {
-                // TODO: Fix this.
-                //var session = new BenchmarkSession(database, TableCount, RecordCount, Randomness, Cancellation);
-                //History.Add(session);
-
-                //Test = new FullWriteReadTest(database, TableCount, RecordCount, Randomness, Cancellation);
-                DirectoryUtils.ClearDatabaseDataDirectory(database);
-            }
-
-            MainLayout.ClearLogFrame();
-
-            // Start the benchmark.
-            MainTask = Task.Factory.StartNew(DoBenchmark, Cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            TestsCommand = new ExecuteTestsCommand(this, PrepareTestsAndDatabasesCommand.Databases);
+            TestsCommand.Start();  
         }
 
-        private void StartTest(Database[] databases, List<KeyValuePair<string, Color>> chartValues )
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            TestsCommand.Stop();
+        }
+
+        private void StartTest(Database[] databases, List<KeyValuePair<string, Color>> chartValues)
         {
         }
 
         private void Tuning_TuningButtonClicked(List<Database> obj)
         {
             throw new NotImplementedException();
-        }
-
-        private void stopButton_Click(object sender, EventArgs e)
-        {
-            if (MainTask == null)
-                return;
-
-            Cancellation.Cancel();
-            MainLayout.ClearCharts();
         }
 
         private void View_Click(object sender, EventArgs e)
@@ -674,49 +662,14 @@ namespace DatabaseBenchmark
         {
             try
             {
-                if (MainTask != null)
-                    btnStop.Enabled = MainTask.Status == TaskStatus.Running ? true : false;
-
-                btnTreeView.Checked = MainLayout.TreeView.Visible;
-
-                btnStart.Enabled = !btnStop.Enabled;
-
-                MainLayout.TreeView.TreeViewEnabled = btnStart.Enabled;
-                MainLayout.EnablePropertiesFrame(btnStart.Enabled);
-
-                cbFlowsCount.Enabled = btnStart.Enabled;
-                cbRecordCount.Enabled = btnStart.Enabled;
-                trackBar1.Enabled = btnStart.Enabled;
-
-                cloneToolStripMenuItem.Enabled = btnStart.Enabled;
-                renameToolStripMenuItem.Enabled = btnStart.Enabled;
-                deleteToolStripMenuItem.Enabled = btnStart.Enabled;
-                restoreDefaultAllToolStripMenuItem.Enabled = btnStart.Enabled;
-                expandAllToolStripMenuItem.Enabled = btnStart.Enabled;
-                collapseAllToolStripMenuItem.Enabled = btnStart.Enabled;
-
-                bool isStoped = !(History.Count == 0 || MainTask.Status == TaskStatus.Running);
-
-                btnExports.Enabled = isStoped;
-
-                exportResultToPDFToolStripMenuItem.Enabled = isStoped;
-                exportToCSVToolStripMenuItem.Enabled = isStoped;
-                exportToJSONToolStripMenuItem.Enabled = isStoped;
-                onlineReportResultsToolStripMenuItem.Enabled = isStoped;
-
-                legendPossitionToolStripMenuItem.Enabled = showLegendToolStripMenuItem.Checked;
-
-                var activeFrame = MainLayout.GetCurrentFrame();
-                var session = Current;
-
-                if (session == null)
+                if (MainState == State.TestRunning)
                 {
-                    progressBar.Value = 0;
-                    progressStatus.Text = "(None)";
-                    percentStatus.Text = "%";
-                    elapsedTimeStatus.Text = "Elapsed: ";
-                    estimateTimeStatus.Text = "Estimate: ";
-                    return;
+                    RunState.Handle();
+                }
+
+                if (MainState == State.TestStopped)
+                {
+                    StopState.Handle();
                 }
 
                 // TODO: Fix this.
