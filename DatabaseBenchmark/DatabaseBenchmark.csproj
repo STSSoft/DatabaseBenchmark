@@ -37,7 +37,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -177,6 +177,12 @@
     <Compile Include="Charts\Windows\LineChart.Designer.cs">
       <DependentUpon>LineChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frames\TestsFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frames\TestsFrame.Designer.cs">
+      <DependentUpon>TestsFrame.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frames\TuningForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -263,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frames\StepFrame.resx">
       <DependentUpon>StepFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frames\TestsFrame.resx">
+      <DependentUpon>TestsFrame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frames\TreeViewFrame.resx">
       <DependentUpon>TreeViewFrame.cs</DependentUpon>

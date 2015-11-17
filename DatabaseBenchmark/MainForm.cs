@@ -15,11 +15,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Diagnostics;
 using DatabaseBenchmark.Properties;
-using DatabaseBenchmark.Utils;
-using DatabaseBenchmark.Core.Benchmarking;
-using OxyPlot;
 using DatabaseBenchmark.Reporting;
-using DatabaseBenchmark.Core.Benchmarking.Tests;
 using DatabaseBenchmark.Commands;
 using DatabaseBenchmark.States;
 
@@ -56,7 +52,7 @@ namespace DatabaseBenchmark
         public StoppedState StopState;
 
         public PrepareInterfaceCommand PrepareGuiCommand;
-        public DatabasesCommand PrepareTestsAndDatabasesCommand;
+        public PrepareBenchmark BenchmarkCommand;
         public ExecuteTestsCommand TestsCommand;
 
         public bool TestFailed;
@@ -77,6 +73,8 @@ namespace DatabaseBenchmark
         public ProjectManager Manager;
         public MainLayout MainLayout;
 
+        public TestsFrame TestsWindows;
+
         public List<ToolStripButton> ViewButtons;
 
         public MainForm()
@@ -87,7 +85,7 @@ namespace DatabaseBenchmark
             ViewButtons = new List<ToolStripButton>();
 
             PrepareGuiCommand = new PrepareInterfaceCommand(this);
-            PrepareTestsAndDatabasesCommand = new DatabasesCommand();
+            BenchmarkCommand = new PrepareBenchmark(this);
 
             ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x => x.CheckOnClick).ToList();
 
@@ -110,7 +108,7 @@ namespace DatabaseBenchmark
             MainLayout.TreeView.CreateTreeView();
             MainLayout.LoadDocking();
 
-            MainLayout.SelectFrame(TestMethod.Write);
+            //MainLayout.SelectFrame(TestMethod.Write);
 
             Manager = new ProjectManager(MainLayout);
 
@@ -120,6 +118,12 @@ namespace DatabaseBenchmark
             saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
 
             WireDragDrop(Controls);
+
+            TestsWindows = new TestsFrame();
+            TestsWindows.Initialize();
+
+            TestsWindows.Show(dockPanel1);
+            TestsWindows.DockState = DockState.DockLeft;
 
             this.ResumeLayout();
         }
@@ -335,9 +339,9 @@ namespace DatabaseBenchmark
         private void startButton_Click(object sender, EventArgs e)
         {
             PrepareGuiCommand.Execute();
-            PrepareTestsAndDatabasesCommand.Execute();
+            BenchmarkCommand.Execute();
 
-            TestsCommand = new ExecuteTestsCommand(this, PrepareTestsAndDatabasesCommand.Databases);
+            TestsCommand = new ExecuteTestsCommand(this, BenchmarkCommand.Databases, BenchmarkCommand.Tests);
             TestsCommand.Start();  
         }
 

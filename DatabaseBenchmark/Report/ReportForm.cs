@@ -1,4 +1,4 @@
-﻿using DatabaseBenchmark.Core.Benchmarking;
+﻿using DatabaseBenchmark.Core;
 using DatabaseBenchmark.Properties;
 using DatabaseBenchmark.Reporting;
 using log4net;
@@ -19,9 +19,9 @@ namespace DatabaseBenchmark.Report
         private ComputerConfiguration Configuration;
         private ServerConnection ServerConnector;
 
-        public List<BenchmarkSession> BenchmarkSessions { get; private set; }
+        public List<Benchmark> BenchmarkSessions { get; private set; }
 
-        public ReportForm(List<BenchmarkSession> benchmarkSessions)
+        public ReportForm(List<Benchmark> benchmarkSessions)
             : this()
         {
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
@@ -93,32 +93,32 @@ namespace DatabaseBenchmark.Report
                 Configuration.StorageDevices.RemoveAll(device => device.Model != comboBoxStorageModel.Text);
 
                 // TODO: fix this method to return string.
-                string jsonData = JsonUtils.ConvertToJson(user, Configuration, BenchmarkSessions).ToString();
-                ServerConnector = new ServerConnection();
+                //string jsonData = JsonUtils.ConvertToJson(user, Configuration, BenchmarkSessions).ToString();
+                //ServerConnector = new ServerConnection();
 
-                Logger.Info("Sending data to server...");
+                //Logger.Info("Sending data to server...");
 
-                HttpWebResponse response = ServerConnector.SendDataAsPost(jsonData);
-                StreamReader reader = new StreamReader(response.GetResponseStream());
+                //HttpWebResponse response = ServerConnector.SendDataAsPost(jsonData);
+                //StreamReader reader = new StreamReader(response.GetResponseStream());
 
-                string benchmarkLink = reader.ReadLine();
+                //string benchmarkLink = reader.ReadLine();
 
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    Logger.Info("Data sent succesfully to server...");
-                    MessageBox.Show("Data sent successfully to server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //if (response.StatusCode == HttpStatusCode.OK)
+                //{
+                //    Logger.Info("Data sent succesfully to server...");
+                //    MessageBox.Show("Data sent successfully to server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    Process.Start(benchmarkLink);
+                //    Process.Start(benchmarkLink);
 
-                    this.Close();
-                }
-                else
-                {
-                    Logger.Info(String.Format("Send error..."));
-                    Logger.Info(String.Format("Server return code: {0}", response.StatusCode));
+                //    this.Close();
+                //}
+                //else
+                //{
+                //    Logger.Info(String.Format("Send error..."));
+                //    Logger.Info(String.Format("Server return code: {0}", response.StatusCode));
 
-                    MessageBox.Show(String.Format("There was an error. The server returned code: {0}", response.StatusCode.ToString()), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }    
+                //    MessageBox.Show(String.Format("There was an error. The server returned code: {0}", response.StatusCode.ToString()), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //}    
             }
             catch (Exception exc)
             {

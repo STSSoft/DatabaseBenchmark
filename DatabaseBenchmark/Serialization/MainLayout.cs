@@ -20,13 +20,12 @@ namespace DatabaseBenchmark.Serialization
         private int Count;
         private ILog Logger;
 
-        private volatile TestMethod CurrentMethod;
         private string DockConfigPath;
 
         public DockPanel Panel { get; private set; }
         public TreeViewFrame TreeView { get; private set; }
         public LogFrame LogFrame { get; private set; }
-        public Dictionary<TestMethod, StepFrame> StepFrames { get; private set; }
+        //public Dictionary<TestMethod, StepFrame> StepFrames { get; private set; }
         public PropertiesFrame PropertiesFrame { get; private set; }
 
         public TrackBar TrackBar { get; private set; }
