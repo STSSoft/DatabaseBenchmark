@@ -15,12 +15,12 @@ namespace DatabaseBenchmark.Commands
 
         public override void Execute()
         {
-            Form.MainLayout.InitializeCharts(Form.MainLayout.GetSelectedDatabasesChartValues());
+            View.MainLayout.InitializeCharts(View.MainLayout.GetSelectedDatabasesChartValues());
 
-            if (Form.MainLayout.TreeView.GetSelectedDatabases().Length == 0 && Form.MainLayout.TreeView.GetSelectedDatabase() == null)
+            if (View.MainLayout.TreeView.GetSelectedDatabases().Length == 0 && View.MainLayout.TreeView.GetSelectedDatabase() == null)
                 return;
 
-            Form.MainLayout.ClearLogFrame();
+            View.MainLayout.ClearLogFrame();
         }
     }
 }

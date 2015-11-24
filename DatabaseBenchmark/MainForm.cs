@@ -43,9 +43,12 @@ namespace DatabaseBenchmark
         public static readonly string DATABASES_DIRECTORY = Path.Combine(Application.StartupPath + "\\Databases");
         public static readonly string CONFIGURATION_FOLDER = Path.Combine(Application.StartupPath + "\\Config");
 
+        public string DockingConfigurationDirectory;
+
         public volatile Task MainTask = null;
 
         public CancellationTokenSource Cancellation;
+        public static int Count = 0;
 
         public State MainState;
         public RunningState RunState;
@@ -57,10 +60,8 @@ namespace DatabaseBenchmark
 
         public bool TestFailed;
 
-        public BenchmarkSession Current;
         public Benchmark CurrentTest;
-        public FullWriteReadTest Test;
-        public List<BenchmarkSession> History;
+        public List<Benchmark> History;
 
         public int TableCount;
         public long RecordCount;
@@ -73,7 +74,11 @@ namespace DatabaseBenchmark
         public ProjectManager Manager;
         public MainLayout MainLayout;
 
-        public TestsFrame TestsWindows;
+        public TreeViewFrame TreeFrame;
+        public LogFrame LogFrame;
+        public PropertiesFrame PropertiesFrame;
+
+        public TestsFrame TestSelectionFrame;
 
         public List<ToolStripButton> ViewButtons;
 
@@ -81,7 +86,7 @@ namespace DatabaseBenchmark
         {
             InitializeComponent();
 
-            History = new List<BenchmarkSession>();
+            History = new List<Benchmark>();
             ViewButtons = new List<ToolStripButton>();
 
             PrepareGuiCommand = new PrepareInterfaceCommand(this);
@@ -119,86 +124,23 @@ namespace DatabaseBenchmark
 
             WireDragDrop(Controls);
 
-            TestsWindows = new TestsFrame();
-            TestsWindows.Initialize();
+            TreeFrame = new TreeViewFrame();
 
-            TestsWindows.Show(dockPanel1);
-            TestsWindows.DockState = DockState.DockLeft;
+            TreeFrame.Show(dockPanel1);
+            TreeFrame.DockState = DockState.DockLeft;
+
+            TestSelectionFrame = new TestsFrame();
+            TestSelectionFrame.Initialize();
+
+            TestSelectionFrame.Show(dockPanel1);
+            TestSelectionFrame.DockState = DockState.DockLeft;
 
             this.ResumeLayout();
         }
 
-        #region Execute Benchmark
-
-        private void DoBenchmark()
-        {
-            //CurrentTest = new BenchmarkSuite();
-            //CurrentTest.ExecuteTests(TableCount, RecordCount, Randomness, Cancellation, Test);
-
-            // TODO: Fix this.
-            //testSuite.OnTestMethodCompleted += Report;
-            //testSuite.OnException += OnException;
-
-            try
-            {
-                foreach (var benchmark in History)
-                {
-                    if (Cancellation.IsCancellationRequested)
-                        break;
-
-                    //Current = benchmark;
-                    //testSuite.ExecuteInit(benchmark);
-
-                    //// Write.
-                    //MainLayout.SetCurrentMethod(TestMethod.Write);
-                    //CurrentStatus = TestMethod.Write.ToString();
-
-                    //testSuite.ExecuteWrite(benchmark);
-
-                    //// Read.
-                    //MainLayout.SetCurrentMethod(TestMethod.Read);
-                    //CurrentStatus = TestMethod.Read.ToString();
-
-                    //testSuite.ExecuteRead(benchmark);
-
-                    //// Secondary Read.
-                    //MainLayout.SetCurrentMethod(TestMethod.SecondaryRead);
-                    //CurrentStatus = TestMethod.SecondaryRead.ToString();
-
-                    //testSuite.ExecuteSecondaryRead(benchmark);
-
-                    //// Finish.
-                    //CurrentStatus = TestMethod.None.ToString();
-                    //testSuite.ExecuteFinish(benchmark);
-                }
-            }
-            finally
-            {
-                Current = null;
-
-                if (Cancellation.IsCancellationRequested)
-                    History.Clear();
-                else
-                {
-                    if (!TestFailed)
-                    {
-                        if (!Settings.Default.HideReportForm)
-                            OnlineReport();
-                    }
-                }
-            }
-        }
-
-        private void OnException(Exception exception, BenchmarkSession test)
-        {
-            TestFailed = true;
-        }
-
-        #endregion
-
         #region Report methods
 
-        private void Report(BenchmarkSession benchmark, TestMethod method)
+        private void Report()
         {
             try
             {
@@ -255,39 +197,39 @@ namespace DatabaseBenchmark
         // CSV.
         private void summaryReportToolStripMenuItemCsv_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.CSV, ReportType.Summary, saveFileDialogCsv);
+            //Export(ReportFormat.CSV, ReportType.Summary, saveFileDialogCsv);
         }
 
         private void detailedReportToolStripMenuItemCsv_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.CSV, ReportType.Detailed, saveFileDialogCsv);
+            //Export(ReportFormat.CSV, ReportType.Detailed, saveFileDialogCsv);
         }
 
         // JSON.
         private void summaryReportToolStripMenuItemJson_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.JSON, ReportType.Summary, saveFileDialogJson);
+            //Export(ReportFormat.JSON, ReportType.Summary, saveFileDialogJson);
         }
 
         private void detailedReportToolStripMenuItemJson_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.JSON, ReportType.Detailed, saveFileDialogJson);
+            //Export(ReportFormat.JSON, ReportType.Detailed, saveFileDialogJson);
         }
 
         // PDF.
         private void summaryReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.PDF, ReportType.Summary, saveFileDialogPdf);
+            //Export(ReportFormat.PDF, ReportType.Summary, saveFileDialogPdf);
         }
 
         private void detailedReportToolStripMenuItemPdf_Click(object sender, EventArgs e)
         {
-            Export(ReportFormat.PDF, ReportType.Detailed, saveFileDialogPdf);
+            //Export(ReportFormat.PDF, ReportType.Detailed, saveFileDialogPdf);
         }
 
-        private void Export(ReportFormat reportFormat, ReportType reportType, SaveFileDialog dialog)
+        private void Export(SaveFileDialog dialog)
         {
-            string postfix = reportType == ReportType.Detailed ? "detailed" : "summary";
+            string postfix = null; //reportType == ReportType.Detailed ? "detailed" : "summary";
             dialog.FileName = String.Format("DatabaseBenchmark-{0:yyyy-MM-dd HH.mm}-{1}", DateTime.Now, postfix);
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -295,26 +237,26 @@ namespace DatabaseBenchmark
                 try
                 {
                     // Start loading and disable MainForm.
-                    LoadingFrame.Start(string.Format("Exporting to {0}...", reportFormat), Bounds);
+                    //LoadingFrame.Start(string.Format("Exporting to {0}...", reportFormat), Bounds);
                     Enabled = false;
 
-                    switch (reportFormat)
-                    {
-                        case ReportFormat.CSV:
-                            CsvUtils.ExportResults(History, saveFileDialogCsv.FileName, reportType);
-                            break;
+                    //switch (reportFormat)
+                    //{
+                    //    case ReportFormat.CSV:
+                    //        CsvUtils.ExportResults(History, saveFileDialogCsv.FileName, reportType);
+                    //        break;
 
-                        case ReportFormat.JSON:
-                            ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
-                            JsonUtils.ExportToJson(saveFileDialogJson.FileName, configuration, History, reportType);
-                            break;
+                    //    case ReportFormat.JSON:
+                    //        ComputerConfiguration configuration = SystemUtils.GetComputerConfiguration();
+                    //        JsonUtils.ExportToJson(saveFileDialogJson.FileName, configuration, History, reportType);
+                    //        break;
 
-                        case ReportFormat.PDF:
-                            // TODO: Fix this.
-                            //BenchmarkSession test = History[0];
-                            //PdfUtils.Export(saveFileDialogPdf.FileName, MainLayout.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
-                            break;
-                    }
+                    //    case ReportFormat.PDF:
+                    //        // TODO: Fix this.
+                    //        //BenchmarkSession test = History[0];
+                    //        //PdfUtils.Export(saveFileDialogPdf.FileName, MainLayout.StepFrames, test.FlowCount, test.RecordCount, test.Randomness, SystemUtils.GetComputerConfiguration(), reportType);
+                    //        break;
+                    //}
 
                     // Stop loading end enable MainForm
                     LoadingFrame.Stop();
@@ -322,10 +264,10 @@ namespace DatabaseBenchmark
                 }
                 catch (Exception exc)
                 {
-                    string message = string.Format("Export results to {0} failed...", reportFormat);
+                    //string message = string.Format("Export results to {0} failed...", reportFormat);
 
-                    Logger.Error(message, exc);
-                    ReportError(message);
+                    //Logger.Error(message, exc);
+                    //ReportError(message);
                     Enabled = true;
                     LoadingFrame.Stop();
                 }
@@ -381,8 +323,8 @@ namespace DatabaseBenchmark
         {
             bool isChecked = (sender as ToolStripButton).Checked;
 
-            foreach (var frame in MainLayout.StepFrames)
-                frame.Value.SelectedChartIsLogarithmic = isChecked;
+            //foreach (var frame in MainLayout.StepFrames)
+            //    frame.Value.SelectedChartIsLogarithmic = isChecked;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -526,24 +468,24 @@ namespace DatabaseBenchmark
 
         private void viewToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            StepFrame selectedFrame = MainLayout.GetActiveFrame();
-            bool state = selectedFrame != null;
+            //StepFrame selectedFrame = MainLayout.GetActiveFrame();
+            //bool state = selectedFrame != null;
 
-            viewToolStripMenuItem.DropDownItems[6].Visible = state;  // Separator.
-            viewToolStripMenuItem.DropDownItems[8].Visible = state;  // Show legend.
-            viewToolStripMenuItem.DropDownItems[9].Visible = state;  // Legend position.
-            viewToolStripMenuItem.DropDownItems[10].Visible = state;  // Logarithmic.
+            //viewToolStripMenuItem.DropDownItems[6].Visible = state;  // Separator.
+            //viewToolStripMenuItem.DropDownItems[8].Visible = state;  // Show legend.
+            //viewToolStripMenuItem.DropDownItems[9].Visible = state;  // Legend position.
+            //viewToolStripMenuItem.DropDownItems[10].Visible = state;  // Logarithmic.
 
-            if (!state)
-                return;
+            //if (!state)
+            //    return;
 
-            LegendPossition position = selectedFrame.SelectedChartPosition;
+            //LegendPossition position = selectedFrame.SelectedChartPosition;
 
-            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
-                menuItem.Checked = menuItem.Text == position.ToString();
+            //foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+            //    menuItem.Checked = menuItem.Text == position.ToString();
 
-            showLegendToolStripMenuItem.Checked = selectedFrame.SelectedChartLegendIsVisible;
-            logarithmicToolStripMenuItem.Checked = selectedFrame.SelectedChartIsLogarithmic;
+            //showLegendToolStripMenuItem.Checked = selectedFrame.SelectedChartLegendIsVisible;
+            //logarithmicToolStripMenuItem.Checked = selectedFrame.SelectedChartIsLogarithmic;
         }
 
         private void databasesWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -554,17 +496,17 @@ namespace DatabaseBenchmark
 
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.SelectFrame(TestMethod.Write);
+            //MainLayout.SelectFrame(TestMethod.Write);
         }
 
         private void readWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.SelectFrame(TestMethod.Read);
+            //MainLayout.SelectFrame(TestMethod.Read);
         }
 
         private void secondaryReadWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.SelectFrame(TestMethod.SecondaryRead);
+           // MainLayout.SelectFrame(TestMethod.SecondaryRead);
         }
 
         private void logWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -576,24 +518,24 @@ namespace DatabaseBenchmark
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             LegendPossition position = (LegendPossition)Enum.Parse(typeof(LegendPossition), item.Text);
-            StepFrame selectedFrame = MainLayout.GetActiveFrame();
+            //StepFrame selectedFrame = MainLayout.GetActiveFrame();
 
-            selectedFrame.SelectedChartPosition = position;
+            //selectedFrame.SelectedChartPosition = position;
 
-            foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
-                menuItem.Checked = menuItem.Text == item.Text;
+            //foreach (ToolStripMenuItem menuItem in legendPossitionToolStripMenuItem.DropDownItems)
+            //    menuItem.Checked = menuItem.Text == item.Text;
         }
 
         private void showLegendToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripMenuItem).Checked;
-            MainLayout.GetActiveFrame().SelectedChartLegendIsVisible = isChecked;
+            //MainLayout.GetActiveFrame().SelectedChartLegendIsVisible = isChecked;
         }
 
         private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool isChecked = (sender as ToolStripMenuItem).Checked;
-            MainLayout.GetActiveFrame().SelectedChartIsLogarithmic = isChecked;
+            //MainLayout.GetActiveFrame().SelectedChartIsLogarithmic = isChecked;
         }
 
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -799,5 +741,324 @@ namespace DatabaseBenchmark
             MainLayout.TreeView.treeViewOrder = TreeViewOrder.IndexTechnology;
             MainLayout.TreeView.SetTreeViewOrder();
         }
+
+        #region Main Layout
+
+        public void Reset()
+        {
+            TreeFrame.Dispose();
+            ShowTreeViewFrame();
+            TreeFrame.ExpandAll();
+
+            ShowStepFrames();
+            //StepFrames[TestMethod.Write].Activate();
+
+            LogFrame.Dispose();
+            ShowLogFrame();
+
+            PropertiesFrame.Dispose();
+            ShowPropertiesFrame();
+
+            //Initialize();
+        }
+
+        public Dictionary<string, bool> GetCheckedToolStripButtons()
+        {
+            Dictionary<string, bool> result = new Dictionary<string, bool>();
+
+            foreach (var btn in ViewButtons)
+                result.Add(btn.Name, btn.Checked);
+
+            return result;
+        }
+
+        public void SelectTreeView(bool visible)
+        {
+            if (!visible)
+            {
+                TreeFrame.Hide();
+                return;
+            }
+
+            ShowTreeViewFrame();
+        }
+
+        public bool IsSelectedTreeViewNode
+        {
+            get { return TreeFrame.IsSelectedNodeDatabase; }
+        }
+
+        #region Docking
+
+        public void StoreDocking()
+        {
+            dockPanel1.SaveAsXml(DockingConfigurationDirectory);
+        }
+
+        public void LoadDocking()
+        {
+            try
+            {
+                if (!File.Exists(DockingConfigurationDirectory))
+                {
+                    Reset();
+                    return;
+                }
+
+                dockPanel1.LoadFromXml(DockingConfigurationDirectory, new DeserializeDockContent(GetContentFromPersistString));
+
+                TreeFrame.Text = "Databases";
+                TreeFrame.ExpandAll();
+
+                LogFrame.Text = "Logs";
+                PropertiesFrame.Text = "Properties";
+            }
+            catch (Exception exc)
+            {
+                Logger.Error("Load docking configuration error...", exc);
+                Reset();
+            }
+        }
+
+        public void RefreshDocking()
+        {
+            TreeFrame.DockState = DockState.DockLeft;
+
+            //foreach (var item in StepFrames)
+            //    item.Value.DockState = DockState.Document;
+
+            if (!LogFrame.IsDisposed)
+                LogFrame.DockState = DockState.DockBottomAutoHide;
+            else
+                ShowLogFrame();
+
+            ShowPropertiesFrame();
+        }
+
+        #endregion
+
+        #region Charts
+
+        public void InitializeCharts(List<KeyValuePair<string, Color>> charts)
+        {
+            StepFrame stepFrame;
+
+            // Clear and prepare charts.
+            //foreach (var item in StepFrames)
+            //{
+            //    stepFrame = item.Value;
+            //    stepFrame.ClearCharts();
+            //    stepFrame.InitializeCharts(charts);
+            //}
+        }
+
+        public List<KeyValuePair<string, Color>> GetSelectedDatabasesChartValues()
+        {
+            return new List<KeyValuePair<string, Color>>(TreeFrame.GetSelectedDatabases().Select(x => new KeyValuePair<string, Color>(x.Name, x.Color)));
+        }
+
+        public void ShowBarChart(int column, bool visible)
+        {
+            //foreach (var kv in StepFrames)
+            //    kv.Value.ShowBarChart(column, visible);
+        }
+
+        public void ClearCharts()
+        {
+            //foreach (var frame in StepFrames)
+            //    frame.Value.ClearCharts();
+        }
+
+        #endregion
+
+        #region Frames
+
+        public void ShowTreeViewFrame()
+        {
+            if (TreeFrame.IsDisposed)
+            {
+                TreeFrame = new TreeViewFrame();
+                TreeFrame.CreateTreeView();
+            }
+
+            TreeFrame.Activate();
+
+            TreeFrame.Text = "Databases";
+            TreeFrame.Show(dockPanel1);
+
+            TreeFrame.DockState = DockState.DockLeft;
+
+            TreeFrame.SelectedDatabaseChanged += TreeView_SlectedDatabaseChanged;
+            TreeFrame.PropertiesClick += TreeView_PropertiesClick;
+        }
+
+        public void ShowPropertiesFrame()
+        {
+            if (!PropertiesFrame.IsDisposed)
+            {
+                PropertiesFrame.Show(dockPanel1);
+                PropertiesFrame.DockState = DockState.DockRight;
+            }
+            else
+            {
+                PropertiesFrame = new PropertiesFrame();
+
+                PropertiesFrame.Show(dockPanel1);
+                PropertiesFrame.DockState = DockState.DockRight;
+                PropertiesFrame.Text = "Properties";
+
+                var database = TreeFrame.GetSelectedDatabase();
+                if (database != null)
+                {
+                    PropertiesFrame.Caller = TreeFrame;
+                    PropertiesFrame.SetProperties(database);
+                }
+            }
+        }
+
+        public void ShowLogFrame()
+        {
+            if (!LogFrame.IsDisposed)
+                LogFrame.Show(dockPanel1);
+            else
+            {
+                LogFrame = new LogFrame();
+                LogFrame.Show(dockPanel1);
+                LogFrame.DockState = DockState.DockBottomAutoHide;
+                LogFrame.Text = "Logs";
+            }
+        }
+
+        private void ShowStepFrames()
+        {
+            // TODO: Finding another way to restore the docking. 
+            //foreach (var item in StepFrames)
+            //    item.Value.Dispose();
+
+            //foreach (var method in GetTestMethods())
+            //{
+            //    StepFrames[method] = CreateStepFrame(method);
+            //    SelectFrame(method);
+            //}
+        }
+
+        public void SelectFrame()
+        {
+            //StepFrame frame = StepFrames[method];
+            //frame.Show(Panel);
+        }
+
+        public StepFrame GetCurrentFrame()
+        {
+            return null;//StepFrames[CurrentMethod];
+        }
+
+        public StepFrame GetActiveFrame()
+        {
+            //StepFrame activeFrame = StepFrames.FirstOrDefault(x => x.Value.IsActivated).Value;
+
+            //return activeFrame;
+
+            return null;
+        }
+
+        public void EnablePropertiesFrame(bool state)
+        {
+            PropertiesFrame.Enabled = state;
+        }
+
+        public void RefreshPropertiesFrame()
+        {
+            PropertiesFrame.SetProperties(TreeFrame.GetSelectedDatabase());
+        }
+
+        public void ClearLogFrame()
+        {
+            LogFrame.Clear();
+        }
+
+        //private StepFrame CreateStepFrame(TestMethod method)
+        //{
+        //    StepFrame stepFrame = new StepFrame();
+        //    stepFrame.Text = method.ToString();
+        //    stepFrame.Dock = DockStyle.Fill;
+
+        //    switch (method)
+        //    {
+        //        case TestMethod.Write:
+        //            stepFrame.Icon = Properties.Resources.w_24x24;
+        //            break;
+
+        //        case TestMethod.Read:
+        //            stepFrame.Icon = Properties.Resources.r_24x24;
+        //            break;
+
+        //        case TestMethod.SecondaryRead:
+        //            stepFrame.Icon = Properties.Resources.sr_24x24;
+        //            break;
+
+        //        default:
+        //            break;
+        //    }
+
+        //    // Hide time, CPU, memory and I/O view from the layout.
+        //    stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
+        //    stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
+        //    stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
+        //    stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
+
+        //    return stepFrame;
+        //}
+
+        #endregion
+
+        #region Private members
+
+        //private TestMethod[] GetTestMethods()
+        //{
+        //    return Enum.GetValues(typeof(TestMethod)).Cast<TestMethod>().Where(item => item != TestMethod.None).ToArray();
+        //}
+
+        private void TreeView_PropertiesClick(object sender, EventArgs e)
+        {
+            ShowPropertiesFrame();
+        }
+
+        private void TreeView_SlectedDatabaseChanged(Object obj)
+        {
+            if (!PropertiesFrame.IsDisposed)
+                PropertiesFrame.SetProperties(obj);
+        }
+
+        private IDockContent GetContentFromPersistString(string persistString)
+        {
+            if (persistString == typeof(TreeViewFrame).ToString())
+                return TreeFrame;
+
+            if (persistString == typeof(LogFrame).ToString())
+                return LogFrame;
+
+            if (persistString == typeof(PropertiesFrame).ToString())
+                return PropertiesFrame;
+
+            StepFrame frame = null;
+            if (persistString == typeof(StepFrame).ToString())
+            {
+                //if (Count == 0)
+                //    frame = StepFrames[TestMethod.Write];
+                //else if (Count == 1)
+                //    frame = StepFrames[TestMethod.Read];
+                //else if (Count == 2)
+                //    frame = StepFrames[TestMethod.SecondaryRead];
+
+                Count++;
+            }
+
+            return frame;
+        }
+
+        #endregion
+
+        #endregion
     }
 }

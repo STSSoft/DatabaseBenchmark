@@ -8,11 +8,11 @@ namespace DatabaseBenchmark.Commands
 {
     public abstract class ViewCommand
     {
-        public MainForm Form;
+        public MainForm View;
 
         public ViewCommand(MainForm form)
         {
-            Form = form;
+            View = form;
         }
 
         public abstract void Execute();

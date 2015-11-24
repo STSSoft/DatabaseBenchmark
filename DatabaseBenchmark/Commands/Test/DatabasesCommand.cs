@@ -26,7 +26,7 @@ namespace DatabaseBenchmark.Commands
             //Form.History.Clear();
 
             var databases = Form.MainLayout.TreeView.GetSelectedDatabases();
-            var tests = Form.TestsWindows.CheckedTests;
+            var tests = Form.TestSelectionFrame.CheckedTests;
 
             foreach (var database in databases)
             {
