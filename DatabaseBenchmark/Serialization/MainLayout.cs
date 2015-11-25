@@ -39,23 +39,22 @@ namespace DatabaseBenchmark.Serialization
             Panel = panel;
             ComboBoxes = comboBoxes;
             Buttons = buttons;
-            TrackBar = trackBar;
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
             DockConfigPath = Path.Combine(path, Settings.Default.DockingConfigurationPath);
 
-            TreeView = new TreeViewFrame();
+            //TreeView = new TreeViewFrame();
 
-            TreeView.SelectedDatabaseChanged += TreeView_SlectedDatabaseChanged;
-            TreeView.PropertiesClick += TreeView_PropertiesClick;
+            //TreeView.SelectedDatabaseChanged += TreeView_SlectedDatabaseChanged;
+            //TreeView.PropertiesClick += TreeView_PropertiesClick;
 
             //StepFrames = new Dictionary<TestMethod, StepFrame>();
             LogFrame = new LogFrame();
 
-            PropertiesFrame = new PropertiesFrame();
-            PropertiesFrame.Caller = TreeView;
+            //PropertiesFrame = new PropertiesFrame();
+            //PropertiesFrame.Caller = TreeView;
             
             //foreach (TestMethod method in GetTestMethods())
             //    StepFrames[method] = CreateStepFrame(method);
@@ -63,10 +62,6 @@ namespace DatabaseBenchmark.Serialization
 
         public void Initialize()
         {
-            TrackBar.Value = 20;
-
-            ComboBoxes[0].SelectedIndex = 0;
-            ComboBoxes[1].SelectedIndex = 5;
         }
 
         public void Reset()
@@ -362,8 +357,8 @@ namespace DatabaseBenchmark.Serialization
 
         private void TreeView_SlectedDatabaseChanged(Object obj)
         {
-            if (!PropertiesFrame.IsDisposed)
-                PropertiesFrame.SetProperties(obj);
+            //if (!PropertiesFrame.IsDisposed)
+            //    PropertiesFrame.SetProperties(obj);
         }
 
         private IDockContent GetContentFromPersistString(string persistString)

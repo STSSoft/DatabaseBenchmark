@@ -18,7 +18,6 @@ using DatabaseBenchmark.Properties;
 using DatabaseBenchmark.Reporting;
 using DatabaseBenchmark.Commands;
 using DatabaseBenchmark.States;
-using DatabaseBenchmark.Core.Benchmarking;
 
 /*
  * Copyright (c) 2010-2015 STS Soft SC
@@ -109,8 +108,8 @@ namespace DatabaseBenchmark
             MainLayout = new MainLayout(dockPanel1, new ToolStripComboBox[] { }.ToList(), ViewButtons, null, CONFIGURATION_FOLDER);
 
             MainLayout.Initialize();
-            MainLayout.TreeView.CreateTreeView();
-            MainLayout.LoadDocking();
+            //MainLayout.TreeView.CreateTreeView();
+            //MainLayout.LoadDocking();
 
             //MainLayout.SelectFrame(TestMethod.Write);
 
@@ -129,12 +128,26 @@ namespace DatabaseBenchmark
             TreeFrame.DockState = DockState.DockLeft;
 
             TestSelectionFrame = new TestsFrame();
+            TestSelectionFrame.TestClick += ShowTestProperties;
+
             TestSelectionFrame.Initialize();
 
             TestSelectionFrame.Show(dockPanel1);
             TestSelectionFrame.DockState = DockState.DockLeft;
 
+            PropertiesFrame = new PropertiesFrame();
+
+            PropertiesFrame.Show(dockPanel1);
+            PropertiesFrame.DockState = DockState.DockRight;
+
+            PropertiesFrame.Caller = TreeFrame;
+
             this.ResumeLayout();
+        }
+
+        public void ShowTestProperties(object sender, EventArgs e)
+        {
+            PropertiesFrame.SetProperties(TestSelectionFrame.SelectedTest);
         }
 
         #region Report methods

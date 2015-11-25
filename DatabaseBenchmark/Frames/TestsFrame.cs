@@ -34,6 +34,14 @@ namespace DatabaseBenchmark.Frames
             }
         }
 
+        public ITest SelectedTest
+        {
+            get
+            {
+                return (ITest)listView1.SelectedItems[0].Tag;
+            }
+        }
+
         public List<ITest> CheckedTests
         {
             get
@@ -50,6 +58,19 @@ namespace DatabaseBenchmark.Frames
                 }
 
                 return tests;
+            }
+        }
+
+        public event EventHandler TestClick
+        {
+            add
+            {
+                listView1.Click += value;
+            }
+
+            remove
+            {
+                listView1.Click -= value;
             }
         }
     }
