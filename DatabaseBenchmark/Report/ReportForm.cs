@@ -4,10 +4,7 @@ using DatabaseBenchmark.Reporting;
 using log4net;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Windows.Forms;
 
 namespace DatabaseBenchmark.Report

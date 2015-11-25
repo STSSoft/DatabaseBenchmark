@@ -25,7 +25,7 @@ namespace DatabaseBenchmark.Serialization
         public DockPanel Panel { get; private set; }
         public TreeViewFrame TreeView { get; private set; }
         public LogFrame LogFrame { get; private set; }
-        //public Dictionary<TestMethod, StepFrame> StepFrames { get; private set; }
+        public List<StepFrame> StepFrames { get; private set; }
         public PropertiesFrame PropertiesFrame { get; private set; }
 
         public TrackBar TrackBar { get; private set; }
@@ -50,7 +50,7 @@ namespace DatabaseBenchmark.Serialization
             //TreeView.SelectedDatabaseChanged += TreeView_SlectedDatabaseChanged;
             //TreeView.PropertiesClick += TreeView_PropertiesClick;
 
-            //StepFrames = new Dictionary<TestMethod, StepFrame>();
+          StepFrames = new List<StepFrame>();
             LogFrame = new LogFrame();
 
             //PropertiesFrame = new PropertiesFrame();
@@ -70,8 +70,13 @@ namespace DatabaseBenchmark.Serialization
             ShowTreeViewFrame();
             TreeView.ExpandAll();
 
-            //ShowStepFrames();
-            //StepFrames[TestMethod.Write].Activate();
+            ShowStepFrames();
+
+            foreach (StepFrame frame in StepFrames)
+            {
+                if (frame.Tag.ToString() == "Write")
+                    frame.Activate();
+            }
 
             LogFrame.Dispose();
             ShowLogFrame();
@@ -82,7 +87,7 @@ namespace DatabaseBenchmark.Serialization
             Initialize();
         }
 
-        //public void SetCurrentMethod(TestMethod method)
+        //public void SetCurrentMethod(string method)
         //{
         //    CurrentMethod = method;
         //}
@@ -157,8 +162,8 @@ namespace DatabaseBenchmark.Serialization
         {
             TreeView.DockState = DockState.DockLeft;
 
-            //foreach (var item in StepFrames)
-            //    item.Value.DockState = DockState.Document;
+            foreach (var item in StepFrames)
+                item.DockState = DockState.Document;
 
             if (!LogFrame.IsDisposed)
                 LogFrame.DockState = DockState.DockBottomAutoHide;
@@ -176,13 +181,13 @@ namespace DatabaseBenchmark.Serialization
         {
             StepFrame stepFrame;
 
-            // Clear and prepare charts.
-            //foreach (var item in StepFrames)
-            //{
-            //    stepFrame = item.Value;
-            //    stepFrame.ClearCharts();
-            //    stepFrame.InitializeCharts(charts);
-            //}
+            //Clear and prepare charts.
+            foreach (var item in StepFrames)
+            {
+                stepFrame = item;
+                stepFrame.ClearCharts();
+                stepFrame.InitializeCharts(charts);
+            }
         }
 
         public List<KeyValuePair<string, Color>> GetSelectedDatabasesChartValues()
@@ -192,14 +197,14 @@ namespace DatabaseBenchmark.Serialization
 
         public void ShowBarChart(int column, bool visible)
         {
-            //foreach (var kv in StepFrames)
-            //    kv.Value.ShowBarChart(column, visible);
+            foreach (var frame in StepFrames)
+                frame.ShowBarChart(column, visible);
         }
 
         public void ClearCharts()
         {
-            //foreach (var frame in StepFrames)
-            //    frame.Value.ClearCharts();
+            foreach (var frame in StepFrames)
+                frame.ClearCharts();
         }
 
         #endregion
@@ -262,36 +267,36 @@ namespace DatabaseBenchmark.Serialization
             }
         }
 
-        //private void ShowStepFrames()
-        //{
-        //    // TODO: Finding another way to restore the docking. 
-        //    foreach (var item in StepFrames)
-        //        item.Value.Dispose();
+        private void ShowStepFrames()
+        {
+            // TODO: Finding another way to restore the docking. 
+            foreach (var item in StepFrames)
+                item.Dispose();
 
-        //    foreach (var method in GetTestMethods())
-        //    {
-        //        StepFrames[method] = CreateStepFrame(method);
-        //        SelectFrame(method);
-        //    }
-        //}
+            //foreach (var method in GetTestMethods())
+            //{
+            //    StepFrames[method] = CreateStepFrame(method);
+            //    SelectFrame(method);
+            //}
+        }
 
-        //public void SelectFrame(TestMethod method)
-        //{
-        //    StepFrame frame = StepFrames[method];
-        //    frame.Show(Panel);
-        //}
+        public void SelectFrame(string method)
+        {
+            StepFrame frame = StepFrames.FirstOrDefault(fr => fr.Tag.ToString().Equals(method));
+            frame.Show(Panel);
+        }
 
         //public StepFrame GetCurrentFrame()
         //{
         //    return StepFrames[CurrentMethod];
         //}
 
-        //public StepFrame GetActiveFrame()
-        //{
-        //    StepFrame activeFrame = StepFrames.FirstOrDefault(x => x.Value.IsActivated).Value;
+        public StepFrame GetActiveFrame()
+        {
+            StepFrame activeFrame = StepFrames.FirstOrDefault(x => x.IsActivated);
 
-        //    return activeFrame;
-        //}
+            return activeFrame;
+        }
 
         public void EnablePropertiesFrame(bool state)
         {
@@ -304,42 +309,44 @@ namespace DatabaseBenchmark.Serialization
         }
 
         public void ClearLogFrame()
+
         {
             LogFrame.Clear();
         }
 
-        //private StepFrame CreateStepFrame(TestMethod method)
-        //{
-        //    StepFrame stepFrame = new StepFrame();
-        //    stepFrame.Text = method.ToString();
-        //    stepFrame.Dock = DockStyle.Fill;
+        private StepFrame CreateStepFrame(string method)
+        {
+            StepFrame stepFrame = new StepFrame();
+            stepFrame.Tag = method;
+            stepFrame.Text = method;
+            stepFrame.Dock = DockStyle.Fill;
 
-        //    switch (method)
-        //    {
-        //        case TestMethod.Write:
-        //            stepFrame.Icon = Properties.Resources.w_24x24;
-        //            break;
+            switch (method)
+            {
+                case "Write":
+                    stepFrame.Icon = Properties.Resources.w_24x24;
+                    break;
 
-        //        case TestMethod.Read:
-        //            stepFrame.Icon = Properties.Resources.r_24x24;
-        //            break;
+                case "Read":
+                    stepFrame.Icon = Properties.Resources.r_24x24;
+                    break;
 
-        //        case TestMethod.SecondaryRead:
-        //            stepFrame.Icon = Properties.Resources.sr_24x24;
-        //            break;
+                case "SecondaryRead":
+                    stepFrame.Icon = Properties.Resources.sr_24x24;
+                    break;
 
-        //        default:
-        //            break;
-        //    }
+                default:
+                    break;
+            }
 
-        //    // Hide time, CPU, memory and I/O view from the layout.
-        //    stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
-        //    stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
-        //    stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
-        //    stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
+            // Hide time, CPU, memory and I/O view from the layout.
+            stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
+            stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
+            stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
+            stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
 
-        //    return stepFrame;
-        //}
+            return stepFrame;
+        }
 
         #endregion
 

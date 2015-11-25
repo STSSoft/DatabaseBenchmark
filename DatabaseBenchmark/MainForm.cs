@@ -1,6 +1,5 @@
 ﻿using DatabaseBenchmark.Charts;
 using DatabaseBenchmark.Frames;
-using DatabaseBenchmark.Report;
 using DatabaseBenchmark.Core;
 using DatabaseBenchmark.Serialization;
 using log4net;
@@ -15,7 +14,6 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Diagnostics;
 using DatabaseBenchmark.Properties;
-using DatabaseBenchmark.Reporting;
 using DatabaseBenchmark.Commands;
 using DatabaseBenchmark.States;
 
@@ -82,6 +80,8 @@ namespace DatabaseBenchmark
 
         public List<ToolStripButton> ViewButtons;
 
+        public List<StepFrame> StepFrames;
+
         public MainForm()
         {
             InitializeComponent();
@@ -111,7 +111,8 @@ namespace DatabaseBenchmark
             //MainLayout.TreeView.CreateTreeView();
             //MainLayout.LoadDocking();
 
-            //MainLayout.SelectFrame(TestMethod.Write);
+            StepFrames = new List<StepFrame>();
+            SelectFrame("Write");
 
             Manager = new ProjectManager(MainLayout);
 
@@ -335,8 +336,8 @@ namespace DatabaseBenchmark
         {
             bool isChecked = (sender as ToolStripButton).Checked;
 
-            //foreach (var frame in MainLayout.StepFrames)
-            //    frame.Value.SelectedChartIsLogarithmic = isChecked;
+            foreach (var frame in StepFrames)
+               frame.SelectedChartIsLogarithmic = isChecked;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -771,7 +772,6 @@ namespace DatabaseBenchmark
             PropertiesFrame.Dispose();
             ShowPropertiesFrame();
 
-            //Initialize();
         }
 
         public Dictionary<string, bool> GetCheckedToolStripButtons()
@@ -855,13 +855,13 @@ namespace DatabaseBenchmark
         {
             StepFrame stepFrame;
 
-            // Clear and prepare charts.
-            //foreach (var item in StepFrames)
-            //{
-            //    stepFrame = item.Value;
-            //    stepFrame.ClearCharts();
-            //    stepFrame.InitializeCharts(charts);
-            //}
+            //Clear and prepare charts.
+            foreach (var item in StepFrames)
+            {
+                stepFrame = item;
+                stepFrame.ClearCharts();
+                stepFrame.InitializeCharts(charts);
+            }
         }
 
         public List<KeyValuePair<string, Color>> GetSelectedDatabasesChartValues()
@@ -871,14 +871,14 @@ namespace DatabaseBenchmark
 
         public void ShowBarChart(int column, bool visible)
         {
-            //foreach (var kv in StepFrames)
-            //    kv.Value.ShowBarChart(column, visible);
+            foreach (var kv in StepFrames)
+               kv.ShowBarChart(column, visible);
         }
 
         public void ClearCharts()
         {
-            //foreach (var frame in StepFrames)
-            //    frame.Value.ClearCharts();
+            foreach (var frame in StepFrames)
+              frame.ClearCharts();
         }
 
         #endregion
@@ -944,8 +944,8 @@ namespace DatabaseBenchmark
         private void ShowStepFrames()
         {
             // TODO: Finding another way to restore the docking. 
-            //foreach (var item in StepFrames)
-            //    item.Value.Dispose();
+            foreach (var item in StepFrames)
+                item.Dispose();
 
             //foreach (var method in GetTestMethods())
             //{
@@ -954,10 +954,10 @@ namespace DatabaseBenchmark
             //}
         }
 
-        public void SelectFrame()
+        public void SelectFrame(string method)
         {
-            //StepFrame frame = StepFrames[method];
-            //frame.Show(Panel);
+            StepFrame frame = StepFrames.FirstOrDefault(fr => fr.Tag.ToString().Equals(method));
+            frame.Show(dockPanel1);
         }
 
         public StepFrame GetCurrentFrame()
@@ -967,11 +967,9 @@ namespace DatabaseBenchmark
 
         public StepFrame GetActiveFrame()
         {
-            //StepFrame activeFrame = StepFrames.FirstOrDefault(x => x.Value.IsActivated).Value;
+            StepFrame activeFrame = StepFrames.FirstOrDefault(x => x.IsActivated);
 
-            //return activeFrame;
-
-            return null;
+            return activeFrame;
         }
 
         public void EnablePropertiesFrame(bool state)
@@ -989,38 +987,39 @@ namespace DatabaseBenchmark
             LogFrame.Clear();
         }
 
-        //private StepFrame CreateStepFrame(TestMethod method)
-        //{
-        //    StepFrame stepFrame = new StepFrame();
-        //    stepFrame.Text = method.ToString();
-        //    stepFrame.Dock = DockStyle.Fill;
+        private StepFrame CreateStepFrame(string method)
+        {
+            StepFrame stepFrame = new StepFrame();
+            stepFrame.Tag = method;
+            stepFrame.Text = method;
+            stepFrame.Dock = DockStyle.Fill;
 
-        //    switch (method)
-        //    {
-        //        case TestMethod.Write:
-        //            stepFrame.Icon = Properties.Resources.w_24x24;
-        //            break;
+            switch (method)
+            {
+                case "Write":
+                    stepFrame.Icon = Properties.Resources.w_24x24;
+                    break;
 
-        //        case TestMethod.Read:
-        //            stepFrame.Icon = Properties.Resources.r_24x24;
-        //            break;
+                case "Read":
+                    stepFrame.Icon = Properties.Resources.r_24x24;
+                    break;
 
-        //        case TestMethod.SecondaryRead:
-        //            stepFrame.Icon = Properties.Resources.sr_24x24;
-        //            break;
+                case "SecondaryRead":
+                    stepFrame.Icon = Properties.Resources.sr_24x24;
+                    break;
 
-        //        default:
-        //            break;
-        //    }
+                default:
+                    break;
+            }
 
-        //    // Hide time, CPU, memory and I/O view from the layout.
-        //    stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
-        //    stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
-        //    stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
-        //    stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
+            // Hide time, CPU, memory and I/O view from the layout.
+            stepFrame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
+            stepFrame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
+            stepFrame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
+            stepFrame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
 
-        //    return stepFrame;
-        //}
+            return stepFrame;
+        }
 
         #endregion
 
