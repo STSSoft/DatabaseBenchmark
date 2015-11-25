@@ -79,15 +79,6 @@
             this.btnIOView = new System.Windows.Forms.ToolStripButton();
             this.btnAxisType = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
-            this.cbFlowsCount = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.cbRecordCount = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
@@ -156,7 +147,6 @@
             this.onlineReportResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.saveFileDialogJson = new System.Windows.Forms.SaveFileDialog();
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
@@ -165,7 +155,6 @@
             this.statusStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripMenuItem2
@@ -251,16 +240,7 @@
             this.buttonMemoryView,
             this.btnIOView,
             this.btnAxisType,
-            this.toolStripSeparator7,
-            this.toolStripLabel5,
-            this.cbFlowsCount,
-            this.toolStripSeparator5,
-            this.toolStripLabel1,
-            this.cbRecordCount,
-            this.toolStripSeparator6,
-            this.toolStripLabel4,
-            this.toolStripLabel2,
-            this.toolStripSeparator10});
+            this.toolStripSeparator7});
             this.toolStripMain.Location = new System.Drawing.Point(0, 24);
             this.toolStripMain.Name = "toolStripMain";
             this.toolStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -500,91 +480,6 @@
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripLabel5
-            // 
-            this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(40, 52);
-            this.toolStripLabel5.Text = "Flows:";
-            // 
-            // cbFlowsCount
-            // 
-            this.cbFlowsCount.AutoSize = false;
-            this.cbFlowsCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbFlowsCount.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "5",
-            "10",
-            "100",
-            "1000"});
-            this.cbFlowsCount.Name = "cbFlowsCount";
-            this.cbFlowsCount.Size = new System.Drawing.Size(50, 23);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(60, 52);
-            this.toolStripLabel1.Text = "x Records:";
-            // 
-            // cbRecordCount
-            // 
-            this.cbRecordCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbRecordCount.Items.AddRange(new object[] {
-            "100",
-            "50 000",
-            "100 000",
-            "200 000",
-            "300 000",
-            "1 000 000",
-            "2 000 000",
-            "3 000 000",
-            "4 000 000",
-            "5 000 000",
-            "6 000 000",
-            "7 000 000",
-            "8 000 000",
-            "9 000 000",
-            "10 000 000",
-            "20 000 000",
-            "50 000 000",
-            "100 000 000",
-            "200 000 000",
-            "500 000 000",
-            "1 000 000 000",
-            "5 000 000 000",
-            "10 000 000 000",
-            "100 000 000 000",
-            "1 000 000 000 000"});
-            this.cbRecordCount.Name = "cbRecordCount";
-            this.cbRecordCount.Size = new System.Drawing.Size(92, 55);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 55);
-            // 
-            // toolStripLabel4
-            // 
-            this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(100, 52);
-            this.toolStripLabel4.Text = "Key Randomness:";
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(23, 52);
-            this.toolStripLabel2.Text = "0%";
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 55);
             // 
             // toolStripMenuItem1
             // 
@@ -1176,18 +1071,6 @@
             this.aboutToolStripMenuItem.Text = "About Database Benchmark";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // trackBar1
-            // 
-            this.trackBar1.AutoSize = false;
-            this.trackBar1.LargeChange = 1;
-            this.trackBar1.Location = new System.Drawing.Point(1112, 27);
-            this.trackBar1.Maximum = 20;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(98, 49);
-            this.trackBar1.TabIndex = 6;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
-            // 
             // saveFileDialogJson
             // 
             this.saveFileDialogJson.DefaultExt = "json";
@@ -1279,7 +1162,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1276, 710);
             this.Controls.Add(this.dockPanel1);
-            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.toolStripMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -1300,7 +1182,6 @@
             this.toolStripMain.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1312,8 +1193,6 @@
         private System.Windows.Forms.ToolStripStatusLabel progressStatus;
         private System.Windows.Forms.ToolStripProgressBar progressBar;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripComboBox cbRecordCount;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripStatusLabel fit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
@@ -1326,21 +1205,13 @@
         private System.Windows.Forms.ToolStripStatusLabel elapsedTimeStatus;
         private System.Windows.Forms.ToolStripStatusLabel estimateTimeStatus;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel5;
-        private System.Windows.Forms.ToolStripComboBox cbFlowsCount;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.SaveFileDialog saveFileDialogCsv;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.SaveFileDialog saveFileDialogJson;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;

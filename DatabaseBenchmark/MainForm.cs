@@ -18,6 +18,7 @@ using DatabaseBenchmark.Properties;
 using DatabaseBenchmark.Reporting;
 using DatabaseBenchmark.Commands;
 using DatabaseBenchmark.States;
+using DatabaseBenchmark.Core.Benchmarking;
 
 /*
  * Copyright (c) 2010-2015 STS Soft SC
@@ -106,10 +107,8 @@ namespace DatabaseBenchmark
 
             this.SuspendLayout();
 
-            toolStripMain.Items.Insert(toolStripMain.Items.Count - 2, new ToolStripControlHost(trackBar1));
-
             // Layout.
-            MainLayout = new MainLayout(dockPanel1, new ToolStripComboBox[] { cbFlowsCount, cbRecordCount }.ToList(), ViewButtons, trackBar1, CONFIGURATION_FOLDER);
+            MainLayout = new MainLayout(dockPanel1, new ToolStripComboBox[] { }.ToList(), ViewButtons, null, CONFIGURATION_FOLDER);
 
             MainLayout.Initialize();
             MainLayout.TreeView.CreateTreeView();
@@ -673,7 +672,7 @@ namespace DatabaseBenchmark
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            toolStripLabel2.Text = (trackBar1.Value * 5).ToString() + " %";
+            //toolStripLabel2.Text = (trackBar1.Value * 5).ToString() + " %";
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -721,10 +720,10 @@ namespace DatabaseBenchmark
             try
             {
                 LoadingFrame.Start("Obtaining computer configuration...", Bounds);
-                ReportForm form = new ReportForm(History);
+                //ReportForm form = new ReportForm(History);
                 LoadingFrame.Stop();
 
-                form.ShowDialog();
+                //form.ShowDialog();
             }
             catch (Exception exc)
             {

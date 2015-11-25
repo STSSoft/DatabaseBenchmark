@@ -136,19 +136,7 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Charts\IChart.cs" />
-    <Compile Include="Charts\Linux\BarChart.Mono.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Charts\Linux\BarChart.Mono.Designer.cs">
-      <DependentUpon>BarChart.Mono.cs</DependentUpon>
-    </Compile>
     <Compile Include="Charts\ChartSettings.cs" />
-    <Compile Include="Charts\Linux\LineChart.Mono.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Charts\Linux\LineChart.Mono.Designer.cs">
-      <DependentUpon>LineChart.Mono.cs</DependentUpon>
-    </Compile>
     <Compile Include="Commands\Test\Command.cs" />
     <Compile Include="Commands\Test\DatabasesCommand.cs" />
     <Compile Include="Commands\View\InitializeMainViewCommand.cs" />
