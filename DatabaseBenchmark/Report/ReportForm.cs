@@ -1,4 +1,5 @@
 ﻿using DatabaseBenchmark.Core;
+using DatabaseBenchmark.Core.Benchmarking;
 using DatabaseBenchmark.Properties;
 using DatabaseBenchmark.Reporting;
 using log4net;
