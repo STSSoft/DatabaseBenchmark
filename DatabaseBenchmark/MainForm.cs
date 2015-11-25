@@ -1,6 +1,5 @@
 ﻿using DatabaseBenchmark.Charts;
 using DatabaseBenchmark.Frames;
-using DatabaseBenchmark.Report;
 using DatabaseBenchmark.Core;
 using DatabaseBenchmark.Serialization;
 using log4net;
@@ -15,10 +14,8 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Diagnostics;
 using DatabaseBenchmark.Properties;
-using DatabaseBenchmark.Reporting;
 using DatabaseBenchmark.Commands;
 using DatabaseBenchmark.States;
-using DatabaseBenchmark.Core.Benchmarking;
 
 /*
  * Copyright (c) 2010-2015 STS Soft SC
@@ -325,8 +322,8 @@ namespace DatabaseBenchmark
         {
             bool isChecked = (sender as ToolStripButton).Checked;
 
-            //foreach (var frame in MainLayout.StepFrames)
-            //    frame.Value.SelectedChartIsLogarithmic = isChecked;
+            foreach (var frame in StepFrames)
+               frame.SelectedChartIsLogarithmic = isChecked;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -761,7 +758,6 @@ namespace DatabaseBenchmark
             PropertiesFrame.Dispose();
             ShowPropertiesFrame();
 
-            //Initialize();
         }
 
         public Dictionary<string, bool> GetCheckedToolStripButtons()
