@@ -46,18 +46,19 @@ namespace DatabaseBenchmark
         public volatile Task MainTask = null;
 
         public CancellationTokenSource Cancellation;
-        public static int Count = 0;
+        public static int Count = 0; // GetContentFromPersistString
 
+        //state
         public State MainState;
         public RunningState RunState;
         public StoppedState StopState;
 
+        //command
         public PrepareInterfaceCommand PrepareGuiCommand;
         public PrepareBenchmark BenchmarkCommand;
         public ExecuteTestsCommand TestsCommand;
 
         public bool TestFailed;
-
         public Benchmark CurrentTest;
         public List<Benchmark> History;
 
@@ -68,31 +69,33 @@ namespace DatabaseBenchmark
         public string CurrentStatus;
 
         public ILog Logger;
-
-        public ProjectManager Manager;
+        
         public MainLayout MainLayout;
+        public ProjectManager Manager;
 
+        //frames
         public TreeViewFrame TreeFrame;
         public LogFrame LogFrame;
         public PropertiesFrame PropertiesFrame;
-
         public TestsFrame TestSelectionFrame;
 
         public List<ToolStripButton> ViewButtons;
-
         public List<StepFrame> StepFrames;
+
+
 
         public MainForm()
         {
             InitializeComponent();
+            SuspendLayout();
 
-            History = new List<Benchmark>();
-            ViewButtons = new List<ToolStripButton>();
+            openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
+            saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
 
             PrepareGuiCommand = new PrepareInterfaceCommand(this);
             BenchmarkCommand = new PrepareBenchmark(this);
 
-            ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x => x.CheckOnClick).ToList();
+            History = new List<Benchmark>();
 
             // Loggers and tracers.
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
@@ -102,48 +105,36 @@ namespace DatabaseBenchmark
             Trace.Listeners.Add(new Log4NetTraceListener(Settings.Default.TestLogger));
             Trace.Listeners.Add(new Log4NetTraceListener(Settings.Default.TestLogger));
 
-            this.SuspendLayout();
-
-            // Layout.
             MainLayout = new MainLayout(dockPanel1, new ToolStripComboBox[] { }.ToList(), ViewButtons, null, CONFIGURATION_FOLDER);
-
-            MainLayout.Initialize();
-            //MainLayout.TreeView.CreateTreeView();
-            //MainLayout.LoadDocking();
-
-            StepFrames = new List<StepFrame>();
-            SelectFrame("Write");
 
             Manager = new ProjectManager(MainLayout);
 
-            View_Click(btnSizeView, EventArgs.Empty);
-
-            openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
-            saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
-
-            WireDragDrop(Controls);
-
             TreeFrame = new TreeViewFrame();
-
+            TreeFrame.CreateTreeView();
             TreeFrame.Show(dockPanel1);
             TreeFrame.DockState = DockState.DockLeft;
 
-            TestSelectionFrame = new TestsFrame();
-            TestSelectionFrame.TestClick += ShowTestProperties;
-
-            TestSelectionFrame.Initialize();
-
-            TestSelectionFrame.Show(dockPanel1);
-            TestSelectionFrame.DockState = DockState.DockLeft;
-
             PropertiesFrame = new PropertiesFrame();
-
+            PropertiesFrame.Caller = TreeFrame;
             PropertiesFrame.Show(dockPanel1);
             PropertiesFrame.DockState = DockState.DockRight;
 
-            PropertiesFrame.Caller = TreeFrame;
+            TestSelectionFrame = new TestsFrame();
+            TestSelectionFrame.TestClick += ShowTestProperties;
+            TestSelectionFrame.Initialize();
+            TestSelectionFrame.Show(dockPanel1);
+            TestSelectionFrame.DockState = DockState.DockRight;
 
-            this.ResumeLayout();
+            ViewButtons = new List<ToolStripButton>();
+            ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x => x.CheckOnClick).ToList();
+
+            StepFrames = new List<StepFrame>();
+
+            View_Click(btnSizeView, EventArgs.Empty);
+
+            WireDragDrop(Controls);
+
+            ResumeLayout();
         }
 
         public void ShowTestProperties(object sender, EventArgs e)
@@ -319,7 +310,7 @@ namespace DatabaseBenchmark
             ToolStripButton button = (ToolStripButton)sender;
             int column = Int32.Parse(button.Tag.ToString());
 
-            MainLayout.ShowBarChart(column, button.Checked);
+            ShowBarChart(column, button.Checked);
             ((ToolStripMenuItem)showBarChartsToolStripMenuItem.DropDownItems[column]).Checked = button.Checked;
         }
 
@@ -328,7 +319,7 @@ namespace DatabaseBenchmark
             ToolStripMenuItem button = (ToolStripMenuItem)sender;
             int column = Int32.Parse(button.Tag.ToString());
 
-            MainLayout.ShowBarChart(column, button.Checked);
+            ShowBarChart(column, button.Checked);
             ((ToolStripButton)toolStripMain.Items[9 + column]).Checked = button.Checked;
         }
 
@@ -356,7 +347,7 @@ namespace DatabaseBenchmark
 
         private void buttonTreeView_Click(object sender, EventArgs e)
         {
-            MainLayout.SelectTreeView(btnTreeView.Checked);
+            SelectTreeView(btnTreeView.Checked);
         }
 
         #endregion
@@ -402,7 +393,7 @@ namespace DatabaseBenchmark
 
             LoadingFrame.Start("Creating project...", Bounds);
 
-            MainLayout.Reset();
+            Reset();
             saveConfigurationToolStripMenuItem.Enabled = false;
             Text = "NewProject.dbproj - Database Benchmark";
 
@@ -462,7 +453,7 @@ namespace DatabaseBenchmark
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.ShowPropertiesFrame();
+            ShowPropertiesFrame();
         }
 
         private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -503,7 +494,7 @@ namespace DatabaseBenchmark
 
         private void databasesWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.SelectTreeView(true);
+            SelectTreeView(true);
             btnTreeView.Checked = true;
         }
 
@@ -524,7 +515,7 @@ namespace DatabaseBenchmark
 
         private void logWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.ShowLogFrame();
+            ShowLogFrame();
         }
 
         private void MoveLegend(object sender, EventArgs e)
@@ -555,7 +546,7 @@ namespace DatabaseBenchmark
         {
             this.SuspendLayout();
 
-            MainLayout.RefreshDocking();
+            RefreshDocking();
 
             this.ResumeLayout();
         }
@@ -689,7 +680,7 @@ namespace DatabaseBenchmark
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             stopButton_Click(sender, e);
-            MainLayout.StoreDocking();
+            StoreDocking();
 
             Application.Exit();
         }
@@ -766,6 +757,12 @@ namespace DatabaseBenchmark
             ShowStepFrames();
             //StepFrames[TestMethod.Write].Activate();
 
+            foreach (StepFrame frame in StepFrames)
+            {
+                if (frame.Tag.ToString() == "Write")
+                    frame.Activate();
+            }
+
             LogFrame.Dispose();
             ShowLogFrame();
 
@@ -836,8 +833,8 @@ namespace DatabaseBenchmark
         {
             TreeFrame.DockState = DockState.DockLeft;
 
-            //foreach (var item in StepFrames)
-            //    item.Value.DockState = DockState.Document;
+            foreach (var item in StepFrames)
+                item.DockState = DockState.Document;
 
             if (!LogFrame.IsDisposed)
                 LogFrame.DockState = DockState.DockBottomAutoHide;
@@ -1023,8 +1020,6 @@ namespace DatabaseBenchmark
 
         #endregion
 
-        #region Private members
-
         //private TestMethod[] GetTestMethods()
         //{
         //    return Enum.GetValues(typeof(TestMethod)).Cast<TestMethod>().Where(item => item != TestMethod.None).ToArray();
@@ -1067,8 +1062,6 @@ namespace DatabaseBenchmark
 
             return frame;
         }
-
-        #endregion
 
         #endregion
     }

@@ -60,7 +60,8 @@ namespace DatabaseBenchmark.Frames
 
         public void CreateTreeViewNode(IDatabase database, bool state)
         {
-            TreeNode node1 = CreateTreeNode(database);
+            TreeNode node1 = new TreeNode();
+            node1 = CreateTreeNode(database);
             SetTreeNodeProperies(node1, database, 0, state);
         }
 

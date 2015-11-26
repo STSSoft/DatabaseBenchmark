@@ -97,7 +97,7 @@ namespace DatabaseBenchmark.Serialization
                 MainLayout.TreeView.ExpandAll();
                 MainLayout.TreeView.SelectFirstNode();
 
-                MainLayout.RefreshPropertiesFrame();
+                //RefreshPropertiesFrame();
 
             }
             catch (Exception exc)
