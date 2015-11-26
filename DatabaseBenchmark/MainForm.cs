@@ -46,14 +46,14 @@ namespace DatabaseBenchmark
         public volatile Task MainTask = null;
 
         public CancellationTokenSource Cancellation;
-        public static int Count = 0; // GetContentFromPersistString
+        public static int Count = 0;
 
-        //state
+        // State.
         public State MainState;
         public RunningState RunState;
         public StoppedState StopState;
 
-        //command
+        // Command.
         public PrepareInterfaceCommand PrepareGuiCommand;
         public PrepareBenchmark BenchmarkCommand;
         public ExecuteTestsCommand TestsCommand;
@@ -73,7 +73,7 @@ namespace DatabaseBenchmark
         public MainLayout MainLayout;
         public ProjectManager Manager;
 
-        //frames
+        // Frames.
         public TreeViewFrame TreeFrame;
         public LogFrame LogFrame;
         public PropertiesFrame PropertiesFrame;
