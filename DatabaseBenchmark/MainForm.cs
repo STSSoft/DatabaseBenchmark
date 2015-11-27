@@ -64,7 +64,7 @@ namespace DatabaseBenchmark
         public string CurrentStatus;
 
         public ILog Logger;
-        
+
         public MainLayout MainLayout;
         public ProjectManager Manager;
 
@@ -289,7 +289,7 @@ namespace DatabaseBenchmark
             BenchmarkCommand.Execute();
 
             TestsCommand = new ExecuteTestsCommand(this, BenchmarkCommand.Databases, BenchmarkCommand.Tests);
-            TestsCommand.Start();  
+            TestsCommand.Start();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -301,10 +301,6 @@ namespace DatabaseBenchmark
         {
         }
 
-        private void Tuning_TuningButtonClicked(List<Database> obj)
-        {
-            throw new NotImplementedException();
-        }
 
         private void View_Click(object sender, EventArgs e)
         {
@@ -329,7 +325,7 @@ namespace DatabaseBenchmark
             bool isChecked = (sender as ToolStripButton).Checked;
 
             foreach (var frame in StepFrames)
-               frame.SelectedChartIsLogarithmic = isChecked;
+                frame.SelectedChartIsLogarithmic = isChecked;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -504,21 +500,6 @@ namespace DatabaseBenchmark
             ShowTestFrame();
         }
 
-        private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //MainLayout.SelectFrame(TestMethod.Write);
-        }
-
-        private void readWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //MainLayout.SelectFrame(TestMethod.Read);
-        }
-
-        private void secondaryReadWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-           // MainLayout.SelectFrame(TestMethod.SecondaryRead);
-        }
-
         private void logWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowLogFrame();
@@ -526,6 +507,7 @@ namespace DatabaseBenchmark
 
         private void MoveLegend(object sender, EventArgs e)
         {
+            //TODO: None
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             LegendPossition position = (LegendPossition)Enum.Parse(typeof(LegendPossition), item.Text);
             //StepFrame selectedFrame = MainLayout.GetActiveFrame();
@@ -536,25 +518,13 @@ namespace DatabaseBenchmark
             //    menuItem.Checked = menuItem.Text == item.Text;
         }
 
-        private void showLegendToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool isChecked = (sender as ToolStripMenuItem).Checked;
-            //MainLayout.GetActiveFrame().SelectedChartLegendIsVisible = isChecked;
-        }
-
-        private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool isChecked = (sender as ToolStripMenuItem).Checked;
-            //MainLayout.GetActiveFrame().SelectedChartIsLogarithmic = isChecked;
-        }
-
         private void resetWindowLayoutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            this.SuspendLayout();
+            SuspendLayout();
 
             RefreshDocking();
 
-            this.ResumeLayout();
+            ResumeLayout();
         }
 
         #endregion
@@ -676,11 +646,6 @@ namespace DatabaseBenchmark
             {
                 Logger.Error("Application exception occured...", exc);
             }
-        }
-
-        private void trackBar1_ValueChanged(object sender, EventArgs e)
-        {
-            //toolStripLabel2.Text = (trackBar1.Value * 5).ToString() + " %";
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -830,6 +795,7 @@ namespace DatabaseBenchmark
 
                 LogFrame.Text = "Logs";
                 PropertiesFrame.Text = "Properties";
+                TestSelectionFrame.Text = "Test Selection";
             }
             catch (Exception exc)
             {
@@ -842,15 +808,12 @@ namespace DatabaseBenchmark
         {
             TreeFrame.DockState = DockState.DockLeft;
 
-            foreach (var item in StepFrames)
-                item.DockState = DockState.Document;
+            //foreach (var item in StepFrames)
+            //    item.DockState = DockState.Document;
 
-            if (!LogFrame.IsDisposed)
-                LogFrame.DockState = DockState.DockBottomAutoHide;
-            else
-                ShowLogFrame();
-
+            ShowLogFrame();
             ShowPropertiesFrame();
+            ShowTestFrame();
         }
 
         #endregion
@@ -878,13 +841,13 @@ namespace DatabaseBenchmark
         public void ShowBarChart(int column, bool visible)
         {
             foreach (var kv in StepFrames)
-               kv.ShowBarChart(column, visible);
+                kv.ShowBarChart(column, visible);
         }
 
         public void ClearCharts()
         {
             foreach (var frame in StepFrames)
-              frame.ClearCharts();
+                frame.ClearCharts();
         }
 
         #endregion
@@ -931,7 +894,7 @@ namespace DatabaseBenchmark
         public void ShowLogFrame()
         {
             if (LogFrame.IsDisposed)
-            { 
+            {
                 LogFrame = new LogFrame();
                 LogFrame.Text = "Logs";
             }
@@ -942,9 +905,11 @@ namespace DatabaseBenchmark
 
         public void ShowTestFrame()
         {
-            if(TestSelectionFrame.IsDisposed)
+            if (TestSelectionFrame.IsDisposed)
             {
                 TestSelectionFrame = new TestsFrame();
+                TestSelectionFrame.Text = "Test Selection";
+
                 TestSelectionFrame.Initialize();
             }
 
@@ -1075,6 +1040,46 @@ namespace DatabaseBenchmark
             }
 
             return frame;
+        }
+
+        #endregion
+
+        #region Recycle Bin
+
+        private void showLegendToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool isChecked = (sender as ToolStripMenuItem).Checked;
+            //MainLayout.GetActiveFrame().SelectedChartLegendIsVisible = isChecked;
+        }
+
+        private void Tuning_TuningButtonClicked(List<Database> obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //MainLayout.SelectFrame(TestMethod.Write);
+        }
+
+        private void readWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //MainLayout.SelectFrame(TestMethod.Read);
+        }
+
+        private void secondaryReadWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // MainLayout.SelectFrame(TestMethod.SecondaryRead);
+        }
+
+        private void trackBar1_ValueChanged(object sender, EventArgs e)
+        {
+            //toolStripLabel2.Text = (trackBar1.Value * 5).ToString() + " %";
+        }
+        private void logarithmicToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool isChecked = (sender as ToolStripMenuItem).Checked;
+            //MainLayout.GetActiveFrame().SelectedChartIsLogarithmic = isChecked;
         }
 
         #endregion

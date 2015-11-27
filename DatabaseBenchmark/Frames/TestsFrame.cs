@@ -38,7 +38,11 @@ namespace DatabaseBenchmark.Frames
         {
             get
             {
-                return (ITest)listView1.SelectedItems[0].Tag;
+                if (listView1.SelectedItems.Count != 0)
+                {
+                    return (ITest)listView1.SelectedItems[0].Tag;
+                }
+                return null;
             }
         }
 
@@ -51,9 +55,9 @@ namespace DatabaseBenchmark.Frames
 
                 List<ITest> tests = new List<ITest>();
 
-                foreach (var item in listView1.CheckedItems)
+                foreach (ListViewItem item in listView1.CheckedItems)
                 {
-                    var test = (ITest)(((ListViewItem)item).Tag);
+                    var test = (ITest)item.Tag;
                     tests.Add(test);
                 }
 
