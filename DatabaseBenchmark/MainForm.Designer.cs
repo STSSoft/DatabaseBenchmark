@@ -104,7 +104,7 @@
             this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.databasesWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dbOrderWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.categoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.indexTechnologyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
@@ -112,7 +112,6 @@
             this.readWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secondaryReadWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoNavigatetoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.logWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.propertiesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
@@ -152,6 +151,8 @@
             this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogProject = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialogPdf = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.testSelectionWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -676,15 +677,16 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.databasesWindowToolStripMenuItem,
-            this.treeToolStripMenuItem,
+            this.dbOrderWindowToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.testSelectionWindowToolStripMenuItem,
+            this.propertiesToolStripMenuItem1,
+            this.logWindowToolStripMenuItem,
             this.toolStripSeparator14,
             this.writeWindowToolStripMenuItem,
             this.readWindowToolStripMenuItem,
             this.secondaryReadWindowToolStripMenuItem,
             this.autoNavigatetoolStripMenuItem,
-            this.toolStripSeparator11,
-            this.logWindowToolStripMenuItem,
-            this.propertiesToolStripMenuItem1,
             this.toolStripSeparator20,
             this.showLegendToolStripMenuItem,
             this.legendPossitionToolStripMenuItem,
@@ -707,14 +709,14 @@
             this.databasesWindowToolStripMenuItem.Text = "Databases Window";
             this.databasesWindowToolStripMenuItem.Click += new System.EventHandler(this.databasesWindowToolStripMenuItem_Click);
             // 
-            // treeToolStripMenuItem
+            // dbOrderWindowToolStripMenuItem
             // 
-            this.treeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dbOrderWindowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.categoryToolStripMenuItem,
             this.indexTechnologyToolStripMenuItem});
-            this.treeToolStripMenuItem.Name = "treeToolStripMenuItem";
-            this.treeToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
-            this.treeToolStripMenuItem.Text = "Database Order";
+            this.dbOrderWindowToolStripMenuItem.Name = "dbOrderWindowToolStripMenuItem";
+            this.dbOrderWindowToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
+            this.dbOrderWindowToolStripMenuItem.Text = "Database Order";
             // 
             // categoryToolStripMenuItem
             // 
@@ -768,11 +770,6 @@
             this.autoNavigatetoolStripMenuItem.Name = "autoNavigatetoolStripMenuItem";
             this.autoNavigatetoolStripMenuItem.Size = new System.Drawing.Size(213, 30);
             this.autoNavigatetoolStripMenuItem.Text = "Auto Navigate Windows";
-            // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(210, 6);
             // 
             // logWindowToolStripMenuItem
             // 
@@ -1155,6 +1152,18 @@
             this.saveFileDialogPdf.Filter = "PDF (*.pdf)|*.pdf";
             this.saveFileDialogPdf.Title = "Export Results";
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(210, 6);
+            // 
+            // testSelectionWindowToolStripMenuItem
+            // 
+            this.testSelectionWindowToolStripMenuItem.Name = "testSelectionWindowToolStripMenuItem";
+            this.testSelectionWindowToolStripMenuItem.Size = new System.Drawing.Size(213, 30);
+            this.testSelectionWindowToolStripMenuItem.Text = "Test Selection Window";
+            this.testSelectionWindowToolStripMenuItem.Click += new System.EventHandler(this.testSelectionWindowToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -1222,7 +1231,6 @@
         private System.Windows.Forms.ToolStripMenuItem writeWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secondaryReadWindowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem resetWindowLayoutToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.OpenFileDialog openFileDialogProject;
@@ -1257,7 +1265,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem propertiesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
-        private System.Windows.Forms.ToolStripMenuItem treeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dbOrderWindowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItem2;
@@ -1296,6 +1304,8 @@
         public System.Windows.Forms.ToolStripMenuItem summaryReportToolStripMenuItemCsv;
         public System.Windows.Forms.ToolStripMenuItem detailedReportToolStripMenuItemCsv;
         public System.Windows.Forms.ToolStripMenuItem showLegendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem testSelectionWindowToolStripMenuItem;
     }
 }
 

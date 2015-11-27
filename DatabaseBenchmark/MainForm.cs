@@ -109,6 +109,10 @@ namespace DatabaseBenchmark
             TreeFrame.Show(dockPanel1);
             TreeFrame.DockState = DockState.DockLeft;
 
+            LogFrame = new LogFrame();
+            LogFrame.Show(dockPanel1);
+            LogFrame.DockState = DockState.DockBottomAutoHide;
+
             PropertiesFrame = new PropertiesFrame();
             PropertiesFrame.Caller = TreeFrame;
 
@@ -131,7 +135,7 @@ namespace DatabaseBenchmark
 
             WireDragDrop(Controls);
 
-            this.ResumeLayout();
+            ResumeLayout();
         }
 
         public void ShowTestProperties(object sender, EventArgs e)
@@ -495,6 +499,11 @@ namespace DatabaseBenchmark
             btnTreeView.Checked = true;
         }
 
+        private void testSelectionWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowTestFrame();
+        }
+
         private void writeWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //MainLayout.SelectFrame(TestMethod.Write);
@@ -751,20 +760,23 @@ namespace DatabaseBenchmark
             ShowTreeViewFrame();
             TreeFrame.ExpandAll();
 
-            ShowStepFrames();
+            // ShowStepFrames();
             //StepFrames[TestMethod.Write].Activate();
 
-            foreach (StepFrame frame in StepFrames)
-            {
-                if (frame.Tag.ToString() == "Write")
-                    frame.Activate();
-            }
+            //foreach (StepFrame frame in StepFrames)
+            //{
+            //    if (frame.Tag.ToString() == "Write")
+            //        frame.Activate();
+            //}
 
             LogFrame.Dispose();
             ShowLogFrame();
 
             PropertiesFrame.Dispose();
             ShowPropertiesFrame();
+
+            TestSelectionFrame.Dispose();
+
 
         }
 
@@ -885,11 +897,10 @@ namespace DatabaseBenchmark
             {
                 TreeFrame = new TreeViewFrame();
                 TreeFrame.CreateTreeView();
+                TreeFrame.Text = "Databases";
             }
 
             TreeFrame.Activate();
-
-            TreeFrame.Text = "Databases";
             TreeFrame.Show(dockPanel1);
 
             TreeFrame.DockState = DockState.DockLeft;
@@ -900,39 +911,45 @@ namespace DatabaseBenchmark
 
         public void ShowPropertiesFrame()
         {
-            if (!PropertiesFrame.IsDisposed)
-            {
-                PropertiesFrame.Show(dockPanel1);
-                PropertiesFrame.DockState = DockState.DockRight;
-            }
-            else
+            if (PropertiesFrame.IsDisposed)
             {
                 PropertiesFrame = new PropertiesFrame();
-
-                PropertiesFrame.Show(dockPanel1);
-                PropertiesFrame.DockState = DockState.DockRight;
                 PropertiesFrame.Text = "Properties";
+            }
 
-                var database = TreeFrame.GetSelectedDatabase();
-                if (database != null)
-                {
-                    PropertiesFrame.Caller = TreeFrame;
-                    PropertiesFrame.SetProperties(database);
-                }
+            PropertiesFrame.Show(dockPanel1);
+            PropertiesFrame.DockState = DockState.DockRight;
+
+            var database = TreeFrame.GetSelectedDatabase();
+            if (database != null)
+            {
+                PropertiesFrame.Caller = TreeFrame;
+                PropertiesFrame.SetProperties(database);
             }
         }
 
         public void ShowLogFrame()
         {
-            if (!LogFrame.IsDisposed)
-                LogFrame.Show(dockPanel1);
-            else
-            {
+            if (LogFrame.IsDisposed)
+            { 
                 LogFrame = new LogFrame();
-                LogFrame.Show(dockPanel1);
-                LogFrame.DockState = DockState.DockBottomAutoHide;
                 LogFrame.Text = "Logs";
             }
+
+            LogFrame.Show(dockPanel1);
+            LogFrame.DockState = DockState.DockBottomAutoHide;
+        }
+
+        public void ShowTestFrame()
+        {
+            if(TestSelectionFrame.IsDisposed)
+            {
+                TestSelectionFrame = new TestsFrame();
+                TestSelectionFrame.Initialize();
+            }
+
+            TestSelectionFrame.Show(dockPanel1);
+            TestSelectionFrame.DockState = DockState.DockLeft;
         }
 
         private void ShowStepFrames()
