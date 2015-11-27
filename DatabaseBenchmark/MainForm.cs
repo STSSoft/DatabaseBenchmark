@@ -419,7 +419,7 @@ namespace DatabaseBenchmark
 
         private void editToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            bool state = MainLayout.TreeView.IsSelectedNodeDatabase;
+            bool state = TreeFrame.IsSelectedNodeDatabase;
 
             editToolStripMenuItem.DropDownItems[0].Visible = state; // Clone.
             editToolStripMenuItem.DropDownItems[1].Visible = state; // Rename.
@@ -427,28 +427,28 @@ namespace DatabaseBenchmark
 
         private void cloneToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.TreeView.CloneNode();
+            TreeFrame.CloneNode();
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.TreeView.RenameNode();
+            TreeFrame.RenameNode();
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.TreeView.DeleteNode();
+            TreeFrame.DeleteNode();
         }
 
         private void restoreDefaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.TreeView.RestoreDefault();
+            TreeFrame.RestoreDefault();
         }
 
         private void restoreDefaultAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.TreeView.ClearTreeViewNodes();
-            MainLayout.TreeView.CreateTreeView();
+            TreeFrame.ClearTreeViewNodes();
+            TreeFrame.CreateTreeView();
         }
 
         private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -458,12 +458,12 @@ namespace DatabaseBenchmark
 
         private void expandAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.TreeView.ExpandAll();
+            TreeFrame.ExpandAll();
         }
 
         private void collapseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.TreeView.CollapseAll();
+            TreeFrame.CollapseAll();
         }
 
         #endregion
@@ -736,14 +736,14 @@ namespace DatabaseBenchmark
 
         private void categoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.TreeView.treeViewOrder = TreeViewOrder.Category;
-            MainLayout.TreeView.SetTreeViewOrder();
+            TreeFrame.treeViewOrder = TreeViewOrder.Category;
+            TreeFrame.SetTreeViewOrder();
         }
 
         private void indexTechnologyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MainLayout.TreeView.treeViewOrder = TreeViewOrder.IndexTechnology;
-            MainLayout.TreeView.SetTreeViewOrder();
+            TreeFrame.treeViewOrder = TreeViewOrder.IndexTechnology;
+            TreeFrame.SetTreeViewOrder();
         }
 
         #region Main Layout
