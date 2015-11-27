@@ -103,6 +103,8 @@ namespace DatabaseBenchmark
 
             Manager = new ProjectManager(MainLayout);
 
+            CurrentBenchmark = new Benchmark();
+
             TreeFrame = new TreeViewFrame();
             TreeFrame.CreateTreeView();
 
@@ -134,10 +136,25 @@ namespace DatabaseBenchmark
             this.ResumeLayout();
         }
 
-        public void ShowTestProperties(object sender, EventArgs e)
+        #region Tests
+
+        private void startButton_Click(object sender, EventArgs e)
         {
-            PropertiesFrame.SetProperties(TestSelectionFrame.SelectedTest);
+            PrepareGuiCommand.Execute();
+            BenchmarkCommand.Execute();
+
+            CreateStepFrames(BenchmarkCommand.Tests);
+
+            TestsCommand = new ExecuteTestsCommand(this, BenchmarkCommand.Databases, BenchmarkCommand.Tests);
+            TestsCommand.Start();
         }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            TestsCommand.Stop();
+        }
+
+        #endregion
 
         #region Report methods
 
@@ -193,6 +210,30 @@ namespace DatabaseBenchmark
 
         #endregion
 
+        public void CreateStepFrames(params ITest[] tests)
+        {
+            foreach (var test in tests)
+            {
+                foreach (var report in test.Reports)
+                {
+                    StepFrame frame = new StepFrame();
+                    frame.Text = report.Name;
+                    frame.Dock = DockStyle.Fill;
+
+                    // Hide time, CPU, memory and I/O view from the layout.
+                    frame.LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Absolute, 0);
+                    frame.LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Absolute, 0);
+                    frame.LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Absolute, 0);
+                    frame.LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Absolute, 0);
+                }
+            }
+        }
+
+        public void ShowTestProperties(object sender, EventArgs e)
+        {
+            PropertiesFrame.SetProperties(TestSelectionFrame.SelectedTest);
+        }
+        
         #region Export
 
         // CSV.
@@ -278,29 +319,6 @@ namespace DatabaseBenchmark
         #endregion
 
         #region Buttons & Click Events
-
-        private void startButton_Click(object sender, EventArgs e)
-        {
-            PrepareGuiCommand.Execute();
-            BenchmarkCommand.Execute();
-
-            TestsCommand = new ExecuteTestsCommand(this, BenchmarkCommand.Databases, BenchmarkCommand.Tests);
-            TestsCommand.Start();  
-        }
-
-        private void stopButton_Click(object sender, EventArgs e)
-        {
-            TestsCommand.Stop();
-        }
-
-        private void StartTest(Database[] databases, List<KeyValuePair<string, Color>> chartValues)
-        {
-        }
-
-        private void Tuning_TuningButtonClicked(List<Database> obj)
-        {
-            throw new NotImplementedException();
-        }
 
         private void View_Click(object sender, EventArgs e)
         {
