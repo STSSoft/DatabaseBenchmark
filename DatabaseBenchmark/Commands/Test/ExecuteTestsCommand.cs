@@ -1,4 +1,5 @@
 ﻿using DatabaseBenchmark.Core;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,49 +34,15 @@ namespace DatabaseBenchmark.Commands
 
         private void DoBenchmark()
         {
-            var benchmark = Form.CurrentTest;
-            benchmark.ExecuteTests(Form.Cancellation.Token, Tests);
-            
-            //TODO:
-            //Fix this.
-            //testSuite.OnTestMethodCompleted += Report;
-            //testSuite.OnException += OnException;
+            var benchmark = Form.CurrentBenchmark;
 
             try
             {
-                //foreach (var benchmark in History)
-                //{
-                //    if (Cancellation.IsCancellationRequested)
-                //        break;
-
-                    //Current = benchmark;
-                    //testSuite.ExecuteInit(benchmark);
-
-                    //// Write.
-                    //MainLayout.SetCurrentMethod(TestMethod.Write);
-                    //CurrentStatus = TestMethod.Write.ToString();
-
-                    //testSuite.ExecuteWrite(benchmark);
-
-                    //// Read.
-                    //MainLayout.SetCurrentMethod(TestMethod.Read);
-                    //CurrentStatus = TestMethod.Read.ToString();
-
-                    //testSuite.ExecuteRead(benchmark);
-
-                    //// Secondary Read.
-                    //MainLayout.SetCurrentMethod(TestMethod.SecondaryRead);
-                    //CurrentStatus = TestMethod.SecondaryRead.ToString();
-
-                    //testSuite.ExecuteSecondaryRead(benchmark);
-
-                    //// Finish.
-                    //CurrentStatus = TestMethod.None.ToString();
-                    //testSuite.ExecuteFinish(benchmark);
-                //}
+                benchmark.ExecuteTests(Form.Cancellation.Token, Tests);
             }
-            finally
+            catch (Exception exc)
             {
+                Logger.Error("Test execution error...", exc);
             }
         }
     }

@@ -1,4 +1,6 @@
 ﻿using DatabaseBenchmark.Core;
+using DatabaseBenchmark.Properties;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,11 @@ namespace DatabaseBenchmark.Commands
     public abstract class TestCommand
     {
         /// <summary>
+        /// Logger object for logging information or errors.
+        /// </summary>
+        protected ILog Logger;
+
+        /// <summary>
         /// The main application form.
         /// </summary>
         public MainForm Form;
@@ -27,6 +34,8 @@ namespace DatabaseBenchmark.Commands
 
         public TestCommand(MainForm form, Database[] databases, ITest[] tests)
         {
+            Logger = LogManager.GetLogger(Settings.Default.TestLogger);
+
             Form = form;
 
             TestedDatabases = databases;

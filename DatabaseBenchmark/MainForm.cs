@@ -58,14 +58,9 @@ namespace DatabaseBenchmark
         public PrepareBenchmark BenchmarkCommand;
         public ExecuteTestsCommand TestsCommand;
 
-        public bool TestFailed;
-        public Benchmark CurrentTest;
+        public Benchmark CurrentBenchmark;
         public List<Benchmark> History;
 
-        public int TableCount;
-        public long RecordCount;
-
-        public float Randomness = 0.0f;
         public string CurrentStatus;
 
         public ILog Logger;
@@ -82,12 +77,11 @@ namespace DatabaseBenchmark
         public List<ToolStripButton> ViewButtons;
         public List<StepFrame> StepFrames;
 
-
-
         public MainForm()
         {
             InitializeComponent();
-            SuspendLayout();
+
+            this.SuspendLayout();
 
             openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
             saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
@@ -111,19 +105,22 @@ namespace DatabaseBenchmark
 
             TreeFrame = new TreeViewFrame();
             TreeFrame.CreateTreeView();
+
             TreeFrame.Show(dockPanel1);
             TreeFrame.DockState = DockState.DockLeft;
 
             PropertiesFrame = new PropertiesFrame();
             PropertiesFrame.Caller = TreeFrame;
+
             PropertiesFrame.Show(dockPanel1);
             PropertiesFrame.DockState = DockState.DockRight;
 
             TestSelectionFrame = new TestsFrame();
             TestSelectionFrame.TestClick += ShowTestProperties;
             TestSelectionFrame.Initialize();
+
             TestSelectionFrame.Show(dockPanel1);
-            TestSelectionFrame.DockState = DockState.DockRight;
+            TestSelectionFrame.DockState = DockState.DockLeft;
 
             ViewButtons = new List<ToolStripButton>();
             ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x => x.CheckOnClick).ToList();
@@ -134,7 +131,7 @@ namespace DatabaseBenchmark
 
             WireDragDrop(Controls);
 
-            ResumeLayout();
+            this.ResumeLayout();
         }
 
         public void ShowTestProperties(object sender, EventArgs e)
