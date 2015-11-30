@@ -67,7 +67,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PropertiesFrame";
             this.ShowIcon = false;
-            this.Text = "BenchmarkInstanceProperies";
+            this.Text = "Properies";
             this.ResumeLayout(false);
 
         }

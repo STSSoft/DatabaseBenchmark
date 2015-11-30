@@ -19,6 +19,9 @@ namespace DatabaseBenchmark.Frames
 
         public void SetProperties(Object obj)
         {
+            if (propertyGrid1.IsDisposed)
+                return;
+
             propertyGrid1.SelectedObject = obj;
 
             Invalidate();

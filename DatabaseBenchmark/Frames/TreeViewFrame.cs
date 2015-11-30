@@ -431,6 +431,18 @@ namespace DatabaseBenchmark.Frames
                 tuning.Close();
             }
         }
+
+        public event EventHandler DatabaseClick
+        {
+            add 
+            {
+                treeView.Click += value;
+            }
+            remove
+            {
+                treeView.Click -= value;
+            }
+        }
     }
 
     public enum TreeViewOrder

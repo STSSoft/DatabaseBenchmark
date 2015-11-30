@@ -25,11 +25,12 @@ namespace DatabaseBenchmark.Commands
         {
             //Form.History.Clear();
 
-            var databases = Form.MainLayout.TreeView.GetSelectedDatabases();
+            var databases = Form.TreeFrame.GetSelectedDatabases();
             var tests = Form.TestSelectionFrame.CheckedTests;
 
             foreach (var database in databases)
             {
+
                 //// TODO: Fix this.
                 //var session = new BenchmarkSession(database, TableCount, RecordCount, Randomness, Cancellation);
                 //History.Add(session);

@@ -105,6 +105,7 @@ namespace DatabaseBenchmark
 
             TreeFrame = new TreeViewFrame();
             TreeFrame.CreateTreeView();
+            TreeFrame.DatabaseClick += ShowDatabaseProperties;
 
             TreeFrame.Show(dockPanel1);
             TreeFrame.DockState = DockState.DockLeft;
@@ -114,7 +115,7 @@ namespace DatabaseBenchmark
             LogFrame.DockState = DockState.DockBottomAutoHide;
 
             PropertiesFrame = new PropertiesFrame();
-            PropertiesFrame.Caller = TreeFrame;
+            //PropertiesFrame.Caller = TreeFrame;
 
             PropertiesFrame.Show(dockPanel1);
             PropertiesFrame.DockState = DockState.DockRight;
@@ -126,6 +127,8 @@ namespace DatabaseBenchmark
             TestSelectionFrame.Show(dockPanel1);
             TestSelectionFrame.DockState = DockState.DockLeft;
 
+            PropertiesFrame.Caller = TreeFrame;
+
             ViewButtons = new List<ToolStripButton>();
             ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x => x.CheckOnClick).ToList();
 
@@ -136,6 +139,11 @@ namespace DatabaseBenchmark
             WireDragDrop(Controls);
 
             ResumeLayout();
+        }
+
+        private void ShowDatabaseProperties(object sender, EventArgs e)
+        {
+            PropertiesFrame.SetProperties(TreeFrame.GetSelectedDatabase());
         }
 
         public void ShowTestProperties(object sender, EventArgs e)
@@ -595,8 +603,9 @@ namespace DatabaseBenchmark
 
                 if (MainState == State.TestStopped)
                 {
-                    StopState.Handle();
+                    StopState.Handle();  
                 }
+
 
                 // TODO: Fix this.
                 //var method = session.CurrentMethod;
@@ -742,7 +751,6 @@ namespace DatabaseBenchmark
 
             TestSelectionFrame.Dispose();
 
-
         }
 
         public Dictionary<string, bool> GetCheckedToolStripButtons()
@@ -883,12 +891,15 @@ namespace DatabaseBenchmark
             PropertiesFrame.Show(dockPanel1);
             PropertiesFrame.DockState = DockState.DockRight;
 
-            var database = TreeFrame.GetSelectedDatabase();
-            if (database != null)
-            {
-                PropertiesFrame.Caller = TreeFrame;
-                PropertiesFrame.SetProperties(database);
-            }
+            TreeFrame.DatabaseClick += ShowDatabaseProperties;   
+            TestSelectionFrame.TestClick += ShowTestProperties;
+
+            //var database = TreeFrame.GetSelectedDatabase();
+            //if (database != null)
+            //{
+            //    PropertiesFrame.Caller = TreeFrame;
+            //    PropertiesFrame.SetProperties(database);
+            //}
         }
 
         public void ShowLogFrame()
@@ -951,11 +962,6 @@ namespace DatabaseBenchmark
         public void EnablePropertiesFrame(bool state)
         {
             PropertiesFrame.Enabled = state;
-        }
-
-        public void RefreshPropertiesFrame()
-        {
-            PropertiesFrame.SetProperties(TreeFrame.GetSelectedDatabase());
         }
 
         public void ClearLogFrame()
@@ -1050,6 +1056,11 @@ namespace DatabaseBenchmark
         {
             bool isChecked = (sender as ToolStripMenuItem).Checked;
             //MainLayout.GetActiveFrame().SelectedChartLegendIsVisible = isChecked;
+        }
+
+        public void RefreshPropertiesFrame()
+        {
+            PropertiesFrame.SetProperties(TreeFrame.GetSelectedDatabase());
         }
 
         private void Tuning_TuningButtonClicked(List<Database> obj)
