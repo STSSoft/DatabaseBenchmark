@@ -42,12 +42,13 @@
             this.expandAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.separator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tuningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxOrder = new System.Windows.Forms.GroupBox();
             this.TreeViewOrderComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tuningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoreDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuDatabase.SuspendLayout();
             this.groupBoxOrder.SuspendLayout();
             this.SuspendLayout();
@@ -86,6 +87,7 @@
             this.renameToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.separator1,
+            this.restoreDefaultToolStripMenuItem,
             this.restoreDefaultAllToolStripMenuItem,
             this.separator2,
             this.expandAllToolStripMenuItem,
@@ -94,7 +96,7 @@
             this.tuningToolStripMenuItem,
             this.propertiesToolStripMenuItem});
             this.contextMenuDatabase.Name = "contextMenuDatabase";
-            this.contextMenuDatabase.Size = new System.Drawing.Size(180, 284);
+            this.contextMenuDatabase.Size = new System.Drawing.Size(180, 292);
             // 
             // cloneToolStripMenuItem
             // 
@@ -161,6 +163,13 @@
             this.separator3.Name = "separator3";
             this.separator3.Size = new System.Drawing.Size(176, 6);
             // 
+            // tuningToolStripMenuItem
+            // 
+            this.tuningToolStripMenuItem.Name = "tuningToolStripMenuItem";
+            this.tuningToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
+            this.tuningToolStripMenuItem.Text = "Tuning";
+            this.tuningToolStripMenuItem.Click += new System.EventHandler(this.tuningToolStripMenuItem_Click);
+            // 
             // propertiesToolStripMenuItem
             // 
             this.propertiesToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.options_24x24;
@@ -206,12 +215,12 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Order By:";
             // 
-            // tuningToolStripMenuItem
+            // restoreDefaultToolStripMenuItem
             // 
-            this.tuningToolStripMenuItem.Name = "tuningToolStripMenuItem";
-            this.tuningToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
-            this.tuningToolStripMenuItem.Text = "Tuning";
-            this.tuningToolStripMenuItem.Click += new System.EventHandler(this.tuningToolStripMenuItem_Click);
+            this.restoreDefaultToolStripMenuItem.Name = "restoreDefaultToolStripMenuItem";
+            this.restoreDefaultToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
+            this.restoreDefaultToolStripMenuItem.Text = "Restore Default";
+            this.restoreDefaultToolStripMenuItem.Click += new System.EventHandler(this.restoreDefaultToolStripMenuItem_Click);
             // 
             // TreeViewFrame
             // 
@@ -254,5 +263,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ComboBox TreeViewOrderComboBox;
         private System.Windows.Forms.ToolStripMenuItem tuningToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem restoreDefaultToolStripMenuItem;
     }
 }

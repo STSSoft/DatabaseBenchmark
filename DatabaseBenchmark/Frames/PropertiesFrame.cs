@@ -48,6 +48,7 @@ namespace DatabaseBenchmark.Frames
 
         private void restoreDefaultBtn_Click(object sender, EventArgs e)
         {
+            var test = Caller;
         }
     }
 }

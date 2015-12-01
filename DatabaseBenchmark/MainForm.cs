@@ -106,6 +106,7 @@ namespace DatabaseBenchmark
             TreeFrame = new TreeViewFrame();
             TreeFrame.CreateTreeView();
             TreeFrame.DatabaseClick += ShowDatabaseProperties;
+            TreeFrame.DefaultRestored +=PropertiesDefaultRestored;
 
             TreeFrame.Show(dockPanel1);
             TreeFrame.DockState = DockState.DockLeft;
@@ -139,6 +140,12 @@ namespace DatabaseBenchmark
             WireDragDrop(Controls);
 
             ResumeLayout();
+        }
+
+        private void PropertiesDefaultRestored(object obj)
+        {
+            if (!PropertiesFrame.IsDisposed)
+                PropertiesFrame.SetProperties(obj);
         }
 
         private void ShowDatabaseProperties(object sender, EventArgs e)
@@ -1094,5 +1101,6 @@ namespace DatabaseBenchmark
         }
 
         #endregion
+
     }
 }

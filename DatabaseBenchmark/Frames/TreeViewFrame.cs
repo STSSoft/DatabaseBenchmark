@@ -22,6 +22,7 @@ namespace DatabaseBenchmark.Frames
 
         public TreeViewOrder treeViewOrder;
         public event Action<Object> SelectedDatabaseChanged; // Object = Database
+        public event Action<Object> DefaultRestored;
 
         public TreeViewFrame()
         {
@@ -443,6 +444,14 @@ namespace DatabaseBenchmark.Frames
                 treeView.Click -= value;
             }
         }
+
+        private void restoreDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           RestoreDefault();
+
+           if (DefaultRestored != null)
+               DefaultRestored.Invoke(GetSelectedDatabase());
+        }  
     }
 
     public enum TreeViewOrder
