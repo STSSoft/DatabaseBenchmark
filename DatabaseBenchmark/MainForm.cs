@@ -116,7 +116,7 @@ namespace DatabaseBenchmark
             LogFrame.DockState = DockState.DockBottomAutoHide;
 
             PropertiesFrame = new PropertiesFrame();
-            //PropertiesFrame.Caller = TreeFrame;
+            PropertiesFrame.DatabaseNameChanged+=DatabaseNameChanged;
 
             PropertiesFrame.Show(dockPanel1);
             PropertiesFrame.DockState = DockState.DockRight;
@@ -140,17 +140,6 @@ namespace DatabaseBenchmark
             WireDragDrop(Controls);
 
             ResumeLayout();
-        }
-
-        private void PropertiesDefaultRestored(object obj)
-        {
-            if (!PropertiesFrame.IsDisposed)
-                PropertiesFrame.SetProperties(obj);
-        }
-
-        private void ShowDatabaseProperties(object sender, EventArgs e)
-        {
-            PropertiesFrame.SetProperties(TreeFrame.GetSelectedDatabase());
         }
 
         public void ShowTestProperties(object sender, EventArgs e)
@@ -900,6 +889,7 @@ namespace DatabaseBenchmark
 
             TreeFrame.DatabaseClick += ShowDatabaseProperties;   
             TestSelectionFrame.TestClick += ShowTestProperties;
+            PropertiesFrame.DatabaseNameChanged += DatabaseNameChanged;
 
             //var database = TreeFrame.GetSelectedDatabase();
             //if (database != null)
@@ -1053,6 +1043,23 @@ namespace DatabaseBenchmark
             }
 
             return frame;
+        }
+
+        private void DatabaseNameChanged(string name)
+        {
+            TreeFrame.GetSelectedDatabase().Name = name;
+            TreeFrame.RefreshTreeView();
+        }
+
+        private void PropertiesDefaultRestored(object obj)
+        {
+            if (!PropertiesFrame.IsDisposed)
+                PropertiesFrame.SetProperties(obj);
+        }
+
+        private void ShowDatabaseProperties(object sender, EventArgs e)
+        {
+            PropertiesFrame.SetProperties(TreeFrame.GetSelectedDatabase());
         }
 
         #endregion

@@ -411,11 +411,6 @@ namespace DatabaseBenchmark.Frames
             }
         }
 
-        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void tuningToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TuningForm tuning = new TuningForm();
