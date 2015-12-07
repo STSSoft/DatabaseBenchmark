@@ -823,7 +823,7 @@
             this.speedToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.speedToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.SpeedView_48x48;
             this.speedToolStripMenuItem.Name = "speedToolStripMenuItem";
-            this.speedToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.speedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.speedToolStripMenuItem.Tag = "0";
             this.speedToolStripMenuItem.Text = "Speed";
             this.speedToolStripMenuItem.Click += new System.EventHandler(this.EditBartItem_Click);
@@ -833,7 +833,7 @@
             this.timeToolStripMenuItem.CheckOnClick = true;
             this.timeToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.TimeView_48x48;
             this.timeToolStripMenuItem.Name = "timeToolStripMenuItem";
-            this.timeToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.timeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.timeToolStripMenuItem.Tag = "1";
             this.timeToolStripMenuItem.Text = "Time";
             this.timeToolStripMenuItem.Click += new System.EventHandler(this.EditBartItem_Click);
@@ -845,7 +845,7 @@
             this.sizeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.sizeToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.sizeview_48x48;
             this.sizeToolStripMenuItem.Name = "sizeToolStripMenuItem";
-            this.sizeToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.sizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.sizeToolStripMenuItem.Tag = "2";
             this.sizeToolStripMenuItem.Text = "Size";
             this.sizeToolStripMenuItem.Click += new System.EventHandler(this.EditBartItem_Click);
@@ -855,7 +855,7 @@
             this.cPUToolStripMenuItem.CheckOnClick = true;
             this.cPUToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.processor_48x48;
             this.cPUToolStripMenuItem.Name = "cPUToolStripMenuItem";
-            this.cPUToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.cPUToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cPUToolStripMenuItem.Tag = "3";
             this.cPUToolStripMenuItem.Text = "CPU";
             this.cPUToolStripMenuItem.Visible = false;
@@ -866,7 +866,7 @@
             this.rAMToolStripMenuItem.CheckOnClick = true;
             this.rAMToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.ram_48x48;
             this.rAMToolStripMenuItem.Name = "rAMToolStripMenuItem";
-            this.rAMToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.rAMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rAMToolStripMenuItem.Tag = "4";
             this.rAMToolStripMenuItem.Text = "RAM";
             this.rAMToolStripMenuItem.Click += new System.EventHandler(this.EditBartItem_Click);
@@ -876,7 +876,7 @@
             this.iOToolStripMenuItem.CheckOnClick = true;
             this.iOToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.io_48x48;
             this.iOToolStripMenuItem.Name = "iOToolStripMenuItem";
-            this.iOToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.iOToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.iOToolStripMenuItem.Tag = "5";
             this.iOToolStripMenuItem.Text = "I/O";
             this.iOToolStripMenuItem.Visible = false;

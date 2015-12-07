@@ -818,6 +818,7 @@ namespace DatabaseBenchmark
             ShowLogFrame();
             ShowPropertiesFrame();
             ShowTestFrame();
+            ShowTreeViewFrame();
         }
 
         #endregion
@@ -921,6 +922,7 @@ namespace DatabaseBenchmark
                 TestSelectionFrame.Initialize();
             }
 
+            TestSelectionFrame.TestClick += ShowTestProperties;
             TestSelectionFrame.Show(dockPanel1);
             TestSelectionFrame.DockState = DockState.DockLeft;
         }
