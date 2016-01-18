@@ -12,6 +12,8 @@ namespace DatabaseBenchmark.Frames
     {
         public Form Caller { get; set; }
 
+        public event Action<string> DatabaseNameChanged;
+
         public PropertiesFrame()
         {
             InitializeComponent();       
@@ -19,6 +21,9 @@ namespace DatabaseBenchmark.Frames
 
         public void SetProperties(Object obj)
         {
+            if (propertyGrid1.IsDisposed)
+                return;
+
             propertyGrid1.SelectedObject = obj;
 
             Invalidate();
@@ -39,12 +44,18 @@ namespace DatabaseBenchmark.Frames
 
         private void propertyGrid1_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            if (e.ChangedItem.Label == "Name")
-                Caller.Refresh();
+            GridItem changedItem = e.ChangedItem;
+            if (changedItem.Label == "Name")
+            {
+                //Caller.Refresh();
+                if (DatabaseNameChanged != null)
+                    DatabaseNameChanged.Invoke(changedItem.Value.ToString());
+            }         
         }
 
         private void restoreDefaultBtn_Click(object sender, EventArgs e)
         {
+            var test = Caller;
         }
     }
 }

@@ -23,15 +23,13 @@ namespace DatabaseBenchmark.Commands
 
         public override void Execute()
         {
-            Form.History.Clear();
+            //Form.History.Clear();
 
             var databases = Form.TreeFrame.GetSelectedDatabases();
             var tests = Form.TestSelectionFrame.CheckedTests;
 
             foreach (var database in databases)
             {
-                foreach (var test in tests)
-                    test.Database = database;
 
                 //// TODO: Fix this.
                 //var session = new BenchmarkSession(database, TableCount, RecordCount, Randomness, Cancellation);

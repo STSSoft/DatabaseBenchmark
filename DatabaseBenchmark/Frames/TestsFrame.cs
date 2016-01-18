@@ -2,12 +2,6 @@
 using DatabaseBenchmark.Core.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -31,6 +25,7 @@ namespace DatabaseBenchmark.Frames
                 item.Tag = test;
 
                 listView1.Items.Add(item);
+
             }
         }
 
@@ -38,7 +33,14 @@ namespace DatabaseBenchmark.Frames
         {
             get
             {
-                return (ITest)listView1.SelectedItems[0].Tag;
+                //TODO: Fix it for more test types.
+                foreach (ListViewItem item in listView1.Items)
+                {
+                    if (item.Selected || !item.Checked)
+                     return  (ITest)item.Tag;
+                }
+
+                return null;
             }
         }
 
@@ -51,9 +53,9 @@ namespace DatabaseBenchmark.Frames
 
                 List<ITest> tests = new List<ITest>();
 
-                foreach (var item in listView1.CheckedItems)
+                foreach (ListViewItem item in listView1.CheckedItems)
                 {
-                    var test = (ITest)(((ListViewItem)item).Tag);
+                    var test = (ITest)item.Tag;
                     tests.Add(test);
                 }
 

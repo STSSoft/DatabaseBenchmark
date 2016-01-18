@@ -22,6 +22,7 @@ namespace DatabaseBenchmark.Frames
 
         public TreeViewOrder treeViewOrder;
         public event Action<Object> SelectedDatabaseChanged; // Object = Database
+        public event Action<Object> DefaultRestored;
 
         public TreeViewFrame()
         {
@@ -410,11 +411,6 @@ namespace DatabaseBenchmark.Frames
             }
         }
 
-        private void propertiesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void tuningToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TuningForm tuning = new TuningForm();
@@ -431,6 +427,26 @@ namespace DatabaseBenchmark.Frames
                 tuning.Close();
             }
         }
+
+        public event EventHandler DatabaseClick
+        {
+            add 
+            {
+                treeView.Click += value;
+            }
+            remove
+            {
+                treeView.Click -= value;
+            }
+        }
+
+        private void restoreDefaultToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           RestoreDefault();
+
+           if (DefaultRestored != null)
+               DefaultRestored.Invoke(GetSelectedDatabase());
+        }  
     }
 
     public enum TreeViewOrder
