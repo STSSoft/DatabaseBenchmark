@@ -15,6 +15,9 @@ using WeifenLuo.WinFormsUI.Docking;
 using System.Diagnostics;
 using DatabaseBenchmark.Properties;
 using DatabaseBenchmark.Commands;
+using DatabaseBenchmark.Commands.Test;
+using DatabaseBenchmark.Commands.View;
+using DatabaseBenchmark.Factory;
 using DatabaseBenchmark.States;
 
 /*
@@ -38,8 +41,8 @@ namespace DatabaseBenchmark
 {
     public partial class MainForm : Form
     {
-        public static readonly string DATABASES_DIRECTORY = Path.Combine(Application.StartupPath + "\\Databases");
-        public static readonly string CONFIGURATION_FOLDER = Path.Combine(Application.StartupPath + "\\Config");
+        public static readonly string DatabasesDirectory = Path.Combine(Application.StartupPath + "\\Databases");
+        public static readonly string ConfigurationFolder = Path.Combine(Application.StartupPath + "\\Config");
 
         public string DockingConfigurationDirectory;
 
@@ -54,9 +57,9 @@ namespace DatabaseBenchmark
         public StoppedState StopState;
 
         // Command.
-        public PrepareInterfaceCommand PrepareGuiCommand;
-        public PrepareBenchmark BenchmarkCommand;
-        public ExecuteTestsCommand TestsCommand;
+        public InterfaceCommand GuiCommand;
+        public BenchmarkCommand BenchmarkCommand;
+        public TestExecutionCommand TestsCommand;
 
         public Benchmark CurrentBenchmark;
         public List<Benchmark> History;
@@ -64,8 +67,6 @@ namespace DatabaseBenchmark
         public string CurrentStatus;
 
         public ILog Logger;
-
-        public MainLayout MainLayout;
         public ProjectManager Manager;
 
         // Frames.
@@ -74,8 +75,10 @@ namespace DatabaseBenchmark
         public PropertiesFrame PropertiesFrame;
         public TestsFrame TestSelectionFrame;
 
-        public List<ToolStripButton> ViewButtons;
+        public StepFrame ActiveFrame;
         public List<StepFrame> StepFrames;
+
+        public List<ToolStripButton> ViewButtons;
 
         public MainForm()
         {
@@ -83,61 +86,10 @@ namespace DatabaseBenchmark
 
             this.SuspendLayout();
 
-            openFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
-            saveFileDialogProject.InitialDirectory = CONFIGURATION_FOLDER;
+            openFileDialogProject.InitialDirectory = ConfigurationFolder;
+            saveFileDialogProject.InitialDirectory = ConfigurationFolder;
 
-            PrepareGuiCommand = new PrepareInterfaceCommand(this);
-            BenchmarkCommand = new PrepareBenchmark(this);
-
-            History = new List<Benchmark>();
-
-            // Loggers and tracers.
-            Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
-            Logger.Info(Environment.NewLine);
-            Logger.Info("Application started...");
-
-            Trace.Listeners.Add(new Log4NetTraceListener(Settings.Default.TestLogger));
-            Trace.Listeners.Add(new Log4NetTraceListener(Settings.Default.TestLogger));
-
-            MainLayout = new MainLayout(dockPanel1, new ToolStripComboBox[] { }.ToList(), ViewButtons, null, CONFIGURATION_FOLDER);
-
-            Manager = new ProjectManager(MainLayout);
-
-            TreeFrame = new TreeViewFrame();
-            TreeFrame.CreateTreeView();
-            TreeFrame.DatabaseClick += ShowDatabaseProperties;
-            TreeFrame.DefaultRestored +=PropertiesDefaultRestored;
-
-            TreeFrame.Show(dockPanel1);
-            TreeFrame.DockState = DockState.DockLeft;
-
-            LogFrame = new LogFrame();
-            LogFrame.Show(dockPanel1);
-            LogFrame.DockState = DockState.DockBottomAutoHide;
-
-            PropertiesFrame = new PropertiesFrame();
-            PropertiesFrame.DatabaseNameChanged+=DatabaseNameChanged;
-
-            PropertiesFrame.Show(dockPanel1);
-            PropertiesFrame.DockState = DockState.DockRight;
-
-            TestSelectionFrame = new TestsFrame();
-            TestSelectionFrame.TestClick += ShowTestProperties;
-            TestSelectionFrame.Initialize();
-
-            TestSelectionFrame.Show(dockPanel1);
-            TestSelectionFrame.DockState = DockState.DockLeft;
-
-            PropertiesFrame.Caller = TreeFrame;
-
-            ViewButtons = new List<ToolStripButton>();
-            ViewButtons = toolStripMain.Items.OfType<ToolStripButton>().Where(x => x.CheckOnClick).ToList();
-
-            StepFrames = new List<StepFrame>();
-
-            View_Click(btnSizeView, EventArgs.Empty);
-
-            WireDragDrop(Controls);
+            InterfaceFactory.Initialize(this);
 
             ResumeLayout();
         }
@@ -289,10 +241,10 @@ namespace DatabaseBenchmark
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            PrepareGuiCommand.Execute();
+            GuiCommand.Execute();
             BenchmarkCommand.Execute();
 
-            TestsCommand = new ExecuteTestsCommand(this, BenchmarkCommand.Databases, BenchmarkCommand.Tests);
+            TestsCommand = new TestExecutionCommand(this, BenchmarkCommand.Databases, BenchmarkCommand.Tests);
             TestsCommand.Start();
         }
 
@@ -306,7 +258,7 @@ namespace DatabaseBenchmark
         }
 
 
-        private void View_Click(object sender, EventArgs e)
+        public void View_Click(object sender, EventArgs e)
         {
             ToolStripButton button = (ToolStripButton)sender;
             int column = Int32.Parse(button.Tag.ToString());
@@ -535,7 +487,7 @@ namespace DatabaseBenchmark
 
         #region Drag Drop Events
 
-        private void WireDragDrop(Control.ControlCollection ctls)
+        public void WireDragDrop(Control.ControlCollection ctls)
         {
             foreach (Control ctl in ctls)
             {
@@ -712,13 +664,13 @@ namespace DatabaseBenchmark
 
         private void categoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TreeFrame.treeViewOrder = TreeViewOrder.Category;
+            TreeFrame.TreeViewOrder = TreeViewOrder.Category;
             TreeFrame.SetTreeViewOrder();
         }
 
         private void indexTechnologyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TreeFrame.treeViewOrder = TreeViewOrder.IndexTechnology;
+            TreeFrame.TreeViewOrder = TreeViewOrder.IndexTechnology;
             TreeFrame.SetTreeViewOrder();
         }
 
@@ -746,7 +698,6 @@ namespace DatabaseBenchmark
             ShowPropertiesFrame();
 
             TestSelectionFrame.Dispose();
-
         }
 
         public Dictionary<string, bool> GetCheckedToolStripButtons()
@@ -1047,19 +998,19 @@ namespace DatabaseBenchmark
             return frame;
         }
 
-        private void DatabaseNameChanged(string name)
+        public void DatabaseNameChanged(string name)
         {
             TreeFrame.GetSelectedDatabase().Name = name;
             TreeFrame.RefreshTreeView();
         }
 
-        private void PropertiesDefaultRestored(object obj)
+        public void PropertiesDefaultRestored(object obj)
         {
             if (!PropertiesFrame.IsDisposed)
                 PropertiesFrame.SetProperties(obj);
         }
 
-        private void ShowDatabaseProperties(object sender, EventArgs e)
+        public void ShowDatabaseProperties(object sender, EventArgs e)
         {
             PropertiesFrame.SetProperties(TreeFrame.GetSelectedDatabase());
         }

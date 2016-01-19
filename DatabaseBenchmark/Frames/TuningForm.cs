@@ -119,7 +119,7 @@ namespace DatabaseBenchmark.Frames
             foreach (var property in Combinations)
                 TuningDatabaseInstances.Add(GetNewDatabase(property));
 
-            Utils.DirectoryUtils.CreateAndSetDatabasesDataDirectory(MainForm.DATABASES_DIRECTORY, TuningDatabaseInstances);
+            Utils.DirectoryUtils.CreateAndSetDatabasesDataDirectory(MainForm.DatabasesDirectory, TuningDatabaseInstances);
 
             DialogResult = DialogResult.OK;
             Close();

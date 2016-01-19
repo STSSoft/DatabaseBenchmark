@@ -1,12 +1,6 @@
 ﻿using DatabaseBenchmark.Core;
 using DatabaseBenchmark.Properties;
 using log4net;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DatabaseBenchmark.Commands
 {

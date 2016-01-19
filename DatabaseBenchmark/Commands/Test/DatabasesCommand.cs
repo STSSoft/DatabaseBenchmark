@@ -5,43 +5,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DatabaseBenchmark.Core;
 
 namespace DatabaseBenchmark.Commands
 {
-    public class PrepareBenchmark : Command
+    public class BenchmarkCommand : Command
     {
         public MainForm Form { get; private set; }
 
-        public PrepareBenchmark()
+        public BenchmarkCommand()
         {
         }
 
-        public PrepareBenchmark(MainForm form)
+        public BenchmarkCommand(MainForm form)
         {
             Form = form;
         }
 
         public override void Execute()
         {
-            //Form.History.Clear();
+            Form.History.Clear();
 
-            var databases = Form.TreeFrame.GetSelectedDatabases();
-            var tests = Form.TestSelectionFrame.CheckedTests;
+            Databases = Form.TreeFrame.GetSelectedDatabases();
+            Tests = Form.TestSelectionFrame.CheckedTests.ToArray();
 
-            foreach (var database in databases)
+            foreach (var database in Databases)
             {
-
                 //// TODO: Fix this.
                 //var session = new BenchmarkSession(database, TableCount, RecordCount, Randomness, Cancellation);
                 //History.Add(session);
+
+                foreach (var test in Tests)
+                {
+                    test.Database = database;
+                }
+
+                var benchmark = new Benchmark();
 
                 //Test = new FullWriteReadTest(database, TableCount, RecordCount, Randomness, Cancellation);
                 DirectoryUtils.ClearDatabaseDataDirectory(database);
                 DirectoryUtils.CreateAndSetDatabaseDirectory(Application.StartupPath, database);
             }
-
-            Tests = tests.ToArray();
-            Databases = databases;
         }
     }
 }

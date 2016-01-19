@@ -37,18 +37,17 @@
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.separator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.restoreDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoreDefaultAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.separator2 = new System.Windows.Forms.ToolStripSeparator();
             this.expandAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.separator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.tuningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxOrder = new System.Windows.Forms.GroupBox();
             this.TreeViewOrderComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.restoreDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuDatabase.SuspendLayout();
             this.groupBoxOrder.SuspendLayout();
             this.SuspendLayout();
@@ -93,10 +92,9 @@
             this.expandAllToolStripMenuItem,
             this.collapseAllToolStripMenuItem,
             this.separator3,
-            this.tuningToolStripMenuItem,
             this.propertiesToolStripMenuItem});
             this.contextMenuDatabase.Name = "contextMenuDatabase";
-            this.contextMenuDatabase.Size = new System.Drawing.Size(180, 292);
+            this.contextMenuDatabase.Size = new System.Drawing.Size(180, 284);
             // 
             // cloneToolStripMenuItem
             // 
@@ -130,6 +128,13 @@
             this.separator1.Name = "separator1";
             this.separator1.Size = new System.Drawing.Size(176, 6);
             // 
+            // restoreDefaultToolStripMenuItem
+            // 
+            this.restoreDefaultToolStripMenuItem.Name = "restoreDefaultToolStripMenuItem";
+            this.restoreDefaultToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
+            this.restoreDefaultToolStripMenuItem.Text = "Restore Default";
+            this.restoreDefaultToolStripMenuItem.Click += new System.EventHandler(this.restoreDefaultToolStripMenuItem_Click);
+            // 
             // restoreDefaultAllToolStripMenuItem
             // 
             this.restoreDefaultAllToolStripMenuItem.Image = global::DatabaseBenchmark.Properties.Resources.default_24x24;
@@ -162,13 +167,6 @@
             // 
             this.separator3.Name = "separator3";
             this.separator3.Size = new System.Drawing.Size(176, 6);
-            // 
-            // tuningToolStripMenuItem
-            // 
-            this.tuningToolStripMenuItem.Name = "tuningToolStripMenuItem";
-            this.tuningToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
-            this.tuningToolStripMenuItem.Text = "Tuning";
-            this.tuningToolStripMenuItem.Click += new System.EventHandler(this.tuningToolStripMenuItem_Click);
             // 
             // propertiesToolStripMenuItem
             // 
@@ -214,13 +212,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Order By:";
             // 
-            // restoreDefaultToolStripMenuItem
-            // 
-            this.restoreDefaultToolStripMenuItem.Name = "restoreDefaultToolStripMenuItem";
-            this.restoreDefaultToolStripMenuItem.Size = new System.Drawing.Size(179, 30);
-            this.restoreDefaultToolStripMenuItem.Text = "Restore Default";
-            this.restoreDefaultToolStripMenuItem.Click += new System.EventHandler(this.restoreDefaultToolStripMenuItem_Click);
-            // 
             // TreeViewFrame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -261,7 +252,6 @@
         public System.Windows.Forms.GroupBox groupBoxOrder;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ComboBox TreeViewOrderComboBox;
-        private System.Windows.Forms.ToolStripMenuItem tuningToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restoreDefaultToolStripMenuItem;
     }
 }

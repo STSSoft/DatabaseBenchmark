@@ -3,14 +3,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DatabaseBenchmark.Commands
+namespace DatabaseBenchmark.Commands.Test
 {
     /// <summary>
     /// The main command that handles the execution of the tests.
     /// </summary>
-    public class ExecuteTestsCommand : TestCommand
+    public class TestExecutionCommand : TestCommand
     {
-        public ExecuteTestsCommand(MainForm form, Database[] databases, ITest[] tests)
+        public TestExecutionCommand(MainForm form, Database[] databases, ITest[] tests)
             : base(form, databases, tests)
         {
         }

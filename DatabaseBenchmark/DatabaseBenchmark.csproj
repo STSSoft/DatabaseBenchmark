@@ -142,8 +142,10 @@
     <Compile Include="Commands\View\InitializeMainViewCommand.cs" />
     <Compile Include="Commands\View\PrepareViewCommand.cs" />
     <Compile Include="Commands\Test\TestCommand.cs" />
-    <Compile Include="Commands\Test\ExecuteTestsCommand.cs" />
+    <Compile Include="Commands\Test\TestExecutionCommand.cs" />
     <Compile Include="Commands\View\ViewCommand.cs" />
+    <Compile Include="Factory\InterfaceFactory.cs" />
+    <Compile Include="Factory\TestFactory.cs" />
     <Compile Include="Frames\PropertiesFrame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,7 +205,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Utils\DirectoryUtils.cs" />
-    <Compile Include="Serialization\MainLayout.cs" />
     <Compile Include="Serialization\LayoutPersist.cs" />
     <Compile Include="Logging\StringAppender.cs" />
     <Compile Include="Report\PdfUtils.cs" />

@@ -7,21 +7,19 @@ using System.Xml;
 
 namespace DatabaseBenchmark.Serialization
 {
+    // TODO: Fix this class.
     /// <summary>
     /// Persists the state of the application (including: application settings, database settings, window layout).
     /// </summary>
     public class ProjectManager
     {
         private ILog Logger;
-        private MainLayout MainLayout;
 
         public string DockConfigPath { get; private set; }
 
-        public ProjectManager(MainLayout layout)
+        public ProjectManager()
         {
             Logger = LogManager.GetLogger(Settings.Default.ApplicationLogger);
-
-            MainLayout = layout;
         }
 
         public void Store(string path)
@@ -72,7 +70,7 @@ namespace DatabaseBenchmark.Serialization
         {
             try
             {
-                MainLayout.TreeView.ClearTreeViewNodes();
+                //MainLayout.TreeView.ClearTreeViewNodes();
 
                 using (var stream = new FileStream(path, FileMode.OpenOrCreate))
                 {
@@ -89,13 +87,13 @@ namespace DatabaseBenchmark.Serialization
                         reader.ReadEndElement();
                         
                         // Add databases in TreeView.
-                        foreach (var database in databasePersist.Databases)
-                            MainLayout.TreeView.CreateTreeViewNode(database.Key, database.Value);
+                        //foreach (var database in databasePersist.Databases)
+                        //    MainLayout.TreeView.CreateTreeViewNode(database.Key, database.Value);
                     }
                 }
 
-                MainLayout.TreeView.ExpandAll();
-                MainLayout.TreeView.SelectFirstNode();
+                //MainLayout.TreeView.ExpandAll();
+                //MainLayout.TreeView.SelectFirstNode();
 
                 //RefreshPropertiesFrame();
 

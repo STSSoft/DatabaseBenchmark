@@ -1171,7 +1171,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialogJson;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
+        public WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel1;
         private System.Windows.Forms.ToolStripMenuItem saveConfigurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadConfigurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;

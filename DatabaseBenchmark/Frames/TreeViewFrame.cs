@@ -18,9 +18,8 @@ namespace DatabaseBenchmark.Frames
     public partial class TreeViewFrame : DockContent
     {
         private ILog Logger;
-        private List<Database> TuningDatabaseInstances;
 
-        public TreeViewOrder treeViewOrder;
+        public TreeViewOrder TreeViewOrder;
         public event Action<Object> SelectedDatabaseChanged; // Object = Database
         public event Action<Object> DefaultRestored;
 
@@ -37,7 +36,7 @@ namespace DatabaseBenchmark.Frames
             try
             {
                 Database[] databases = ReflectionUtils.CreateDatabaseInstances();
-                DirectoryUtils.CreateAndSetDatabasesDataDirectory(MainForm.DATABASES_DIRECTORY, databases);
+                DirectoryUtils.CreateAndSetDatabasesDataDirectory(MainForm.DatabasesDirectory, databases);
 
                 foreach (var database in databases.OrderBy(db => db.Name))
                     CreateTreeViewNode(database, false);
@@ -47,7 +46,7 @@ namespace DatabaseBenchmark.Frames
                 var node = treeView.Nodes[0];
                 treeView.SelectedNode = node;
 
-                TreeViewOrderComboBox.Text = treeViewOrder.ToString();
+                TreeViewOrderComboBox.Text = TreeViewOrder.ToString();
 
                 if (SelectedDatabaseChanged != null)
                     SelectedDatabaseChanged.Invoke(node.Tag);
@@ -106,9 +105,6 @@ namespace DatabaseBenchmark.Frames
 
         public Database[] GetSelectedDatabases()
         {
-            if (TuningDatabaseInstances != null)
-                return TuningDatabaseInstances.ToArray();
-
             return treeView.Nodes.Iterate().Where(x => x.Checked && x.Tag as Database != null).Select(y => y.Tag as Database).ToArray();
         }
 
@@ -128,11 +124,6 @@ namespace DatabaseBenchmark.Frames
                 treeView.Enabled = value;
                 groupBoxOrder.Enabled = value;
             }
-        }
-
-        public List<Database> GetTuningDatabaseInstances()
-        {
-            return TuningDatabaseInstances;
         }
 
         public bool IsSelectedNodeDatabase
@@ -162,7 +153,7 @@ namespace DatabaseBenchmark.Frames
                     Database tempDatabase = ReflectionUtils.CreateDatabaseInstance(databaseType);
                     tempDatabase.Name = treeView.SelectedNode.Text + " Clone";
 
-                    DirectoryUtils.CreateAndSetDatabaseDirectory(MainForm.DATABASES_DIRECTORY, tempDatabase);
+                    DirectoryUtils.CreateAndSetDatabaseDirectory(MainForm.DatabasesDirectory, tempDatabase);
 
                     TreeNode node = treeView.Nodes.Iterate().Where(x => x.Tag == selectedDatabase).FirstOrDefault();
                     TreeNodeCollection nodes = node.Parent != null ? node.Parent.Nodes : treeView.Nodes;
@@ -208,7 +199,7 @@ namespace DatabaseBenchmark.Frames
             {
                 TreeNode selectedNode = treeView.SelectedNode;
                 Database instance = Activator.CreateInstance(selectedNode.Tag.GetType()) as Database;
-                instance.DataDirectory = Path.Combine(MainForm.DATABASES_DIRECTORY, instance.Name);
+                instance.DataDirectory = Path.Combine(MainForm.DatabasesDirectory, instance.Name);
 
                 selectedNode.Tag = instance;
                 selectedNode.Text = instance.Name;
@@ -234,7 +225,7 @@ namespace DatabaseBenchmark.Frames
 
             List<KeyValuePair<string, TreeNode>> groupedTree;
 
-            if (treeViewOrder == TreeViewOrder.Category)
+            if (TreeViewOrder == TreeViewOrder.Category)
                 groupedTree = newTree.Select(x => new KeyValuePair<string, TreeNode>((x.Tag as Database).Category, x)).ToList();
             else
                 groupedTree = newTree.Select(x => new KeyValuePair<string, TreeNode>((x.Tag as Database).IndexingTechnology.ToString(), x)).ToList();
@@ -261,10 +252,10 @@ namespace DatabaseBenchmark.Frames
         private TreeNode CreateTreeNode(IDatabase database)
         {
             TreeNode node = new TreeNode();
-            TreeViewOrderComboBox.Text = treeViewOrder.ToString();
+            TreeViewOrderComboBox.Text = TreeViewOrder.ToString();
 
 
-            if (treeViewOrder == TreeViewOrder.Category)
+            if (TreeViewOrder == TreeViewOrder.Category)
                 node = treeView.Nodes.BuildNode(database.Category, database.Name);
             else
                 node = treeView.Nodes.BuildNode(database.IndexingTechnology, database.Name);
@@ -389,7 +380,7 @@ namespace DatabaseBenchmark.Frames
 
         private void TreeViewOrderComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            treeViewOrder = (TreeViewOrder)Enum.Parse(typeof(TreeViewOrder), TreeViewOrderComboBox.Text);
+            TreeViewOrder = (TreeViewOrder)Enum.Parse(typeof(TreeViewOrder), TreeViewOrderComboBox.Text);
             try
             {
                 SetTreeViewOrder(); //TODO: fix 
@@ -408,23 +399,6 @@ namespace DatabaseBenchmark.Frames
             remove
             {
                 propertiesToolStripMenuItem.Click -= value;
-            }
-        }
-
-        private void tuningToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TuningForm tuning = new TuningForm();
-            tuning.Initialize(ReflectionUtils.GetPublicPropertiesAndValues(GetSelectedDatabase()), GetSelectedDatabase());
-            tuning.Name = GetSelectedDatabase().Name;
-
-            tuning.ShowDialog();
-
-            if (tuning.DialogResult == DialogResult.OK)
-            {
-                TuningDatabaseInstances = new List<Database>();
-                TuningDatabaseInstances = tuning.GetTuningDatabaseInstances();
-
-                tuning.Close();
             }
         }
 
