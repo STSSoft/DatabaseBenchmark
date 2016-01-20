@@ -254,7 +254,7 @@
             this.btnStart.Size = new System.Drawing.Size(52, 52);
             this.btnStart.Text = "Start";
             this.btnStart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnStart.Click += new System.EventHandler(this.startButton_Click);
+            this.btnStart.Click += new System.EventHandler(this.StartButton_Click);
             // 
             // btnStop
             // 
@@ -266,7 +266,7 @@
             this.btnStop.Size = new System.Drawing.Size(52, 52);
             this.btnStop.Text = "Stop";
             this.btnStop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnStop.Click += new System.EventHandler(this.stopButton_Click);
+            this.btnStop.Click += new System.EventHandler(this.StopButton_Click);
             // 
             // toolStripSeparator2
             // 
@@ -470,7 +470,7 @@
             this.btnAxisType.Size = new System.Drawing.Size(52, 52);
             this.btnAxisType.Text = "toolStripButton1";
             this.btnAxisType.ToolTipText = "Axis Type (Normal/Logarithmic)";
-            this.btnAxisType.Click += new System.EventHandler(this.axisType_Click);
+            this.btnAxisType.Click += new System.EventHandler(this.AxisType_Click);
             // 
             // toolStripSeparator7
             // 
@@ -588,7 +588,7 @@
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(204, 30);
             this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
