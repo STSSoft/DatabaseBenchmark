@@ -26,36 +26,26 @@ namespace DatabaseBenchmark.Frames
             barChartTime.CreateSeries("Series1", "HH:mm:ss");
             barChartTime.AxisYValueType = ChartValueType.DateTime;
 
-            //barChartCPU.CreateSeries("Series1", "{0:0.#}");
             barChartMemory.CreateSeries("Series1", "{0:0.#}");
-            //barChartIO.CreateSeries("Series1", "{0:0.#}");
 
             barChartSpeed.Title = "Speed (rec/sec)";
             barChartSize.Title = "Size (MB)";
             barChartTime.Title = "Time (hh:mm:ss)";
-            barChartCPU.Title = "CPU usage (%)";
             barChartMemory.Title = "Peak Memory (MB)";
-            barChartIO.Title = "IO Data (MB/sec)";
 
             // Line charts.
             lineChartAverageSpeed.AxisXTitle = "Records";
             lineChartAverageSpeed.AxisYTitle = "Records/Sec";
             lineChartMomentSpeed.AxisXTitle = "Records";
             lineChartMomentSpeed.AxisYTitle = "Records/Sec";
-            //lineChartAverageCPU.AxisXTitle = "Records";
-            //lineChartAverageCPU.AxisYTitle = "Percent (%)";
             lineChartMomentMemory.AxisXTitle = "Records";
             lineChartMomentMemory.AxisYTitle = "MB";
-            //lineChartAverageIO.AxisXTitle = "Records";
-            //lineChartAverageIO.AxisYTitle = "MB/Sec";
 
             foreach (var item in lineSeries)
             {
                 lineChartAverageSpeed.CreateSeries(item.Key, item.Value);
                 lineChartMomentSpeed.CreateSeries(item.Key, item.Value);
-                //lineChartAverageCPU.CreateSeries(item.Key, item.Value);
                 lineChartMomentMemory.CreateSeries(item.Key, item.Value);
-                //lineChartAverageIO.CreateSeries(item.Key, item.Value);
             }
         }
 
@@ -63,16 +53,12 @@ namespace DatabaseBenchmark.Frames
         {
             lineChartAverageSpeed.Clear();
             lineChartMomentSpeed.Clear();
-            //lineChartAverageCPU.Clear();
             lineChartMomentMemory.Clear();
-            //lineChartAverageIO.Clear();
 
             barChartSpeed.Clear();
             barChartTime.Clear();
             barChartSize.Clear();
-            //barChartCPU.Clear();
             barChartMemory.Clear();
-            //barChartIO.Clear();
         }
 
         #region Add points to LineChart
@@ -126,19 +112,9 @@ namespace DatabaseBenchmark.Frames
             barChartTime.AddPoint(label, y, color);
         }
 
-        public void AddCpuUsageToBar(string label, object y, Color color)
-        {
-            barChartCPU.AddPoint(label, y, color);
-        }
-
         public void AddMemoryUsageToBar(string label, object y, Color color)
         {
             barChartMemory.AddPoint(label, y, color);
-        }
-
-        public void AddIoUsageToBar(string label, object y, Color color)
-        {
-            barChartIO.AddPoint(label, y, color);
         }
 
         #endregion
@@ -160,9 +136,11 @@ namespace DatabaseBenchmark.Frames
         {
             List<BarChart> barCharts = new List<BarChart>();
 
-            CurrentStyles = new Dictionary<int, ColumnStyle>();
-            CurrentStyles[0] = LayoutPanel.ColumnStyles[0];
-            CurrentStyles[2] = LayoutPanel.ColumnStyles[2];
+            CurrentStyles = new Dictionary<int, ColumnStyle>
+            {
+                [0] = LayoutPanel.ColumnStyles[0],
+                [2] = LayoutPanel.ColumnStyles[2]
+            };
 
             LayoutPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 18);
             LayoutPanel.ColumnStyles[2] = new ColumnStyle(SizeType.Percent, 18);
@@ -178,26 +156,26 @@ namespace DatabaseBenchmark.Frames
 
         public List<BarChart> GetAllBarCharts()
         {
-            CurrentStyles = new Dictionary<int, ColumnStyle>();
-            CurrentStyles[0] = LayoutPanel.ColumnStyles[0];
-            CurrentStyles[1] = LayoutPanel.ColumnStyles[1];
-            CurrentStyles[2] = LayoutPanel.ColumnStyles[2];
-           //CurrentStyles[3] = LayoutPanel.ColumnStyles[3];
-            CurrentStyles[4] = LayoutPanel.ColumnStyles[4];
-           // CurrentStyles[5] = LayoutPanel.ColumnStyles[5];
+            CurrentStyles = new Dictionary<int, ColumnStyle>
+            {
+                [0] = LayoutPanel.ColumnStyles[0],
+                [1] = LayoutPanel.ColumnStyles[1],
+                [2] = LayoutPanel.ColumnStyles[2],
+                [4] = LayoutPanel.ColumnStyles[4]
+            };
 
             LayoutPanel.ColumnStyles[0] = new ColumnStyle(SizeType.Percent, 18);
             LayoutPanel.ColumnStyles[1] = new ColumnStyle(SizeType.Percent, 18);
             LayoutPanel.ColumnStyles[2] = new ColumnStyle(SizeType.Percent, 18);
-            //LayoutPanel.ColumnStyles[3] = new ColumnStyle(SizeType.Percent, 18);
             LayoutPanel.ColumnStyles[4] = new ColumnStyle(SizeType.Percent, 18);
-            //LayoutPanel.ColumnStyles[5] = new ColumnStyle(SizeType.Percent, 18);
 
-            List<BarChart> barCharts = new List<BarChart>();
-            barCharts.Add(barChartSpeed);
-            barCharts.Add(barChartSize);
-            barCharts.Add(barChartTime);
-            barCharts.Add(barChartMemory);
+            var barCharts = new List<BarChart>()
+            {
+                barChartSpeed,
+                barChartSize,
+                barChartTime,
+                barChartMemory
+            };
 
             return barCharts;
         }
@@ -210,14 +188,13 @@ namespace DatabaseBenchmark.Frames
 
         public List<ChartSettings> GetLineChartSettings()
         {
-            List<ChartSettings> settings = new List<ChartSettings>();
-
-            settings.Add(lineChartAverageSpeed.Settings);
-            settings.Add(lineChartMomentSpeed.Settings);
-            //settings.Add(lineChartAverageCPU.Settings);
-            settings.Add(lineChartMomentMemory.Settings);
-            //settings.Add(lineChartAverageIO.Settings);
-
+            var settings = new List<ChartSettings>
+            {
+                lineChartAverageSpeed.Settings,
+                lineChartMomentSpeed.Settings,
+                lineChartMomentMemory.Settings
+            };
+      
             return settings;
         }
 
@@ -225,9 +202,7 @@ namespace DatabaseBenchmark.Frames
         {
             lineChartAverageSpeed.Settings = settings[0];
             lineChartMomentSpeed.Settings = settings[1];
-            //lineChartAverageCPU.Settings = settings[2];
             lineChartMomentMemory.Settings = settings[2];
-            //lineChartAverageIO.Settings = settings[4];
         }
 
         public void ShowBarChart(int columnNumber, bool visible)

@@ -8,10 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DatabaseBenchmark.Commands.View;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace DatabaseBenchmark.Factory
@@ -23,7 +20,8 @@ namespace DatabaseBenchmark.Factory
         /// </summary>
         public static void Initialize(MainForm form)
         {
-            form.GuiCommand = new InterfaceCommand(form);
+            form.DockingConfigurationDirectory = MainForm.ConfigurationFolder;
+
             form.BenchmarkCommand = new BenchmarkCommand(form);
 
             form.History = new List<Benchmark>();
@@ -54,7 +52,7 @@ namespace DatabaseBenchmark.Factory
 
             // Properties frame.
             form.PropertiesFrame = new PropertiesFrame();
-            form.PropertiesFrame.DatabaseNameChanged += form.DatabaseNameChanged;
+            form.PropertiesFrame.DatabaseNameChanged += form.TreeView_DatabaseNameChanged;
             form.PropertiesFrame.Caller = form.TreeFrame;
 
             form.PropertiesFrame.Show(form.dockPanel1);
@@ -69,9 +67,9 @@ namespace DatabaseBenchmark.Factory
             form.TestSelectionFrame.DockState = DockState.DockLeft;
 
             // Step frames.
-            form.StepFrames = new List<StepFrame>();
+            form.StepFrames = new Dictionary<string, StepFrame>();
 
-            // View buttons.
+            // Form buttons.
             form.ViewButtons = new List<ToolStripButton>();
             form.ViewButtons = form.toolStripMain.Items.OfType<ToolStripButton>().Where(x => x.CheckOnClick).ToList();
             form.View_Click(form.btnSizeView, EventArgs.Empty);

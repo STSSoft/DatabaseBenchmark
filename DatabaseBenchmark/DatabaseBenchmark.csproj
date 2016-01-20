@@ -139,11 +139,8 @@
     <Compile Include="Charts\ChartSettings.cs" />
     <Compile Include="Commands\Test\Command.cs" />
     <Compile Include="Commands\Test\DatabasesCommand.cs" />
-    <Compile Include="Commands\View\InitializeMainViewCommand.cs" />
-    <Compile Include="Commands\View\PrepareViewCommand.cs" />
     <Compile Include="Commands\Test\TestCommand.cs" />
     <Compile Include="Commands\Test\TestExecutionCommand.cs" />
-    <Compile Include="Commands\View\ViewCommand.cs" />
     <Compile Include="Factory\InterfaceFactory.cs" />
     <Compile Include="Factory\TestFactory.cs" />
     <Compile Include="Frames\PropertiesFrame.cs">

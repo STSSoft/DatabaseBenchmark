@@ -40,7 +40,8 @@ namespace DatabaseBenchmark.Commands
                     test.Database = database;
                 }
 
-                var benchmark = new Benchmark();
+                var benchmark = new Benchmark(database);
+                Form.History.Add(benchmark);
 
                 //Test = new FullWriteReadTest(database, TableCount, RecordCount, Randomness, Cancellation);
                 DirectoryUtils.ClearDatabaseDataDirectory(database);

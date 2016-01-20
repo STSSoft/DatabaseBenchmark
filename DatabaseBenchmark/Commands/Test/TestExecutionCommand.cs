@@ -34,7 +34,7 @@ namespace DatabaseBenchmark.Commands.Test
 
         private void DoBenchmark()
         {
-            var benchmark = Form.CurrentBenchmark;
+            var benchmark = Form.History[0];
 
             try
             {
