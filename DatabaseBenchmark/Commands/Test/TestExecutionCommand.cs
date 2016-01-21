@@ -21,7 +21,7 @@ namespace DatabaseBenchmark.Commands.Test
             Form.Cancellation = new CancellationTokenSource();
 
             // Start the benchmark.
-            Form.MainTask = Task.Factory.StartNew(DoBenchmark, Form.Cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+            Form.MainTask = Task.Factory.StartNew(DoBenchmark, Form.Cancellation, Form.Cancellation.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         }
 
         public override void Stop()
@@ -30,15 +30,21 @@ namespace DatabaseBenchmark.Commands.Test
                 return;
 
             Form.Cancellation.Cancel();
+            Task.WaitAll(new Task[] { Form.MainTask }, 500);
         }
 
-        private void DoBenchmark()
+        private void DoBenchmark(object state)
         {
+            var token = ((CancellationTokenSource)state).Token;
+
+            token.ThrowIfCancellationRequested();
+
             var benchmark = Form.History[0];
 
             try
             {
-                benchmark.ExecuteTests(Form.Cancellation.Token, Tests);
+                Form.CurrentBenchmark = benchmark;
+                benchmark.ExecuteTests(token, Tests);
             }
             catch (Exception exc)
             {

@@ -327,7 +327,7 @@ namespace DatabaseBenchmark
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CloseApplication();
+            ExitApplication();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -979,10 +979,15 @@ namespace DatabaseBenchmark
 
         public void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-           
+            ExitApplication();
         }
 
-        public void CloseApplication()
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        public void ExitApplication()
         {
             try
             {
@@ -994,10 +999,12 @@ namespace DatabaseBenchmark
                 // Do not retrow or log the exception,
                 // because the result is irrelevant.
             }
+            catch (Exception)
+            {
+            }
             finally
             {
                 MainTask = null;
-                Application.Exit();
             }
         }
 
@@ -1026,6 +1033,7 @@ namespace DatabaseBenchmark
                 //MainLayout.StepFrames[method].Activate();
 
                 var session = History.First();
+                var benchmark = CurrentBenchmark;
                 //TimeSpan elapsed = session.GetElapsedTime(method);
 
                 //long currentRecords = session.GetRecords(method);
