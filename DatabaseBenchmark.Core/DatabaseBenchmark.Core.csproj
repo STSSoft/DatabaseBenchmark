@@ -1,0 +1,412 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EE22F8E1-DD02-48BE-827F-02C334586949}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DatabaseBenchmark.Core</RootNamespace>
+    <AssemblyName>DatabaseBenchmark.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AerospikeClient, Version=3.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\AerospikeClient.dll</HintPath>
+    </Reference>
+    <Reference Include="BrightstarDB, Version=1.9.1.0, Culture=neutral, PublicKeyToken=e08b12254e74c9d9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\BrightstarDB.dll</HintPath>
+    </Reference>
+    <Reference Include="Cassandra, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Cassandra.dll</HintPath>
+    </Reference>
+    <Reference Include="Cassandra.Data, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Cassandra.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Cassandra.Data.Linq, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Cassandra.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Couchbase.NetClient, Version=2.0.2.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Couchbase.NetClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Db4objects.Db4o, Version=8.0.249.16098, Culture=neutral, PublicKeyToken=6199cd4f203aa8eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Db4objects.Db4o.dll</HintPath>
+    </Reference>
+    <Reference Include="dotNetRDF, Version=1.0.7.3471, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\dotNetRDF.dll</HintPath>
+    </Reference>
+    <Reference Include="FirebirdSql.Data.FirebirdClient, Version=3.0.2.0, Culture=neutral, PublicKeyToken=3750abcc3150b00c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\FirebirdSql.Data.FirebirdClient.dll</HintPath>
+    </Reference>
+    <Reference Include="HamsterDb-dotnet, Version=0.0.0.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\HamsterDb-dotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.ADOX, Version=2.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\Debug\Interop.ADOX.dll</HintPath>
+    </Reference>
+    <Reference Include="iTextSharp, Version=4.1.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\iTextSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LevelDB.NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\LevelDB.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="libdb_dotnet60, Version=6.0.20.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\libdb_dotnet60.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface, Version=2.0.4.21329, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\LuaInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Access, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Visual Studio Tools for Office\PIA\Office14\Microsoft.Office.Interop.Access.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.interop.access.dao, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Visual Studio Tools for Office\PIA\Office14\Microsoft.Office.interop.access.dao.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.0.0.788, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.0.0.788, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.0.0.788, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Legacy, Version=2.0.0.788, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MongoDB.Driver.Legacy.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.0.13.91, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Orient.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Orient.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Orient.NUnit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Orient.NUnit.dll</HintPath>
+    </Reference>
+    <Reference Include="PerstNet40, Version=1.0.4915.345, Culture=neutral, PublicKeyToken=ac1b8589238349b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\PerstNet40.dll</HintPath>
+    </Reference>
+    <Reference Include="policy.2.0.Npgsql, Version=0.0.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\policy.2.0.Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Database, Version=3.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Raven.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Linq, Version=1.13.122.1, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Remotion.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Scimore.Data.ScimoreClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d9897f3bde4de09, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Scimore.Data.ScimoreClient.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ServiceStack.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common, Version=3.9.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces, Version=3.9.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite, Version=3.9.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ServiceStack.OrmLite.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.OrmLite.SqlServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ServiceStack.OrmLite.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis, Version=3.9.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.ServiceInterface, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ServiceStack.ServiceInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.71.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="STSdb, Version=3.5.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STSdb.dll</HintPath>
+    </Reference>
+    <Reference Include="STSdb4, Version=4.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\STSdb4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.94.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Net.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VDS.Common, Version=1.4.0.0, Culture=neutral, PublicKeyToken=ab5f4eb908061bf0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\VDS.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="VelocityDb, Version=3.2.1.0, Culture=neutral, PublicKeyToken=9d412ecd5a0c8179, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\VelocityDb.dll</HintPath>
+    </Reference>
+    <Reference Include="Volante, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Volante.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.LinterClient">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Data.LinterClient.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Benchmark.cs" />
+    <Compile Include="ITable.cs" />
+    <Compile Include="Reporting\PerformanceReport.cs" />
+    <Compile Include="Tests\FullWriteReadTest.cs" />
+    <Compile Include="ITest.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="Databases\AccessDatabase.cs" />
+    <Compile Include="Databases\AerospikeDatabase.cs" />
+    <Compile Include="Databases\BerkeleyDBDatabase.cs" />
+    <Compile Include="Databases\BrightstarDBDatabase.cs" />
+    <Compile Include="Databases\CassandraDatabase.cs" />
+    <Compile Include="Databases\CouchbaseDatabase.cs" />
+    <Compile Include="Databases\Db4objectsDatabase.cs" />
+    <Compile Include="Databases\FirebirdDatabase.cs" />
+    <Compile Include="Databases\HamsterDBDatabase.cs" />
+    <Compile Include="Databases\LevelDBDatabase.cs" />
+    <Compile Include="Databases\LinterDatabase.cs" />
+    <Compile Include="Databases\MongoDBDatabase.cs" />
+    <Compile Include="Databases\MSSQLServerCompactDatabase.cs" />
+    <Compile Include="Databases\MSSQLServerDatabase.cs" />
+    <Compile Include="Databases\MySQLArchiveDatabase.cs" />
+    <Compile Include="Databases\MySQLBlackholeDatabase.cs" />
+    <Compile Include="Databases\MySQLDatabase.cs" />
+    <Compile Include="Databases\MySQLInnoDBDatabase.cs" />
+    <Compile Include="Databases\MySQLMemoryDatabase.cs" />
+    <Compile Include="Databases\MySQLMyIsamDatabase.cs" />
+    <Compile Include="Databases\MySQLTokuDBDatabase.cs" />
+    <Compile Include="Databases\OrientDBDatabase.cs" />
+    <Compile Include="Databases\PerstDatabase.cs" />
+    <Compile Include="Databases\PostgreSQLDatabase.cs" />
+    <Compile Include="Databases\RavenDBDatabase.cs" />
+    <Compile Include="Databases\RedisDatabase.cs" />
+    <Compile Include="Databases\ScimoreDBDatabase.cs" />
+    <Compile Include="Databases\SQLiteDatabase.cs" />
+    <Compile Include="Databases\STSdb4Database.cs" />
+    <Compile Include="Databases\STSdbDatabase.cs" />
+    <Compile Include="Databases\TokuMXDatabase.cs" />
+    <Compile Include="Databases\VelocityDBDatabase.cs" />
+    <Compile Include="Databases\VolanteDatabase.cs" />
+    <Compile Include="Attributes\DbParameterAttribute.cs" />
+    <Compile Include="Exceptions\KeysNotOrderedException.cs" />
+    <Compile Include="IDatabase.cs" />
+    <Compile Include="Logging\StringAppender.cs" />
+    <Compile Include="Logging\TraceListener.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ReflectionUtils.cs" />
+    <Compile Include="Exporting\CsvUtils.cs" />
+    <Compile Include="Exporting\JsonUtils.cs" />
+    <Compile Include="Exporting\ExportEnums.cs" />
+    <Compile Include="Exporting\SystemInfo.cs" />
+    <Compile Include="Exporting\SystemUtils.cs" />
+    <Compile Include="Serialization\XmlDatabasePersist.cs" />
+    <Compile Include="Statistics\IOStatistics.cs" />
+    <Compile Include="Statistics\IStatistic.cs" />
+    <Compile Include="Statistics\MemoryStatistics.cs" />
+    <Compile Include="Statistics\ProcessorStatistics.cs" />
+    <Compile Include="Statistics\SpeedStatistics.cs" />
+    <Compile Include="Reporting\PerformanceWatch.cs" />
+    <Compile Include="Test.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\STS.General\STS.General.SQL\STS.General.SQL.csproj">
+      <Project>{72693b8c-90cd-4681-97d2-4247432e2422}</Project>
+      <Name>STS.General.SQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\STS.General\STS.General\STS.General.csproj">
+      <Project>{820fc9a2-48a0-4463-8182-d1ac8d539fb9}</Project>
+      <Name>STS.General</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>set target=x64
+set drive=R:
+set source=%25drive%25\Databases
+set thirdParty=%25drive%25\Third Party
+set ikvm=%25thirdParty%25\ikvm\ikvmbin-8.0.5449.1
+
+if exist %25drive%25 (
+   xcopy /d /y /r "%25source%25\STSdb\STSdb.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\STSdb4\STSdb4.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Access\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\HamsterDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\BrightstarDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Volante\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\HamsterDB\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\CassandraDB\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Couchbase\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Aerospike\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Oracle BerkeleyDB\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\OrientDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Perst\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\db4object\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Firebird\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Microsoft SQL Server Compact\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\SQLite\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\MySQL\MySql.Data.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\PostgreSQL\Npgsql.net\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\PostgreSQL\Npgsql.net\policy.2.0.Npgsql.config" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\ScimoreDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\LevelDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\VelocityDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\MongoDB\Client\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\RaptorDB\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\RavenDB\RavenDB-Build-3528\Server\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\RavenDB\RavenDB-Build-3528\Client\Raven.Client.Lightweight.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Siaqodb\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\RedisDB\%25target%25\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25source%25\Linter\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\log4net\1.2.13\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\Json for .NET 1.2\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\DockingSuite\2.9.0\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25thirdParty%25\PdfExport\*.dll" "$(TargetDir)"
+   xcopy /d /y /r "%25ikvm%25\bin\*.dll" "$(TargetDir)"
+)</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

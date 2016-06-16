@@ -149,9 +149,7 @@
     <Compile Include="Charts\Linux\LineChart.Mono.Designer.cs">
       <DependentUpon>LineChart.Mono.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frames\PropertiesFrame.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Frames\PropertiesFrame.cs" />
     <Compile Include="Frames\PropertiesFrame.Designer.cs">
       <DependentUpon>PropertiesFrame.cs</DependentUpon>
     </Compile>
@@ -173,17 +171,13 @@
     <Compile Include="Frames\TuningForm.Designer.cs">
       <DependentUpon>TuningForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frames\TuningResultsFrame.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Frames\TuningResultsFrame.cs" />
     <Compile Include="Frames\TuningResultsFrame.Designer.cs">
       <DependentUpon>TuningResultsFrame.cs</DependentUpon>
     </Compile>
     <Compile Include="Utils\PropertyGridUtils.cs" />
     <Compile Include="Utils\RegistryUtils.cs" />
-    <Compile Include="Frames\LogFrame.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Frames\LogFrame.cs" />
     <Compile Include="Frames\LogFrame.Designer.cs">
       <DependentUpon>LogFrame.cs</DependentUpon>
     </Compile>
@@ -204,15 +198,11 @@
     <Compile Include="Logging\StringAppender.cs" />
     <Compile Include="Report\PdfUtils.cs" />
     <Compile Include="Serialization\ProjectManager.cs" />
-    <Compile Include="Frames\StepFrame.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Frames\StepFrame.cs" />
     <Compile Include="Frames\StepFrame.Designer.cs">
       <DependentUpon>StepFrame.cs</DependentUpon>
     </Compile>
-    <Compile Include="Frames\TreeViewFrame.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Frames\TreeViewFrame.cs" />
     <Compile Include="Frames\TreeViewFrame.Designer.cs">
       <DependentUpon>TreeViewFrame.cs</DependentUpon>
     </Compile>
@@ -544,17 +534,9 @@
     <None Include="Resources\cloneToolStripMenuItem.Image.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseBenchmark.Core\DatabaseBenchmark.Core\DatabaseBenchmark.Core.csproj">
+    <ProjectReference Include="..\DatabaseBenchmark.Core\DatabaseBenchmark.Core.csproj">
       <Project>{ee22f8e1-dd02-48be-827f-02c334586949}</Project>
       <Name>DatabaseBenchmark.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DatabaseBenchmark.Core\STS.General\STS.General\STS.General.csproj">
-      <Project>{820fc9a2-48a0-4463-8182-d1ac8d539fb9}</Project>
-      <Name>STS.General</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\STS.General.GUI\STS.General.GUI\STS.General.GUI.csproj">
-      <Project>{19c6fd6a-2e47-407f-9940-620edc0f2ecb}</Project>
-      <Name>STS.General.GUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
